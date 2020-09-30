@@ -1,0 +1,8 @@
+dependencies:
+  - name: vitessce
+    version: 1.0.0
+    src: htmlwidgets/lib/vitessce-1.0.0
+    script:
+      - index.js
+    stylesheet:
+      - index.css
