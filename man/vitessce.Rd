@@ -2,10 +2,30 @@
 % Please edit documentation in R/vitessce.R
 \name{vitessce}
 \alias{vitessce}
-\title{<Add Title>}
+\title{Vitessce Widget}
 \usage{
-vitessce(message, width = NULL, height = NULL, elementId = NULL)
+vitessce(
+  config = NULL,
+  data = NULL,
+  width = NULL,
+  height = NULL,
+  elementId = NULL
+)
+}
+\arguments{
+\item{config}{A view config as a list.}
+
+\item{data}{A dataset as a SingleCellExperiment or Seurat object.}
+
+\item{width}{The width of the widget as a number or CSS string.}
+
+\item{height}{The height of the widget as a number or CSS string.}
 }
 \description{
-<Add Description>
+The \code{vitessce} function creates a new Vitessce htmlwidget.
+A Vitessce widget is defined by a view config which specifies dataset(s),
+a layout of views, and linked view connections. An explicit view config can be
+passed to the widget using the \code{config} parameter, or a view config
+can be automatically generated using the \code{data} parameter.
+or
 }
