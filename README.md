@@ -4,8 +4,10 @@ R htmlwidget facilitating interactive visualization of spatial single-cell data 
 
 👷🚧 work in progress ⚠️
 
-In## stallation
---``r
+
+## Installation
+
+```r
 install.packages("vitessce")
 ```
 
