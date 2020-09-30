@@ -21,6 +21,7 @@ vitessce("hello, world")
 ## Development
 
 ```r
+setwd("path/to/vitessce-htmlwidget")
 install.packages("htmlwidgets")
 install.packages("devtools")
 devtools::install()
