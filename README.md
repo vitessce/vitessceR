@@ -27,3 +27,7 @@ install.packages("devtools")
 devtools::install()
 
 ```
+
+## Resources
+
+- [htmlwidgets: creating a widget](http://www.htmlwidgets.org/develop_intro.html)
