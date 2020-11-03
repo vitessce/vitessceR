@@ -71,3 +71,21 @@ FileType <- list(
   RASTER_JSON = "raster.json",
   CELL_SETS_JSON = "cell-sets.json"
 )
+
+#' Component
+#'
+#' The \code{Component} list contains an enumeration of
+#' valid string constant values representing components.
+#'
+#' @export
+Component <- list(
+  SCATTERPLOT = "scatterplot",
+  SPATIAL = "spatial",
+  DESCRIPTION = "description",
+  STATUS = "status",
+  CELL_SETS = "cellSets",
+  HEATMAP = "heatmap",
+  LAYER_CONTROLLER = "layerController",
+  HIGLASS = "higlass",
+  CELL_SET_SIZES = "cellSetSizes"
+)

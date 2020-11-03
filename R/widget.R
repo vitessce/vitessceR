@@ -1,19 +1,18 @@
 #' Vitessce Widget
 #'
-#' The \code{vitessce} function creates a new Vitessce htmlwidget.
+#' The \code{vitessceWidget} function creates a new Vitessce htmlwidget.
 #' A Vitessce widget is defined by a view config which specifies dataset(s),
-#' a layout of views, and linked view connections. An explicit view config can be
-#' passed to the widget using the \code{config} parameter, or a view config
-#' can be automatically generated using the \code{data} parameter.
+#' a layout of views, and linked view connections. A config object can be
+#' passed to the widget using the \code{config} parameter.
 #'
-#' @param config A view config as a list.
+#' @param config A view config as a `VitessceConfig` object.
 #' @param width The width of the widget as a number or CSS string.
 #' @param height The height of the widget as a number or CSS string.
 #'
 #' @import htmlwidgets
 #'
 #' @export
-vitessce <- function(config = NULL, width = NULL, height = NULL, elementId = NULL) {
+vitessceWidget <- function(config = NULL, width = NULL, height = NULL, elementId = NULL) {
 
   # forward options using x
   x = list(
@@ -45,8 +44,7 @@ vitessce <- function(config = NULL, width = NULL, height = NULL, elementId = NUL
 #' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
 #'   is useful if you want to save an expression in a variable.
 #'
-#' @name vitessce-shiny
-#'
+#' @rdname vitessce-shiny
 #' @export
 vitessceOutput <- function(outputId, width = '100%', height = '400px'){
   htmlwidgets::shinyWidgetOutput(outputId, 'vitessce', width, height, package = 'vitessce')

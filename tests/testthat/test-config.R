@@ -1,3 +1,5 @@
+library(vitessce)
+
 test_that("VitessceConfig new", {
   vc <- VitessceConfig$new("My config")
 
