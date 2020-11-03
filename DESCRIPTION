@@ -1,16 +1,20 @@
 Package: vitessce
-Title: What the Package Does (One Line, Title Case)
+Type: Package
+Title: Create Interactive Single-cell Visualizations with the 'Vitessce' JavaScript Library
 Version: 0.0.0.9000
-Authors@R: 
-    person(given = "First",
-           family = "Last",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+Authors@R: c(
+    person("Mark", "Keller", email = "markkellerweb@gmail.com", role = c("aut", "cre"))
+  )
 Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+License: MIT + file LICENSE
+Depends: R (>= 3.1.0)
+Imports:
+    htmlwidgets,
+    rjson,
+    R6
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Suggests: 
+    testthat

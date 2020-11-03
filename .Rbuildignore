@@ -1,2 +1,9 @@
 ^vitessce\.Rproj$
 ^\.Rproj\.user$
+^package\.json$
+^package-lock\.json$
+^node_modules$
+^webpack\.config\.js$
+^inst/htmlwidgets/lib/.*$
+^inst/htmlwidgets/dist/.*\.map$
+^LICENSE\.md$

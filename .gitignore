@@ -1,3 +1,6 @@
 .Rproj.user
 .DS_Store
 .Rhistory
+man/
+node_modules/
+inst/htmlwidgets/dist/

@@ -5,17 +5,15 @@
 #' a layout of views, and linked view connections. An explicit view config can be
 #' passed to the widget using the \code{config} parameter, or a view config
 #' can be automatically generated using the \code{data} parameter.
-#' or
 #'
 #' @param config A view config as a list.
-#' @param data A dataset as a SingleCellExperiment or Seurat object.
 #' @param width The width of the widget as a number or CSS string.
 #' @param height The height of the widget as a number or CSS string.
 #'
 #' @import htmlwidgets
 #'
 #' @export
-vitessce <- function(config = NULL, data = NULL, width = NULL, height = NULL, elementId = NULL) {
+vitessce <- function(config = NULL, width = NULL, height = NULL, elementId = NULL) {
 
   # forward options using x
   x = list(
