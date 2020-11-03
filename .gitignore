@@ -1,6 +1,8 @@
 .Rproj.user
 .DS_Store
 .Rhistory
+*.Rcheck/
+*.tar.gz
 man/
 node_modules/
 inst/htmlwidgets/dist/
