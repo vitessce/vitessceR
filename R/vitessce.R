@@ -19,7 +19,7 @@ vitessce <- function(config = NULL, data = NULL, width = NULL, height = NULL, el
 
   # forward options using x
   x = list(
-    config = config,
+    config = config
   )
 
   # create widget
