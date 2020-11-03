@@ -1,7 +1,7 @@
 #' Vitessce Config
 #'
-#' @param name A name for the view config
-#' @param description A description for the view config
+#' @param name A name for the view config.
+#' @param description A description for the view config.
 #'
 #' @import R6
 #'
@@ -35,6 +35,8 @@ vitessceConfigFromList <- function(config) {
 #' Vitessce Config from object
 #'
 #' @param obj An object from which to construct a config. Can be a SingleCellExperiment or Seurat object.
+#' @param name A name for the view config.
+#' @param description A description for the view config.
 #'
 #' @export
 vitessceConfigFromObject <- function(obj, name = NA, description = NA) {

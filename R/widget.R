@@ -8,6 +8,7 @@
 #' @param config A view config as a `VitessceConfig` object.
 #' @param width The width of the widget as a number or CSS string.
 #' @param height The height of the widget as a number or CSS string.
+#' @param elementId An optional element ID.
 #'
 #' @import htmlwidgets
 #'

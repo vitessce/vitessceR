@@ -1,5 +1,6 @@
 ^vitessce\.Rproj$
 ^\.Rproj\.user$
+^\.travis\.yml$
 ^package\.json$
 ^package-lock\.json$
 ^node_modules$
