@@ -16,8 +16,9 @@ remotes::install_github("keller-mark/vitessce-htmlwidgets")
 
 ```r
 library(vitessce)
-vic <- vitessceConfig()
-vitessceWidget"vc)```
+vc <- vitessceConfig()
+vitessceWidget(vc)
+```
 
 ## Development
 
@@ -47,4 +48,4 @@ devtools::test()
 - [r leaflet](https://github.com/rstudio/leaflet)
 - [R6](https://r6.r-lib.org/index.html)
 - [R packages](https://r-pkgs.org/)
-- []roxygen2 syntax](https://cran.r-project.org/web/packages/roxygen2/vignettes/rd-formatting.html)
+- [roxygen2 syntax](https://cran.r-project.org/web/packages/roxygen2/vignettes/rd-formatting.html)
