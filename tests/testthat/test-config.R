@@ -112,6 +112,49 @@ test_that("VitessceConfigDataset add_file twice", {
   ))
 })
 
+test_that("VitessceConfigDataset add_object", {
+  vc <- VitessceConfig$new("My config")
+  ds <- vc$add_dataset("My dataset")
+  ds$add_object("Test")
+
+  on_obj <- function(obj, dataset_uid, obj_i) {
+    retval <- list(
+      list(
+        url = "http://localhost:8000/cells",
+        type = "cells",
+        fileType = "cells.json"
+      )
+    )
+  }
+
+  vc_list <- vc$to_list(on_obj)
+  expect_equal(vc_list, list(
+    version = "1.0.0",
+    name = "My config",
+    description = "",
+    datasets = list(
+      list(
+        uid = "A",
+        name = "My dataset",
+        files = list(
+          list(
+            url = "http://localhost:8000/cells",
+            type = "cells",
+            fileType = "cells.json"
+          )
+        )
+      )
+    ),
+    coordinationSpace = list(
+      dataset = list(
+        A = "A"
+      )
+    ),
+    layout = list(),
+    initStrategy = "auto"
+  ))
+})
+
 test_that("VitessceConfig add_view", {
   vc <- VitessceConfig$new("My config")
   ds <- vc$add_dataset("My dataset")

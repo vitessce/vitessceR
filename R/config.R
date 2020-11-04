@@ -140,8 +140,13 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
           }
         }
 
+        for(obj_file in self$dataset$files) {
+          f_list <- obj_file$to_list()
+          obj_file_defs <- append(obj_file_defs, list(f_list))
+        }
+
         retval <- self$dataset
-        retval$files <- c(self$dataset$files, obj_file_defs)
+        retval$files <- obj_file_defs
         retval
     }
   )
