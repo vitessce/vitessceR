@@ -6,24 +6,29 @@
 #' passed to the widget using the \code{config} parameter.
 #'
 #' @param config A view config as a `VitessceConfig` object.
+#' @param theme The theme of the widget, either "dark" or "light".
 #' @param width The width of the widget as a number or CSS string.
 #' @param height The height of the widget as a number or CSS string.
 #' @param elementId An optional element ID.
 #'
 #' @import htmlwidgets
+#' @import rjson
 #'
 #' @export
-vitessceWidget <- function(config = NULL, width = NULL, height = NULL, elementId = NULL) {
+vitessceWidget <- function(config = NULL, theme = "dark", width = NULL, height = NULL, elementId = NULL) {
+
+  config_list = config$to_list()
 
   # forward options using x
-  x = list(
-    config = config
+  params = list(
+    config = config_list,
+    theme = theme
   )
 
   # create widget
   htmlwidgets::createWidget(
     name = 'vitessce',
-    x,
+    params,
     width = width,
     height = height,
     package = 'vitessce',

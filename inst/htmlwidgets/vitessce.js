@@ -1,28 +1,16 @@
 HTMLWidgets.widget({
-
   name: 'vitessce',
-
   type: 'output',
-
   factory: function(el, width, height) {
-
     // TODO: define shared variables for this instance
 
     return {
-
       renderValue: function(x) {
-
-        // TODO: code to render the widget, e.g.
-        el.innerText = x.message;
-
+        renderVitessce(el, x.config, width, height, x.theme);
       },
-
       resize: function(width, height) {
-
         // TODO: code to re-render the widget with a new size
-
       }
-
     };
   }
 });
