@@ -120,9 +120,11 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
         if(length(private$objs) > 0) {
           for(i in length(private$objs)) {
             obj <- private$objs[[i]]
-            if(!is.na(onObj)) {
+            if(is.function(on_obj)) {
               new_obj_file_defs <- on_obj(obj, private$dataset$uid, i)
-              obj_file_defs <- append(obj_file_defs, new_obj_file_defs)
+              for(new_obj_file_def in new_obj_file_defs) {
+                obj_file_defs <- append(obj_file_defs, list(new_obj_file_def))
+              }
             }
           }
         }
@@ -220,7 +222,6 @@ VitessceConfigView <- R6::R6Class("VitessceConfigView",
 
 #' R6 Class representing a Vitessce view config.
 #' @rdname R6VitessceConfig
-#' @export
 VitessceConfig <- R6::R6Class("VitessceConfig",
   private = list(
     config = NULL

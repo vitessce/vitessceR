@@ -7,7 +7,8 @@
 #'
 #' @export
 vitessceConfig <- function(name = "", description = "") {
-  return;
+  vc <- VitessceConfig$new(name, description)
+  vc
 }
 
 #' Vitessce Config from list

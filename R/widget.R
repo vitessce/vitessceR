@@ -9,17 +9,22 @@
 #' @param theme The theme of the widget, either "dark" or "light".
 #' @param width The width of the widget as a number or CSS string.
 #' @param height The height of the widget as a number or CSS string.
+#' @param port The port for the local web server (which serves local dataset objects to the widget).
 #' @param elementId An optional element ID.
 #'
 #' @import htmlwidgets
 #' @import rjson
+#' @import plumber
 #'
 #' @export
-vitessceWidget <- function(config = NULL, theme = "dark", width = NULL, height = NULL, elementId = NULL) {
+vitessceWidget <- function(config = NULL, theme = "dark", width = NULL, height = NULL, port = 8000, elementId = NULL) {
 
-  config_list = config$to_list()
+  server <- VitessceConfigServer$new(port)
+  on_obj <- server$on_obj
 
-  # forward options using x
+  config_list = config$to_list(on_obj)
+
+  # forward widget options to javascript
   params = list(
     config = config_list,
     theme = theme
@@ -34,6 +39,8 @@ vitessceWidget <- function(config = NULL, theme = "dark", width = NULL, height =
     package = 'vitessce',
     elementId = elementId
   )
+  # run the web server
+  server$run()
 }
 
 #' Shiny bindings for vitessce
