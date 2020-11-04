@@ -1,3 +1,5 @@
 language: r
 sudo: false
 cache: packages
+before_script:
+- R -e 'devtools::document()'
