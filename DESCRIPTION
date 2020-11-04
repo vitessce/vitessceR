@@ -12,7 +12,8 @@ Imports:
     htmlwidgets,
     rjson,
     R6,
-    plumber
+    plumber,
+    future
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

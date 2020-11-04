@@ -8,6 +8,14 @@ R6 Class representing a local web server to serve dataset objects.
 
 R6 Class representing a local web server to serve dataset objects.
 }
+\keyword{internal}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{num_obj}}{The number of times the on_obj callback has been called.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{

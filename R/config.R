@@ -1,5 +1,6 @@
 #' Get next scope name
 #'
+#' @keywords internal
 #' @param prev_scopes A vector of previous scope names.
 #' @return The new scope name which does not conflict with any previous scope name.
 get_next_scope <- function(prev_scopes) {
@@ -41,7 +42,12 @@ get_next_scope <- function(prev_scopes) {
 }
 
 
-#' R6 Class representing a file in a dataset in a Vitessce view config.
+#' File in a dataset in a VitessceConfig
+#' @title VitessceConfigDatasetFile Class
+#' @docType class
+#' @description
+#' Class representing a file in a dataset in a Vitessce view config.
+#'
 #' @rdname R6VitessceConfigDatasetFile
 VitessceConfigDatasetFile <- R6::R6Class("VitessceConfigDatasetFile",
   private = list(
@@ -70,7 +76,12 @@ VitessceConfigDatasetFile <- R6::R6Class("VitessceConfigDatasetFile",
   )
 )
 
-#' R6 Class representing a dataset in a Vitessce view config.
+#' Dataset in a VitessceConfig
+#' @title VitessceConfigDataset Class
+#' @docType class
+#' @description
+#' Class representing a dataset in a Vitessce view config.
+#'
 #' @rdname R6VitessceConfigDataset
 VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
   private = list(
@@ -130,21 +141,18 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
         }
 
         retval <- self$dataset
-        retval_files <- list()
-        for(f in self$dataset$files) {
-          file_list <- f$to_list()
-          retval_files <- append(retval_files, list(file_list))
-        }
-        for(file_list in obj_file_defs) {
-          retval_files <- append(retval_files, list(file_list))
-        }
-        retval$files <- retval_files
+        retval$files <- c(self$dataset$files, obj_file_defs)
         retval
     }
   )
 )
 
-#' R6 Class representing a coordination scope in a Vitessce view config.
+#' Coordination scope in a VitessceConfig
+#' @title VitessceConfigCoordinationScope Class
+#' @docType class
+#' @description
+#' Class representing a coordination scope in a Vitessce view config.
+#'
 #' @rdname R6VitessceConfigCoordinationScope
 VitessceConfigCoordinationScope <- R6::R6Class("VitessceConfigCoordinationScope",
   public = list(
@@ -175,7 +183,12 @@ VitessceConfigCoordinationScope <- R6::R6Class("VitessceConfigCoordinationScope"
   )
 )
 
-#' R6 Class representing a view in a Vitessce view config.
+#' View in a VitessceConfig
+#' @title VitessceConfigView Class
+#' @docType class
+#' @description
+#' Class representing a view in a Vitessce view config.
+#'
 #' @rdname R6VitessceConfigView
 VitessceConfigView <- R6::R6Class("VitessceConfigView",
   private = list(
@@ -220,8 +233,14 @@ VitessceConfigView <- R6::R6Class("VitessceConfigView",
   )
 )
 
-#' R6 Class representing a Vitessce view config.
+#' VitessceConfig
+#' @title VitessceConfig Class
+#' @docType class
+#' @description
+#' Class representing a Vitessce view config.
+#'
 #' @rdname R6VitessceConfig
+#' @export
 VitessceConfig <- R6::R6Class("VitessceConfig",
   private = list(
     config = NULL

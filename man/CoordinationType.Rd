@@ -3,7 +3,7 @@
 \docType{data}
 \name{CoordinationType}
 \alias{CoordinationType}
-\title{Coordination Type}
+\title{Enumeration of Coordination Type values}
 \format{
 An object of class \code{list} of length 32.
 }
@@ -14,5 +14,11 @@ CoordinationType
 The \code{CoordinationType} list contains an enumeration of
 valid string constant values representing coordination types
 in the coordination space.
+\itemize{
+\item \code{DATASET}: The dataset to be used for a view.
+\item \code{EMBEDDING_TYPE}: The type of embedding to be used in the embedding scatterplot view, for example "UMAP" or "t-SNE".
+\item \code{EMBEDDING_ZOOM}: The zoom level of an embedding scatterplot view.
+\item \code{EMBEDDING_ROTATION}: The rotation of an embedding scatterplot view.
+}
 }
 \keyword{datasets}

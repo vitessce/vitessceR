@@ -3,7 +3,7 @@
 \docType{data}
 \name{FileType}
 \alias{FileType}
-\title{File Type}
+\title{Enumeration of File Type values}
 \format{
 An object of class \code{list} of length 6.
 }

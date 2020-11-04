@@ -15,3 +15,4 @@ The new scope name which does not conflict with any previous scope name.
 \description{
 Get next scope name
 }
+\keyword{internal}

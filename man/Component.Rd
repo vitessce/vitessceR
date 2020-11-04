@@ -3,7 +3,7 @@
 \docType{data}
 \name{Component}
 \alias{Component}
-\title{Component}
+\title{Enumeration of Component values}
 \format{
 An object of class \code{list} of length 9.
 }

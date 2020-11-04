@@ -8,8 +8,8 @@ R htmlwidget facilitating interactive visualization of spatial single-cell data 
 ## Installation
 
 ```r
-install.packages("remotes")
-remotes::install_github("keller-mark/vitessce-htmlwidgets")
+install.packages("devtools")
+devtools::install_github("keller-mark/vitessce-htmlwidgets")
 ```
 
 ## Usage
@@ -31,7 +31,6 @@ npm run build
 setwd("path/to/vitessce-htmlwidget")
 install.packages("htmlwidgets")
 install.packages("devtools")
-devtools::document()
 devtools::install()
 devtools::load_all()
 ```
@@ -43,6 +42,15 @@ devtools::check()
 devtools::test()
 ```
 
+## Documentation
+
+```r
+install.packages("devtools")
+install.packages("pkgdown")
+devtools::document()
+pkgdown::build_site()
+```
+
 ## Resources
 
 - [htmlwidgets: creating a widget](http://www.htmlwidgets.org/develop_intro.html)
@@ -52,3 +60,4 @@ devtools::test()
 - [R6](https://r6.r-lib.org/index.html)
 - [R6 roxygen2 syntax](https://www.tidyverse.org/blog/2019/11/roxygen2-7-0-0/#r6-documentation)
 - [plumber: programmatic usage](https://www.rplumber.io/articles/programmatic-usage.html)
+- [pkgdown](https://pkgdown.r-lib.org/)

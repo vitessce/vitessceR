@@ -1,8 +1,14 @@
-#' Coordination Type
+#' Enumeration of Coordination Type values
 #'
 #' The \code{CoordinationType} list contains an enumeration of
 #' valid string constant values representing coordination types
 #' in the coordination space.
+#' \itemize{
+#'   \item `DATASET`: The dataset to be used for a view.
+#'   \item `EMBEDDING_TYPE`: The type of embedding to be used in the embedding scatterplot view, for example "UMAP" or "t-SNE".
+#'   \item `EMBEDDING_ZOOM`: The zoom level of an embedding scatterplot view.
+#'   \item `EMBEDDING_ROTATION`: The rotation of an embedding scatterplot view.
+#' }
 #'
 #' @export
 CoordinationType <- list(
@@ -40,7 +46,7 @@ CoordinationType <- list(
   ADDITIONAL_CELL_SETS = "additionalCellSets"
 )
 
-#' Data Type
+#' Enumeration of Data Type values
 #'
 #' The \code{DataType} list contains an enumeration of
 #' valid string constant values representing data types
@@ -56,7 +62,7 @@ DataType <- list(
   RASTER = "raster"
 )
 
-#' File Type
+#' Enumeration of File Type values
 #'
 #' The \code{FileType} list contains an enumeration of
 #' valid string constant values representing file types
@@ -72,7 +78,7 @@ FileType <- list(
   CELL_SETS_JSON = "cell-sets.json"
 )
 
-#' Component
+#' Enumeration of Component values
 #'
 #' The \code{Component} list contains an enumeration of
 #' valid string constant values representing components.

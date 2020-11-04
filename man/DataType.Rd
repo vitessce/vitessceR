@@ -3,7 +3,7 @@
 \docType{data}
 \name{DataType}
 \alias{DataType}
-\title{Data Type}
+\title{Enumeration of Data Type values}
 \format{
 An object of class \code{list} of length 6.
 }

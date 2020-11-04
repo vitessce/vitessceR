@@ -8,3 +8,6 @@
 ^inst/htmlwidgets/lib/.*$
 ^inst/htmlwidgets/dist/.*\.map$
 ^LICENSE\.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
