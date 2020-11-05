@@ -15,6 +15,7 @@ View in a VitessceConfig
 \itemize{
 \item \href{#method-new}{\code{VitessceConfigView$new()}}
 \item \href{#method-use_coordination}{\code{VitessceConfigView$use_coordination()}}
+\item \href{#method-set_xywh}{\code{VitessceConfigView$set_xywh()}}
 \item \href{#method-to_list}{\code{VitessceConfigView$to_list()}}
 \item \href{#method-clone}{\code{VitessceConfigView$clone()}}
 }
@@ -67,6 +68,29 @@ Link this view to existing coordination scope(s).
 }
 \subsection{Returns}{
 Invisible self, to allow chaining.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-set_xywh"></a>}}
+\if{latex}{\out{\hypertarget{method-set_xywh}{}}}
+\subsection{Method \code{set_xywh()}}{
+Set the dimensions of the view.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigView$set_xywh(x, y, w, h)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{x}}{The x-coordinate of the view in the layout.}
+
+\item{\code{y}}{The y-coordinate of the view in the layout.}
+
+\item{\code{w}}{The width of the view in the layout.}
+
+\item{\code{h}}{The height of the view in the layout.}
+}
+\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}

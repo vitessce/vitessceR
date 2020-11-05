@@ -9,6 +9,9 @@ vitessce_config_from_list(config)
 \arguments{
 \item{config}{A list containing a valid config.}
 }
+\value{
+A \code{VitessceConfig} object reflecting the list-based configuration values.
+}
 \description{
 A helper function to construct a new \code{VitessceConfig} object based on an existing config in a list format.
 }

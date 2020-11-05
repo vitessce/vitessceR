@@ -13,6 +13,9 @@ vitessce_config_from_object(obj, name = NA, description = NA)
 
 \item{description}{A description for the view config.}
 }
+\value{
+A \code{VitessceConfig} object containing the object as a member of the datasets list, with some automatically-configured views.
+}
 \description{
 A helper function to construct a new \code{VitessceConfig} object based on an object containing single-cell or imaging data.
 }

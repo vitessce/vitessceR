@@ -205,7 +205,7 @@ spatial$use_coordination(c_scopes)
 \subsection{Method \code{layout()}}{
 Define the layout of views.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$layout()}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$layout(view_concat)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

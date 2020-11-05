@@ -2,11 +2,11 @@
 % Please edit documentation in R/server.R
 \name{VitessceConfigServer}
 \alias{VitessceConfigServer}
-\title{R6 Class representing a local web server to serve dataset objects.}
+\title{Class representing a local web server to serve dataset objects.}
 \description{
-R6 Class representing a local web server to serve dataset objects.
+Class representing a local web server to serve dataset objects.
 
-R6 Class representing a local web server to serve dataset objects.
+Class representing a local web server to serve dataset objects.
 }
 \keyword{internal}
 \section{Public fields}{

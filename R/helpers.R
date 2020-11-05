@@ -4,6 +4,7 @@
 #'
 #' @param name A name for the view config.
 #' @param description A description for the view config.
+#' @return A new `VitessceConfig` object.
 #'
 #' @import R6
 #'
@@ -23,6 +24,7 @@ vitessce_config <- function(name = "", description = "") {
 #' A helper function to construct a new `VitessceConfig` object based on an existing config in a list format.
 #'
 #' @param config A list containing a valid config.
+#' @return A `VitessceConfig` object reflecting the list-based configuration values.
 #'
 #' @export
 vitessce_config_from_list <- function(config) {
@@ -49,6 +51,7 @@ vitessce_config_from_list <- function(config) {
 #' @param obj An object from which to construct a config. Can be a SingleCellExperiment or Seurat object.
 #' @param name A name for the view config.
 #' @param description A description for the view config.
+#' @return A `VitessceConfig` object containing the object as a member of the datasets list, with some automatically-configured views.
 #'
 #' @export
 vitessce_config_from_object <- function(obj, name = NA, description = NA) {
@@ -58,3 +61,30 @@ vitessce_config_from_object <- function(obj, name = NA, description = NA) {
   # TODO: infer views and coordinations
   vc
 }
+
+#' Horizontally concatenate views
+#'
+#' A helper function to construct a new `VitessceConfigViewHConcat` object based on multiple views.
+#'
+#' @param ... A variable number of `VitessceConfigView`, `VitessceConfigViewHConcat`, or `VitessceConfigViewVConcat` objects.
+#' @return A `VitessceConfigViewHConcat` object.
+#'
+#' @export
+hconcat <- function(...) {
+  vcvhc <- VitessceConfigViewHConcat$new(list(...))
+  vcvhc
+}
+
+#' Vertically concatenate views
+#'
+#' A helper function to construct a new `VitessceConfigViewVConcat` object based on multiple views.
+#'
+#' @param ... A variable number of `VitessceConfigView`, `VitessceConfigViewHConcat`, or `VitessceConfigViewVConcat` objects.
+#' @return A `VitessceConfigViewVConcat` object.
+#'
+#' @export
+vconcat <- function(...) {
+  vcvvc <- VitessceConfigViewVConcat$new(list(...))
+  vcvvc
+}
+

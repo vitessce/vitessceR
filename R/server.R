@@ -1,4 +1,4 @@
-#' R6 Class representing a local web server to serve dataset objects.
+#' Class representing a local web server to serve dataset objects.
 #' @keywords internal
 #' @rdname R6VitessceConfigServer
 VitessceConfigServer <- R6::R6Class("VitessceConfigServer",

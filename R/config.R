@@ -188,6 +188,48 @@ VitessceConfigCoordinationScope <- R6::R6Class("VitessceConfigCoordinationScope"
   )
 )
 
+#' Horizontal view concatenation in a VitessceConfig
+#' @title VitessceConfigViewHConcat Class
+#' @docType class
+#' @description
+#' Class representing a horizontal view concatenation in a Vitessce view config.
+#'
+#' @rdname VitessceConfigViewHConcat
+VitessceConfigViewHConcat <- R6::R6Class("VitessceConfigViewHConcat",
+  public = list(
+    #' @field views The views to concatenate.
+    views = NULL,
+    #' @description
+    #' Create a new view concat object.
+    #' @param views A list of views.
+    #' @return A new `VitessceConfigViewHConcat` object.
+    initialize = function(views) {
+      self$views <- views
+    }
+  )
+)
+
+#' Vertical view concatenation in a VitessceConfig
+#' @title VitessceConfigViewVConcat Class
+#' @docType class
+#' @description
+#' Class representing a vertical view concatenation in a Vitessce view config.
+#'
+#' @rdname VitessceConfigViewVConcat
+VitessceConfigViewVConcat <- R6::R6Class("VitessceConfigViewVConcat",
+  public = list(
+    #' @field views The views to concatenate.
+    views = NULL,
+    #' @description
+    #' Create a new view concat object.
+    #' @param views A list of views.
+    #' @return A new `VitessceConfigViewVConcat` object.
+    initialize = function(views) {
+      self$views <- views
+    }
+  )
+)
+
 #' View in a VitessceConfig
 #' @title VitessceConfigView Class
 #' @docType class
@@ -227,6 +269,19 @@ VitessceConfigView <- R6::R6Class("VitessceConfigView",
       for(c_scope in c_scopes) {
         private$view$coordinationScopes[[c_scope$c_type]] = c_scope$c_scope
       }
+      invisible(self)
+    },
+    #' @description
+    #' Set the dimensions of the view.
+    #' @param x The x-coordinate of the view in the layout.
+    #' @param y The y-coordinate of the view in the layout.
+    #' @param w The width of the view in the layout.
+    #' @param h The height of the view in the layout.
+    set_xywh = function(x, y, w, h) {
+      private$view$x <- x
+      private$view$y <- y
+      private$view$w <- w
+      private$view$h <- h
       invisible(self)
     },
     #' @description
@@ -361,8 +416,47 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' ds <- vc$add_dataset("My dataset")
     #' spatial <- vc$add_view(ds, "spatial")
     #' scatterplot <- vc$add_view(ds, "scatterplot")
-    layout = function() {
+    layout = function(view_concat) {
       # TODO
+
+      layout_aux <- function(obj, x_min, x_max, y_min, y_max) {
+        w <- x_max - x_min
+        h <- y_max - y_min
+        if(class(obj)[[1]] == "VitessceConfigView") {
+          obj$set_xywh(x_min, y_min, w, h)
+        } else if(class(obj)[[1]] == "VitessceConfigViewHConcat") {
+          views <- obj$views
+          num_views <- length(views)
+          for(i in 1:num_views) {
+            layout_aux(
+              views[[i]],
+              x_min+(w/num_views)*i,
+              x_min+(w/num_views)*(i+1),
+              y_min,
+              y_max
+            )
+          }
+        } else if(class(obj)[[1]] == "VitessceConfigViewVConcat") {
+          views <- obj$views
+          num_views <- length(views)
+          for(i in 1:num_views) {
+            layout_aux(
+              views[[i]],
+              x_min,
+              x_max,
+              y_min+(h/num_views)*i,
+              y_min+(h/num_views)*(i+1)
+            )
+          }
+        }
+      }
+
+      # Recursively set the values (x,y,w,h) for each view.
+      layout_aux(view_concat, 0, 12, 0, 12)
+
+      # TODO: decide how to handle views that were omitted from the `view_concat` parameter
+      # TODO: decide how to handle .add_view() being called after .layout() has been called
+
       invisible(self)
     },
     #' @description

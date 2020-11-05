@@ -11,6 +11,9 @@ vitessce_config(name = "", description = "")
 
 \item{description}{A description for the view config.}
 }
+\value{
+A new \code{VitessceConfig} object.
+}
 \description{
 A helper function to construct a new \code{VitessceConfig} object.
 }
