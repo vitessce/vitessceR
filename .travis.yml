@@ -5,3 +5,11 @@ addons:
   apt:
     packages:
       - libsodium-dev
+before_deploy:
+  - R -e 'pkgdown::build_site()'
+  - docs/.nojekyll
+deploy:
+  - provider: pages
+    skip-cleanup: true
+    github-token: $github_token
+    local-dir: docs
