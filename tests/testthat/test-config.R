@@ -260,3 +260,56 @@ test_that("VitessceConfig add_coordination", {
     initStrategy = "auto"
   ))
 })
+
+test_that("VitessceConfig layout", {
+  vc <- VitessceConfig$new("My config")
+  ds <- vc$add_dataset("My dataset")
+  v1 <- vc$add_view(ds, "spatial")
+  v2 <- vc$add_view(ds, "description")
+  v3 <- vc$add_view(ds, "layerController")
+
+  vc$layout(hconcat(v1, vconcat(v2, v3)))
+
+  vc_list <- vc$to_list()
+  expect_equal(vc_list, list(
+    version = "1.0.0",
+    name = "My config",
+    description = "",
+    datasets = list(
+      list(
+        uid = "A",
+        name = "My dataset",
+        files = list()
+      )
+    ),
+    coordinationSpace = list(
+      dataset = list(
+        A = "A"
+      )
+    ),
+    layout = list(
+      list(
+        component = "spatial",
+        coordinationScopes = list(
+          dataset = "A"
+        ),
+        x = 0, y = 0, w = 6, h = 12
+      ),
+      list(
+        component = "description",
+        coordinationScopes = list(
+          dataset = "A"
+        ),
+        x = 6, y = 0, w = 6, h = 6
+      ),
+      list(
+        component = "layerController",
+        coordinationScopes = list(
+          dataset = "A"
+        ),
+        x = 6, y = 6, w = 6, h = 6
+      )
+    ),
+    initStrategy = "auto"
+  ))
+})

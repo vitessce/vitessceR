@@ -132,7 +132,7 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
           for(i in length(private$objs)) {
             obj <- private$objs[[i]]
             if(is.function(on_obj)) {
-              new_obj_file_defs <- on_obj(obj, private$dataset$uid, i)
+              new_obj_file_defs <- on_obj(obj, self$dataset$uid, i)
               for(new_obj_file_def in new_obj_file_defs) {
                 obj_file_defs <- append(obj_file_defs, list(new_obj_file_def))
               }
@@ -317,7 +317,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
         name = ifelse(is.na(name), "", name),
         description = ifelse(is.na(description), "", description),
         datasets = list(),
-        coordinationSpace = list(),
+        coordinationSpace = obj_list(),
         layout = list(),
         initStrategy = "auto"
       )
@@ -430,8 +430,8 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
           for(i in 1:num_views) {
             layout_aux(
               views[[i]],
+              x_min+(w/num_views)*(i-1),
               x_min+(w/num_views)*i,
-              x_min+(w/num_views)*(i+1),
               y_min,
               y_max
             )
@@ -444,8 +444,8 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
               views[[i]],
               x_min,
               x_max,
-              y_min+(h/num_views)*i,
-              y_min+(h/num_views)*(i+1)
+              y_min+(h/num_views)*(i-1),
+              y_min+(h/num_views)*i
             )
           }
         }
@@ -477,9 +477,9 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
       }
       retval$datasets <- retval_datasets
 
-      retval_coordination_space <- list()
+      retval_coordination_space <- obj_list()
       for(c_type in names(private$config$coordinationSpace)) {
-        retval_coordination_space[[c_type]] <- list()
+        retval_coordination_space[[c_type]] <- obj_list()
         c_scopes <- private$config$coordinationSpace[[c_type]]
         for(c_scope_name in names(c_scopes)) {
           c_scope <- c_scopes[[c_scope_name]]

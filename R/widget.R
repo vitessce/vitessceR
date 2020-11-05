@@ -30,7 +30,7 @@ vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL,
   # run the web server if necessary
   if(server$num_obj > 0) {
     # run in a background process
-    future::plan(future::multiprocess)
+    future::plan(future::multisession)
     future::future(server$run())
   }
 
