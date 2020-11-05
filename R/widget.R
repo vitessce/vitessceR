@@ -12,10 +12,6 @@
 #' @param port The port for the local web server (which serves local dataset objects to the widget). Optional. By default, 8000.
 #' @param element_id An element ID. Optional.
 #'
-#' @import htmlwidgets
-#' @import rjson
-#' @import plumber
-#'
 #' @export
 #'
 #' @examples

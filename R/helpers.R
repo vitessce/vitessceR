@@ -6,8 +6,6 @@
 #' @param description A description for the view config.
 #' @return A new `VitessceConfig` object.
 #'
-#' @import R6
-#'
 #' @export
 #'
 #' @examples
