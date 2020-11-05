@@ -8,6 +8,11 @@ addons:
       - libharfbuzz-dev
       - libfribidi-dev
 
+bioc_packages:
+  - SummarizedExperiment
+  - SingleCellExperiment
+  - SpatialExperiment
+
 before_script:
   - bash download.sh
 before_deploy:
@@ -18,3 +23,5 @@ deploy:
     skip-cleanup: true
     github-token: $github_token
     local-dir: docs
+
+warnings_are_errors: false
