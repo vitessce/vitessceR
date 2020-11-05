@@ -8,8 +8,8 @@ addons:
       - libharfbuzz-dev
       - libfribidi-dev
 before_deploy:
-  - Rscript -e 'pkgdown::build_site()'
-  - docs/.nojekyll
+  - Rscript -e 'pkgdown::build_site(new_process = FALSE)'
+  - touch docs/.nojekyll
 deploy:
   - provider: pages
     skip-cleanup: true
