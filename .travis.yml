@@ -5,6 +5,8 @@ addons:
   apt:
     packages:
       - libsodium-dev
+      - libharfbuzz-dev
+      - libfribidi-dev
 before_deploy:
   - Rscript -e 'pkgdown::build_site()'
   - docs/.nojekyll
