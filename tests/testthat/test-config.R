@@ -9,7 +9,7 @@ test_that("VitessceConfig new", {
     name = "My config",
     description = "",
     datasets = list(),
-    coordinationSpace = list(),
+    coordinationSpace = obj_list(),
     layout = list(),
     initStrategy = "auto"
   ))
