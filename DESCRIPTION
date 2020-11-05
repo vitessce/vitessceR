@@ -22,5 +22,6 @@ Suggests:
     testthat,
     pkgdown,
     Seurat,
+    SummarizedExperiment,
     SingleCellExperiment,
     SpatialExperiment
