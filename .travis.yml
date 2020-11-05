@@ -6,7 +6,7 @@ addons:
     packages:
       - libsodium-dev
 before_deploy:
-  - R -e 'pkgdown::build_site()'
+  - Rscript -e 'pkgdown::build_site()'
   - docs/.nojekyll
 deploy:
   - provider: pages
