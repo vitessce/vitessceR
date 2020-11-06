@@ -6,4 +6,4 @@
 node_modules/
 inst/htmlwidgets/dist/
 docs/
-inst/testdata/
+tests/testthat/seurat/

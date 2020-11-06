@@ -13,8 +13,6 @@ bioc_packages:
   - SingleCellExperiment
   - SpatialExperiment
 
-before_script:
-  - bash download.sh
 before_deploy:
   - Rscript -e 'pkgdown::build_site(new_process = FALSE)'
   - touch docs/.nojekyll

@@ -16,9 +16,8 @@ devtools::install_github("keller-mark/vitessce-htmlwidgets")
 
 The simplest way to instantiate a Vitessce widget is to create a view config based on a single-cell dataset object (from which data types and visualization types can be inferred automatically) and pass the view config instance as a parameter to the widget function:
 
-```py
+```r
 library(vitessce)
-
 vc <- vitessce_config_from_object(my_seurat_object)
 vitessce_widget(vc)
 ```
