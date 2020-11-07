@@ -7,7 +7,6 @@ addons:
       - libsodium-dev
       - libharfbuzz-dev
       - libfribidi-dev
-
 bioc_packages:
   - SummarizedExperiment
   - SingleCellExperiment
