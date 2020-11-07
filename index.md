@@ -9,7 +9,7 @@ The `vitessce` R package has two main parts:
 
 ```r
 install.packages("devtools")
-devtools::install_github("keller-mark/vitessce-htmlwidgets")
+devtools::install_github("vitessce/vitessce-htmlwidgets")
 ```
 
 ## Simplest Widget Use Case
