@@ -9,15 +9,15 @@ R htmlwidget facilitating interactive visualization of spatial single-cell data 
 
 ```r
 install.packages("devtools")
-devtools::install_github("keller-mark/vitessce-htmlwidgets")
+devtools::install_github("vitessce/vitessce-htmlwidgets")
 ```
 
 ## Usage
 
 ```r
 library(vitessce)
-vc <- vitessceConfig()
-vitessceWidget(vc)
+vc <- vitessce_config()
+vitessce_widget(vc)
 ```
 
 ## Development
