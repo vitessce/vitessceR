@@ -8,7 +8,7 @@ R htmlwidget facilitating interactive visualization of spatial single-cell data 
 
 ```r
 install.packages("devtools")
-devtools::install_github("vitessce/vitessce-htmlwidgets")
+devtools::install_github("vitessce/vitessce-htmlwidget")
 ```
 
 ## Usage
