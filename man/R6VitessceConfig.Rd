@@ -94,13 +94,15 @@ A new \code{VitessceConfig} object.
 \subsection{Method \code{add_dataset()}}{
 Add a dataset to the config.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$add_dataset(name)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$add_dataset(name, uid = NA)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{name}}{A name for the dataset.}
+
+\item{\code{uid}}{A unique ID for the dataset. Optional. Created automatically if not provided.}
 }
 \if{html}{\out{</div>}}
 }

@@ -16,7 +16,7 @@ devtools::install_github("vitessce/vitessce-htmlwidgets")
 
 ```r
 library(vitessce)
-vc <- vitessce_config()
+vc <- VitessceConfig$new()
 vitessce_widget(vc)
 ```
 

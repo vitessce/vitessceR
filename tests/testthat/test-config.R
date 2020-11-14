@@ -313,3 +313,55 @@ test_that("VitessceConfig layout", {
     initStrategy = "auto"
   ))
 })
+
+test_that("VitessceConfig from list", {
+  vc_list_orig <- list(
+    version = "1.0.0",
+    name = "My config",
+    description = "",
+    datasets = list(
+      list(
+        uid = "A",
+        name = "My dataset",
+        files = list()
+      )
+    ),
+    coordinationSpace = list(
+      dataset = list(
+        A = "A"
+      ),
+      spatialZoom = list(
+        A = 10
+      ),
+      spatialTargetX = list(
+        A = 20
+      )
+    ),
+    layout = list(
+      list(
+        component = "spatial",
+        coordinationScopes = list(
+          dataset = "A",
+          spatialZoom = "A",
+          spatialTargetX = "A"
+        ),
+        x = 0, y = 0, w = 1, h = 1
+      ),
+      list(
+        component = "spatial",
+        coordinationScopes = list(
+          dataset = "A",
+          spatialZoom = "A",
+          spatialTargetX = "A"
+        ),
+        x = 0, y = 0, w = 1, h = 1
+      )
+    ),
+    initStrategy = "auto"
+  )
+
+  vc <- vitessce_config_from_list(vc_list_orig)
+
+  vc_list_loaded <- vc$to_list()
+  expect_equal(vc_list_loaded, vc_list_orig)
+})
