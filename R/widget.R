@@ -15,7 +15,7 @@
 #' @export
 #'
 #' @examples
-#' vc <- vitessce_config("My config")
+#' vc <- VitessceConfig$new("My config")
 #' vitessce_widget(vc)
 vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL, port = 8000, element_id = NULL) {
   server <- VitessceConfigServer$new(port)
