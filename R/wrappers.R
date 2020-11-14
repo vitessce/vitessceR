@@ -4,7 +4,7 @@
 #' @description
 #' Abstract class representing a local dataset object in a Vitessce dataset.
 #'
-#' @rdname R6AbstractWrapper
+#' @rdname AbstractWrapper
 #' @export
 #' @keywords internal
 AbstractWrapper <- R6::R6Class("AbstractWrapper",
@@ -124,7 +124,7 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
 #' @description
 #' Class representing a local Seurat object in a Vitessce dataset.
 #'
-#' @rdname R6SeuratWrapper
+#' @rdname SeuratWrapper
 #' @export
 SeuratWrapper <- R6::R6Class("SeuratWrapper",
   inherit = AbstractWrapper,

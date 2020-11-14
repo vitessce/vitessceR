@@ -1,6 +1,6 @@
 #' Class representing a local web server route: path + callback.
 #' @keywords internal
-#' @rdname R6VitessceConfigServerRoute
+#' @rdname VitessceConfigServerRoute
 VitessceConfigServerRoute <- R6::R6Class("VitessceConfigServerRoute",
   public = list(
     #' @field path The path on which the web server should respond to requests using this callback.
@@ -21,7 +21,7 @@ VitessceConfigServerRoute <- R6::R6Class("VitessceConfigServerRoute",
 
 #' Class representing a local web server to serve dataset objects.
 #' @keywords internal
-#' @rdname R6VitessceConfigServer
+#' @rdname VitessceConfigServer
 VitessceConfigServer <- R6::R6Class("VitessceConfigServer",
   private = list(
     server = NULL,
