@@ -48,7 +48,7 @@ get_next_scope <- function(prev_scopes) {
 #' @description
 #' Class representing a file in a dataset in a Vitessce view config.
 #'
-#' @rdname R6VitessceConfigDatasetFile
+#' @rdname VitessceConfigDatasetFile
 VitessceConfigDatasetFile <- R6::R6Class("VitessceConfigDatasetFile",
   private = list(
     file = NULL
@@ -82,7 +82,7 @@ VitessceConfigDatasetFile <- R6::R6Class("VitessceConfigDatasetFile",
 #' @description
 #' Class representing a dataset in a Vitessce view config.
 #'
-#' @rdname R6VitessceConfigDataset
+#' @rdname VitessceConfigDataset
 VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
   private = list(
     objs = NULL
@@ -158,7 +158,7 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
 #' @description
 #' Class representing a coordination scope in a Vitessce view config.
 #'
-#' @rdname R6VitessceConfigCoordinationScope
+#' @rdname VitessceConfigCoordinationScope
 VitessceConfigCoordinationScope <- R6::R6Class("VitessceConfigCoordinationScope",
   public = list(
     #' @field c_type The coordination type as a string.
@@ -236,7 +236,7 @@ VitessceConfigViewVConcat <- R6::R6Class("VitessceConfigViewVConcat",
 #' @description
 #' Class representing a view in a Vitessce view config.
 #'
-#' @rdname R6VitessceConfigView
+#' @rdname VitessceConfigView
 VitessceConfigView <- R6::R6Class("VitessceConfigView",
   private = list(
     view = NULL
@@ -299,7 +299,7 @@ VitessceConfigView <- R6::R6Class("VitessceConfigView",
 #' @description
 #' Class representing a Vitessce view config.
 #'
-#' @rdname R6VitessceConfig
+#' @rdname VitessceConfig
 #' @export
 VitessceConfig <- R6::R6Class("VitessceConfig",
   public = list(
