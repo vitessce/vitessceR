@@ -4,6 +4,5 @@
 *.Rcheck/
 *.tar.gz
 node_modules/
-inst/htmlwidgets/dist/
 docs/
 tests/testthat/seurat/
