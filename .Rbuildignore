@@ -11,5 +11,6 @@
 ^inst/testdata
 ^LICENSE\.md$
 ^_pkgdown\.yml$
+^vignettes$
 ^docs$
 ^pkgdown$
