@@ -12,6 +12,8 @@ test_that("SeuratWrapper create_cells_list", {
   all.genes <- rownames(pbmc)
   pbmc <- ScaleData(pbmc, features = all.genes)
   pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
+  pbmc <- FindNeighbors(pbmc, dims = 1:10)
+  pbmc <- FindClusters(pbmc, resolution = 0.5)
 
   w <- SeuratWrapper$new(pbmc)
 
@@ -23,4 +25,7 @@ test_that("SeuratWrapper create_cells_list", {
   expect_equal(length(cells_list[['CATTTGTGGGATCT-1']]$mappings$pca), 2)
   expect_equal(cells_list[['CATTTGTGGGATCT-1']]$mappings$pca[[1]], -2.372751, tolerance = 0.1)
   expect_equal(cells_list[['CATTTGTGGGATCT-1']]$mappings$pca[[2]], 7.776640, tolerance = 0.1)
+
+  cell_sets_list <- w$create_cell_sets_list()
+
 })

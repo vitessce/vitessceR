@@ -26,7 +26,9 @@ Seurat object wrapper class
 \itemize{
 \item \href{#method-new}{\code{SeuratWrapper$new()}}
 \item \href{#method-create_cells_list}{\code{SeuratWrapper$create_cells_list()}}
+\item \href{#method-create_cell_sets_list}{\code{SeuratWrapper$create_cell_sets_list()}}
 \item \href{#method-get_cells}{\code{SeuratWrapper$get_cells()}}
+\item \href{#method-get_cell_sets}{\code{SeuratWrapper$get_cell_sets()}}
 \item \href{#method-clone}{\code{SeuratWrapper$clone()}}
 }
 }
@@ -34,7 +36,6 @@ Seurat object wrapper class
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="create_response_json">}\href{../../vitessce/html/AbstractWrapper.html#method-create_response_json}{\code{vitessce::AbstractWrapper$create_response_json()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_cell_sets">}\href{../../vitessce/html/AbstractWrapper.html#method-get_cell_sets}{\code{vitessce::AbstractWrapper$get_cell_sets()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_data">}\href{../../vitessce/html/AbstractWrapper.html#method-get_data}{\code{vitessce::AbstractWrapper$get_data()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_expression_matrix">}\href{../../vitessce/html/AbstractWrapper.html#method-get_expression_matrix}{\code{vitessce::AbstractWrapper$get_expression_matrix()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_molecules">}\href{../../vitessce/html/AbstractWrapper.html#method-get_molecules}{\code{vitessce::AbstractWrapper$get_molecules()}}\out{</span>}
@@ -79,12 +80,49 @@ A list that can be converted to JSON.
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-create_cell_sets_list"></a>}}
+\if{latex}{\out{\hypertarget{method-create_cell_sets_list}{}}}
+\subsection{Method \code{create_cell_sets_list()}}{
+Create a list representing the cluster assignments in the Seurat object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$create_cell_sets_list()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A list that can be converted to JSON.
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_cells"></a>}}
 \if{latex}{\out{\hypertarget{method-get_cells}{}}}
 \subsection{Method \code{get_cells()}}{
 Get the routes and file definitions for the cells data type.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$get_cells(port, dataset_uid, obj_i)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{port}}{The port on which the web server is serving.}
+
+\item{\code{dataset_uid}}{The ID for this dataset.}
+
+\item{\code{obj_i}}{The index of this data object within the dataset.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A list of \code{routes} and \code{file_defs} lists.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_cell_sets"></a>}}
+\if{latex}{\out{\hypertarget{method-get_cell_sets}{}}}
+\subsection{Method \code{get_cell_sets()}}{
+Get the routes and file definitions for the cell sets data type.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$get_cell_sets(port, dataset_uid, obj_i)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
