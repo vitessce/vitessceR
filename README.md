@@ -2,9 +2,6 @@
 
 R htmlwidget facilitating interactive visualization of spatial single-cell data with Vitessce.
 
-🚧 work in progress ⚠️
-
-
 ## Installation
 
 ```r
