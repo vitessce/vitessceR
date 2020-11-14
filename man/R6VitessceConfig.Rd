@@ -54,6 +54,13 @@ vc <- VitessceConfig$new("My config")
 ds <- vc$add_dataset("My dataset")
 vc_list <- vc$to_list()
 }
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{config}}{The internal representation of the view config.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{

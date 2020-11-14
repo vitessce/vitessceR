@@ -360,7 +360,7 @@ test_that("VitessceConfig from list", {
     initStrategy = "auto"
   )
 
-  vc <- vitessce_config_from_list(vc_list_orig)
+  vc <- VitessceConfig$from_list(vc_list_orig)
 
   vc_list_loaded <- vc$to_list()
   expect_equal(vc_list_loaded, vc_list_orig)

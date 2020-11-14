@@ -302,17 +302,16 @@ VitessceConfigView <- R6::R6Class("VitessceConfigView",
 #' @rdname R6VitessceConfig
 #' @export
 VitessceConfig <- R6::R6Class("VitessceConfig",
-  private = list(
-    config = NULL
-  ),
   public = list(
+    #' @field config The internal representation of the view config.
+    config = NULL,
     #' @description
     #' Create a new config object.
     #' @param name A name for the config.
     #' @param description A description for the config.
     #' @return A new `VitessceConfig` object.
     initialize = function(name = NA, description = NA) {
-      private$config <- list(
+      self$config <- list(
         version = "1.0.0",
         name = ifelse(is.na(name), "", name),
         description = ifelse(is.na(description), "", description),
@@ -332,12 +331,12 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' ds <- vc$add_dataset("My dataset")
     add_dataset = function(name, uid = NA) {
       prev_dataset_uids <- c()
-      for(d in private$config$datasets) {
+      for(d in self$config$datasets) {
         prev_dataset_uids <- c(prev_dataset_uids, d$dataset$uid)
       }
       uid <- ifelse(is.na(uid), get_next_scope(prev_dataset_uids), uid)
       new_dataset <- VitessceConfigDataset$new(uid, name)
-      private$config$datasets <- append(private$config$datasets, new_dataset)
+      self$config$datasets <- append(self$config$datasets, new_dataset)
 
       new_scopes <- self$add_coordination(CoordinationType$DATASET)
       new_scopes[[1]]$set_value(uid)
@@ -359,8 +358,8 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' spatial <- vc$add_view(ds, "spatial")
     add_view = function(dataset, component, x = NA, y = NA, w = NA, h = NA, mapping = NA) {
       dataset_scope_name_matches <- c()
-      for(scope_name in names(private$config$coordinationSpace[[CoordinationType$DATASET]])) {
-        dataset_scope <- private$config$coordinationSpace[[CoordinationType$DATASET]][[scope_name]]
+      for(scope_name in names(self$config$coordinationSpace[[CoordinationType$DATASET]])) {
+        dataset_scope <- self$config$coordinationSpace[[CoordinationType$DATASET]][[scope_name]]
         if(dataset_scope$c_value == dataset$dataset$uid) {
           dataset_scope_name_matches <- c(dataset_scope_name_matches, scope_name)
         }
@@ -381,7 +380,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
         new_view$use_coordination(et_scopes)
       }
 
-      private$config$layout <- append(private$config$layout, new_view)
+      self$config$layout <- append(self$config$layout, new_view)
       new_view
     },
     #' @description
@@ -397,14 +396,14 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     add_coordination = function(c_types) {
       result <- list()
       for(c_type in c_types) {
-        c_obj <- private$config$coordinationSpace[[c_type]]
+        c_obj <- self$config$coordinationSpace[[c_type]]
         prev_scopes <- ifelse(is.null(c_obj), character(), names(c_obj))
         c_scope <- get_next_scope(prev_scopes)
         scope <- VitessceConfigCoordinationScope$new(c_type, c_scope)
-        if(!is.element(c_type, names(private$config$coordinationSpace))) {
-          private$config$coordinationSpace[[c_type]] <- list()
+        if(!is.element(c_type, names(self$config$coordinationSpace))) {
+          self$config$coordinationSpace[[c_type]] <- list()
         }
-        private$config$coordinationSpace[[c_type]][[c_scope]] <- scope
+        self$config$coordinationSpace[[c_type]][[c_scope]] <- scope
         result <- append(result, scope)
       }
       result
@@ -469,19 +468,19 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' ds <- vc$add_dataset("My dataset")
     #' vc_list <- vc$to_list()
     to_list = function(on_obj = NA) {
-      retval <- private$config
+      retval <- self$config
 
       retval_datasets <- list()
-      for(d in private$config$datasets) {
+      for(d in self$config$datasets) {
         dataset_list <- d$to_list(on_obj)
         retval_datasets <- append(retval_datasets, list(dataset_list))
       }
       retval$datasets <- retval_datasets
 
       retval_coordination_space <- obj_list()
-      for(c_type in names(private$config$coordinationSpace)) {
+      for(c_type in names(self$config$coordinationSpace)) {
         retval_coordination_space[[c_type]] <- obj_list()
-        c_scopes <- private$config$coordinationSpace[[c_type]]
+        c_scopes <- self$config$coordinationSpace[[c_type]]
         for(c_scope_name in names(c_scopes)) {
           c_scope <- c_scopes[[c_scope_name]]
           retval_coordination_space[[c_type]][[c_scope_name]] <- c_scope$c_value
@@ -490,7 +489,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
       retval$coordinationSpace <- retval_coordination_space
 
       retval_layout <- list()
-      for(v in private$config$layout) {
+      for(v in self$config$layout) {
         view_list <- v$to_list()
         retval_layout <- append(retval_layout, list(view_list))
       }
@@ -502,13 +501,14 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
 )
 
 
-#' Create a new Vitessce Config from a list
+#' @name VitessceConfig$from_list
+#' @title Create a new Vitessce Config from a list
 #'
 #' A helper function to construct a new `VitessceConfig` object based on an existing config in a list format.
 #'
 #' @param config A list containing a valid config.
 #' @return A `VitessceConfig` object reflecting the list-based configuration values.
-vitessce_config_from_list <- function(config) {
+VitessceConfig$from_list <- function(config) {
   vc <- VitessceConfig$new(config$name, config$description)
   for(d in config$datasets) {
     new_dataset <- vc$add_dataset(d$name, uid = d$uid)
@@ -523,7 +523,7 @@ vitessce_config_from_list <- function(config) {
   for(c_type in names(config$coordinationSpace)) {
     if(c_type != CoordinationType$DATASET) {
       c_obj <- config$coordinationSpace[[c_type]]
-      vc$config$coordinationSpace[[c_type]] = obj_list
+      vc$config$coordinationSpace[[c_type]] <- obj_list()
       for(c_scope_name in names(c_obj)) {
         c_scope_value <- c_obj[[c_scope_name]]
         scope <- VitessceConfigCoordinationScope$new(c_type, c_scope_name)
@@ -539,7 +539,8 @@ vitessce_config_from_list <- function(config) {
   vc
 }
 
-#' Create a new Vitessce Config from a data object
+#' @name VitessceConfig$from_object
+#' @title Create a new Vitessce Config from a data object
 #'
 #' A helper function to construct a new `VitessceConfig` object based on an object containing single-cell or imaging data.
 #'
@@ -547,7 +548,7 @@ vitessce_config_from_list <- function(config) {
 #' @param name A name for the view config.
 #' @param description A description for the view config.
 #' @return A `VitessceConfig` object containing the object as a member of the datasets list, with some automatically-configured views.
-vitessce_config_from_object <- function(obj, name = NA, description = NA) {
+VitessceConfig$from_object <- function(obj, name = NA, description = NA) {
   vc <- VitessceConfig$new(name, description)
   ds <- vc$add_dataset("From object")
   ds$add_object(obj)

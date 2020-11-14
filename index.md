@@ -18,7 +18,7 @@ The simplest way to instantiate a Vitessce widget is to create a view config bas
 
 ```r
 library(vitessce)
-vc <- vitessce_config_from_object(my_seurat_object)
+vc <- VitessceConfig$from_object(my_seurat_object)
 vitessce_widget(vc)
 ```
 

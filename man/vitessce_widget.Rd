@@ -33,6 +33,6 @@ a layout of views, and linked view connections. A config object can be
 passed to the widget using the \code{config} parameter.
 }
 \examples{
-vc <- vitessce_config("My config")
+vc <- VitessceConfig$new("My config")
 vitessce_widget(vc)
 }
