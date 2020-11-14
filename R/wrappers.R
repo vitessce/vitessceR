@@ -165,6 +165,36 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
         cells_list
     },
     #' @description
+    #' Create a list representing the cluster assignments in the Seurat object.
+    #' @return A list that can be converted to JSON.
+    #' @keywords internal
+    create_cell_sets_list = function() {
+      obj <- self$obj
+      cells <- Seurat::Idents(obj)
+      cluster_names <- levels(cells)
+
+      cell_sets_list <- list(
+        datatype = jsonlite::unbox("cell"),
+        version = jsonlite::unbox("0.1.2"),
+        tree = list(
+          list(
+            name = jsonlite::unbox("Clusters"),
+            children = list()
+          )
+        )
+      )
+
+      for(cluster_name in cluster_names) {
+        cells_in_cluster <- names(cells[cells == cluster_name])
+        cluster_node <- list(
+          name = jsonlite::unbox(paste("Cluster", cluster_name)),
+          set = cells_in_cluster
+        )
+        cell_sets_list$tree[[1]]$children <- append(cell_sets_list$tree[[1]]$children, list(cluster_node))
+      }
+      cell_sets_list
+    },
+    #' @description
     #' Get the routes and file definitions for the cells data type.
     #' @param port The port on which the web server is serving.
     #' @param dataset_uid The ID for this dataset.
@@ -192,6 +222,35 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
             )
         )
         retval
+    },
+    #' @description
+    #' Get the routes and file definitions for the cell sets data type.
+    #' @param port The port on which the web server is serving.
+    #' @param dataset_uid The ID for this dataset.
+    #' @param obj_i The index of this data object within the dataset.
+    #' @return A list of `routes` and `file_defs` lists.
+    get_cell_sets = function(port, dataset_uid, obj_i) {
+      retval <- list(
+        routes = list(),
+        file_defs = list()
+      )
+
+      cell_sets_list <- self$create_cell_sets_list()
+
+      retval$routes <- list(
+        VitessceConfigServerRoute$new(
+          super$get_route(dataset_uid, obj_i, "cell_sets"),
+          super$create_response_json(cell_sets_list)
+        )
+      )
+      retval$file_defs <- list(
+        list(
+          type = DataType$CELL_SETS,
+          fileType = FileType$CELL_SETS_JSON,
+          url = super$get_url(port, dataset_uid, obj_i, "cell_sets")
+        )
+      )
+      retval
     }
   )
 )
