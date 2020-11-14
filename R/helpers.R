@@ -1,21 +1,16 @@
-#' Create a new Vitessce Config
-#'
-#' A helper function to construct a new `VitessceConfig` object.
-#'
-#' @param name A name for the view config.
-#' @param description A description for the view config.
-#' @return A new `VitessceConfig` object.
-#'
-#' @export
-#'
-#' @examples
-#' vc <- vitessce_config("My config")
-#' # On the returned object, access the methods of the VitessceConfig class.
-#' ds <- vc$add_dataset("My dataset")
-vitessce_config <- function(name = "", description = "") {
-  vc <- VitessceConfig$new(name, description)
-  vc
-}
+
+#' Class representing a Vitessce widget state.
+#' @keywords internal
+#' @rdname R6VitessceWidgetState
+VitessceWidgetState <- R6::R6Class("VitessceWidgetState",
+  public = list(
+   #' @field path The path on which the web server should respond to requests using this callback.
+   config = NULL,
+   set_config = function(new_config) {
+    self$config <- new_config
+   }
+  )
+)
 
 #' Create a new Vitessce Config from a list
 #'

@@ -30,19 +30,35 @@ VitessceConfigServer <- R6::R6Class("VitessceConfigServer",
   public = list(
     #' @field num_obj The number of times the on_obj callback has been called.
     num_obj = NULL,
+    config_env = NULL,
     #' @description
     #' Create a new server wrapper object.
     #' @param port The server port.
     #' @return A new `VitessceConfigServer` object.
     initialize = function(port) {
-      cors <- function(res) {
+      cors <- function(req, res) {
+        # Reference: https://github.com/rstudio/plumber/issues/66#issuecomment-418660334
         res$setHeader("Access-Control-Allow-Origin", "*")
-        plumber::forward()
+        if(req$REQUEST_METHOD == "OPTIONS") {
+          res$setHeader("Access-Control-Allow-Methods", "*")
+          res$setHeader("Access-Control-Allow-Headers", req$HTTP_ACCESS_CONTROL_REQUEST_HEADERS)
+          res$status <- 200
+          return(list())
+        } else {
+          plumber::forward()
+        }
       }
 
-      private$server <- plumber::pr()
+      config_env <- new.env()
+      self$config_env <- config_env
+
+      private$server <- plumber::pr(envir = config_env)
       private$server <- plumber::pr_set_docs(private$server, FALSE)
       private$server <- plumber::pr_filter(private$server, "CORS", cors)
+      private$server <- plumber::pr_post(private$server, "/config", function(req, res) {
+        assign("config", req$body, envir = config_env)
+        list(status = "success", config = config_env$config)
+      }, parsers = c("json"))
       private$port <- port
       self$num_obj <- 0
     },

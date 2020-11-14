@@ -23,21 +23,19 @@ vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL,
 
   config_list = config$to_list(on_obj)
 
-  # run the web server if necessary
-  if(server$num_obj > 0) {
-    # run in a background process
-    future::plan(future::multisession)
-    future::future(server$run())
-  }
+  # run the webs server in a background process
+  future::plan(future::multisession)
+  future::future(server$run())
 
   # forward widget options to javascript
   params = list(
     config = config_list,
-    theme = theme
+    theme = theme,
+    port = port
   )
 
   # create widget
-  htmlwidgets::createWidget(
+  widget <- htmlwidgets::createWidget(
     name = 'vitessce',
     params,
     width = width,
@@ -45,6 +43,8 @@ vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL,
     package = 'vitessce',
     elementId = element_id
   )
+  widget$server <- server
+  widget
 }
 
 #' Shiny bindings for vitessce

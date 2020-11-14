@@ -16,7 +16,7 @@ devtools::install_github("vitessce/vitessce-htmlwidgets")
 
 ```r
 library(vitessce)
-vc <- vitessce_config()
+vc <- VitessceConfig$new()
 vitessce_widget(vc)
 ```
 
@@ -60,5 +60,7 @@ pkgdown::build_site()
 - [R6](https://r6.r-lib.org/index.html)
 - [R6 roxygen2 syntax](https://www.tidyverse.org/blog/2019/11/roxygen2-7-0-0/#r6-documentation)
 - [plumber: programmatic usage](https://www.rplumber.io/articles/programmatic-usage.html)
+- [plumber: environments](https://www.rplumber.io/articles/execution-model.html#environments-1)
+- [R environments](https://adv-r.hadley.nz/environments.html)
 - [pkgdown](https://pkgdown.r-lib.org/)
 - [S4](http://adv-r.had.co.nz/S4.html)
