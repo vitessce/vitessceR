@@ -2,6 +2,8 @@
 
 R htmlwidget facilitating interactive visualization of spatial single-cell data with Vitessce.
 
+  <img src="./img/screenshot.png" width="700" alt="Screenshot of RStudio">
+
 ## Installation
 
 ```r
