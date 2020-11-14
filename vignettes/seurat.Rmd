@@ -1,6 +1,10 @@
 ---
 title: "Usage with Seurat"
 output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Usage with Seurat}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
 ---
 
 The following is a full example of usage of the widget with a Seurat object.
