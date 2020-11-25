@@ -8,7 +8,7 @@ R API and htmlwidget facilitating interactive visualization of spatial single-ce
 
 ```r
 install.packages("devtools")
-devtools::install_github("vitessce/vitessce-htmlwidget")
+devtools::install_github("vitessce/vitessce-r")
 ```
 
 ## Usage
@@ -27,7 +27,7 @@ npm run build
 ```
 
 ```r
-setwd("path/to/vitessce-htmlwidget")
+setwd("path/to/vitessce-r")
 install.packages("htmlwidgets")
 install.packages("devtools")
 devtools::install()
