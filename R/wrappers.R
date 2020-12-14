@@ -254,3 +254,83 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     }
   )
 )
+
+#' Seurat DimReduc object wrapper class
+#' @title SeuratDimReducWrapper Class
+#' @docType class
+#' @description
+#' Class representing a local DimReduc object in a Vitessce dataset.
+#'
+#' @rdname SeuratDimReducWrapper
+#' @export
+SeuratDimReducWrapper <- R6::R6Class("SeuratDimReducWrapper",
+   inherit = AbstractWrapper,
+   public = list(
+     #' @field obj The object to wrap.
+     #' @keywords internal
+     obj = NULL,
+     #' @field mapping A name for the embedding type.
+     #' @keywords internal
+     mapping = NULL,
+     #' @description
+     #' Create a wrapper around a Seurat DimReduc object.
+     #' @param obj The object to wrap.
+     #' @param mapping A name for the embedding type, e.g. "PCA".
+     #' @return A new `SeuratDimReducWrapper` object.
+     initialize = function(obj, mapping) {
+       self$obj <- obj
+       self$mapping <- mapping
+     },
+     #' @description
+     #' Create a list representing the cells in the Seurat object.
+     #' @return A list that can be converted to JSON.
+     #' @keywords internal
+     create_cells_list = function() {
+       obj <- self$obj
+       embedding_name <- self$mapping
+       embedding_matrix <- slot(obj, "cell.embeddings")
+       cell_ids <- rownames(embedding_matrix)
+       cells_list <- obj_list()
+       for(cell_id in cell_ids) {
+         cells_list[[cell_id]] <- list(
+           mappings = obj_list()
+         )
+       }
+
+       for(cell_id in cell_ids) {
+         cells_list[[cell_id]]$mappings[[embedding_name]] <- unname(embedding_matrix[cell_id, 1:2])
+       }
+
+       cells_list
+     },
+     #' @description
+     #' Get the routes and file definitions for the cells data type.
+     #' @param port The port on which the web server is serving.
+     #' @param dataset_uid The ID for this dataset.
+     #' @param obj_i The index of this data object within the dataset.
+     #' @return A list of `routes` and `file_defs` lists.
+     get_cells = function(port, dataset_uid, obj_i) {
+       retval <- list(
+         routes = list(),
+         file_defs = list()
+       )
+
+       cells_list <- self$create_cells_list()
+
+       retval$routes <- list(
+         VitessceConfigServerRoute$new(
+           super$get_route(dataset_uid, obj_i, "cells"),
+           super$create_response_json(cells_list)
+         )
+       )
+       retval$file_defs <- list(
+         list(
+           type = DataType$CELLS,
+           fileType = FileType$CELLS_JSON,
+           url = super$get_url(port, dataset_uid, obj_i, "cells")
+         )
+       )
+       retval
+     }
+   )
+)
