@@ -20,6 +20,8 @@ test_that("VitessceConfig add_dataset", {
   vc$add_dataset("My dataset")
 
   vc_list <- vc$to_list()
+
+
   expect_equal(vc_list, list(
     version = "1.0.0",
     name = "My config",
@@ -33,7 +35,7 @@ test_that("VitessceConfig add_dataset", {
     ),
     coordinationSpace = list(
       dataset = list(
-        A = "A"
+        A = jsonlite::unbox("A")
       )
     ),
     layout = list(),
@@ -66,7 +68,7 @@ test_that("VitessceConfigDataset add_file", {
     ),
     coordinationSpace = list(
       dataset = list(
-        A = "A"
+        A = jsonlite::unbox("A")
       )
     ),
     layout = list(),
@@ -104,7 +106,7 @@ test_that("VitessceConfigDataset add_file twice", {
     ),
     coordinationSpace = list(
       dataset = list(
-        A = "A"
+        A = jsonlite::unbox("A")
       )
     ),
     layout = list(),
@@ -147,7 +149,7 @@ test_that("VitessceConfigDataset add_object", {
     ),
     coordinationSpace = list(
       dataset = list(
-        A = "A"
+        A = jsonlite::unbox("A")
       )
     ),
     layout = list(),
@@ -175,10 +177,10 @@ test_that("VitessceConfig add_view", {
     ),
     coordinationSpace = list(
       dataset = list(
-        A = "A"
+        A = jsonlite::unbox("A")
       ),
       embeddingType = list(
-        A = "UMAP"
+        A = jsonlite::unbox("UMAP")
       )
     ),
     layout = list(
@@ -228,13 +230,13 @@ test_that("VitessceConfig add_coordination", {
     ),
     coordinationSpace = list(
       dataset = list(
-        A = "A"
+        A = jsonlite::unbox("A")
       ),
       spatialZoom = list(
-        A = 10
+        A = jsonlite::unbox(10)
       ),
       spatialTargetX = list(
-        A = 20
+        A = jsonlite::unbox(20)
       )
     ),
     layout = list(
@@ -284,7 +286,7 @@ test_that("VitessceConfig layout", {
     ),
     coordinationSpace = list(
       dataset = list(
-        A = "A"
+        A = jsonlite::unbox("A")
       )
     ),
     layout = list(
@@ -363,5 +365,8 @@ test_that("VitessceConfig from list", {
   vc <- VitessceConfig$from_list(vc_list_orig)
 
   vc_list_loaded <- vc$to_list()
+  vc_list_orig[['coordinationSpace']][['dataset']][['A']] <- jsonlite::unbox("A")
+  vc_list_orig[['coordinationSpace']][['spatialZoom']][['A']] <- jsonlite::unbox(10)
+  vc_list_orig[['coordinationSpace']][['spatialTargetX']][['A']] <- jsonlite::unbox(20)
   expect_equal(vc_list_loaded, vc_list_orig)
 })
