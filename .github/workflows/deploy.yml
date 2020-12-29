@@ -1,0 +1,36 @@
+name: R
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up libraries for Ubuntu
+        run: sudo apt-get install -y libsodium-dev libharfbuzz-dev libfribidi-dev
+      - name: Set up R 4.0
+        uses: r-lib/actions/setup-r@master
+        with:
+          r-version: 4.0
+      - name: Install dependencies
+        run: |
+          install.packages(c("rcmdcheck", "BiocManager"))
+          BiocManager::install(c("SummarizedExperiment", "SingleCellExperiment", "SpatialExperiment"))
+        shell: Rscript {0}
+      - name: Check
+        run: rcmdcheck::rcmdcheck(args = "--no-manual", error_on = "error")
+        shell: Rscript {0}
+      - name: Build docs
+        run: |
+          Rscript -e 'pkgdown::build_site(new_process = FALSE)'
+          touch docs/.nojekyll
+      - name: Deploy docs to gh-pages branch
+        uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          site-directory: docs
