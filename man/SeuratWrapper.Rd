@@ -18,6 +18,15 @@ Seurat object wrapper class
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{obj}}{The object to wrap.}
+
+\item{\code{cell_set_meta_names}}{The keys in the Seurat object's meta.data
+to use for creating cell sets.}
+
+\item{\code{cell_set_meta_name_mappings}}{The keys in the Seurat object's meta.data
+to use for cell set names mapped to new names.}
+
+\item{\code{cell_set_meta_score_mappings}}{The keys in the Seurat object's meta.data
+to use for cell set names mapped to keys for scores.}
 }
 \if{html}{\out{</div>}}
 }
@@ -52,13 +61,29 @@ Seurat object wrapper class
 \subsection{Method \code{new()}}{
 Create a wrapper around a Seurat object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$new(obj)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$new(
+  obj,
+  cell_set_meta_names = NA,
+  cell_set_meta_score_mappings = NA,
+  cell_set_meta_name_mappings = NA
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{obj}}{The object to wrap.}
+
+\item{\code{cell_set_meta_names}}{An optional list of keys in the object's meta.data
+list to use for creating cell sets.}
+
+\item{\code{cell_set_meta_score_mappings}}{If cell_set_meta_names is provided, this list can
+also be provided to map between meta.data keys for set annotations
+and keys for annotation scores.}
+
+\item{\code{cell_set_meta_name_mappings}}{If cell_set_meta_names is provided, this list can
+also be provided to map between meta.data keys and new names to replace
+the keys in the interface.}
 }
 \if{html}{\out{</div>}}
 }

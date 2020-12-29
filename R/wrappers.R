@@ -132,12 +132,35 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' @field obj The object to wrap.
     #' @keywords internal
     obj = NULL,
+    #' @field cell_set_meta_names The keys in the Seurat object's meta.data
+    #' to use for creating cell sets.
+    #' @keywords internal
+    cell_set_meta_names = NULL,
+    #' @field cell_set_meta_name_mappings The keys in the Seurat object's meta.data
+    #' to use for cell set names mapped to new names.
+    #' @keywords internal
+    cell_set_meta_name_mappings = NULL,
+    #' @field cell_set_meta_score_mappings The keys in the Seurat object's meta.data
+    #' to use for cell set names mapped to keys for scores.
+    #' @keywords internal
+    cell_set_meta_score_mappings = NULL,
     #' @description
     #' Create a wrapper around a Seurat object.
     #' @param obj The object to wrap.
+    #' @param cell_set_meta_names An optional list of keys in the object's meta.data
+    #' list to use for creating cell sets.
+    #' @param cell_set_meta_score_mappings If cell_set_meta_names is provided, this list can
+    #' also be provided to map between meta.data keys for set annotations
+    #' and keys for annotation scores.
+    #' @param cell_set_meta_name_mappings If cell_set_meta_names is provided, this list can
+    #' also be provided to map between meta.data keys and new names to replace
+    #' the keys in the interface.
     #' @return A new `SeuratWrapper` object.
-    initialize = function(obj) {
+    initialize = function(obj, cell_set_meta_names = NA, cell_set_meta_score_mappings = NA, cell_set_meta_name_mappings = NA) {
       self$obj <- obj
+      self$cell_set_meta_names <- cell_set_meta_names
+      self$cell_set_meta_score_mappings <- cell_set_meta_score_mappings
+      self$cell_set_meta_name_mappings <- cell_set_meta_name_mappings
     },
     #' @description
     #' Create a list representing the cells in the Seurat object.
@@ -170,27 +193,56 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' @keywords internal
     create_cell_sets_list = function() {
       obj <- self$obj
+
+      meta.data <- slot(obj, "meta.data")
       cells <- Seurat::Idents(obj)
-      cluster_names <- levels(cells)
 
       cell_sets_list <- list(
         datatype = jsonlite::unbox("cell"),
-        version = jsonlite::unbox("0.1.2"),
-        tree = list(
-          list(
-            name = jsonlite::unbox("Clusters"),
-            children = list()
-          )
-        )
+        version = jsonlite::unbox("0.1.3"),
+        tree = list()
       )
 
-      for(cluster_name in cluster_names) {
-        cells_in_cluster <- names(cells[cells == cluster_name])
-        cluster_node <- list(
-          name = jsonlite::unbox(paste("Cluster", cluster_name)),
-          set = cells_in_cluster
-        )
-        cell_sets_list$tree[[1]]$children <- append(cell_sets_list$tree[[1]]$children, list(cluster_node))
+      if(!is.na(self$cell_set_meta_names)) {
+        for(cell_set_meta_name in self$cell_set_meta_names) {
+          cell_set_meta_name_mapped <- cell_set_meta_name
+          if(!is.na(self$cell_set_meta_name_mappings) && !is.null(self$cell_set_meta_name_mappings[[cell_set_meta_name]])) {
+            cell_set_meta_name_mapped <- self$cell_set_meta_name_mappings[[cell_set_meta_name]]
+          }
+
+          cell_set_meta_node <- list(
+            name = jsonlite::unbox(cell_set_meta_name_mapped),
+            children = list()
+          )
+          cell_set_annotations <- meta.data[[cell_set_meta_name]]
+          cell_set_annotation_scores <- NA
+          if(!is.na(self$cell_set_meta_score_mappings) && !is.null(self$cell_set_meta_score_mappings[[cell_set_meta_name]])) {
+            cell_set_annotation_scores <- meta.data[[self$cell_set_meta_score_mappings[[cell_set_meta_name]]]]
+          }
+
+          cluster_names <- sort(unique(cell_set_annotations))
+
+          for(cluster_name in cluster_names) {
+            cells_in_cluster <- names(cells[cell_set_annotations == cluster_name])
+
+            # TODO: find out if there is a way to return NULL
+            make_null_tuples <- function(x) { list(jsonlite::unbox(x), jsonlite::unbox(NA)) }
+            cells_in_cluster_with_score <- purrr::map(cells_in_cluster, make_null_tuples)
+            if(!is.na(cell_set_annotation_scores)) {
+              # Scores are available
+              score_per_cell <- cell_set_annotation_scores[cell_set_annotations == cluster_name]
+              for(i in 1:length(cells_in_cluster)) {
+                cells_in_cluster_with_score[[i]][[2]] <- jsonlite::unbox(score_per_cell[[i]])
+              }
+            }
+            cluster_node <- list(
+              name = jsonlite::unbox(cluster_name),
+              set = cells_in_cluster_with_score
+            )
+            cell_set_meta_node$children <- append(cell_set_meta_node$children, list(cluster_node))
+          }
+          cell_sets_list$tree <- append(cell_sets_list$tree, list(cell_set_meta_node))
+        }
       }
       cell_sets_list
     },
