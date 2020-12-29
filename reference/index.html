@@ -79,7 +79,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -94,7 +94,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/seurat.html">Usage with Seurat</a>
+      <a href="../articles/azimuth.html">Usage with Seurat: Reference Mapping</a>
+    </li>
+    <li>
+      <a href="../articles/seurat.html">Usage with Seurat: Basic Example</a>
     </li>
   </ul>
 </li>
@@ -102,7 +105,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/vitessce/vitessce-htmlwidget/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -133,8 +136,8 @@
     <tbody>
       <tr>
         <th colspan="2">
-          <h2 id="section-all-functions" class="hasAnchor"><a href="#section-all-functions" class="anchor"></a>All functions</h2>
-          <p class="section-desc"></p>
+          <h2 id="section-working-with-view-configs" class="hasAnchor"><a href="#section-working-with-view-configs" class="anchor"></a>Working with view configs</h2>
+          <p class="section-desc"><p>Functions and R6 classes for creating and manipulating Vitessce view config objects.</p></p>
         </th>
       </tr>
       
@@ -143,30 +146,6 @@
       
       
       <tr>
-        
-        <td>
-          <p><code><a href="Component.html">Component</a></code> </p>
-        </td>
-        <td><p>Enumeration of Component values</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="CoordinationType.html">CoordinationType</a></code> </p>
-        </td>
-        <td><p>Enumeration of Coordination Type values</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="DataType.html">DataType</a></code> </p>
-        </td>
-        <td><p>Enumeration of Data Type values</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="FileType.html">FileType</a></code> </p>
-        </td>
-        <td><p>Enumeration of File Type values</p></td>
-      </tr><tr>
         
         <td>
           <p><code><a href="VitessceConfig-cash-from_list.html">VitessceConfig$from_list</a></code> </p>
@@ -215,18 +194,6 @@ A helper function to construct a new <code>VitessceConfig</code> object based on
       </tr><tr>
         
         <td>
-          <p><code><a href="VitessceConfigViewHConcat.html">VitessceConfigViewHConcat</a></code> </p>
-        </td>
-        <td><p>VitessceConfigViewHConcat Class</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="VitessceConfigViewVConcat.html">VitessceConfigViewVConcat</a></code> </p>
-        </td>
-        <td><p>VitessceConfigViewVConcat Class</p></td>
-      </tr><tr>
-        
-        <td>
           <p><code><a href="hconcat.html">hconcat()</a></code> </p>
         </td>
         <td><p>Horizontally concatenate views</p></td>
@@ -236,7 +203,57 @@ A helper function to construct a new <code>VitessceConfig</code> object based on
           <p><code><a href="vconcat.html">vconcat()</a></code> </p>
         </td>
         <td><p>Vertically concatenate views</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-constants-for-view-configs" class="hasAnchor"><a href="#section-constants-for-view-configs" class="anchor"></a>Constants for view configs</h2>
+          <p class="section-desc"><p>Lists which map keys to constant strings for use as parameters to the above view config functions.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="DataType.html">DataType</a></code> </p>
+        </td>
+        <td><p>Enumeration of Data Type values</p></td>
       </tr><tr>
+        
+        <td>
+          <p><code><a href="FileType.html">FileType</a></code> </p>
+        </td>
+        <td><p>Enumeration of File Type values</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="Component.html">Component</a></code> </p>
+        </td>
+        <td><p>Enumeration of Component values</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="CoordinationType.html">CoordinationType</a></code> </p>
+        </td>
+        <td><p>Enumeration of Coordination Type values</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-widgets" class="hasAnchor"><a href="#section-widgets" class="anchor"></a>Widgets</h2>
+          <p class="section-desc"><p>Functions for creating Vitessce htmlwidgets.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
         
         <td>
           <p><code><a href="vitessce-shiny.html">vitessce_output()</a></code> <code><a href="vitessce-shiny.html">render_vitessce()</a></code> </p>
@@ -248,6 +265,37 @@ A helper function to construct a new <code>VitessceConfig</code> object based on
           <p><code><a href="vitessce_widget.html">vitessce_widget()</a></code> </p>
         </td>
         <td><p>Vitessce Widget</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-dataset-wrapper-classes" class="hasAnchor"><a href="#section-dataset-wrapper-classes" class="anchor"></a>Dataset wrapper classes</h2>
+          <p class="section-desc"><p>Wrapper classes for automating the data conversion process for Vitessce.</p></p>
+        </th>
+      </tr>
+      
+      
+    </tbody><tbody>
+      
+      
+      <tr>
+        
+        <td>
+          <p><code><a href="AbstractWrapper.html">AbstractWrapper</a></code> </p>
+        </td>
+        <td><p>AbstractWrapper Class</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="SeuratWrapper.html">SeuratWrapper</a></code> </p>
+        </td>
+        <td><p>SeuratWrapper Class</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="SeuratDimReducWrapper.html">SeuratDimReducWrapper</a></code> </p>
+        </td>
+        <td><p>SeuratDimReducWrapper Class</p></td>
       </tr>
     </tbody>
     </table>

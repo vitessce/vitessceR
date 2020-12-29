@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -54,7 +54,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="articles/seurat.html">Usage with Seurat</a>
+      <a href="articles/azimuth.html">Usage with Seurat: Reference Mapping</a>
+    </li>
+    <li>
+      <a href="articles/seurat.html">Usage with Seurat: Basic Example</a>
     </li>
   </ul>
 </li>
@@ -62,7 +65,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/vitessce/vitessce-htmlwidget/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -91,7 +94,7 @@
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"vitessce/vitessce-htmlwidget"</span><span class="op">)</span></code></pre></div>
 </div>
@@ -99,7 +102,7 @@
 <h2 class="hasAnchor">
 <a href="#simplest-widget-use-case" class="anchor"></a>Simplest Widget Use Case</h2>
 <p>The simplest way to instantiate a Vitessce widget is to create a view config based on a single-cell dataset object (from which data types and visualization types can be inferred automatically) and pass the view config instance as a parameter to the widget function:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vitessce/vitessce-htmlwidget">vitessce</a></span><span class="op">)</span>
 <span class="va">vc</span> <span class="op">&lt;-</span> <span class="va">VitessceConfig</span><span class="op">$</span><span class="fu">from_object</span><span class="op">(</span><span class="va">my_seurat_object</span><span class="op">)</span>
 <span class="fu"><a href="reference/vitessce_widget.html">vitessce_widget</a></span><span class="op">(</span><span class="va">vc</span><span class="op">)</span></code></pre></div>

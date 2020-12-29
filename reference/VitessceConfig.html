@@ -80,7 +80,7 @@
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -95,7 +95,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/seurat.html">Usage with Seurat</a>
+      <a href="../articles/azimuth.html">Usage with Seurat: Reference Mapping</a>
+    </li>
+    <li>
+      <a href="../articles/seurat.html">Usage with Seurat: Basic Example</a>
     </li>
   </ul>
 </li>
@@ -103,7 +106,7 @@
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/vitessce/vitessce-htmlwidget/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -131,6 +134,11 @@
 
 
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>Self, to allow chaining.</p>
+<p>Self, to allow chaining.</p>
+<p>A <code>list</code> that can be serialized to JSON using <code>rjson</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>VitessceConfig</p>
@@ -151,6 +159,7 @@
 <li><p><a href='#method-add_view'><code>VitessceConfig$add_view()</code></a></p></li>
 <li><p><a href='#method-add_coordination'><code>VitessceConfig$add_coordination()</code></a></p></li>
 <li><p><a href='#method-layout'><code>VitessceConfig$layout()</code></a></p></li>
+<li><p><a href='#method-link_views'><code>VitessceConfig$link_views()</code></a></p></li>
 <li><p><a href='#method-to_list'><code>VitessceConfig$to_list()</code></a></p></li>
 <li><p><a href='#method-clone'><code>VitessceConfig$clone()</code></a></p></li>
 </ul>
@@ -263,6 +272,30 @@
 </pre><p></div></p>
 
 <p><hr>
+<a id="method-link_views"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>link_views()</code></h3>
+<p>A convenience function for setting up new coordination scopes across a set of views.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>VitessceConfig</span><span class='op'>$</span><span class='fu'>link_views</span><span class='op'>(</span><span class='va'>views</span>, <span class='va'>c_types</span>, c_values <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>views</code></dt><dd><p>An array of view objects to link together.</p></dd>
+
+<dt><code>c_types</code></dt><dd><p>The coordination types on which to coordinate the views.</p></dd>
+
+<dt><code>c_values</code></dt><dd><p>Initial values corresponding to each coordination type.
+Should have the same length as the c_types array. Optional.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
+<p><div class="r example copy"></p><pre><span class='va'>vc</span> <span class='op'>&lt;-</span> <span class='va'>VitessceConfig</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"My config"</span><span class='op'>)</span>
+<span class='va'>ref_dataset</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_dataset</span><span class='op'>(</span><span class='st'>"Reference"</span><span class='op'>)</span>
+<span class='va'>qry_dataset</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_dataset</span><span class='op'>(</span><span class='st'>"Query"</span><span class='op'>)</span>
+<span class='va'>ref_plot</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_view</span><span class='op'>(</span><span class='va'>ref_dataset</span>, <span class='va'>Component</span><span class='op'>$</span><span class='va'>SCATTERPLOT</span>, mapping <span class='op'>=</span> <span class='st'>"umap"</span><span class='op'>)</span>
+<span class='va'>qry_plot</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_view</span><span class='op'>(</span><span class='va'>qry_dataset</span>, <span class='va'>Component</span><span class='op'>$</span><span class='va'>SCATTERPLOT</span>, mapping <span class='op'>=</span> <span class='st'>"proj.umap"</span><span class='op'>)</span>
+<span class='va'>vc</span><span class='op'>$</span><span class='fu'>link_views</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>ref_plot</span>, <span class='va'>qry_plot</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>CoordinationType</span><span class='op'>$</span><span class='va'>EMBEDDING_TARGET_X</span>, <span class='va'>CoordinationType</span><span class='op'>$</span><span class='va'>EMBEDDING_TARGET_Y</span><span class='op'>)</span>, c_values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
+</pre><p></div></p>
+
+<p><hr>
 <a id="method-to_list"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>to_list()</code></h3>
 <p>Convert the config to an R list. Helpful when converting the config to JSON.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>VitessceConfig</span><span class='op'>$</span><span class='fu'>to_list</span><span class='op'>(</span>on_obj <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span></pre><p></div></p>
@@ -272,8 +305,6 @@
 <dt><code>on_obj</code></dt><dd><p>An optional function to call upon encountering a dataset object. Used internally by the htmlwidget when rendering local objects.</p></dd>
 
 </dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A <code>list</code> that can be serialized to JSON using <code>rjson</code>.</p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
 <p><div class="r example copy"></p><pre><span class='va'>vc</span> <span class='op'>&lt;-</span> <span class='va'>VitessceConfig</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"My config"</span><span class='op'>)</span>
 <span class='va'>ds</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_dataset</span><span class='op'>(</span><span class='st'>"My dataset"</span><span class='op'>)</span>
@@ -328,6 +359,17 @@
 <span class='va'>ds</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_dataset</span><span class='op'>(</span><span class='st'>"My dataset"</span><span class='op'>)</span>
 <span class='va'>spatial</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_view</span><span class='op'>(</span><span class='va'>ds</span>, <span class='st'>"spatial"</span><span class='op'>)</span>
 <span class='va'>scatterplot</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_view</span><span class='op'>(</span><span class='va'>ds</span>, <span class='st'>"scatterplot"</span><span class='op'>)</span>
+
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `VitessceConfig$link_views`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='va'>vc</span> <span class='op'>&lt;-</span> <span class='va'>VitessceConfig</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"My config"</span><span class='op'>)</span>
+<span class='va'>ref_dataset</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_dataset</span><span class='op'>(</span><span class='st'>"Reference"</span><span class='op'>)</span>
+<span class='va'>qry_dataset</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_dataset</span><span class='op'>(</span><span class='st'>"Query"</span><span class='op'>)</span>
+<span class='va'>ref_plot</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_view</span><span class='op'>(</span><span class='va'>ref_dataset</span>, <span class='va'>Component</span><span class='op'>$</span><span class='va'>SCATTERPLOT</span>, mapping <span class='op'>=</span> <span class='st'>"umap"</span><span class='op'>)</span>
+<span class='va'>qry_plot</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_view</span><span class='op'>(</span><span class='va'>qry_dataset</span>, <span class='va'>Component</span><span class='op'>$</span><span class='va'>SCATTERPLOT</span>, mapping <span class='op'>=</span> <span class='st'>"proj.umap"</span><span class='op'>)</span>
+<span class='va'>vc</span><span class='op'>$</span><span class='fu'>link_views</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>ref_plot</span>, <span class='va'>qry_plot</span><span class='op'>)</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>CoordinationType</span><span class='op'>$</span><span class='va'>EMBEDDING_TARGET_X</span>, <span class='va'>CoordinationType</span><span class='op'>$</span><span class='va'>EMBEDDING_TARGET_Y</span><span class='op'>)</span>, c_values <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='co'>## ------------------------------------------------</span>
 <span class='co'>## Method `VitessceConfig$to_list`</span>

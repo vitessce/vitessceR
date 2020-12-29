@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>VitessceConfigCoordinationScope Class — VitessceConfigCoordinationScope • vitessce</title>
+<title>SeuratDimReducWrapper Class — SeuratDimReducWrapper • vitessce</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="VitessceConfigCoordinationScope Class — VitessceConfigCoordinationScope" />
-<meta property="og:description" content="Class representing a coordination scope in a Vitessce view config." />
+<meta property="og:title" content="SeuratDimReducWrapper Class — SeuratDimReducWrapper" />
+<meta property="og:description" content="Class representing a local DimReduc object in a Vitessce dataset." />
 
 
 
@@ -123,28 +123,29 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>VitessceConfigCoordinationScope Class</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vitessce/vitessce-htmlwidget/blob/master/R/config.R'><code>R/config.R</code></a></small>
-    <div class="hidden name"><code>VitessceConfigCoordinationScope.Rd</code></div>
+    <h1>SeuratDimReducWrapper Class</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vitessce/vitessce-htmlwidget/blob/master/R/wrappers.R'><code>R/wrappers.R</code></a></small>
+    <div class="hidden name"><code>SeuratDimReducWrapper.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Class representing a coordination scope in a Vitessce view config.</p>
+    <p>Class representing a local DimReduc object in a Vitessce dataset.</p>
     </div>
 
 
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Coordination scope in a VitessceConfig</p>
+    <p>Seurat DimReduc object wrapper class</p>
+    <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
+
+    <p><code><a href='AbstractWrapper.html'>vitessce::AbstractWrapper</a></code> -&gt; <code>SeuratDimReducWrapper</code></p>
     <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
     <p><div class="r6-fields"></p><dl>
-<dt><code>c_type</code></dt><dd><p>The coordination type as a string.</p></dd>
+<dt><code>obj</code></dt><dd><p>The object to wrap.</p></dd>
 
-<dt><code>c_scope</code></dt><dd><p>The coordination scope as a string.</p></dd>
-
-<dt><code>c_value</code></dt><dd><p>The coordination value.</p></dd>
+<dt><code>mapping</code></dt><dd><p>A name for the embedding type.</p></dd>
 
 </dl><p></div></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
@@ -153,53 +154,66 @@
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
-<li><p><a href='#method-new'><code>VitessceConfigCoordinationScope$new()</code></a></p></li>
-<li><p><a href='#method-set_value'><code>VitessceConfigCoordinationScope$set_value()</code></a></p></li>
-<li><p><a href='#method-set_value_raw'><code>VitessceConfigCoordinationScope$set_value_raw()</code></a></p></li>
-<li><p><a href='#method-clone'><code>VitessceConfigCoordinationScope$clone()</code></a></p></li>
+<li><p><a href='#method-new'><code>SeuratDimReducWrapper$new()</code></a></p></li>
+<li><p><a href='#method-create_cells_list'><code>SeuratDimReducWrapper$create_cells_list()</code></a></p></li>
+<li><p><a href='#method-get_cells'><code>SeuratDimReducWrapper$get_cells()</code></a></p></li>
+<li><p><a href='#method-clone'><code>SeuratDimReducWrapper$clone()</code></a></p></li>
 </ul>
-<p><hr>
+<p><details ><summary>Inherited methods</summary>
+<ul>
+<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="create_response_json"><a href='../../vitessce/html/AbstractWrapper.html#method-create_response_json'><code>vitessce::AbstractWrapper$create_response_json()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_cell_sets"><a href='../../vitessce/html/AbstractWrapper.html#method-get_cell_sets'><code>vitessce::AbstractWrapper$get_cell_sets()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_data"><a href='../../vitessce/html/AbstractWrapper.html#method-get_data'><code>vitessce::AbstractWrapper$get_data()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_expression_matrix"><a href='../../vitessce/html/AbstractWrapper.html#method-get_expression_matrix'><code>vitessce::AbstractWrapper$get_expression_matrix()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_molecules"><a href='../../vitessce/html/AbstractWrapper.html#method-get_molecules'><code>vitessce::AbstractWrapper$get_molecules()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_neighborhoods"><a href='../../vitessce/html/AbstractWrapper.html#method-get_neighborhoods'><code>vitessce::AbstractWrapper$get_neighborhoods()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_raster"><a href='../../vitessce/html/AbstractWrapper.html#method-get_raster'><code>vitessce::AbstractWrapper$get_raster()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_route"><a href='../../vitessce/html/AbstractWrapper.html#method-get_route'><code>vitessce::AbstractWrapper$get_route()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_url"><a href='../../vitessce/html/AbstractWrapper.html#method-get_url'><code>vitessce::AbstractWrapper$get_url()</code></a></span></p></li>
+</ul>
+</details>
+
+<hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Create a new coordination scope object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>VitessceConfigCoordinationScope</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>c_type</span>, <span class='va'>c_scope</span><span class='op'>)</span></pre><p></div></p>
+<p>Create a wrapper around a Seurat DimReduc object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>SeuratDimReducWrapper</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>obj</span>, <span class='va'>mapping</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>c_type</code></dt><dd><p>A coordination type name.</p></dd>
+<dt><code>obj</code></dt><dd><p>The object to wrap.</p></dd>
 
-<dt><code>c_scope</code></dt><dd><p>A coordination scope name.</p></dd>
+<dt><code>mapping</code></dt><dd><p>A name for the embedding type, e.g. "PCA".</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A new <code>VitessceConfigCoordinationScope</code> object.</p>
+<p>A new <code>SeuratDimReducWrapper</code> object.</p>
 <p><hr>
-<a id="method-set_value"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>set_value()</code></h3>
-<p>Set the coordination value of this coordination scope object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>VitessceConfigCoordinationScope</span><span class='op'>$</span><span class='fu'>set_value</span><span class='op'>(</span><span class='va'>c_value</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-create_cells_list"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>create_cells_list()</code></h3>
+<p>Create a list representing the cells in the Seurat object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>SeuratDimReducWrapper</span><span class='op'>$</span><span class='fu'>create_cells_list</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>c_value</code></dt><dd><p>The value to set.</p></dd>
-
-</dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>Invisible self, to allow chaining.</p>
+<p>A list that can be converted to JSON.</p>
 <p><hr>
-<a id="method-set_value_raw"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>set_value_raw()</code></h3>
-<p>Set the coordination value of this coordination scope object, without unboxing.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>VitessceConfigCoordinationScope</span><span class='op'>$</span><span class='fu'>set_value_raw</span><span class='op'>(</span><span class='va'>c_value</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-get_cells"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>get_cells()</code></h3>
+<p>Get the routes and file definitions for the cells data type.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>SeuratDimReducWrapper</span><span class='op'>$</span><span class='fu'>get_cells</span><span class='op'>(</span><span class='va'>port</span>, <span class='va'>dataset_uid</span>, <span class='va'>obj_i</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>c_value</code></dt><dd><p>The value to set.</p></dd>
+<dt><code>port</code></dt><dd><p>The port on which the web server is serving.</p></dd>
+
+<dt><code>dataset_uid</code></dt><dd><p>The ID for this dataset.</p></dd>
+
+<dt><code>obj_i</code></dt><dd><p>The index of this data object within the dataset.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>Invisible self, to allow chaining.</p>
+<p>A list of <code>routes</code> and <code>file_defs</code> lists.</p>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>VitessceConfigCoordinationScope</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>SeuratDimReducWrapper</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
