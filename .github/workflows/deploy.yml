@@ -12,18 +12,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up libraries for Ubuntu
-        run: sudo apt-get install -y libsodium-dev libharfbuzz-dev libfribidi-dev libcurl4-openssl-dev libgit2-dev
+        run: sudo apt-get install -y libsodium-dev libharfbuzz-dev libfribidi-dev libcurl4-openssl-dev
       - name: Set up R 4.0
         uses: r-lib/actions/setup-r@master
         with:
           r-version: 4.0
       - name: Install dependencies
         run: |
-          install.packages(c("devtools", "BiocManager"))
+          install.packages(c("remotes", "rcmdcheck", "BiocManager"))
           BiocManager::install(c("SummarizedExperiment", "SingleCellExperiment", "SpatialExperiment"))
+          remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
       - name: Check
-        run: devtools::check(error_on = "error")
+        run: rcmdcheck::rcmdcheck(error_on = "error")
         shell: Rscript {0}
       - name: Build docs
         run: |
