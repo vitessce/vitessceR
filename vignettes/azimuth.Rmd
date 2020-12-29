@@ -1,0 +1,214 @@
+---
+title: "Usage with Seurat: Reference Mapping"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Usage with Seurat}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The following is an example of using the Vitessce widget to visualize a reference and mapped query dataset, with mapping performed by [Seurat v4](https://satijalab.org/v4preprint) and scripts from [Azimuth](https://satijalab.org/azimuth/).
+
+```r
+# Install Vitessce
+install.packages("devtools")
+devtools::install_github("vitessce/vitessce-r")
+
+# Install Seurat v4 and its dependencies
+devtools::install_github("satijalab/seurat", ref = "release/4.0.0")
+install.packages("BiocManager")
+BiocManager::install("glmGamPoi")
+
+# Load helper functions from Azimuth
+source("https://raw.githubusercontent.com/satijalab/azimuth/master/R/helpers.R")
+
+# Load packages
+library(vitessce)
+library(Seurat)
+
+# Download query dataset
+url <- "https://www.dropbox.com/s/cmbvq2og93lnl9z/pbmc_10k_v3_filtered_feature_bc_matrix.h5?dl=1"
+dir.create("seurat")
+download.file(url, destfile = "seurat/pbmc_10k_v3_filtered_feature_bc_matrix.h5")
+
+# Download the reference
+# Change the file path based on where the reference is located on your system.
+reference <- LoadReference(path = "https://seurat.nygenome.org/references/pbmc/")
+
+# Load the query object for mapping
+# Change the file path based on where the query file is located on your system.
+query <- LoadFileInput(path = "seurat/pbmc_10k_v3_filtered_feature_bc_matrix.h5")
+
+#### Use Seurat v4 to perform the reference mapping ####
+
+# Calculate nCount_RNA and nFeature_RNA if the query does not
+# contain them already
+if (!all(c("nCount_RNA", "nFeature_RNA") %in% c(colnames(x = query[[]])))) {
+    calcn <- as.data.frame(x = Seurat:::CalcN(object = query))
+    colnames(x = calcn) <- paste(
+      colnames(x = calcn),
+      "RNA",
+      sep = '_'
+    )
+    query <- AddMetaData(
+      object = query,
+      metadata = calcn
+    )
+    rm(calcn)
+}
+
+# Calculate percent mitochondrial genes if the query contains genes
+# matching the regular expression "^MT-"
+if (any(grepl(pattern = '^MT-', x = rownames(x = query)))) {
+  query <- PercentageFeatureSet(
+    object = query,
+    pattern = '^MT-',
+    col.name = 'percent.mt',
+    assay = "RNA"
+  )
+}
+
+# Filter cells based on the thresholds for nCount_RNA and nFeature_RNA
+# you set in the app
+cells.use <- query[["nCount_RNA", drop = TRUE]] <= 79534 &
+  query[["nCount_RNA", drop = TRUE]] >= 501 &
+  query[["nFeature_RNA", drop = TRUE]] <= 7211 &
+  query[["nFeature_RNA", drop = TRUE]] >= 54
+
+# If the query contains mitochondrial genes, filter cells based on the
+# thresholds for percent.mt you set in the app
+if ("percent.mt" %in% c(colnames(x = query[[]]))) {
+  cells.use <- query[["percent.mt", drop = TRUE]] <= 97 &
+    query[["percent.mt", drop = TRUE]] >= 0
+}
+
+# Remove filtered cells from the query
+query <- query[, cells.use]
+
+# Preprocess with SCTransform
+query <- SCTransform(
+  object = query,
+  assay = "RNA",
+  residual.features = rownames(x = reference$map),
+  method = 'glmGamPoi',
+  ncells = 2000,
+  n_genes = 2000,
+  do.correct.umi = FALSE,
+  do.scale = FALSE,
+  do.center = TRUE
+)
+
+# Find anchors between query and reference
+anchors <- FindTransferAnchors(
+  reference = reference$map,
+  query = query,
+  k.filter = NA,
+  reference.neighbors = "spca.annoy.neighbors",
+  reference.assay = "SCT",
+  query.assay = "SCT",
+  reference.reduction = "spca",
+  normalization.method = "SCT",
+  features = intersect(rownames(x = reference$map), VariableFeatures(object = query)),
+  dims = 1:50,
+  n.trees = 20,
+  mapping.score.k = 100
+)
+
+# Transfer cell type labels and impute protein expression
+#
+# Transferred labels are in a metadata column named "predicted.id"
+# The maximum prediction score is in a metadata column named "predicted.id.score"
+# The prediction scores for each class are in an assay named "prediction.score.id"
+# The imputed assay is named "impADT"
+query <- TransferData(
+  reference = reference$map,
+  query = query,
+  dims = 1:50,
+  anchorset = anchors,
+  refdata = list(
+    id = Idents(reference$map),
+    impADT = GetAssayData(
+    object = reference$map[['ADT']],
+    slot = 'data'
+  )),
+  store.weights = TRUE
+)
+
+# Calculate the embeddings of the query data on the reference SPCA
+query <- IntegrateEmbeddings(
+  anchorset = anchors,
+  reference = reference$map,
+  query = query,
+  reductions = "pcaproject",
+  reuse.weights.matrix = TRUE
+)
+
+# Calculate the query neighbors in the reference
+# with respect to the integrated embeddings
+query[["query_ref.nn"]] <- FindNeighbors(
+  object = Embeddings(reference$map[["spca"]]),
+  query = Embeddings(query[["integrated_dr"]]),
+  return.neighbor = TRUE,
+  l2.norm = TRUE
+)
+
+# The reference used in the app is downsampled compared to the reference on which
+# the UMAP model was computed. This step, using the helper function NNTransform,
+# corrects the Neighbors to account for the downsampling.
+query <- NNTransform(
+  object = query,
+  meta.data = reference$map[[]]
+)
+
+# Project the query to the reference UMAP.
+query[["proj.umap"]] <- RunUMAP(
+  object = query[["query_ref.nn"]],
+  reduction.model = reference$map[["jumap"]],
+  reduction.key = 'UMAP_'
+)
+
+
+# Calculate mapping score and add to metadata
+query <- AddMetaData(
+  object = query,
+  metadata = MappingScore(anchors = anchors),
+  col.name = "mapping.score"
+)
+
+
+#### Use Vitessce for visualization ####
+
+# Create Vitessce view config
+vc <- VitessceConfig$new("Azimuth")
+ref_dataset <- vc$add_dataset("Reference")$add_object(
+  SeuratWrapper$new(
+    reference[['plot']],
+    cell_set_meta_names = list("id")
+  )
+)
+qry_dataset <- vc$add_dataset("Query")$add_object(
+  SeuratWrapper$new(
+    query,
+    cell_set_meta_names = list("predicted.id"),
+    cell_set_meta_score_mappings = list(predicted.id = "predicted.id.score"),
+    cell_set_meta_name_mappings = list(predicted.id = "id")
+  )
+)
+
+ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "umap")
+qry_plot <- vc$add_view(qry_dataset, Component$SCATTERPLOT, mapping = "proj.umap")
+cell_sets <- vc$add_view(ref_dataset, Component$CELL_SETS)
+cell_sets_2 <- vc$add_view(qry_dataset, Component$CELL_SETS)
+
+vc$link_views(
+  c(ref_plot, qry_plot),
+  c(CoordinationType$EMBEDDING_ZOOM, CoordinationType$EMBEDDING_TARGET_X, CoordinationType$EMBEDDING_TARGET_Y),
+  c_values = c(1, 0, 0)
+)
+
+vc$layout(hconcat(vconcat(ref_plot, qry_plot), vconcat(cell_sets, cell_sets_2)))
+
+# Render the Vitessce widget
+vitessce_widget(vc, port = 8000)
+
+```
