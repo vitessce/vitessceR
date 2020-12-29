@@ -6,7 +6,6 @@
 #'
 #' @rdname AbstractWrapper
 #' @export
-#' @keywords internal
 AbstractWrapper <- R6::R6Class("AbstractWrapper",
   public = list(
     #' @description

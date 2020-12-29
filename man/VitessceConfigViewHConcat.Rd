@@ -10,6 +10,7 @@ Class representing a horizontal view concatenation in a Vitessce view config.
 \details{
 Horizontal view concatenation in a VitessceConfig
 }
+\keyword{internal}
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
