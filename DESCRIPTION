@@ -1,7 +1,7 @@
 Package: vitessce
 Type: Package
 Title: Create Interactive Single-cell Visualizations with the 'Vitessce' JavaScript Library
-Version: 0.0.0.9000
+Version: 0.0.0.9001
 Authors@R: c(
     person("Mark", "Keller", email = "markkellerweb@gmail.com", role = c("aut", "cre"))
   )
@@ -17,7 +17,8 @@ Imports:
     R6,
     plumber,
     future,
-    purrr
+    purrr,
+    httpuv
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

@@ -46,10 +46,11 @@ dataset <- vc$add_dataset("My dataset")$add_object(SeuratWrapper$new(pbmc, cell_
 scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
 status <- vc$add_view(dataset, Component$STATUS)
 cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
-vc$layout(hconcat(scatterplot, vconcat(status, cell_sets)))
+vc$layout(hconcat(scatterplot, vconcat(cell_sets, status)))
 
 # Render the Vitessce widget
-vitessce_widget(vc, port = 8001)
+vitessce_widget(vc)
 ```
+
 
 

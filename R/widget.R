@@ -9,7 +9,8 @@
 #' @param theme The theme of the widget, either "dark" or "light". Optional. By default, "dark".
 #' @param width The width of the widget as a number or CSS string. Optional.
 #' @param height The height of the widget as a number or CSS string. Optional.
-#' @param port The port for the local web server (which serves local dataset objects to the widget). Optional. By default, 8000.
+#' @param port The port for the local web server (which serves local dataset objects to the widget).
+#' Optional. By default, uses open port between 8000 and 9000.
 #' @param element_id An element ID. Optional.
 #'
 #' @export
@@ -17,8 +18,14 @@
 #' @examples
 #' vc <- VitessceConfig$new("My config")
 #' vitessce_widget(vc)
-vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL, port = 8000, element_id = NULL) {
-  server <- VitessceConfigServer$new(port)
+vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL, port = NA, element_id = NULL) {
+
+  use_port <- port
+  if(is.na(port)) {
+    use_port <- httpuv::randomPort(min = 8000, max = 9000, n = 1000)
+  }
+
+  server <- VitessceConfigServer$new(use_port)
   on_obj <- server$on_obj
 
   config_list = config$to_list(on_obj)
