@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The following is a full example of usage of the widget with a Seurat object.
+The following is an example of using the Vitessce widget to visualize a reference and mapped query dataset, with mapping performed by [Seurat v4](https://satijalab.org/v4preprint) and scripts from [Azimuth](https://satijalab.org/azimuth/).
 
 ```r
 # Install Vitessce

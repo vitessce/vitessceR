@@ -1,5 +1,5 @@
 ---
-title: "Usage with Seurat"
+title: "Usage with Seurat: Basic Example"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Usage with Seurat}
