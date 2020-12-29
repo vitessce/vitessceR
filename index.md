@@ -21,7 +21,7 @@ The ``vitessce`` R package includes:
 
 ```r
 install.packages("devtools")
-devtools::install_github("vitessce/vitessce-htmlwidget")
+devtools::install_github("vitessce/vitessce-r")
 ```
 
 ## Examples
