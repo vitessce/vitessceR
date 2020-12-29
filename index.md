@@ -19,6 +19,8 @@ The ``vitessce`` R package includes:
 
 ## Installation
 
+Depends on R 4.0.0
+
 ```r
 install.packages("devtools")
 devtools::install_github("vitessce/vitessce-r")
