@@ -1,5 +1,5 @@
 ---
-title: "Usage with Seurat"
+title: "Usage with Seurat: Basic Example"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Usage with Seurat}
@@ -12,7 +12,7 @@ The following is a full example of usage of the widget with a Seurat object.
 ```r
 # Install packages
 install.packages("devtools")
-devtools::install_github("vitessce/vitessce-htmlwidget")
+devtools::install_github("vitessce/vitessce-r")
 devtools::install_github("satijalab/seurat", ref = "release/4.0.0")
 
 # Load packages
@@ -42,10 +42,11 @@ pbmc <- FindClusters(pbmc, resolution = 0.5)
 
 # Create Vitessce view config
 vc <- VitessceConfig$new("My config")
-dataset <- vc$add_dataset("My dataset")$add_object(SeuratWrapper$new(pbmc))
+dataset <- vc$add_dataset("My dataset")$add_object(SeuratWrapper$new(pbmc, cell_set_meta_names = list("seurat_clusters")))
 scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
 status <- vc$add_view(dataset, Component$STATUS)
-vc$layout(hconcat(scatterplot, status))
+cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
+vc$layout(hconcat(scatterplot, vconcat(status, cell_sets)))
 
 # Render the Vitessce widget
 vitessce_widget(vc, port = 8001)

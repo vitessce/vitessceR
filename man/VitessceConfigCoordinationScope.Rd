@@ -26,6 +26,7 @@ Coordination scope in a VitessceConfig
 \itemize{
 \item \href{#method-new}{\code{VitessceConfigCoordinationScope$new()}}
 \item \href{#method-set_value}{\code{VitessceConfigCoordinationScope$set_value()}}
+\item \href{#method-set_value_raw}{\code{VitessceConfigCoordinationScope$set_value_raw()}}
 \item \href{#method-clone}{\code{VitessceConfigCoordinationScope$clone()}}
 }
 }
@@ -58,6 +59,26 @@ A new \code{VitessceConfigCoordinationScope} object.
 Set the coordination value of this coordination scope object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VitessceConfigCoordinationScope$set_value(c_value)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{c_value}}{The value to set.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Invisible self, to allow chaining.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-set_value_raw"></a>}}
+\if{latex}{\out{\hypertarget{method-set_value_raw}{}}}
+\subsection{Method \code{set_value_raw()}}{
+Set the coordination value of this coordination scope object, without unboxing.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigCoordinationScope$set_value_raw(c_value)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{

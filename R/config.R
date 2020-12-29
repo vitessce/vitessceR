@@ -182,6 +182,14 @@ VitessceConfigCoordinationScope <- R6::R6Class("VitessceConfigCoordinationScope"
     #' @param c_value The value to set.
     #' @return Invisible self, to allow chaining.
     set_value = function(c_value) {
+      self$c_value <- jsonlite::unbox(c_value)
+      invisible(self)
+    },
+    #' @description
+    #' Set the coordination value of this coordination scope object, without unboxing.
+    #' @param c_value The value to set.
+    #' @return Invisible self, to allow chaining.
+    set_value_raw = function(c_value) {
       self$c_value <- c_value
       invisible(self)
     }
@@ -195,6 +203,7 @@ VitessceConfigCoordinationScope <- R6::R6Class("VitessceConfigCoordinationScope"
 #' Class representing a horizontal view concatenation in a Vitessce view config.
 #'
 #' @rdname VitessceConfigViewHConcat
+#' @keywords internal
 VitessceConfigViewHConcat <- R6::R6Class("VitessceConfigViewHConcat",
   public = list(
     #' @field views The views to concatenate.
@@ -216,6 +225,7 @@ VitessceConfigViewHConcat <- R6::R6Class("VitessceConfigViewHConcat",
 #' Class representing a vertical view concatenation in a Vitessce view config.
 #'
 #' @rdname VitessceConfigViewVConcat
+#' @keywords internal
 VitessceConfigViewVConcat <- R6::R6Class("VitessceConfigViewVConcat",
   public = list(
     #' @field views The views to concatenate.
@@ -411,6 +421,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' @description
     #' Define the layout of views.
     #' @param view_concat A concatenation of views.
+    #' @returns Self, to allow chaining.
     #' @examples
     #' vc <- VitessceConfig$new("My config")
     #' ds <- vc$add_dataset("My dataset")
@@ -460,9 +471,38 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
       invisible(self)
     },
     #' @description
+    #' A convenience function for setting up new coordination scopes across a set of views.
+    #' @param views An array of view objects to link together.
+    #' @param c_types The coordination types on which to coordinate the views.
+    #' @param c_values Initial values corresponding to each coordination type.
+    #' Should have the same length as the c_types array. Optional.
+    #' @returns Self, to allow chaining.
+    #' @examples
+    #' vc <- VitessceConfig$new("My config")
+    #' ref_dataset <- vc$add_dataset("Reference")
+    #' qry_dataset <- vc$add_dataset("Query")
+    #' ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "umap")
+    #' qry_plot <- vc$add_view(qry_dataset, Component$SCATTERPLOT, mapping = "proj.umap")
+    #' vc$link_views(c(ref_plot, qry_plot), c(CoordinationType$EMBEDDING_TARGET_X, CoordinationType$EMBEDDING_TARGET_Y), c_values = c(0, 0))
+    link_views = function(views, c_types, c_values = NA) {
+      c_scopes <- self$add_coordination(c_types)
+      for(view in views) {
+        for(c_scope in c_scopes) {
+          view$use_coordination(c(c_scope))
+        }
+      }
+      if(!is.na(c_values) && length(c_types) == length(c_values)) {
+        for(i in 1:length(c_scopes)) {
+          c_scope <- c_scopes[[i]]
+          c_scope$set_value(c_values[[i]])
+        }
+      }
+      invisible(self)
+    },
+    #' @description
     #' Convert the config to an R list. Helpful when converting the config to JSON.
     #' @param on_obj An optional function to call upon encountering a dataset object. Used internally by the htmlwidget when rendering local objects.
-    #' @return A `list` that can be serialized to JSON using `rjson`.
+    #' @returns A `list` that can be serialized to JSON using `rjson`.
     #' @examples
     #' vc <- VitessceConfig$new("My config")
     #' ds <- vc$add_dataset("My dataset")

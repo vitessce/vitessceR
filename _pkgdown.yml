@@ -1,0 +1,27 @@
+reference:
+- title: "Working with view configs"
+  desc: >
+    Functions and R6 classes for creating and manipulating Vitessce view config objects.
+- contents:
+  - starts_with("VitessceConfig")
+  - ends_with("concat")
+- title: "Constants for view configs"
+  desc: >
+    Lists which map keys to constant strings for use as parameters to the above view config functions.
+- contents:
+  - DataType
+  - FileType
+  - Component
+  - CoordinationType
+- title: "Widgets"
+  desc: "Functions for creating Vitessce htmlwidgets."
+- contents:
+  - vitessce_output
+  - render_vitessce
+  - vitessce_widget
+- title: "Dataset wrapper classes"
+  desc: "Wrapper classes for automating the data conversion process for Vitessce."
+- contents:
+  - AbstractWrapper
+  - SeuratWrapper
+  - SeuratDimReducWrapper
