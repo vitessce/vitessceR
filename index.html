@@ -82,13 +82,18 @@
       </header><div class="row">
   <div class="contents col-md-9">
 
+<p>Vitessce is a visual integration tool for exploration of spatial single-cell experiments. To learn more about the features of Vitessce, please visit our <a href="http://vitessce.io">core docs</a>.</p>
 <div id="getting-started" class="section level2">
 <h2 class="hasAnchor">
 <a href="#getting-started" class="anchor"></a>Getting Started</h2>
-<p>The <code>vitessce</code> R package has two main parts:</p>
+<p>The <code>vitessce</code> R package includes:</p>
 <ul>
-<li>Widget API: use Vitessce directly from within RStudio</li>
-<li>Config API: create and edit Vitessce view configs using R syntax</li>
+<li><p><strong>Vitessce as an htmlwidget</strong></p></li>
+<li><p>Use Vitessce directly within RStudio as an interactive widget</p></li>
+<li><p><strong>View config API</strong></p></li>
+<li><p>Create and edit Vitessce configurations using R6 object-oriented syntax</p></li>
+<li><p><strong>Data preparation</strong></p></li>
+<li><p>Use our data conversion wrapper classes to process data stored in common single-cell file types including Seurat objects.</p></li>
 </ul>
 </div>
 <div id="installation" class="section level2">
@@ -98,14 +103,24 @@
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"vitessce/vitessce-htmlwidget"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="simplest-widget-use-case" class="section level2">
+<div id="examples" class="section level2">
 <h2 class="hasAnchor">
-<a href="#simplest-widget-use-case" class="anchor"></a>Simplest Widget Use Case</h2>
-<p>The simplest way to instantiate a Vitessce widget is to create a view config based on a single-cell dataset object (from which data types and visualization types can be inferred automatically) and pass the view config instance as a parameter to the widget function:</p>
+<a href="#examples" class="anchor"></a>Examples</h2>
+<p>The simplest way to instantiate a Vitessce widget is to create a view config based on a single-cell dataset object and pass the view config instance as a parameter to the widget function:</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vitessce/vitessce-htmlwidget">vitessce</a></span><span class="op">)</span>
-<span class="va">vc</span> <span class="op">&lt;-</span> <span class="va">VitessceConfig</span><span class="op">$</span><span class="fu">from_object</span><span class="op">(</span><span class="va">my_seurat_object</span><span class="op">)</span>
+
+<span class="co"># Create Vitessce view config</span>
+<span class="va">vc</span> <span class="op">&lt;-</span> <span class="va"><a href="reference/VitessceConfig.html">VitessceConfig</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"My config"</span><span class="op">)</span>
+<span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_dataset</span><span class="op">(</span><span class="st">"My dataset"</span><span class="op">)</span>
+<span class="va">scatterplot</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_view</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">Component</span><span class="op">$</span><span class="va">SCATTERPLOT</span>, mapping <span class="op">=</span> <span class="st">"pca"</span><span class="op">)</span>
+<span class="va">status</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_view</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">Component</span><span class="op">$</span><span class="va">STATUS</span><span class="op">)</span>
+<span class="va">cell_sets</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_view</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">Component</span><span class="op">$</span><span class="va">CELL_SETS</span><span class="op">)</span>
+<span class="va">vc</span><span class="op">$</span><span class="fu">layout</span><span class="op">(</span><span class="fu"><a href="reference/hconcat.html">hconcat</a></span><span class="op">(</span><span class="va">scatterplot</span>, <span class="fu"><a href="reference/vconcat.html">vconcat</a></span><span class="op">(</span><span class="va">status</span>, <span class="va">cell_sets</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># Render the Vitessce widget</span>
 <span class="fu"><a href="reference/vitessce_widget.html">vitessce_widget</a></span><span class="op">(</span><span class="va">vc</span><span class="op">)</span></code></pre></div>
+<p>For a full example, visit the <a href="articles/seurat.html">Usage with Seurat</a> page.</p>
 <p>To customize the view config passed into the widget (or to define a view config manually), please see the documentation for the <code>VitessceConfig</code> class.</p>
 </div>
 
