@@ -51,3 +51,5 @@ vc$layout(hconcat(scatterplot, vconcat(status, cell_sets)))
 # Render the Vitessce widget
 vitessce_widget(vc, port = 8001)
 ```
+
+
