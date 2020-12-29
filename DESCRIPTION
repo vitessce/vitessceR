@@ -16,7 +16,8 @@ Imports:
     jsonlite,
     R6,
     plumber,
-    future
+    future,
+    purrr
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

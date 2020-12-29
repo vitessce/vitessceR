@@ -4,6 +4,13 @@
 \name{VitessceConfig}
 \alias{VitessceConfig}
 \title{VitessceConfig Class}
+\value{
+Self, to allow chaining.
+
+Self, to allow chaining.
+
+A \code{list} that can be serialized to JSON using \code{rjson}.
+}
 \description{
 Class representing a Vitessce view config.
 }
@@ -47,6 +54,17 @@ spatial <- vc$add_view(ds, "spatial")
 scatterplot <- vc$add_view(ds, "scatterplot")
 
 ## ------------------------------------------------
+## Method `VitessceConfig$link_views`
+## ------------------------------------------------
+
+vc <- VitessceConfig$new("My config")
+ref_dataset <- vc$add_dataset("Reference")
+qry_dataset <- vc$add_dataset("Query")
+ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "umap")
+qry_plot <- vc$add_view(qry_dataset, Component$SCATTERPLOT, mapping = "proj.umap")
+vc$link_views(c(ref_plot, qry_plot), c(CoordinationType$EMBEDDING_TARGET_X, CoordinationType$EMBEDDING_TARGET_Y), c_values = c(0, 0))
+
+## ------------------------------------------------
 ## Method `VitessceConfig$to_list`
 ## ------------------------------------------------
 
@@ -69,6 +87,7 @@ vc_list <- vc$to_list()
 \item \href{#method-add_view}{\code{VitessceConfig$add_view()}}
 \item \href{#method-add_coordination}{\code{VitessceConfig$add_coordination()}}
 \item \href{#method-layout}{\code{VitessceConfig$layout()}}
+\item \href{#method-link_views}{\code{VitessceConfig$link_views()}}
 \item \href{#method-to_list}{\code{VitessceConfig$to_list()}}
 \item \href{#method-clone}{\code{VitessceConfig$clone()}}
 }
@@ -237,6 +256,41 @@ scatterplot <- vc$add_view(ds, "scatterplot")
 
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-link_views"></a>}}
+\if{latex}{\out{\hypertarget{method-link_views}{}}}
+\subsection{Method \code{link_views()}}{
+A convenience function for setting up new coordination scopes across a set of views.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$link_views(views, c_types, c_values = NA)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{views}}{An array of view objects to link together.}
+
+\item{\code{c_types}}{The coordination types on which to coordinate the views.}
+
+\item{\code{c_values}}{Initial values corresponding to each coordination type.
+Should have the same length as the c_types array. Optional.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{vc <- VitessceConfig$new("My config")
+ref_dataset <- vc$add_dataset("Reference")
+qry_dataset <- vc$add_dataset("Query")
+ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "umap")
+qry_plot <- vc$add_view(qry_dataset, Component$SCATTERPLOT, mapping = "proj.umap")
+vc$link_views(c(ref_plot, qry_plot), c(CoordinationType$EMBEDDING_TARGET_X, CoordinationType$EMBEDDING_TARGET_Y), c_values = c(0, 0))
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-to_list"></a>}}
 \if{latex}{\out{\hypertarget{method-to_list}{}}}
 \subsection{Method \code{to_list()}}{
@@ -251,9 +305,6 @@ Convert the config to an R list. Helpful when converting the config to JSON.
 \item{\code{on_obj}}{An optional function to call upon encountering a dataset object. Used internally by the htmlwidget when rendering local objects.}
 }
 \if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-A \code{list} that can be serialized to JSON using \code{rjson}.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
