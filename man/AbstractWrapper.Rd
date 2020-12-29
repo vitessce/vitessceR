@@ -10,7 +10,6 @@ Abstract class representing a local dataset object in a Vitessce dataset.
 \details{
 Abstract dataset object wrapper class
 }
-\keyword{internal}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{

@@ -203,6 +203,7 @@ VitessceConfigCoordinationScope <- R6::R6Class("VitessceConfigCoordinationScope"
 #' Class representing a horizontal view concatenation in a Vitessce view config.
 #'
 #' @rdname VitessceConfigViewHConcat
+#' @keywords internal
 VitessceConfigViewHConcat <- R6::R6Class("VitessceConfigViewHConcat",
   public = list(
     #' @field views The views to concatenate.
@@ -224,6 +225,7 @@ VitessceConfigViewHConcat <- R6::R6Class("VitessceConfigViewHConcat",
 #' Class representing a vertical view concatenation in a Vitessce view config.
 #'
 #' @rdname VitessceConfigViewVConcat
+#' @keywords internal
 VitessceConfigViewVConcat <- R6::R6Class("VitessceConfigViewVConcat",
   public = list(
     #' @field views The views to concatenate.
