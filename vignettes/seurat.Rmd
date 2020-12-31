@@ -49,7 +49,7 @@ cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
 vc$layout(hconcat(scatterplot, vconcat(cell_sets, status)))
 
 # Render the Vitessce widget
-vitessce_widget(vc)
+vc$widget()
 ```
 
 

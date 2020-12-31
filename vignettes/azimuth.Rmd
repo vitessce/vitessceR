@@ -209,6 +209,5 @@ vc$link_views(
 vc$layout(hconcat(vconcat(ref_plot, qry_plot), vconcat(cell_sets, cell_sets_2)))
 
 # Render the Vitessce widget
-vitessce_widget(vc)
-
+vc$widget()
 ```

@@ -9,7 +9,7 @@ vitessce_widget(
   theme = "dark",
   width = NULL,
   height = NULL,
-  port = 8000,
+  port = NA,
   element_id = NULL
 )
 }
@@ -22,7 +22,8 @@ vitessce_widget(
 
 \item{height}{The height of the widget as a number or CSS string. Optional.}
 
-\item{port}{The port for the local web server (which serves local dataset objects to the widget). Optional. By default, 8000.}
+\item{port}{The port for the local web server (which serves local dataset objects to the widget).
+Optional. By default, uses open port between 8000 and 9000.}
 
 \item{element_id}{An element ID. Optional.}
 }

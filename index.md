@@ -40,7 +40,7 @@ cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
 vc$layout(hconcat(scatterplot, vconcat(status, cell_sets)))
 
 # Render the Vitessce widget
-vitessce_widget(vc)
+vc$widget()
 ```
 
 For a full example, visit the [Usage with Seurat](articles/seurat.html) page.

@@ -7,8 +7,8 @@ Authors@R: c(
   )
 Description: What the package does (one paragraph).
 License: MIT + file LICENSE
-BugReports: https://github.com/vitessce/vitessce-htmlwidget/issues
-URL: https://github.com/vitessce/vitessce-htmlwidget
+BugReports: https://github.com/vitessce/vitessce-r/issues
+URL: https://github.com/vitessce/vitessce-r
 Depends: R (>= 3.6.0)
 Imports:
     htmlwidgets,
