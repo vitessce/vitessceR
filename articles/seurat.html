@@ -64,7 +64,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/vitessce/vitessce-htmlwidget/">
+  <a href="https://github.com/vitessce/vitessce-r/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -85,7 +85,7 @@
       <h1 data-toc-skip>Usage with Seurat: Basic Example</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/vitessce/vitessce-htmlwidget/blob/master/vignettes/seurat.Rmd"><code>vignettes/seurat.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/vitessce/vitessce-r/blob/master/vignettes/seurat.Rmd"><code>vignettes/seurat.Rmd</code></a></small>
       <div class="hidden name"><code>seurat.Rmd</code></div>
 
     </div>
@@ -100,7 +100,7 @@
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"satijalab/seurat"</span>, ref <span class="op">=</span> <span class="st">"release/4.0.0"</span><span class="op">)</span>
 
 <span class="co"># Load packages</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vitessce/vitessce-htmlwidget">vitessce</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vitessce/vitessce-r">vitessce</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat">Seurat</a></span><span class="op">)</span>
 
 <span class="co"># Download example dataset</span>
@@ -133,7 +133,7 @@
 <span class="va">vc</span><span class="op">$</span><span class="fu">layout</span><span class="op">(</span><span class="fu"><a href="../reference/hconcat.html">hconcat</a></span><span class="op">(</span><span class="va">scatterplot</span>, <span class="fu"><a href="../reference/vconcat.html">vconcat</a></span><span class="op">(</span><span class="va">cell_sets</span>, <span class="va">status</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
 <span class="co"># Render the Vitessce widget</span>
-<span class="fu"><a href="../reference/vitessce_widget.html">vitessce_widget</a></span><span class="op">(</span><span class="va">vc</span><span class="op">)</span></code></pre></div>
+<span class="va">vc</span><span class="op">$</span><span class="fu">widget</span><span class="op">(</span><span class="op">)</span></code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

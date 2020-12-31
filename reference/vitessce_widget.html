@@ -108,7 +108,7 @@ passed to the widget using the config parameter." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/vitessce/vitessce-htmlwidget/">
+  <a href="https://github.com/vitessce/vitessce-r/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -127,7 +127,7 @@ passed to the widget using the config parameter." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Vitessce Widget</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vitessce/vitessce-htmlwidget/blob/master/R/widget.R'><code>R/widget.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/vitessce/vitessce-r/blob/master/R/widget.R'><code>R/widget.R</code></a></small>
     <div class="hidden name"><code>vitessce_widget.Rd</code></div>
     </div>
 
@@ -143,7 +143,7 @@ passed to the widget using the <code>config</code> parameter.</p>
   theme <span class='op'>=</span> <span class='st'>"dark"</span>,
   width <span class='op'>=</span> <span class='cn'>NULL</span>,
   height <span class='op'>=</span> <span class='cn'>NULL</span>,
-  port <span class='op'>=</span> <span class='fl'>8000</span>,
+  port <span class='op'>=</span> <span class='cn'>NA</span>,
   element_id <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
@@ -168,7 +168,8 @@ passed to the widget using the <code>config</code> parameter.</p>
     </tr>
     <tr>
       <th>port</th>
-      <td><p>The port for the local web server (which serves local dataset objects to the widget). Optional. By default, 8000.</p></td>
+      <td><p>The port for the local web server (which serves local dataset objects to the widget).
+Optional. By default, uses open port between 8000 and 9000.</p></td>
     </tr>
     <tr>
       <th>element_id</th>
