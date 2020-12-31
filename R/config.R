@@ -536,6 +536,24 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
       retval$layout <- retval_layout
 
       retval
+    },
+    #' @description
+    #' Create an htmlwidget based on this config.
+    #' @param theme The theme of the widget, either "dark" or "light". Optional. By default, "dark".
+    #' @param width The width of the widget as a number or CSS string. Optional.
+    #' @param height The height of the widget as a number or CSS string. Optional.
+    #' @param port The port for the local web server (which serves local dataset objects to the widget).
+    #' Optional. By default, uses open port between 8000 and 9000.
+    #' @param element_id An element ID. Optional.
+    #' @returns The Vitessce htmlwidget.
+    #' @examples
+    #' vc <- VitessceConfig$new("My config")
+    #' dataset <- vc$add_dataset("My dataset")
+    #' description <- vc$add_view(dataset, Component$DESCRIPTION)
+    #' vc$layout(description)
+    #' vc$widget()
+    widget = function(...) {
+      return(vitessce_widget(config = self, ...))
     }
   )
 )

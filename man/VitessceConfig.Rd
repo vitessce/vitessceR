@@ -10,6 +10,8 @@ Self, to allow chaining.
 Self, to allow chaining.
 
 A \code{list} that can be serialized to JSON using \code{rjson}.
+
+The Vitessce htmlwidget.
 }
 \description{
 Class representing a Vitessce view config.
@@ -71,6 +73,16 @@ vc$link_views(c(ref_plot, qry_plot), c(CoordinationType$EMBEDDING_TARGET_X, Coor
 vc <- VitessceConfig$new("My config")
 ds <- vc$add_dataset("My dataset")
 vc_list <- vc$to_list()
+
+## ------------------------------------------------
+## Method `VitessceConfig$widget`
+## ------------------------------------------------
+
+vc <- VitessceConfig$new("My config")
+dataset <- vc$add_dataset("My dataset")
+description <- vc$add_view(dataset, Component$DESCRIPTION)
+vc$layout(description)
+vc$widget()
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -89,6 +101,7 @@ vc_list <- vc$to_list()
 \item \href{#method-layout}{\code{VitessceConfig$layout()}}
 \item \href{#method-link_views}{\code{VitessceConfig$link_views()}}
 \item \href{#method-to_list}{\code{VitessceConfig$to_list()}}
+\item \href{#method-widget}{\code{VitessceConfig$widget()}}
 \item \href{#method-clone}{\code{VitessceConfig$clone()}}
 }
 }
@@ -311,6 +324,44 @@ Convert the config to an R list. Helpful when converting the config to JSON.
 \preformatted{vc <- VitessceConfig$new("My config")
 ds <- vc$add_dataset("My dataset")
 vc_list <- vc$to_list()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-widget"></a>}}
+\if{latex}{\out{\hypertarget{method-widget}{}}}
+\subsection{Method \code{widget()}}{
+Create an htmlwidget based on this config.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$widget(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{theme}}{The theme of the widget, either "dark" or "light". Optional. By default, "dark".}
+
+\item{\code{width}}{The width of the widget as a number or CSS string. Optional.}
+
+\item{\code{height}}{The height of the widget as a number or CSS string. Optional.}
+
+\item{\code{port}}{The port for the local web server (which serves local dataset objects to the widget).
+Optional. By default, uses open port between 8000 and 9000.}
+
+\item{\code{element_id}}{An element ID. Optional.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{vc <- VitessceConfig$new("My config")
+dataset <- vc$add_dataset("My dataset")
+description <- vc$add_view(dataset, Component$DESCRIPTION)
+vc$layout(description)
+vc$widget()
 }
 \if{html}{\out{</div>}}
 

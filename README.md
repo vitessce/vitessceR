@@ -1,6 +1,6 @@
 # vitessce-r
 
-R API and htmlwidget facilitating interactive visualization of spatial single-cell data with Vitessce.
+R API and htmlwidget facilitating interactive visualization of spatial single-cell data with [Vitessce](https://github.com/vitessce/vitessce).
 
   <img src="./img/screenshot.png" width="700" alt="Screenshot of RStudio">
 
@@ -15,9 +15,12 @@ devtools::install_github("vitessce/vitessce-r")
 
 ```r
 library(vitessce)
+
 vc <- VitessceConfig$new()
-vitessce_widget(vc)
+vc$widget()
 ```
+
+For full examples, visit the [documentation](https://vitessce.github.io/vitessce-r/).
 
 ## Development
 
