@@ -385,3 +385,204 @@ SeuratDimReducWrapper <- R6::R6Class("SeuratDimReducWrapper",
      }
    )
 )
+
+
+#' Giotto object wrapper class
+#' @title GiottoWrapper Class
+#' @docType class
+#' @description
+#' Class representing a local Giotto object in a Vitessce dataset.
+#'
+#' @rdname GiottoWrapper
+#' @export
+GiottoWrapper <- R6::R6Class("GiottoWrapper",
+ inherit = AbstractWrapper,
+ public = list(
+   #' @field obj The object to wrap.
+   #' @keywords internal
+   obj = NULL,
+   #' @field cell_set_meta_names The keys in the Seurat object's meta.data
+   #' to use for creating cell sets.
+   #' @keywords internal
+   cell_set_meta_names = NULL,
+   #' @field cell_set_meta_name_mappings The keys in the Seurat object's meta.data
+   #' to use for cell set names mapped to new names.
+   #' @keywords internal
+   cell_set_meta_name_mappings = NULL,
+   #' @field cell_set_meta_score_mappings The keys in the Seurat object's meta.data
+   #' to use for cell set names mapped to keys for scores.
+   #' @keywords internal
+   cell_set_meta_score_mappings = NULL,
+   #' @description
+   #' Create a wrapper around a Giotto object.
+   #' @param obj The object to wrap.
+   #' @param cell_set_meta_names An optional list of keys in the object's meta.data
+   #' list to use for creating cell sets.
+   #' @param cell_set_meta_score_mappings If cell_set_meta_names is provided, this list can
+   #' also be provided to map between meta.data keys for set annotations
+   #' and keys for annotation scores.
+   #' @param cell_set_meta_name_mappings If cell_set_meta_names is provided, this list can
+   #' also be provided to map between meta.data keys and new names to replace
+   #' the keys in the interface.
+   #' @return A new `GiottoWrapper` object.
+   initialize = function(obj, cell_set_meta_names = NA, cell_set_meta_score_mappings = NA, cell_set_meta_name_mappings = NA) {
+     self$obj <- obj
+     self$cell_set_meta_names <- cell_set_meta_names
+     self$cell_set_meta_score_mappings <- cell_set_meta_score_mappings
+     self$cell_set_meta_name_mappings <- cell_set_meta_name_mappings
+   },
+   #' @description
+   #' Create a list representing the cells in the Seurat object.
+   #' @return A list that can be converted to JSON.
+   #' @keywords internal
+   create_cells_list = function() {
+     obj <- self$obj
+     embeddings <- slot(obj, "dimension_reduction")[['cells']]
+     available_embeddings <- names(embeddings)
+
+     cell_ids <- slot(obj, "cell_ID")
+     cells_list <- obj_list()
+     for(cell_id in cell_ids) {
+       cells_list[[cell_id]] <- list(
+         mappings = obj_list()
+       )
+     }
+     for(embedding_name in available_embeddings) {
+       embedding <- embeddings[[embedding_name]][[embedding_name]]
+       embedding_matrix <- embedding[['coordinates']]
+       for(cell_id in cell_ids) {
+         cells_list[[cell_id]]$mappings[[embedding_name]] <- unname(embedding_matrix[cell_id, 1:2])
+       }
+     }
+
+     spatial_locs <- slot(obj, "spatial_locs")
+
+     if(!is.null(spatial_locs)) {
+       sdimx <- spatial_locs[['sdimx']]
+       sdimy <- spatial_locs[['sdimy']]
+       scell_id <- spatial_locs[['cell_ID']]
+     }
+
+
+     cells_list
+   },
+   #' @description
+   #' Create a list representing the cluster assignments in the Seurat object.
+   #' @return A list that can be converted to JSON.
+   #' @keywords internal
+   create_cell_sets_list = function() {
+     obj <- self$obj
+
+     meta.data <- slot(obj, "meta.data")
+     cells <- Seurat::Idents(obj)
+
+     cell_sets_list <- list(
+       datatype = jsonlite::unbox("cell"),
+       version = jsonlite::unbox("0.1.3"),
+       tree = list()
+     )
+
+     if(!is.na(self$cell_set_meta_names)) {
+       for(cell_set_meta_name in self$cell_set_meta_names) {
+         cell_set_meta_name_mapped <- cell_set_meta_name
+         if(!is.na(self$cell_set_meta_name_mappings) && !is.null(self$cell_set_meta_name_mappings[[cell_set_meta_name]])) {
+           cell_set_meta_name_mapped <- self$cell_set_meta_name_mappings[[cell_set_meta_name]]
+         }
+
+         cell_set_meta_node <- list(
+           name = jsonlite::unbox(cell_set_meta_name_mapped),
+           children = list()
+         )
+         cell_set_annotations <- meta.data[[cell_set_meta_name]]
+         cell_set_annotation_scores <- NA
+         if(!is.na(self$cell_set_meta_score_mappings) && !is.null(self$cell_set_meta_score_mappings[[cell_set_meta_name]])) {
+           cell_set_annotation_scores <- meta.data[[self$cell_set_meta_score_mappings[[cell_set_meta_name]]]]
+         }
+
+         cluster_names <- sort(unique(cell_set_annotations))
+
+         for(cluster_name in cluster_names) {
+           cells_in_cluster <- names(cells[cell_set_annotations == cluster_name])
+
+           # TODO: find out if there is a way to return NULL
+           make_null_tuples <- function(x) { list(jsonlite::unbox(x), jsonlite::unbox(NA)) }
+           cells_in_cluster_with_score <- purrr::map(cells_in_cluster, make_null_tuples)
+           if(!is.na(cell_set_annotation_scores)) {
+             # Scores are available
+             score_per_cell <- cell_set_annotation_scores[cell_set_annotations == cluster_name]
+             for(i in 1:length(cells_in_cluster)) {
+               cells_in_cluster_with_score[[i]][[2]] <- jsonlite::unbox(score_per_cell[[i]])
+             }
+           }
+           cluster_node <- list(
+             name = jsonlite::unbox(cluster_name),
+             set = cells_in_cluster_with_score
+           )
+           cell_set_meta_node$children <- append(cell_set_meta_node$children, list(cluster_node))
+         }
+         cell_sets_list$tree <- append(cell_sets_list$tree, list(cell_set_meta_node))
+       }
+     }
+     cell_sets_list
+   },
+   #' @description
+   #' Get the routes and file definitions for the cells data type.
+   #' @param port The port on which the web server is serving.
+   #' @param dataset_uid The ID for this dataset.
+   #' @param obj_i The index of this data object within the dataset.
+   #' @return A list of `routes` and `file_defs` lists.
+   get_cells = function(port, dataset_uid, obj_i) {
+     retval <- list(
+       routes = list(),
+       file_defs = list()
+     )
+
+     cells_list <- self$create_cells_list()
+
+     retval$routes <- list(
+       VitessceConfigServerRoute$new(
+         super$get_route(dataset_uid, obj_i, "cells"),
+         super$create_response_json(cells_list)
+       )
+     )
+     retval$file_defs <- list(
+       list(
+         type = DataType$CELLS,
+         fileType = FileType$CELLS_JSON,
+         url = super$get_url(port, dataset_uid, obj_i, "cells")
+       )
+     )
+     retval
+   },
+   #' @description
+   #' Get the routes and file definitions for the cell sets data type.
+   #' @param port The port on which the web server is serving.
+   #' @param dataset_uid The ID for this dataset.
+   #' @param obj_i The index of this data object within the dataset.
+   #' @return A list of `routes` and `file_defs` lists.
+   get_cell_sets = function(port, dataset_uid, obj_i) {
+     retval <- list(
+       routes = list(),
+       file_defs = list()
+     )
+
+     cell_sets_list <- self$create_cell_sets_list()
+
+     retval$routes <- list(
+       VitessceConfigServerRoute$new(
+         super$get_route(dataset_uid, obj_i, "cell_sets"),
+         super$create_response_json(cell_sets_list)
+       )
+     )
+     retval$file_defs <- list(
+       list(
+         type = DataType$CELL_SETS,
+         fileType = FileType$CELL_SETS_JSON,
+         url = super$get_url(port, dataset_uid, obj_i, "cell_sets")
+       )
+     )
+     retval
+   }
+ )
+)
+
