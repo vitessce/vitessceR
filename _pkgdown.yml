@@ -1,3 +1,9 @@
+authors:
+  Gehlenborg Lab:
+    href: http://gehlenborglab.org/
+  Mark Keller:
+    href: https://github.com/keller-mark
+
 reference:
 - title: "Working with view configs"
   desc: >
