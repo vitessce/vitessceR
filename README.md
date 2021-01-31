@@ -6,6 +6,8 @@ R API and htmlwidget facilitating interactive visualization of spatial single-ce
 
 ## Installation
 
+Installation requires R 4.0.0 or greater.
+
 ```r
 install.packages("devtools")
 devtools::install_github("vitessce/vitessce-r")

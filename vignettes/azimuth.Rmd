@@ -33,7 +33,7 @@ download.file(url, destfile = "seurat/pbmc_10k_v3_filtered_feature_bc_matrix.h5"
 
 # Download the reference
 # Change the file path based on where the reference is located on your system.
-reference <- LoadReference(path = "https://seurat.nygenome.org/references/pbmc/")
+reference <- LoadReference(path = "https://seurat.nygenome.org/references/pbmc/", seconds = 30L)
 
 # Load the query object for mapping
 # Change the file path based on where the query file is located on your system.
@@ -211,3 +211,4 @@ vc$layout(hconcat(vconcat(ref_plot, qry_plot), vconcat(cell_sets, cell_sets_2)))
 # Render the Vitessce widget
 vc$widget()
 ```
+

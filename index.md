@@ -19,7 +19,7 @@ The ``vitessce`` R package includes:
 
 ## Installation
 
-Depends on R 4.0.0
+Installation requires R 4.0.0 or greater.
 
 ```r
 install.packages("devtools")

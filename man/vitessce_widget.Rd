@@ -33,7 +33,12 @@ A Vitessce widget is defined by a config which specifies dataset(s),
 a layout of views, and linked view connections. A config object can be
 passed to the widget using the \code{config} parameter.
 }
+\details{
+We do not recommend calling this function directly. Instead, we
+recommend calling the \code{widget()} method on the \code{VitessceConfig}
+instance.
+}
 \examples{
 vc <- VitessceConfig$new("My config")
-vitessce_widget(vc)
+vc$widget()
 }

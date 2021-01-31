@@ -5,6 +5,10 @@
 #' a layout of views, and linked view connections. A config object can be
 #' passed to the widget using the \code{config} parameter.
 #'
+#' We do not recommend calling this function directly. Instead, we
+#' recommend calling the \code{widget()} method on the \code{VitessceConfig}
+#' instance.
+#'
 #' @param config A view config as a `VitessceConfig` object.
 #' @param theme The theme of the widget, either "dark" or "light". Optional. By default, "dark".
 #' @param width The width of the widget as a number or CSS string. Optional.
@@ -17,7 +21,7 @@
 #'
 #' @examples
 #' vc <- VitessceConfig$new("My config")
-#' vitessce_widget(vc)
+#' vc$widget()
 vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL, port = NA, element_id = NULL) {
 
   use_port <- port
