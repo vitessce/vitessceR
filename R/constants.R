@@ -75,7 +75,8 @@ FileType <- list(
   MOLECULES_JSON = "molecules.json",
   NEIGHBORHOODS_JSON = "neighborhoods.json",
   RASTER_JSON = "raster.json",
-  CELL_SETS_JSON = "cell-sets.json"
+  CELL_SETS_JSON = "cell-sets.json",
+  CLUSTERS_JSON = "clusters.json"
 )
 
 #' Enumeration of Component values

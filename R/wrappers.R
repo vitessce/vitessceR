@@ -154,6 +154,7 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' @param cell_set_meta_name_mappings If cell_set_meta_names is provided, this list can
     #' also be provided to map between meta.data keys and new names to replace
     #' the keys in the interface.
+    #' @param assay_name The assay name under the assays part of the Seurat object.
     #' @return A new `SeuratWrapper` object.
     initialize = function(obj, cell_set_meta_names = NA, cell_set_meta_score_mappings = NA, cell_set_meta_name_mappings = NA) {
       self$obj <- obj
@@ -196,6 +197,7 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
       meta.data <- slot(obj, "meta.data")
       cells <- Seurat::Idents(obj)
 
+      # https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/linnarsson.cell-sets.json
       cell_sets_list <- list(
         datatype = jsonlite::unbox("cell"),
         version = jsonlite::unbox("0.1.3"),
@@ -302,8 +304,63 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
         )
       )
       retval
+    },
+    #' @return A list which is in the format of the clusters.json file type.
+    create_expression_matrix_list = function() {
+      # Link to an example clusters.json expression matrix: https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/linnarsson.clusters.json
+
+      result <- list()
+
+      # TODO: assay name assumption
+      dimnames <- slot(slot(slot(self$obj, "assays")[["RNA"]], "counts"), "Dimnames")
+      # TODO: find out whether the dimensions always have the same order
+      gene_ids <- dimnames[[1]]
+      cell_ids <- dimnames[[2]]
+
+      # TODO: get the number of cells and genes from a parameter
+      num_cells <- 10
+      num_genes <- 15
+
+      result$rows <- gene_ids[1:num_genes]
+      result$cols <- cell_ids[1:num_cells]
+
+      sparse_matrix <- slot(slot(self$obj, "assays")[['RNA']], "counts")
+      dense_matrix <- as.matrix(sparse_matrix)
+      #
+      result$matrix <- dense_matrix[1:num_genes, 1:num_cells] / 10
+
+      result
+    },
+    #' @examples
+    #' vc <- VitessceConfig$new("My config")
+    #' dataset <- vc$add_dataset("My dataset")$add_object(SeuratWrapper$new(pbmc))
+    #' heatmap <- vc$add_view(dataset, Component$HEATMAP)
+    #' status <- vc$add_view(dataset, Component$STATUS)
+    #' vc$layout(hconcat(status, heatmap))
+    get_expression_matrix = function(port, dataset_uid, obj_i) {
+      retval <- list(
+        routes = list(),
+        file_defs = list()
+      )
+
+      expression_matrix_list <- self$create_expression_matrix_list()
+
+      retval$routes <- list(
+        VitessceConfigServerRoute$new(
+          super$get_route(dataset_uid, obj_i, "expression_matrix"),
+          super$create_response_json(expression_matrix_list)
+        )
+      )
+      retval$file_defs <- list(
+        list(
+          type = DataType$EXPRESSION_MATRIX,
+          fileType = FileType$CLUSTERS_JSON,
+          url = super$get_url(port, dataset_uid, obj_i, "expression_matrix")
+        )
+      )
+      retval
     }
-  )
+  ),
 )
 
 #' Seurat DimReduc object wrapper class
