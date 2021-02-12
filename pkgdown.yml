@@ -2,7 +2,8 @@ pandoc: 1.19.2.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
-  azimuth: azimuth.html
-  seurat: seurat.html
-last_built: 2021-02-01T00:27Z
+  dev_wrapper_class: dev_wrapper_class.html
+  seurat_azimuth: seurat_azimuth.html
+  seurat_basic: seurat_basic.html
+last_built: 2021-02-12T03:30Z
 
