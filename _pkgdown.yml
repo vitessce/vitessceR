@@ -31,3 +31,14 @@ reference:
   - AbstractWrapper
   - SeuratWrapper
   - SeuratDimReducWrapper
+
+articles:
+  - title: Articles
+    navbar: Examples
+    contents:
+      - seurat_basic
+      - seurat_azimuth
+  - title: Articles
+    navbar: Developer guides
+    contents:
+      - dev_wrapper_class
