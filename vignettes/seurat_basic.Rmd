@@ -42,10 +42,11 @@ pbmc <- FindClusters(pbmc, resolution = 0.5)
 
 # Create Vitessce view config
 vc <- VitessceConfig$new("My config")
-dataset <- vc$add_dataset("My dataset")$add_object(SeuratWrapper$new(pbmc))
-heatmap <- vc$add_view(dataset, Component$HEATMAP)
+dataset <- vc$add_dataset("My dataset")$add_object(SeuratWrapper$new(pbmc, cell_set_meta_names = list("seurat_clusters")))
+scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
 status <- vc$add_view(dataset, Component$STATUS)
-vc$layout(hconcat(status, heatmap))
+cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
+vc$layout(hconcat(scatterplot, vconcat(cell_sets, status)))
 
 # Render the Vitessce widget
 vc$widget(theme = "light")
