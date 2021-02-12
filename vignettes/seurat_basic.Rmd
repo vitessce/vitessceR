@@ -2,7 +2,7 @@
 title: "Usage with Seurat: Basic Example"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Usage with Seurat}
+  %\VignetteIndexEntry{Usage with Seurat: Basic Example}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -49,7 +49,7 @@ cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
 vc$layout(hconcat(scatterplot, vconcat(cell_sets, status)))
 
 # Render the Vitessce widget
-vc$widget()
+vc$widget(theme = "light")
 ```
 
 
