@@ -2,7 +2,7 @@
 title: "Usage with Seurat: Basic Example"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Usage with Seurat}
+  %\VignetteIndexEntry{Usage with Seurat: Basic Example}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -42,14 +42,13 @@ pbmc <- FindClusters(pbmc, resolution = 0.5)
 
 # Create Vitessce view config
 vc <- VitessceConfig$new("My config")
-dataset <- vc$add_dataset("My dataset")$add_object(SeuratWrapper$new(pbmc, cell_set_meta_names = list("seurat_clusters")))
-scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
+dataset <- vc$add_dataset("My dataset")$add_object(SeuratWrapper$new(pbmc))
+heatmap <- vc$add_view(dataset, Component$HEATMAP)
 status <- vc$add_view(dataset, Component$STATUS)
-cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
-vc$layout(hconcat(scatterplot, vconcat(cell_sets, status)))
+vc$layout(hconcat(status, heatmap))
 
 # Render the Vitessce widget
-vc$widget()
+vc$widget(theme = "light")
 ```
 
 
