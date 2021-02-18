@@ -405,19 +405,30 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' spatial$use_coordination(c_scopes)
     add_coordination = function(c_types) {
       result <- list()
+      # We want to allow the user to obtain multiple instances of `VitessceConfigCoordinationScope`
+      # (one coordination scope instance per coordination type in the `c_types` list).
       for(c_type in c_types) {
+        # We need to make sure that the new coordination scope instance has a unique name,
+        # among all coordination scopes with the same coordination type.
         c_obj <- self$config$coordinationSpace[[c_type]]
         prev_scopes <- character()
         if(!is.null(c_obj)) {
+          # We retrieve the existing coordination scope names for this coordination type.
           prev_scopes <- names(c_obj)
         }
-
+        # With the `get_next_scope` function, we obtain a unique name which does not conflict
+        # with any of the existing names in `prev_scopes`.
         c_scope <- get_next_scope(prev_scopes)
+        # We create a new coordination scope instance with the new name.
         scope <- VitessceConfigCoordinationScope$new(c_type, c_scope)
+        # We want to include the new coordination scope instance in the coordination space.
         if(!is.element(c_type, names(self$config$coordinationSpace))) {
+          # A coordination object for this coordination type does not yet exist in the coordination space.
           self$config$coordinationSpace[[c_type]] <- list()
         }
+        # We append the new instance to the coordination object in the coordination space.
         self$config$coordinationSpace[[c_type]][[c_scope]] <- scope
+        # We append the new instance to the result, which will be returned to the user.
         result <- append(result, scope)
       }
       result
