@@ -407,7 +407,11 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
       result <- list()
       for(c_type in c_types) {
         c_obj <- self$config$coordinationSpace[[c_type]]
-        prev_scopes <- ifelse(is.null(c_obj), character(), names(c_obj))
+        prev_scopes <- character()
+        if(!is.null(c_obj)) {
+          prev_scopes <- names(c_obj)
+        }
+
         c_scope <- get_next_scope(prev_scopes)
         scope <- VitessceConfigCoordinationScope$new(c_type, c_scope)
         if(!is.element(c_type, names(self$config$coordinationSpace))) {
