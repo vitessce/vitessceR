@@ -77,7 +77,6 @@ json_to_raw <- function(json_as_list) {
 #' @param store The Zarr store.
 matrix_to_zarr <- function(matrix, rows, cols, store, compressor = NA) {
 
-
   num_rows <- nrow(matrix)
   num_cols <- ncol(matrix)
 
