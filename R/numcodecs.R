@@ -51,12 +51,8 @@ Zstd <- R6::R6Class("Zstd",
      self$level <- level
    },
    encode = function(buf) {
-     # Reference: http://www.fstpackage.org/reference/compress_fst.html
-     # Reference: https://github.com/fstpackage/fst/blob/master/src/fstcore/compression/compression.cpp#L1267
-     rescaled_level <- as.integer(self$level * ceiling(100 / 22))
-     # when level is 1
-     # want (rescaled_level * 22) / 100 to be 1
-     result <- fst::compress_fst(buf, compressor = "ZSTD", compression = rescaled_level, hash = FALSE)
+     # Reference: https://github.com/traversc/qs/blob/84e30f4/R/RcppExports.R#L16
+     result <- qs::zstd_compress_raw(buf, self$level)
      return(result)
    },
    decode = function(buf) {
@@ -94,12 +90,8 @@ LZ4 <- R6::R6Class("LZ4",
       self$acceleration <- acceleration
     },
     encode = function(buf) {
-      # Reference: http://www.fstpackage.org/reference/compress_fst.html
-      # Reference: https://github.com/fstpackage/fst/blob/master/src/fstcore/compression/compression.cpp#L935
-      rescaled_acceleration <- 101 - self$acceleration
-      # when acceleration is 1
-      # want 101 - rescaled_acceleration to be 1
-      body <- fst::compress_fst(buf, compressor = "LZ4", compression = rescaled_acceleration, hash = FALSE)
+      # Reference: https://github.com/traversc/qs/blob/84e30f4/R/RcppExports.R#L24
+      body <- qs::lz4_compress_raw(buf, self$acceleration)
 
       # The compressed output includes a 4-byte header storing the original size
       # of the decompressed data as a little-endian 32-bit integer.
