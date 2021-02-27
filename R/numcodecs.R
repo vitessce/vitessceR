@@ -56,7 +56,6 @@ Zstd <- R6::R6Class("Zstd",
      rescaled_level <- as.integer(self$level * ceiling(100 / 22))
      # when level is 1
      # want (rescaled_level * 22) / 100 to be 1
-     print(rescaled_level)
      result <- fst::compress_fst(buf, compressor = "ZSTD", compression = rescaled_level, hash = FALSE)
      return(result)
    },
@@ -97,11 +96,9 @@ LZ4 <- R6::R6Class("LZ4",
     encode = function(buf) {
       # Reference: http://www.fstpackage.org/reference/compress_fst.html
       # Reference: https://github.com/fstpackage/fst/blob/master/src/fstcore/compression/compression.cpp#L935
-      #rescaled_acceleration <- 101 - self$acceleration
-      rescaled_acceleration <- self$acceleration
+      rescaled_acceleration <- 101 - self$acceleration
       # when acceleration is 1
       # want 101 - rescaled_acceleration to be 1
-      #print(rescaled_acceleration)
       body <- fst::compress_fst(buf, compressor = "LZ4", compression = rescaled_acceleration, hash = FALSE)
 
       # The compressed output includes a 4-byte header storing the original size
@@ -109,10 +106,10 @@ LZ4 <- R6::R6Class("LZ4",
       # Reference: https://numcodecs.readthedocs.io/en/stable/lz4.html#numcodecs.lz4.compress
       orig_size <- length(buf)
       header <- as.raw(c(
-        bitwShiftR(bitwAnd(orig_size, 0x000000ff), 0),
-        bitwShiftR(bitwAnd(orig_size, 0x0000ff00), 8),
-        bitwShiftR(bitwAnd(orig_size, 0x00ff0000), 16),
-        bitwShiftR(bitwAnd(orig_size, 0x0f000000), 24)
+        bitwAnd(orig_size, 0xff),
+        bitwAnd(bitwShiftR(orig_size, 8), 0xff),
+        bitwAnd(bitwShiftR(orig_size, 16), 0xff),
+        bitwAnd(bitwShiftR(orig_size, 24), 0xff)
       ))
 
       result <- c(header, body)
