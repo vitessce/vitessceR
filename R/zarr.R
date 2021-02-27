@@ -56,6 +56,7 @@ FSStore <- R6::R6Class("FSStore",
  )
 )
 
+
 #' Convert a JSON-like list to a raw type.
 #'
 #' @param json_as_list An R list to be converted to JSON.
@@ -66,16 +67,27 @@ json_to_raw <- function(json_as_list) {
   return(json_raw)
 }
 
+
+
 #' Write an R matrix to a Zarr store (one chunk, no compression).
 #'
 #' @param matrix The matrix as an R matrix.
 #' @param rows A vector of row names.
 #' @param cols A vector of column names.
 #' @param store The Zarr store.
-matrix_to_zarr <- function(matrix, rows, cols, store) {
+matrix_to_zarr <- function(matrix, rows, cols, store, compressor = NA) {
+
 
   num_rows <- nrow(matrix)
   num_cols <- ncol(matrix)
+
+  raw_matrix <- as.raw(matrix)
+
+  compressor_meta <- jsonlite::unbox(NA)
+  if(R6::is.R6(compressor)) {
+    raw_matrix <- compressor$encode(raw_matrix)
+    compressor_meta <- compressor$get_meta()
+  }
 
   zattrs <- list(
     rows = rows,
@@ -84,7 +96,7 @@ matrix_to_zarr <- function(matrix, rows, cols, store) {
   zarray <- list(
     # TODO: set chunk size to something smaller if multiple chunks
     chunks = c(num_rows, num_cols),
-    compressor = jsonlite::unbox(NA),
+    compressor = compressor_meta,
     dtype = jsonlite::unbox("|u1"),
     fill_value = jsonlite::unbox(0),
     filters = jsonlite::unbox(NA),
@@ -92,8 +104,6 @@ matrix_to_zarr <- function(matrix, rows, cols, store) {
     shape = c(num_rows, num_cols),
     zarr_format = jsonlite::unbox(2)
   )
-
-  raw_matrix <- as.raw(matrix)
 
   store$setItem(".zattrs", json_to_raw(zattrs))
   store$setItem(".zarray", json_to_raw(zarray))
