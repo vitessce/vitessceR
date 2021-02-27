@@ -91,7 +91,7 @@ LZ4 <- R6::R6Class("LZ4",
     #' Create a new LZ4 compressor.
     #' @param acceleration The compression level.
     #' @return A new `LZ4` object.
-    initialize = function(acceleration = 100) {
+    initialize = function(acceleration = 1) {
       self$acceleration <- acceleration
     },
     encode = function(buf) {
