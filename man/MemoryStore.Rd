@@ -57,10 +57,21 @@ A new \code{MemoryStore} object.
 \if{html}{\out{<a id="method-get_parent"></a>}}
 \if{latex}{\out{\hypertarget{method-get_parent}{}}}
 \subsection{Method \code{get_parent()}}{
+Get the parent of an item.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MemoryStore$get_parent(item)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{item}}{The item key.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A list with the keys \code{parent} and \code{key}.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_item"></a>}}
@@ -74,7 +85,7 @@ Get an item from the store.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{key}}{The item key.}
+\item{\code{item}}{The item key.}
 }
 \if{html}{\out{</div>}}
 }
@@ -94,9 +105,9 @@ Set an item in the store.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{value}}{The item value as a vector of type raw.}
+\item{\code{item}}{The item key.}
 
-\item{\code{key}}{The item key.}
+\item{\code{value}}{The item value as a vector of type raw.}
 }
 \if{html}{\out{</div>}}
 }
@@ -113,7 +124,7 @@ Determine whether the store contains an item.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{key}}{The item key.}
+\item{\code{item}}{The item key.}
 }
 \if{html}{\out{</div>}}
 }

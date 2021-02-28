@@ -115,6 +115,11 @@ MemoryStore <- R6::R6Class("MemoryStore",
     initialize = function() {
       self$root <- obj_list()
     },
+    #' @description
+    #' Get the parent of an item.
+    #' @keywords internal
+    #' @param item The item key.
+    #' @return A list with the keys `parent` and `key`.
     get_parent = function(item) {
       parent <- self$root
       segments <- strsplit(item, "/")[[1]]
@@ -128,7 +133,7 @@ MemoryStore <- R6::R6Class("MemoryStore",
     },
     #' @description
     #' Get an item from the store.
-    #' @param key The item key.
+    #' @param item The item key.
     #' @return The item data in a vector of type raw.
     get_item = function(item) {
       parent_and_key <- self$get_parent(item)
@@ -144,7 +149,7 @@ MemoryStore <- R6::R6Class("MemoryStore",
     },
     #' @description
     #' Set an item in the store.
-    #' @param key The item key.
+    #' @param item The item key.
     #' @param value The item value as a vector of type raw.
     set_item = function(item, value) {
       segments <- strsplit(item, "/")[[1]]
@@ -168,7 +173,7 @@ MemoryStore <- R6::R6Class("MemoryStore",
     },
     #' @description
     #' Determine whether the store contains an item.
-    #' @param key The item key.
+    #' @param item The item key.
     #' @return A boolean value.
     contains_item = function(item) {
       result <- tryCatch({
