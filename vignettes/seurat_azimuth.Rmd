@@ -2,7 +2,7 @@
 title: "Usage with Seurat: Reference Mapping"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Usage with Seurat}
+  %\VignetteIndexEntry{Usage with Seurat: Reference Mapping}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -209,6 +209,6 @@ vc$link_views(
 vc$layout(hconcat(vconcat(ref_plot, qry_plot), vconcat(cell_sets, cell_sets_2)))
 
 # Render the Vitessce widget
-vc$widget()
+vc$widget(theme = "light")
 ```
 
