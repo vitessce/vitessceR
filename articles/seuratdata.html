@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Usage with Seurat: Basic Example • vitessce</title>
+<title>Usage with SeuratData • vitessce</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Usage with Seurat: Basic Example">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Usage with SeuratData">
 <meta property="og:description" content="vitessce">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -95,58 +95,37 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Usage with Seurat: Basic Example</h1>
+      <h1 data-toc-skip>Usage with SeuratData</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/vitessce/vitessce-r/blob/master/vignettes/seurat_basic.Rmd"><code>vignettes/seurat_basic.Rmd</code></a></small>
-      <div class="hidden name"><code>seurat_basic.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/vitessce/vitessce-r/blob/master/vignettes/seuratdata.Rmd"><code>vignettes/seuratdata.Rmd</code></a></small>
+      <div class="hidden name"><code>seuratdata.Rmd</code></div>
 
     </div>
 
     
     
-<p>The following is a full example of usage of the widget with a <a href="https://satijalab.org/seurat/">Seurat</a> object.</p>
+<p>The following is an example of usage of the widget with a <a href="https://satijalab.org/seurat/">Seurat</a> object loaded from the <a href="https://github.com/satijalab/seurat-data">SeuratData</a> package.</p>
 <p>First, install the dependencies:</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"seurat"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"vitessce/vitessce-r"</span><span class="op">)</span></code></pre></div>
-<p>Next, download the dataset, load and preprocess the Seurat object, and configure the Vitessce widget:</p>
-<pre><code><a href="https://github.com/vitessce/vitessce-r">library(vitessce)
-library(Seurat)
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"vitessce/vitessce-r"</span><span class="op">)</span>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'satijalab/seurat-data'</span><span class="op">)</span></code></pre></div>
+<p>Load the dataset, create the Vitessce configuration <code>vc</code>, and render the widget by calling <code>vc$widget()</code>:</p>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vitessce/vitessce-r">vitessce</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">SeuratData</span><span class="op">)</span>
 
-# Download example dataset
-url &lt;- "https://cf.10xgenomics.com/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz"
-dir.create("seurat")
-download.file(url, destfile = "seurat/filtered_gene_bc_matrices.tar.gz")
-untar("seurat/filtered_gene_bc_matrices.tar.gz", exdir = "seurat")
+<span class="fu">SeuratData</span><span class="fu">::</span><span class="fu">InstallData</span><span class="op">(</span><span class="st">"pbmc3k"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"pbmc3k.final"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span><span class="op">(</span><span class="va">pbmc3k.final</span><span class="op">)</span>
 
-# Load example dataset
-pbmc.data &lt;- Read10X(data.dir = "seurat/filtered_gene_bc_matrices/hg19")
-
-# Process example dataset (run PCA and cluster)
-pbmc &lt;- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 3, min.features = 200)
-pbmc[["percent.mt"]] &lt;- PercentageFeatureSet(pbmc, pattern = "^MT-")
-pbmc &lt;- subset(pbmc, subset = nFeature_RNA &gt; 200 &amp; nFeature_RNA &lt; 2500 &amp; percent.mt &lt; 5)
-pbmc &lt;- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
-pbmc &lt;- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 2000)
-all.genes &lt;- rownames(pbmc)
-pbmc &lt;- ScaleData(pbmc, features = all.genes)
-pbmc &lt;- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
-pbmc &lt;- FindNeighbors(pbmc, dims = 1:10)
-pbmc &lt;- FindClusters(pbmc, resolution = 0.5)
-
-# Create Vitessce view config
-vc &lt;- VitessceConfig$new("My config")
-dataset &lt;- vc$add_dataset("My dataset")$add_object(SeuratWrapper$new(pbmc, cell_set_meta_names = list("seurat_clusters"), out_dir = "out"))
-scatterplot &lt;- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
-status &lt;- vc$add_view(dataset, Component$STATUS)
-cell_sets &lt;- vc$add_view(dataset, Component$CELL_SETS)
-heatmap &lt;- vc$add_view(dataset, Component$HEATMAP)
-vc$layout(hconcat(vconcat(scatterplot, heatmap), vconcat(cell_sets, status)))
-
-# Render the Vitessce widget
-vc$widget(theme = "light")</a></code></pre>
+<span class="va">vc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/VitessceConfig.html">VitessceConfig</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"My config"</span><span class="op">)</span>
+<span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_dataset</span><span class="op">(</span><span class="st">"My dataset"</span><span class="op">)</span>
+<span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">dataset</span><span class="op">$</span><span class="fu">add_object</span><span class="op">(</span><span class="va"><a href="../reference/SeuratWrapper.html">SeuratWrapper</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">pbmc3k.final</span><span class="op">)</span><span class="op">)</span>
+<span class="va">scatterplot</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_view</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">Component</span><span class="op">$</span><span class="va">SCATTERPLOT</span>, mapping <span class="op">=</span> <span class="st">"pca"</span><span class="op">)</span>
+<span class="va">vc</span><span class="op">$</span><span class="fu">layout</span><span class="op">(</span><span class="va">scatterplot</span><span class="op">)</span>
+<span class="va">vc</span><span class="op">$</span><span class="fu">widget</span><span class="op">(</span>theme <span class="op">=</span> <span class="st">"light"</span><span class="op">)</span></code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

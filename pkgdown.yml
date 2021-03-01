@@ -5,5 +5,7 @@ articles:
   dev_wrapper_class: dev_wrapper_class.html
   seurat_azimuth: seurat_azimuth.html
   seurat_basic: seurat_basic.html
-last_built: 2021-03-01T06:38Z
+  seuratdata: seuratdata.html
+  shiny: shiny.html
+last_built: 2021-03-01T17:25Z
 
