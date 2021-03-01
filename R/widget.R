@@ -17,6 +17,7 @@
 #' Optional. By default, uses open port between 8000 and 9000.
 #' @param base_url The base URL for the web server. Optional.
 #' By default, creates a localhost URL which includes the port.
+#' @param serve Should local data be served by running a local web server with R plumber? By default, TRUE.
 #' @param element_id An element ID. Optional.
 #'
 #' @export
@@ -24,7 +25,7 @@
 #' @examples
 #' vc <- VitessceConfig$new("My config")
 #' vc$widget()
-vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL, port = NA, base_url = NA, element_id = NULL) {
+vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL, port = NA, base_url = NA, serve = TRUE, element_id = NULL) {
 
   use_port <- port
   if(is.na(port)) {
@@ -41,7 +42,7 @@ vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL,
   server$create_routes(routes)
 
   # run the web server if necessary
-  if(length(routes) > 0) {
+  if(length(routes) > 0 && serve) {
     # run in a background process
     future::plan(future::multisession)
     future::future(server$run())

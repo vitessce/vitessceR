@@ -132,6 +132,9 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' @field obj The object to wrap.
     #' @keywords internal
     obj = NULL,
+    #' @field assay The assay name in the Seurat object.
+    #' @keywords internal
+    assay = NULL,
     #' @field cell_set_meta_names The keys in the Seurat object's meta.data
     #' to use for creating cell sets.
     #' @keywords internal
@@ -144,9 +147,13 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' to use for cell set names mapped to keys for scores.
     #' @keywords internal
     cell_set_meta_score_mappings = NULL,
+    #' @field Number of genes to use for the heatmap.
+    #' @keywords internal
+    num_genes = NULL,
     #' @description
     #' Create a wrapper around a Seurat object.
     #' @param obj The object to wrap.
+    #' @param assay The assay name under the assays part of the Seurat object.
     #' @param cell_set_meta_names An optional list of keys in the object's meta.data
     #' list to use for creating cell sets.
     #' @param cell_set_meta_score_mappings If cell_set_meta_names is provided, this list can
@@ -155,14 +162,15 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' @param cell_set_meta_name_mappings If cell_set_meta_names is provided, this list can
     #' also be provided to map between meta.data keys and new names to replace
     #' the keys in the interface.
-    #' @param assay_name The assay name under the assays part of the Seurat object.
     #' @return A new `SeuratWrapper` object.
-    initialize = function(obj, cell_set_meta_names = NA, cell_set_meta_score_mappings = NA, cell_set_meta_name_mappings = NA, ...) {
+    initialize = function(obj, assay = "RNA", cell_set_meta_names = NA, cell_set_meta_score_mappings = NA, cell_set_meta_name_mappings = NA, num_genes = 10, ...) {
       super$initialize(...)
       self$obj <- obj
+      self$assay <- assay
       self$cell_set_meta_names <- cell_set_meta_names
       self$cell_set_meta_score_mappings <- cell_set_meta_score_mappings
       self$cell_set_meta_name_mappings <- cell_set_meta_name_mappings
+      self$num_genes <- num_genes
     },
     #' @description
     #' Create the JSON output files, web server routes, and file definition creators.
@@ -294,23 +302,23 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
 
       result <- list()
 
-      # TODO: assay name assumption
-      dimnames <- slot(slot(slot(self$obj, "assays")[["RNA"]], "counts"), "Dimnames")
-      # TODO: find out whether the dimensions always have the same order
+      dimnames <- slot(slot(slot(self$obj, "assays")[[self$assay]], "counts"), "Dimnames")
       gene_ids <- dimnames[[1]]
       cell_ids <- dimnames[[2]]
 
-      # TODO: get the number of cells and genes from a parameter
-      num_cells <- 10
-      num_genes <- 15
+      # TODO: add an option to restrict to highly variable genes or some other subset.
+      num_cells <- length(cell_ids)
+      #num_genes <- length(gene_ids)
+      num_genes <- self$num_genes
 
       result$rows <- gene_ids[1:num_genes]
-      result$cols <- cell_ids[1:num_cells]
+      result$cols <- cell_ids
 
-      sparse_matrix <- slot(slot(self$obj, "assays")[['RNA']], "counts")
+      sparse_matrix <- slot(slot(self$obj, "assays")[[self$assay]], "counts")
       dense_matrix <- as.matrix(sparse_matrix)
-      #
-      result$matrix <- dense_matrix[1:num_genes, 1:num_cells] / 10
+
+      result$matrix <- dense_matrix[1:num_genes, 1:num_cells]
+      result$matrix <- result$matrix / max(result$matrix)
 
       result
     },
