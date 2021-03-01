@@ -22,17 +22,21 @@
 #' @examples
 #' vc <- VitessceConfig$new("My config")
 #' vc$widget()
-vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL, port = NA, element_id = NULL) {
+vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL, port = NA, base_url = NA, element_id = NULL) {
 
   use_port <- port
   if(is.na(port)) {
     use_port <- httpuv::randomPort(min = 8000, max = 9000, n = 1000)
   }
+  use_base_url <- paste0("http://localhost:", use_port)
+  if(!is.na(base_url)) {
+    use_base_url <- base_url
+  }
 
   server <- VitessceConfigServer$new(use_port)
-  on_obj <- server$on_obj
 
-  config_list = config$to_list(on_obj)
+  config_list <- config$to_list(base_url = use_base_url)
+  server$create_routes(config$get_routes())
 
   # run the web server if necessary
   if(server$num_obj > 0) {

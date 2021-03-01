@@ -119,23 +119,31 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
     #' @param obj The data object to add.
     #' @return Invisible self, to allow chaining.
     add_object = function(obj) {
+      obj$convert_and_save(self$dataset$uid, length(private$objs))
       private$objs <- append(private$objs, obj)
       invisible(self)
     },
+    get_routes = function() {
+      routes <- list()
+      for(obj in private$objs) {
+        obj_routes <- obj$get_routes()
+        for(obj_route in obj_routes) {
+          routes <- append(routes, obj_route)
+        }
+      }
+      return(routes)
+    },
     #' @description
     #' Convert the dataset to an R list. Helpful when converting the config to JSON.
-    #' @param on_obj An optional function to call upon encountering a dataset object. Used internally by the htmlwidget when rendering local objects.
+    #' @param base_url The base URL to prepend to web server file paths.
     #' @return A `list` that can be serialized to JSON using `rjson`.
-    to_list = function(on_obj = NA) {
+    to_list = function(base_url = NA) {
         obj_file_defs <- list()
         if(length(private$objs) > 0) {
-          for(i in length(private$objs)) {
-            obj <- private$objs[[i]]
-            if(is.function(on_obj)) {
-              new_obj_file_defs <- on_obj(obj, self$dataset$uid, i)
-              for(new_obj_file_def in new_obj_file_defs) {
-                obj_file_defs <- append(obj_file_defs, list(new_obj_file_def))
-              }
+          for(obj in private$objs) {
+            new_obj_file_defs <- obj$get_file_defs(base_url)
+            for(new_obj_file_def in new_obj_file_defs) {
+              obj_file_defs <- append(obj_file_defs, list(new_obj_file_def))
             }
           }
         }
@@ -507,12 +515,12 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' vc <- VitessceConfig$new("My config")
     #' ds <- vc$add_dataset("My dataset")
     #' vc_list <- vc$to_list()
-    to_list = function(on_obj = NA) {
+    to_list = function(base_url = NA) {
       retval <- self$config
 
       retval_datasets <- list()
       for(d in self$config$datasets) {
-        dataset_list <- d$to_list(on_obj)
+        dataset_list <- d$to_list(base_url = base_url)
         retval_datasets <- append(retval_datasets, list(dataset_list))
       }
       retval$datasets <- retval_datasets
@@ -536,6 +544,16 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
       retval$layout <- retval_layout
 
       retval
+    },
+    get_routes = function() {
+      retval <- list()
+      for(d in self$config$datasets) {
+        dataset_routes <- d$get_routes()
+        for(dr in dataset_routes) {
+          retval <- append(retval, dr)
+        }
+      }
+      return(retval)
     },
     #' @description
     #' Create an htmlwidget based on this config.
