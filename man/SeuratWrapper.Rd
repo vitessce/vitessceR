@@ -34,7 +34,7 @@ to use for cell set names mapped to keys for scores.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{SeuratWrapper$new()}}
-\item \href{#method-create_and_save}{\code{SeuratWrapper$create_and_save()}}
+\item \href{#method-convert_and_save}{\code{SeuratWrapper$convert_and_save()}}
 \item \href{#method-create_cells_list}{\code{SeuratWrapper$create_cells_list()}}
 \item \href{#method-create_cell_sets_list}{\code{SeuratWrapper$create_cell_sets_list()}}
 \item \href{#method-create_expression_matrix_list}{\code{SeuratWrapper$create_expression_matrix_list()}}
@@ -48,7 +48,6 @@ to use for cell set names mapped to keys for scores.}
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
 \item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="auto_view_config">}\href{../../vitessce/html/AbstractWrapper.html#method-auto_view_config}{\code{vitessce::AbstractWrapper$auto_view_config()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="convert_and_save">}\href{../../vitessce/html/AbstractWrapper.html#method-convert_and_save}{\code{vitessce::AbstractWrapper$convert_and_save()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_file_defs">}\href{../../vitessce/html/AbstractWrapper.html#method-get_file_defs}{\code{vitessce::AbstractWrapper$get_file_defs()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_out_dir">}\href{../../vitessce/html/AbstractWrapper.html#method-get_out_dir}{\code{vitessce::AbstractWrapper$get_out_dir()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_out_dir_route">}\href{../../vitessce/html/AbstractWrapper.html#method-get_out_dir_route}{\code{vitessce::AbstractWrapper$get_out_dir_route()}}\out{</span>}
@@ -98,13 +97,23 @@ A new \code{SeuratWrapper} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-create_and_save"></a>}}
-\if{latex}{\out{\hypertarget{method-create_and_save}{}}}
-\subsection{Method \code{create_and_save()}}{
+\if{html}{\out{<a id="method-convert_and_save"></a>}}
+\if{latex}{\out{\hypertarget{method-convert_and_save}{}}}
+\subsection{Method \code{convert_and_save()}}{
+Create the JSON output files, web server routes, and file definition creators.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$create_and_save(dataset_uid, obj_i)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$convert_and_save(dataset_uid, obj_i)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{dataset_uid}}{The ID for this dataset.}
+
+\item{\code{obj_i}}{The index of this data object within the dataset.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-create_cells_list"></a>}}
@@ -136,12 +145,13 @@ A list that can be converted to JSON.
 \if{html}{\out{<a id="method-create_expression_matrix_list"></a>}}
 \if{latex}{\out{\hypertarget{method-create_expression_matrix_list}{}}}
 \subsection{Method \code{create_expression_matrix_list()}}{
+Create a list representing the cluster assignments in the Seurat object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$create_expression_matrix_list()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-A list which is in the format of the clusters.json file type.
+A list that can be converted to JSON.
 }
 }
 \if{html}{\out{<hr>}}
@@ -163,14 +173,14 @@ Make the file definition creator function for the cells data type.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A list of \code{routes} and \code{file_defs} lists.
+A file definition creator function which takes a \code{base_url} parameter.
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-make_cell_sets_file_def_creator"></a>}}
 \if{latex}{\out{\hypertarget{method-make_cell_sets_file_def_creator}{}}}
 \subsection{Method \code{make_cell_sets_file_def_creator()}}{
-Make the file definition creator function for the cells data type.
+Make the file definition creator function for the cell sets data type.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$make_cell_sets_file_def_creator(dataset_uid, obj_i)}\if{html}{\out{</div>}}
 }
@@ -185,14 +195,14 @@ Make the file definition creator function for the cells data type.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A list of \code{routes} and \code{file_defs} lists.
+A file definition creator function which takes a \code{base_url} parameter.
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-make_expression_matrix_file_def_creator"></a>}}
 \if{latex}{\out{\hypertarget{method-make_expression_matrix_file_def_creator}{}}}
 \subsection{Method \code{make_expression_matrix_file_def_creator()}}{
-Make the file definition creator function for the cells data type.
+Make the file definition creator function for the expression matrix data type.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$make_expression_matrix_file_def_creator(dataset_uid, obj_i)}\if{html}{\out{</div>}}
 }
@@ -207,7 +217,7 @@ Make the file definition creator function for the cells data type.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A list of \code{routes} and \code{file_defs} lists.
+A file definition creator function which takes a \code{base_url} parameter.
 }
 }
 \if{html}{\out{<hr>}}
