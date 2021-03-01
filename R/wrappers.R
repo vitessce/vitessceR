@@ -147,7 +147,7 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' to use for cell set names mapped to keys for scores.
     #' @keywords internal
     cell_set_meta_score_mappings = NULL,
-    #' @field Number of genes to use for the heatmap.
+    #' @field num_genes Number of genes to use for the heatmap.
     #' @keywords internal
     num_genes = NULL,
     #' @description
@@ -162,6 +162,8 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' @param cell_set_meta_name_mappings If cell_set_meta_names is provided, this list can
     #' also be provided to map between meta.data keys and new names to replace
     #' the keys in the interface.
+    #' @param num_genes The number of genes to include in the expression matrix. Note: this parameter is temporary and should be changed to something more useful such as number of most variable genes.
+    #' @param ... Parameters inherited from `AbstractWrapper`.
     #' @return A new `SeuratWrapper` object.
     initialize = function(obj, assay = "RNA", cell_set_meta_names = NA, cell_set_meta_score_mappings = NA, cell_set_meta_name_mappings = NA, num_genes = 10, ...) {
       super$initialize(...)

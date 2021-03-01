@@ -36,8 +36,10 @@ articles:
   - title: Articles
     navbar: Examples
     contents:
+      - seuratdata
       - seurat_basic
       - seurat_azimuth
+      - shiny
   - title: Articles
     navbar: Developer guides
     contents:
