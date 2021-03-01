@@ -57,6 +57,15 @@ devtools::document()
 pkgdown::build_site()
 ```
 
+Documentation is automatically deployed to GitHub pages with GitHub actions.
+
+## Deployment
+
+Currently, the package is only distributed through GitHub.
+In the future, we plan to submit the package to CRAN or Bioconductor.
+
+To increment the package version, update it in [`DESCRIPTION`](https://github.com/vitessce/vitessce-r/blob/master/DESCRIPTION#L4).
+
 ## Resources
 
 - [htmlwidgets: creating a widget](http://www.htmlwidgets.org/develop_intro.html)
