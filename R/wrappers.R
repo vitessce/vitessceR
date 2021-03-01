@@ -42,7 +42,6 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
     #'
     #' @param dataset_uid A unique identifier for this dataset.
     #' @param obj_i Within the dataset, the index of this data wrapper object.
-    #' @return A new response function.
     convert_and_save = function(dataset_uid, obj_i) {
       dir.create(self$get_out_dir(dataset_uid, obj_i), recursive = TRUE, showWarnings = FALSE)
     },
