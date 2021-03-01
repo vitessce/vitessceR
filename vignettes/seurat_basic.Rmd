@@ -9,13 +9,17 @@ vignette: >
 
 The following is a full example of usage of the widget with a Seurat object.
 
+First, install the dependencies:
+
 ```r
-# Install packages
+install.packages("seurat")
 install.packages("devtools")
 devtools::install_github("vitessce/vitessce-r")
-devtools::install_github("satijalab/seurat", ref = "release/4.0.0")
+```
 
-# Load packages
+Next, download the dataset, load and preprocess the Seurat object, and configure the Vitessce widget:
+
+```
 library(vitessce)
 library(Seurat)
 
