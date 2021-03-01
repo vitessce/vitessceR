@@ -34,23 +34,26 @@ to use for cell set names mapped to keys for scores.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{SeuratWrapper$new()}}
+\item \href{#method-create_and_save}{\code{SeuratWrapper$create_and_save()}}
 \item \href{#method-create_cells_list}{\code{SeuratWrapper$create_cells_list()}}
 \item \href{#method-create_cell_sets_list}{\code{SeuratWrapper$create_cell_sets_list()}}
-\item \href{#method-get_cells}{\code{SeuratWrapper$get_cells()}}
-\item \href{#method-get_cell_sets}{\code{SeuratWrapper$get_cell_sets()}}
+\item \href{#method-create_expression_matrix_list}{\code{SeuratWrapper$create_expression_matrix_list()}}
+\item \href{#method-make_cells_file_def_creator}{\code{SeuratWrapper$make_cells_file_def_creator()}}
+\item \href{#method-make_cell_sets_file_def_creator}{\code{SeuratWrapper$make_cell_sets_file_def_creator()}}
+\item \href{#method-make_expression_matrix_file_def_creator}{\code{SeuratWrapper$make_expression_matrix_file_def_creator()}}
 \item \href{#method-clone}{\code{SeuratWrapper$clone()}}
 }
 }
 \if{html}{
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="create_response_json">}\href{../../vitessce/html/AbstractWrapper.html#method-create_response_json}{\code{vitessce::AbstractWrapper$create_response_json()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_data">}\href{../../vitessce/html/AbstractWrapper.html#method-get_data}{\code{vitessce::AbstractWrapper$get_data()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_expression_matrix">}\href{../../vitessce/html/AbstractWrapper.html#method-get_expression_matrix}{\code{vitessce::AbstractWrapper$get_expression_matrix()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_molecules">}\href{../../vitessce/html/AbstractWrapper.html#method-get_molecules}{\code{vitessce::AbstractWrapper$get_molecules()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_neighborhoods">}\href{../../vitessce/html/AbstractWrapper.html#method-get_neighborhoods}{\code{vitessce::AbstractWrapper$get_neighborhoods()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_raster">}\href{../../vitessce/html/AbstractWrapper.html#method-get_raster}{\code{vitessce::AbstractWrapper$get_raster()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_route">}\href{../../vitessce/html/AbstractWrapper.html#method-get_route}{\code{vitessce::AbstractWrapper$get_route()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="auto_view_config">}\href{../../vitessce/html/AbstractWrapper.html#method-auto_view_config}{\code{vitessce::AbstractWrapper$auto_view_config()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="convert_and_save">}\href{../../vitessce/html/AbstractWrapper.html#method-convert_and_save}{\code{vitessce::AbstractWrapper$convert_and_save()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_file_defs">}\href{../../vitessce/html/AbstractWrapper.html#method-get_file_defs}{\code{vitessce::AbstractWrapper$get_file_defs()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_out_dir">}\href{../../vitessce/html/AbstractWrapper.html#method-get_out_dir}{\code{vitessce::AbstractWrapper$get_out_dir()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_out_dir_route">}\href{../../vitessce/html/AbstractWrapper.html#method-get_out_dir_route}{\code{vitessce::AbstractWrapper$get_out_dir_route()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_route_str">}\href{../../vitessce/html/AbstractWrapper.html#method-get_route_str}{\code{vitessce::AbstractWrapper$get_route_str()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_routes">}\href{../../vitessce/html/AbstractWrapper.html#method-get_routes}{\code{vitessce::AbstractWrapper$get_routes()}}\out{</span>}
 \item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_url">}\href{../../vitessce/html/AbstractWrapper.html#method-get_url}{\code{vitessce::AbstractWrapper$get_url()}}\out{</span>}
 }
 \out{</details>}
@@ -65,7 +68,8 @@ Create a wrapper around a Seurat object.
   obj,
   cell_set_meta_names = NA,
   cell_set_meta_score_mappings = NA,
-  cell_set_meta_name_mappings = NA
+  cell_set_meta_name_mappings = NA,
+  ...
 )}\if{html}{\out{</div>}}
 }
 
@@ -84,12 +88,23 @@ and keys for annotation scores.}
 \item{\code{cell_set_meta_name_mappings}}{If cell_set_meta_names is provided, this list can
 also be provided to map between meta.data keys and new names to replace
 the keys in the interface.}
+
+\item{\code{assay_name}}{The assay name under the assays part of the Seurat object.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 A new \code{SeuratWrapper} object.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-create_and_save"></a>}}
+\if{latex}{\out{\hypertarget{method-create_and_save}{}}}
+\subsection{Method \code{create_and_save()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$create_and_save(dataset_uid, obj_i)}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-create_cells_list"></a>}}
@@ -118,19 +133,29 @@ A list that can be converted to JSON.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_cells"></a>}}
-\if{latex}{\out{\hypertarget{method-get_cells}{}}}
-\subsection{Method \code{get_cells()}}{
-Get the routes and file definitions for the cells data type.
+\if{html}{\out{<a id="method-create_expression_matrix_list"></a>}}
+\if{latex}{\out{\hypertarget{method-create_expression_matrix_list}{}}}
+\subsection{Method \code{create_expression_matrix_list()}}{
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$get_cells(port, dataset_uid, obj_i)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$create_expression_matrix_list()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+A list which is in the format of the clusters.json file type.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-make_cells_file_def_creator"></a>}}
+\if{latex}{\out{\hypertarget{method-make_cells_file_def_creator}{}}}
+\subsection{Method \code{make_cells_file_def_creator()}}{
+Make the file definition creator function for the cells data type.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$make_cells_file_def_creator(dataset_uid, obj_i)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{port}}{The port on which the web server is serving.}
-
 \item{\code{dataset_uid}}{The ID for this dataset.}
 
 \item{\code{obj_i}}{The index of this data object within the dataset.}
@@ -142,19 +167,39 @@ A list of \code{routes} and \code{file_defs} lists.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_cell_sets"></a>}}
-\if{latex}{\out{\hypertarget{method-get_cell_sets}{}}}
-\subsection{Method \code{get_cell_sets()}}{
-Get the routes and file definitions for the cell sets data type.
+\if{html}{\out{<a id="method-make_cell_sets_file_def_creator"></a>}}
+\if{latex}{\out{\hypertarget{method-make_cell_sets_file_def_creator}{}}}
+\subsection{Method \code{make_cell_sets_file_def_creator()}}{
+Make the file definition creator function for the cells data type.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$get_cell_sets(port, dataset_uid, obj_i)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$make_cell_sets_file_def_creator(dataset_uid, obj_i)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{port}}{The port on which the web server is serving.}
+\item{\code{dataset_uid}}{The ID for this dataset.}
 
+\item{\code{obj_i}}{The index of this data object within the dataset.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A list of \code{routes} and \code{file_defs} lists.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-make_expression_matrix_file_def_creator"></a>}}
+\if{latex}{\out{\hypertarget{method-make_expression_matrix_file_def_creator}{}}}
+\subsection{Method \code{make_expression_matrix_file_def_creator()}}{
+Make the file definition creator function for the cells data type.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$make_expression_matrix_file_def_creator(dataset_uid, obj_i)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
 \item{\code{dataset_uid}}{The ID for this dataset.}
 
 \item{\code{obj_i}}{The index of this data object within the dataset.}
