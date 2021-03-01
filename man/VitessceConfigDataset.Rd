@@ -23,6 +23,7 @@ Dataset in a VitessceConfig
 \item \href{#method-new}{\code{VitessceConfigDataset$new()}}
 \item \href{#method-add_file}{\code{VitessceConfigDataset$add_file()}}
 \item \href{#method-add_object}{\code{VitessceConfigDataset$add_object()}}
+\item \href{#method-get_routes}{\code{VitessceConfigDataset$get_routes()}}
 \item \href{#method-to_list}{\code{VitessceConfigDataset$to_list()}}
 \item \href{#method-clone}{\code{VitessceConfigDataset$clone()}}
 }
@@ -94,18 +95,27 @@ Invisible self, to allow chaining.
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_routes"></a>}}
+\if{latex}{\out{\hypertarget{method-get_routes}{}}}
+\subsection{Method \code{get_routes()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDataset$get_routes()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-to_list"></a>}}
 \if{latex}{\out{\hypertarget{method-to_list}{}}}
 \subsection{Method \code{to_list()}}{
 Convert the dataset to an R list. Helpful when converting the config to JSON.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDataset$to_list(on_obj = NA)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDataset$to_list(base_url = NA)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{on_obj}}{An optional function to call upon encountering a dataset object. Used internally by the htmlwidget when rendering local objects.}
+\item{\code{base_url}}{The base URL to prepend to web server file paths.}
 }
 \if{html}{\out{</div>}}
 }

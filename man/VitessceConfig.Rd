@@ -9,7 +9,9 @@ Self, to allow chaining.
 
 Self, to allow chaining.
 
-A \code{list} that can be serialized to JSON using \code{rjson}.
+A \code{list} that can be serialized to JSON.
+
+A \code{list} of either \code{VitessceConfigServerCallbackRoute} or \code{VitessceConfigServerStaticRoute}.
 
 The Vitessce htmlwidget.
 }
@@ -72,7 +74,7 @@ vc$link_views(c(ref_plot, qry_plot), c(CoordinationType$EMBEDDING_TARGET_X, Coor
 
 vc <- VitessceConfig$new("My config")
 ds <- vc$add_dataset("My dataset")
-vc_list <- vc$to_list()
+vc_list <- vc$to_list(base_url = "http://localhost:8000")
 
 ## ------------------------------------------------
 ## Method `VitessceConfig$widget`
@@ -101,6 +103,7 @@ vc$widget()
 \item \href{#method-layout}{\code{VitessceConfig$layout()}}
 \item \href{#method-link_views}{\code{VitessceConfig$link_views()}}
 \item \href{#method-to_list}{\code{VitessceConfig$to_list()}}
+\item \href{#method-get_routes}{\code{VitessceConfig$get_routes()}}
 \item \href{#method-widget}{\code{VitessceConfig$widget()}}
 \item \href{#method-clone}{\code{VitessceConfig$clone()}}
 }
@@ -309,13 +312,13 @@ vc$link_views(c(ref_plot, qry_plot), c(CoordinationType$EMBEDDING_TARGET_X, Coor
 \subsection{Method \code{to_list()}}{
 Convert the config to an R list. Helpful when converting the config to JSON.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$to_list(on_obj = NA)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$to_list(base_url = NA)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{on_obj}}{An optional function to call upon encountering a dataset object. Used internally by the htmlwidget when rendering local objects.}
+\item{\code{base_url}}{An base URL to prepend to file paths.}
 }
 \if{html}{\out{</div>}}
 }
@@ -323,10 +326,20 @@ Convert the config to an R list. Helpful when converting the config to JSON.
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{vc <- VitessceConfig$new("My config")
 ds <- vc$add_dataset("My dataset")
-vc_list <- vc$to_list()
+vc_list <- vc$to_list(base_url = "http://localhost:8000")
 }
 \if{html}{\out{</div>}}
 
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_routes"></a>}}
+\if{latex}{\out{\hypertarget{method-get_routes}{}}}
+\subsection{Method \code{get_routes()}}{
+Get a list of web server route objects corresponding to any local files which will need to be served.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$get_routes()}\if{html}{\out{</div>}}
 }
 
 }

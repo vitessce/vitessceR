@@ -20,7 +20,7 @@ Class representing a local web server to serve dataset objects.
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{VitessceConfigServer$new()}}
-\item \href{#method-on_obj}{\code{VitessceConfigServer$on_obj()}}
+\item \href{#method-create_routes}{\code{VitessceConfigServer$create_routes()}}
 \item \href{#method-run}{\code{VitessceConfigServer$run()}}
 \item \href{#method-clone}{\code{VitessceConfigServer$clone()}}
 }
@@ -46,22 +46,19 @@ A new \code{VitessceConfigServer} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-on_obj"></a>}}
-\if{latex}{\out{\hypertarget{method-on_obj}{}}}
-\subsection{Method \code{on_obj()}}{
-Callback for a dataset object.
+\if{html}{\out{<a id="method-create_routes"></a>}}
+\if{latex}{\out{\hypertarget{method-create_routes}{}}}
+\subsection{Method \code{create_routes()}}{
+Set up the server routes.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigServer$on_obj(obj, dataset_uid, obj_i)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigServer$create_routes(routes)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{obj}}{The dataset object to serve.}
-
-\item{\code{dataset_uid}}{The dataset UID.}
-
-\item{\code{obj_i}}{The object index within the dataset.}
+\item{\code{routes}}{A list of route definition objects
+(\code{VitessceConfigServerCallbackRoute} or \code{VitessceConfigServerStaticRoute}).}
 }
 \if{html}{\out{</div>}}
 }

@@ -10,35 +10,73 @@ Abstract class representing a local dataset object in a Vitessce dataset.
 \details{
 Abstract dataset object wrapper class
 }
+\keyword{internal}
+\section{Public fields}{
+\if{html}{\out{<div class="r6-fields">}}
+\describe{
+\item{\code{out_dir}}{The directory for processed output files.}
+
+\item{\code{is_remote}}{Is the data object fully remote?}
+
+\item{\code{routes}}{A list of \code{VitessceConfigServerRoute} objects.}
+
+\item{\code{file_def_creators}}{A list of file definition creator functions.}
+}
+\if{html}{\out{</div>}}
+}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-create_response_json}{\code{AbstractWrapper$create_response_json()}}
-\item \href{#method-get_cells}{\code{AbstractWrapper$get_cells()}}
-\item \href{#method-get_cell_sets}{\code{AbstractWrapper$get_cell_sets()}}
-\item \href{#method-get_raster}{\code{AbstractWrapper$get_raster()}}
-\item \href{#method-get_molecules}{\code{AbstractWrapper$get_molecules()}}
-\item \href{#method-get_neighborhoods}{\code{AbstractWrapper$get_neighborhoods()}}
-\item \href{#method-get_expression_matrix}{\code{AbstractWrapper$get_expression_matrix()}}
-\item \href{#method-get_data}{\code{AbstractWrapper$get_data()}}
+\item \href{#method-new}{\code{AbstractWrapper$new()}}
+\item \href{#method-convert_and_save}{\code{AbstractWrapper$convert_and_save()}}
+\item \href{#method-get_routes}{\code{AbstractWrapper$get_routes()}}
+\item \href{#method-get_file_defs}{\code{AbstractWrapper$get_file_defs()}}
+\item \href{#method-get_out_dir_route}{\code{AbstractWrapper$get_out_dir_route()}}
 \item \href{#method-get_url}{\code{AbstractWrapper$get_url()}}
-\item \href{#method-get_route}{\code{AbstractWrapper$get_route()}}
+\item \href{#method-get_route_str}{\code{AbstractWrapper$get_route_str()}}
+\item \href{#method-get_out_dir}{\code{AbstractWrapper$get_out_dir()}}
+\item \href{#method-auto_view_config}{\code{AbstractWrapper$auto_view_config()}}
 \item \href{#method-clone}{\code{AbstractWrapper$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-create_response_json"></a>}}
-\if{latex}{\out{\hypertarget{method-create_response_json}{}}}
-\subsection{Method \code{create_response_json()}}{
-Create a response function.
+\if{html}{\out{<a id="method-new"></a>}}
+\if{latex}{\out{\hypertarget{method-new}{}}}
+\subsection{Method \code{new()}}{
+Create an abstract wrapper around a data object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$create_response_json(data_list)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$new(out_dir = NA)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{data_list}}{The data to serve, as a list. Will be converted to JSON.}
+\item{\code{out_dir}}{The directory for processed output files.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{AbstractWrapper} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-convert_and_save"></a>}}
+\if{latex}{\out{\hypertarget{method-convert_and_save}{}}}
+\subsection{Method \code{convert_and_save()}}{
+Fill in the file_def_creators array.
+Each function added to this list should take in a base URL and generate a Vitessce file definition.
+If this wrapper is wrapping local data, then create routes and fill in the routes array.
+This method is void, should not return anything.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$convert_and_save(dataset_uid, obj_i)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{dataset_uid}}{A unique identifier for this dataset.}
+
+\item{\code{obj_i}}{Within the dataset, the index of this data wrapper object.}
 }
 \if{html}{\out{</div>}}
 }
@@ -47,67 +85,50 @@ A new response function.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_cells"></a>}}
-\if{latex}{\out{\hypertarget{method-get_cells}{}}}
-\subsection{Method \code{get_cells()}}{
-Get the routes and file definitions for the cells data type.
+\if{html}{\out{<a id="method-get_routes"></a>}}
+\if{latex}{\out{\hypertarget{method-get_routes}{}}}
+\subsection{Method \code{get_routes()}}{
+Obtain the routes that have been created for this wrapper class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_cells(port, dataset_uid, obj_i)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_routes()}\if{html}{\out{</div>}}
 }
 
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{port}}{The port on which the web server is serving.}
-
-\item{\code{dataset_uid}}{The ID for this dataset.}
-
-\item{\code{obj_i}}{The index of this data object within the dataset.}
-}
-\if{html}{\out{</div>}}
-}
 \subsection{Returns}{
-NA or a list of \code{routes} and \code{file_defs} lists.
+A list of server routes.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_cell_sets"></a>}}
-\if{latex}{\out{\hypertarget{method-get_cell_sets}{}}}
-\subsection{Method \code{get_cell_sets()}}{
-Get the routes and file definitions for the cell sets data type.
+\if{html}{\out{<a id="method-get_file_defs"></a>}}
+\if{latex}{\out{\hypertarget{method-get_file_defs}{}}}
+\subsection{Method \code{get_file_defs()}}{
+Obtain the file definitions for this wrapper class.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_cell_sets(port, dataset_uid, obj_i)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_file_defs(base_url)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{port}}{The port on which the web server is serving.}
-
-\item{\code{dataset_uid}}{The ID for this dataset.}
-
-\item{\code{obj_i}}{The index of this data object within the dataset.}
+\item{\code{base_url}}{A base URL to prepend to relative URLs.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-NA or a list of \code{routes} and \code{file_defs} lists.
+A list of server routes.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_raster"></a>}}
-\if{latex}{\out{\hypertarget{method-get_raster}{}}}
-\subsection{Method \code{get_raster()}}{
-Get the routes and file definitions for the raster type.
+\if{html}{\out{<a id="method-get_out_dir_route"></a>}}
+\if{latex}{\out{\hypertarget{method-get_out_dir_route}{}}}
+\subsection{Method \code{get_out_dir_route()}}{
+Create a web server route for this object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_raster(port, dataset_uid, obj_i)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_out_dir_route(dataset_uid, obj_i)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{port}}{The port on which the web server is serving.}
-
 \item{\code{dataset_uid}}{The ID for this dataset.}
 
 \item{\code{obj_i}}{The index of this data object within the dataset.}
@@ -115,126 +136,26 @@ Get the routes and file definitions for the raster type.
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-NA or a list of \code{routes} and \code{file_defs} lists.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_molecules"></a>}}
-\if{latex}{\out{\hypertarget{method-get_molecules}{}}}
-\subsection{Method \code{get_molecules()}}{
-Get the routes and file definitions for the molecules data type.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_molecules(port, dataset_uid, obj_i)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{port}}{The port on which the web server is serving.}
-
-\item{\code{dataset_uid}}{The ID for this dataset.}
-
-\item{\code{obj_i}}{The index of this data object within the dataset.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-NA or a list of \code{routes} and \code{file_defs} lists.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_neighborhoods"></a>}}
-\if{latex}{\out{\hypertarget{method-get_neighborhoods}{}}}
-\subsection{Method \code{get_neighborhoods()}}{
-Get the routes and file definitions for the neighborhoods data type.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_neighborhoods(port, dataset_uid, obj_i)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{port}}{The port on which the web server is serving.}
-
-\item{\code{dataset_uid}}{The ID for this dataset.}
-
-\item{\code{obj_i}}{The index of this data object within the dataset.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-NA or a list of \code{routes} and \code{file_defs} lists.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_expression_matrix"></a>}}
-\if{latex}{\out{\hypertarget{method-get_expression_matrix}{}}}
-\subsection{Method \code{get_expression_matrix()}}{
-Get the routes and file definitions for the expression matrix data type.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_expression_matrix(port, dataset_uid, obj_i)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{port}}{The port on which the web server is serving.}
-
-\item{\code{dataset_uid}}{The ID for this dataset.}
-
-\item{\code{obj_i}}{The index of this data object within the dataset.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-NA or a list of \code{routes} and \code{file_defs} lists.
-}
-}
-\if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_data"></a>}}
-\if{latex}{\out{\hypertarget{method-get_data}{}}}
-\subsection{Method \code{get_data()}}{
-Get the routes and file definitions for a data type.
-\subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_data(data_type, port, dataset_uid, obj_i)}\if{html}{\out{</div>}}
-}
-
-\subsection{Arguments}{
-\if{html}{\out{<div class="arguments">}}
-\describe{
-\item{\code{data_type}}{A data type.}
-
-\item{\code{port}}{The port on which the web server is serving.}
-
-\item{\code{dataset_uid}}{The ID for this dataset.}
-
-\item{\code{obj_i}}{The index of this data object within the dataset.}
-}
-\if{html}{\out{</div>}}
-}
-\subsection{Returns}{
-NA or a list of \code{routes} and \code{file_defs} lists.
+A new \code{VitessceConfigServerStaticRoute} instance.
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_url"></a>}}
 \if{latex}{\out{\hypertarget{method-get_url}{}}}
 \subsection{Method \code{get_url()}}{
-Create a local web server URL for a dataset object data type.
+Create a local web server URL for a dataset object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_url(port, dataset_uid, obj_i, suffix)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_url(base_url, dataset_uid, obj_i, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{port}}{The port on which the web server is serving.}
+\item{\code{base_url}}{The base URL on which the web server is serving.}
 
 \item{\code{dataset_uid}}{The ID for this dataset.}
 
 \item{\code{obj_i}}{The index of this data object within the dataset.}
-
-\item{\code{suffix}}{A suffix for the URL.}
 }
 \if{html}{\out{</div>}}
 }
@@ -243,12 +164,12 @@ A URL as a string.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_route"></a>}}
-\if{latex}{\out{\hypertarget{method-get_route}{}}}
-\subsection{Method \code{get_route()}}{
-Create a web server route path for a dataset object data type.
+\if{html}{\out{<a id="method-get_route_str"></a>}}
+\if{latex}{\out{\hypertarget{method-get_route_str}{}}}
+\subsection{Method \code{get_route_str()}}{
+Create a string representing a web server route path (the part following the base URL).
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_route(dataset_uid, obj_i, suffix)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_route_str(dataset_uid, obj_i, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -257,13 +178,50 @@ Create a web server route path for a dataset object data type.
 \item{\code{dataset_uid}}{The ID for this dataset.}
 
 \item{\code{obj_i}}{The index of this data object within the dataset.}
-
-\item{\code{suffix}}{A suffix for the URL.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
 A path as a string.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-get_out_dir"></a>}}
+\if{latex}{\out{\hypertarget{method-get_out_dir}{}}}
+\subsection{Method \code{get_out_dir()}}{
+Create a directory path to a dataset within the base output directory.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_out_dir(dataset_uid, obj_i, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{dataset_uid}}{The ID for this dataset.}
+
+\item{\code{obj_i}}{The index of this data object within the dataset.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A path as a string.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-auto_view_config"></a>}}
+\if{latex}{\out{\hypertarget{method-auto_view_config}{}}}
+\subsection{Method \code{auto_view_config()}}{
+Automatically configure views for a particular dataset.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$auto_view_config(vc)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{vc}}{A \code{VitessceConfig} instance to configure.}
+}
+\if{html}{\out{</div>}}
 }
 }
 \if{html}{\out{<hr>}}
