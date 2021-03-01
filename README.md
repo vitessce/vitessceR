@@ -1,8 +1,8 @@
+<img src="./img/hexsticker.png" width="220" align="right"/> 
+
 # vitessce-r
 
 R API and htmlwidget facilitating interactive visualization of spatial single-cell data with [Vitessce](https://github.com/vitessce/vitessce).
-
-  <img src="./img/screenshot.png" width="700" alt="Screenshot of RStudio">
 
 ## Installation
 
@@ -23,6 +23,8 @@ vc$widget()
 ```
 
 For full examples, visit the [documentation](https://vitessce.github.io/vitessce-r/).
+
+<img src="./img/screenshot.png" width="600" alt="Screenshot of RStudio">
 
 ## Development
 
