@@ -15,22 +15,22 @@ Here, we start by overriding the `get_cells`, `get_cell_sets`, and `get_expressi
 
 The `initialize` constructor function currently takes one parameter `obj` which will be the Seurat of interest (i.e., the object that we are wrapping).
 
+The `convert_and_save` function performs any required data conversion steps, creates the web server routes, and creates the corresponding file definition creator functions.
+
+Complete file definitions cannot be finalized at this stage because the file definitions depend on the `base_url` (the URL on which the files will ultimately be served, typically "http://localhost:8000").
+
 ```r
 SeuratWrapper <- R6::R6Class("SeuratWrapper",
   inherit = AbstractWrapper,
   public = list(
     obj = NULL,
-    initialize = function(obj) {
+    initialize = function(obj, ...) {
+      super$initialize(...)
       self$obj <- obj
     },
-    get_cells = function(port, dataset_uid, obj_i) {
-        # TODO
-    },
-    get_cell_sets = function(port, dataset_uid, obj_i) {
-        # TODO
-    },
-    get_expression_matrix = function(port, dataset_uid, obj_i) {
-        # TODO
+    convert_and_save = function(dataset_uid, obj_i) {
+      super$initialize(dataset_uid, obj_i)
+      # TODO
     }
   )
 )
@@ -38,16 +38,13 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
 
 ## Cells
 
-We can begin to fill in the `get_cells` function corresponding to the `cells` data type.
+We can begin to create the output files and web server route details for the `cells` data type.
 Files with the `cells` data type can contain cell-level observations, such as dimensionality reduction coordinates for each cell.
 
 For now, we can create a new function called `create_cells_list` which we will fill in later.
 
-The return value for all functions with the `get_` prefix should be a list with two named values:
-
-- `routes`: a list containing `VitessceConfigServerRoute` objects, and
-- `file_defs`: a list containing file definitions.
-
+The `make_cells_file_def_creator` is a function which creates and returns a new "file definition creator" function.
+All file definition creator functions must take the `base_url` parameter and return a complete file definition.
 File definitions should be lists with named values:
 
 - `type`: a Vitessce data type string (for convenience, the values in the `DataType` list can be used),
@@ -55,55 +52,51 @@ File definitions should be lists with named values:
 - `url`: a URL string (required for most file types, but optional for the `raster.json` file type),
 - `options`: optional list of extra options (not necessary for any JSON file types).
 
-The `VitessceConfigServerRoute` constructor takes two parameters:
-
-- a path for the route (such as `/cells` which will become `http://localhost:8000/cells` if the web server is on port 8000), and
-- the data to serve on the route (such as an R list which will be automatically converted to a JSON object).
-
-For convenience, the functions `super$get_route` and `super$get_url` can be used to create the route and URL strings.
-For example, `/cells` and `http://localhost:8000/cells`, respectively.
-
-The final line of the function `retval` will result in `retval` being the return value of the function.
+In `convert_and_save` we append the new file definition creator to the list `self$file_def_creators` and we append a new web server route to `self$routes`.
 
 ```r
 SeuratWrapper <- R6::R6Class("SeuratWrapper",
   inherit = AbstractWrapper,
   public = list(
     obj = NULL,
-    initialize = function(obj) {
+    initialize = function(obj, ...) {
+      super$initialize(...)
       self$obj <- obj
     },
     create_cells_list = function() {
         # TODO
     },
-    get_cells = function(port, dataset_uid, obj_i) {
-        retval <- list(
-            routes = list(),
-            file_defs = list()
+    make_cells_file_def_creator = function(dataset_uid, obj_i) {
+      get_cells <- function(base_url) {
+        file_def <- list(
+          type = DataType$CELLS,
+          fileType = FileType$CELLS_JSON,
+          url = super$get_url(base_url, dataset_uid, obj_i, "cells.json")
         )
-
-        cells_list <- self$create_cells_list()
-
-        retval$routes <- list(
-            VitessceConfigServerRoute$new(
-                super$get_route(dataset_uid, obj_i, "cells"),
-                super$create_response_json(cells_list)
-            )
-        )
-        retval$file_defs <- list(
-            list(
-                type = DataType$CELLS,
-                fileType = FileType$CELLS_JSON,
-                url = super$get_url(port, dataset_uid, obj_i, "cells")
-            )
-        )
-        retval
+        return(file_def)
+      }
+      return(get_cells)
     },
-    get_cell_sets = function(port, dataset_uid, obj_i) {
-        # TODO
-    },
-    get_expression_matrix = function(port, dataset_uid, obj_i) {
-        # TODO
+    convert_and_save = function(dataset_uid, obj_i) {
+      super$initialize(dataset_uid, obj_i)
+      
+      # Get list representations of the data.
+      cells_list <- self$create_cells_list()
+
+      # Convert the lists to JSON strings.
+      cells_json <- jsonlite::toJSON(cells_list)
+
+      # Save the JSON strings to JSON files.
+      write(cells_json, file = self$get_out_dir(dataset_uid, obj_i, "cells.json"))
+
+      # Get the file definition creator functions.
+      cells_file_creator <- self$make_cells_file_def_creator(dataset_uid, obj_i)
+
+      # Append the new file definition creator function to the main list.
+      self$file_def_creators <- append(self$file_def_creators, cells_file_creator)
+
+      # Append a new web server route object which corresponds to the directory of JSON files to be served.
+      self$routes <- append(self$routes, self$get_out_dir_route(dataset_uid, obj_i))
     }
   )
 )
@@ -150,7 +143,8 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
   inherit = AbstractWrapper,
   public = list(
     obj = NULL,
-    initialize = function(obj) {
+    initialize = function(obj, ...) {
+      super$initialize(...)
       self$obj <- obj
     },
     create_cells_list = function() {
@@ -173,109 +167,45 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
             }
         }
 
-        cells_list
+        return(cells_list)
     },
-    get_cells = function(port, dataset_uid, obj_i) {
-        # omitted
+    make_cells_file_def_creator = function(dataset_uid, obj_i) {
+      get_cells <- function(base_url) {
+        file_def <- list(
+          type = DataType$CELLS,
+          fileType = FileType$CELLS_JSON,
+          url = super$get_url(base_url, dataset_uid, obj_i, "cells.json")
+        )
+        return(file_def)
+      }
+      return(get_cells)
     },
-    get_cell_sets = function(port, dataset_uid, obj_i) {
-        # TODO
-    },
-    get_expression_matrix = function(port, dataset_uid, obj_i) {
-        # TODO
+    convert_and_save = function(dataset_uid, obj_i) {
+      super$initialize(dataset_uid, obj_i)
+      
+      # Get list representations of the data.
+      cells_list <- self$create_cells_list()
+
+      # Convert the lists to JSON strings.
+      cells_json <- jsonlite::toJSON(cells_list)
+
+      # Save the JSON strings to JSON files.
+      write(cells_json, file = self$get_out_dir(dataset_uid, obj_i, "cells.json"))
+
+      # Get the file definition creator functions.
+      cells_file_creator <- self$make_cells_file_def_creator(dataset_uid, obj_i)
+
+      # Append the new file definition creator function to the main list.
+      self$file_def_creators <- append(self$file_def_creators, cells_file_creator)
+
+      # Append a new web server route object which corresponds to the directory of JSON files to be served.
+      self$routes <- append(self$routes, self$get_out_dir_route(dataset_uid, obj_i))
     }
   )
 )
 ```
 
-Putting it all together:
 
-```r
-#' Seurat object wrapper class
-#' @title SeuratWrapper Class
-#' @docType class
-#' @description
-#' Class representing a local Seurat object in a Vitessce dataset.
-#'
-#' @rdname SeuratWrapper
-#' @export
-SeuratWrapper <- R6::R6Class("SeuratWrapper",
-  inherit = AbstractWrapper,
-  public = list(
-    #' @field obj The object to wrap.
-    #' @keywords internal
-    obj = NULL,
-    #' @description
-    #' Create a wrapper around a Seurat object.
-    #' @param obj The object to wrap.
-    #' @return A new `SeuratWrapper` object.
-    initialize = function(obj) {
-      self$obj <- obj
-    },
-    #' @description
-    #' Create a list representing the cells in the Seurat object.
-    #' @return A list that can be converted to JSON.
-    #' @keywords internal
-    create_cells_list = function() {
-        obj <- self$obj
-        embeddings <- slot(obj, "reductions")
-        available_embeddings <- names(embeddings)
-
-        cell_ids <- names(slot(obj, "active.ident"))
-        cells_list <- obj_list()
-        for(cell_id in cell_ids) {
-            cells_list[[cell_id]] <- list(
-                mappings = obj_list()
-            )
-        }
-        for(embedding_name in available_embeddings) {
-            embedding <- embeddings[[embedding_name]]
-            embedding_matrix <- slot(embedding, "cell.embeddings")
-            for(cell_id in cell_ids) {
-                cells_list[[cell_id]]$mappings[[embedding_name]] <- unname(embedding_matrix[cell_id, 1:2])
-            }
-        }
-
-        cells_list
-    },
-    #' @description
-    #' Get the routes and file definitions for the cells data type.
-    #' @param port The port on which the web server is serving.
-    #' @param dataset_uid The ID for this dataset.
-    #' @param obj_i The index of this data object within the dataset.
-    #' @return A list of `routes` and `file_defs` lists.
-    get_cells = function(port, dataset_uid, obj_i) {
-        retval <- list(
-            routes = list(),
-            file_defs = list()
-        )
-
-        cells_list <- self$create_cells_list()
-
-        retval$routes <- list(
-            VitessceConfigServerRoute$new(
-                super$get_route(dataset_uid, obj_i, "cells"),
-                super$create_response_json(cells_list)
-            )
-        )
-        retval$file_defs <- list(
-            list(
-                type = DataType$CELLS,
-                fileType = FileType$CELLS_JSON,
-                url = super$get_url(port, dataset_uid, obj_i, "cells")
-            )
-        )
-        retval
-    },
-    get_cell_sets = function(port, dataset_uid, obj_i) {
-        # TODO
-    },
-    get_expression_matrix = function(port, dataset_uid, obj_i) {
-        # TODO
-    }
-  )
-)
-```
 
 ## Cell sets
 
