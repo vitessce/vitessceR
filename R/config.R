@@ -580,6 +580,9 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' @param height The height of the widget as a number or CSS string. Optional.
     #' @param port The port for the local web server (which serves local dataset objects to the widget).
     #' Optional. By default, uses open port between 8000 and 9000.
+    #' @param base_url The base URL for the web server. Optional.
+    #' By default, creates a localhost URL which includes the port.
+    #' @param serve Should local data be served by running a local web server with R plumber? By default, TRUE.
     #' @param element_id An element ID. Optional.
     #' @returns The Vitessce htmlwidget.
     #' @examples

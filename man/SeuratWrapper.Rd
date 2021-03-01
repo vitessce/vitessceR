@@ -19,6 +19,8 @@ Seurat object wrapper class
 \describe{
 \item{\code{obj}}{The object to wrap.}
 
+\item{\code{assay}}{The assay name in the Seurat object.}
+
 \item{\code{cell_set_meta_names}}{The keys in the Seurat object's meta.data
 to use for creating cell sets.}
 
@@ -27,6 +29,8 @@ to use for cell set names mapped to new names.}
 
 \item{\code{cell_set_meta_score_mappings}}{The keys in the Seurat object's meta.data
 to use for cell set names mapped to keys for scores.}
+
+\item{\code{num_genes}}{Number of genes to use for the heatmap.}
 }
 \if{html}{\out{</div>}}
 }
@@ -65,9 +69,11 @@ Create a wrapper around a Seurat object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$new(
   obj,
+  assay = "RNA",
   cell_set_meta_names = NA,
   cell_set_meta_score_mappings = NA,
   cell_set_meta_name_mappings = NA,
+  num_genes = 10,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -76,6 +82,8 @@ Create a wrapper around a Seurat object.
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{obj}}{The object to wrap.}
+
+\item{\code{assay}}{The assay name under the assays part of the Seurat object.}
 
 \item{\code{cell_set_meta_names}}{An optional list of keys in the object's meta.data
 list to use for creating cell sets.}
@@ -88,7 +96,9 @@ and keys for annotation scores.}
 also be provided to map between meta.data keys and new names to replace
 the keys in the interface.}
 
-\item{\code{assay_name}}{The assay name under the assays part of the Seurat object.}
+\item{\code{num_genes}}{The number of genes to include in the expression matrix. Note: this parameter is temporary and should be changed to something more useful such as number of most variable genes.}
+
+\item{\code{...}}{Parameters inherited from \code{AbstractWrapper}.}
 }
 \if{html}{\out{</div>}}
 }

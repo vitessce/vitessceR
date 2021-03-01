@@ -364,6 +364,11 @@ Create an htmlwidget based on this config.
 \item{\code{port}}{The port for the local web server (which serves local dataset objects to the widget).
 Optional. By default, uses open port between 8000 and 9000.}
 
+\item{\code{base_url}}{The base URL for the web server. Optional.
+By default, creates a localhost URL which includes the port.}
+
+\item{\code{serve}}{Should local data be served by running a local web server with R plumber? By default, TRUE.}
+
 \item{\code{element_id}}{An element ID. Optional.}
 }
 \if{html}{\out{</div>}}
