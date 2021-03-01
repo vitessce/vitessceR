@@ -68,6 +68,12 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
       }
       return(file_defs_with_base_url)
     },
+    #' @description
+    #' Create a web server route for this object.
+    #'
+    #' @param dataset_uid The ID for this dataset.
+    #' @param obj_i The index of this data object within the dataset.
+    #' @return A new `VitessceConfigServerStaticRoute` instance.
     get_out_dir_route = function(dataset_uid, obj_i) {
       route <- VitessceConfigServerStaticRoute$new(
         self$get_route_str(dataset_uid, obj_i),
@@ -103,6 +109,9 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
       retval <- paste(self$out_dir, dataset_uid, obj_i, ..., sep = "/")
       return(retval)
     },
+    #' @description
+    #' Automatically configure views for a particular dataset.
+    #' @param vc A `VitessceConfig` instance to configure.
     auto_view_config = function(vc) {
         warning("Auto view configuration has not yet been implemented for this data object wrapper class.")
     }
@@ -155,6 +164,10 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
       self$cell_set_meta_score_mappings <- cell_set_meta_score_mappings
       self$cell_set_meta_name_mappings <- cell_set_meta_name_mappings
     },
+    #' @description
+    #' Create the JSON output files, web server routes, and file definition creators.
+    #' @param dataset_uid The ID for this dataset.
+    #' @param obj_i The index of this data object within the dataset.
     convert_and_save = function(dataset_uid, obj_i) {
       super$convert_and_save(dataset_uid, obj_i)
 
@@ -272,7 +285,10 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
       }
       cell_sets_list
     },
-    #' @return A list which is in the format of the clusters.json file type.
+    #' @description
+    #' Create a list representing the cluster assignments in the Seurat object.
+    #' @return A list that can be converted to JSON.
+    #' @keywords internal
     create_expression_matrix_list = function() {
       # Link to an example clusters.json expression matrix: https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/linnarsson.clusters.json
 
@@ -302,7 +318,7 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' Make the file definition creator function for the cells data type.
     #' @param dataset_uid The ID for this dataset.
     #' @param obj_i The index of this data object within the dataset.
-    #' @return A list of `routes` and `file_defs` lists.
+    #' @return A file definition creator function which takes a `base_url` parameter.
     make_cells_file_def_creator = function(dataset_uid, obj_i) {
       get_cells <- function(base_url) {
         file_def <- list(
@@ -315,10 +331,10 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
       return(get_cells)
     },
     #' @description
-    #' Make the file definition creator function for the cells data type.
+    #' Make the file definition creator function for the cell sets data type.
     #' @param dataset_uid The ID for this dataset.
     #' @param obj_i The index of this data object within the dataset.
-    #' @return A list of `routes` and `file_defs` lists.
+    #' @return A file definition creator function which takes a `base_url` parameter.
     make_cell_sets_file_def_creator = function(dataset_uid, obj_i) {
       get_cell_sets <- function(base_url) {
         file_def <- list(
@@ -331,10 +347,10 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
       return(get_cell_sets)
     },
     #' @description
-    #' Make the file definition creator function for the cells data type.
+    #' Make the file definition creator function for the expression matrix data type.
     #' @param dataset_uid The ID for this dataset.
     #' @param obj_i The index of this data object within the dataset.
-    #' @return A list of `routes` and `file_defs` lists.
+    #' @return A file definition creator function which takes a `base_url` parameter.
     make_expression_matrix_file_def_creator = function(dataset_uid, obj_i) {
       get_expression_matrix <- function(base_url) {
         file_def <- list(

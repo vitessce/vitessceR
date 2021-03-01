@@ -15,6 +15,8 @@
 #' @param height The height of the widget as a number or CSS string. Optional.
 #' @param port The port for the local web server (which serves local dataset objects to the widget).
 #' Optional. By default, uses open port between 8000 and 9000.
+#' @param base_url The base URL for the web server. Optional.
+#' By default, creates a localhost URL which includes the port.
 #' @param element_id An element ID. Optional.
 #'
 #' @export
@@ -34,12 +36,12 @@ vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL,
   }
 
   server <- VitessceConfigServer$new(use_port)
-
   config_list <- config$to_list(base_url = use_base_url)
-  server$create_routes(config$get_routes())
+  routes <- config$get_routes()
+  server$create_routes(routes)
 
   # run the web server if necessary
-  if(server$num_obj > 0) {
+  if(length(routes) > 0) {
     # run in a background process
     future::plan(future::multisession)
     future::future(server$run())

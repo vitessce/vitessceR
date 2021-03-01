@@ -65,10 +65,9 @@ VitessceConfigServer <- R6::R6Class("VitessceConfigServer",
       private$server <- plumber::pr_set_docs(private$server, FALSE)
       private$server <- plumber::pr_filter(private$server, "CORS", cors)
       private$port <- port
-      self$num_obj <- 0
     },
     #' @description
-    #' Create the server routes.
+    #' Set up the server routes.
     #' @param routes A list of route definition objects
     #' (`VitessceConfigServerCallbackRoute` or `VitessceConfigServerStaticRoute`).
     create_routes = function(routes) {
@@ -79,9 +78,7 @@ VitessceConfigServer <- R6::R6Class("VitessceConfigServer",
         } else {
           # Reference: https://www.rplumber.io/articles/programmatic-usage.html#mount-static
           if(!(route$path %in% used_paths)) {
-            print(route$path)
-            print(route$directory)
-            private$server <- plumber::pr_static(private$server, "/test", "./test_out")
+            private$server <- plumber::pr_static(private$server, route$path, route$directory)
             used_paths <- append(used_paths, route$path)
           }
         }

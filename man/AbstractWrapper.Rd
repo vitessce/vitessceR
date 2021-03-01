@@ -121,10 +121,23 @@ A list of server routes.
 \if{html}{\out{<a id="method-get_out_dir_route"></a>}}
 \if{latex}{\out{\hypertarget{method-get_out_dir_route}{}}}
 \subsection{Method \code{get_out_dir_route()}}{
+Create a web server route for this object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_out_dir_route(dataset_uid, obj_i)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{dataset_uid}}{The ID for this dataset.}
+
+\item{\code{obj_i}}{The index of this data object within the dataset.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{VitessceConfigServerStaticRoute} instance.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_url"></a>}}
@@ -198,10 +211,18 @@ A path as a string.
 \if{html}{\out{<a id="method-auto_view_config"></a>}}
 \if{latex}{\out{\hypertarget{method-auto_view_config}{}}}
 \subsection{Method \code{auto_view_config()}}{
+Automatically configure views for a particular dataset.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$auto_view_config(vc)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{vc}}{A \code{VitessceConfig} instance to configure.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-clone"></a>}}
