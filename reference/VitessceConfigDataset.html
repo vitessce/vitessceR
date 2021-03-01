@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vitessce</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9002</span>
       </span>
     </div>
 
@@ -159,6 +159,7 @@
 <li><p><a href='#method-new'><code>VitessceConfigDataset$new()</code></a></p></li>
 <li><p><a href='#method-add_file'><code>VitessceConfigDataset$add_file()</code></a></p></li>
 <li><p><a href='#method-add_object'><code>VitessceConfigDataset$add_object()</code></a></p></li>
+<li><p><a href='#method-get_routes'><code>VitessceConfigDataset$get_routes()</code></a></p></li>
 <li><p><a href='#method-to_list'><code>VitessceConfigDataset$to_list()</code></a></p></li>
 <li><p><a href='#method-clone'><code>VitessceConfigDataset$clone()</code></a></p></li>
 </ul>
@@ -205,13 +206,19 @@
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>Invisible self, to allow chaining.</p>
 <p><hr>
+<a id="method-get_routes"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>get_routes()</code></h3>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>VitessceConfigDataset</span><span class='op'>$</span><span class='fu'>get_routes</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+
+<p><hr>
 <a id="method-to_list"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>to_list()</code></h3>
 <p>Convert the dataset to an R list. Helpful when converting the config to JSON.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>VitessceConfigDataset</span><span class='op'>$</span><span class='fu'>to_list</span><span class='op'>(</span>on_obj <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>VitessceConfigDataset</span><span class='op'>$</span><span class='fu'>to_list</span><span class='op'>(</span>base_url <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>on_obj</code></dt><dd><p>An optional function to call upon encountering a dataset object. Used internally by the htmlwidget when rendering local objects.</p></dd>
+<dt><code>base_url</code></dt><dd><p>The base URL to prepend to web server file paths.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>

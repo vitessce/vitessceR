@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vitessce</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9002</span>
       </span>
     </div>
 
@@ -169,21 +169,23 @@ to use for cell set names mapped to keys for scores.</p></dd>
 
 <ul>
 <li><p><a href='#method-new'><code>SeuratWrapper$new()</code></a></p></li>
+<li><p><a href='#method-convert_and_save'><code>SeuratWrapper$convert_and_save()</code></a></p></li>
 <li><p><a href='#method-create_cells_list'><code>SeuratWrapper$create_cells_list()</code></a></p></li>
 <li><p><a href='#method-create_cell_sets_list'><code>SeuratWrapper$create_cell_sets_list()</code></a></p></li>
-<li><p><a href='#method-get_cells'><code>SeuratWrapper$get_cells()</code></a></p></li>
-<li><p><a href='#method-get_cell_sets'><code>SeuratWrapper$get_cell_sets()</code></a></p></li>
+<li><p><a href='#method-create_expression_matrix_list'><code>SeuratWrapper$create_expression_matrix_list()</code></a></p></li>
+<li><p><a href='#method-make_cells_file_def_creator'><code>SeuratWrapper$make_cells_file_def_creator()</code></a></p></li>
+<li><p><a href='#method-make_cell_sets_file_def_creator'><code>SeuratWrapper$make_cell_sets_file_def_creator()</code></a></p></li>
+<li><p><a href='#method-make_expression_matrix_file_def_creator'><code>SeuratWrapper$make_expression_matrix_file_def_creator()</code></a></p></li>
 <li><p><a href='#method-clone'><code>SeuratWrapper$clone()</code></a></p></li>
 </ul>
 <p><details ><summary>Inherited methods</summary>
 <ul>
-<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="create_response_json"><a href='../../vitessce/html/AbstractWrapper.html#method-create_response_json'><code>vitessce::AbstractWrapper$create_response_json()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_data"><a href='../../vitessce/html/AbstractWrapper.html#method-get_data'><code>vitessce::AbstractWrapper$get_data()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_expression_matrix"><a href='../../vitessce/html/AbstractWrapper.html#method-get_expression_matrix'><code>vitessce::AbstractWrapper$get_expression_matrix()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_molecules"><a href='../../vitessce/html/AbstractWrapper.html#method-get_molecules'><code>vitessce::AbstractWrapper$get_molecules()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_neighborhoods"><a href='../../vitessce/html/AbstractWrapper.html#method-get_neighborhoods'><code>vitessce::AbstractWrapper$get_neighborhoods()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_raster"><a href='../../vitessce/html/AbstractWrapper.html#method-get_raster'><code>vitessce::AbstractWrapper$get_raster()</code></a></span></p></li>
-<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_route"><a href='../../vitessce/html/AbstractWrapper.html#method-get_route'><code>vitessce::AbstractWrapper$get_route()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="auto_view_config"><a href='../../vitessce/html/AbstractWrapper.html#method-auto_view_config'><code>vitessce::AbstractWrapper$auto_view_config()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_file_defs"><a href='../../vitessce/html/AbstractWrapper.html#method-get_file_defs'><code>vitessce::AbstractWrapper$get_file_defs()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_out_dir"><a href='../../vitessce/html/AbstractWrapper.html#method-get_out_dir'><code>vitessce::AbstractWrapper$get_out_dir()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_out_dir_route"><a href='../../vitessce/html/AbstractWrapper.html#method-get_out_dir_route'><code>vitessce::AbstractWrapper$get_out_dir_route()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_route_str"><a href='../../vitessce/html/AbstractWrapper.html#method-get_route_str'><code>vitessce::AbstractWrapper$get_route_str()</code></a></span></p></li>
+<li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_routes"><a href='../../vitessce/html/AbstractWrapper.html#method-get_routes'><code>vitessce::AbstractWrapper$get_routes()</code></a></span></p></li>
 <li><p><span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_url"><a href='../../vitessce/html/AbstractWrapper.html#method-get_url'><code>vitessce::AbstractWrapper$get_url()</code></a></span></p></li>
 </ul>
 </details>
@@ -195,7 +197,8 @@ to use for cell set names mapped to keys for scores.</p></dd>
   <span class='va'>obj</span>,
   cell_set_meta_names <span class='op'>=</span> <span class='cn'>NA</span>,
   cell_set_meta_score_mappings <span class='op'>=</span> <span class='cn'>NA</span>,
-  cell_set_meta_name_mappings <span class='op'>=</span> <span class='cn'>NA</span>
+  cell_set_meta_name_mappings <span class='op'>=</span> <span class='cn'>NA</span>,
+  <span class='va'>...</span>
 <span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
@@ -213,9 +216,23 @@ and keys for annotation scores.</p></dd>
 also be provided to map between meta.data keys and new names to replace
 the keys in the interface.</p></dd>
 
+<dt><code>assay_name</code></dt><dd><p>The assay name under the assays part of the Seurat object.</p></dd>
+
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A new <code>SeuratWrapper</code> object.</p>
+<p><hr>
+<a id="method-convert_and_save"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>convert_and_save()</code></h3>
+<p>Create the JSON output files, web server routes, and file definition creators.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>SeuratWrapper</span><span class='op'>$</span><span class='fu'>convert_and_save</span><span class='op'>(</span><span class='va'>dataset_uid</span>, <span class='va'>obj_i</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>dataset_uid</code></dt><dd><p>The ID for this dataset.</p></dd>
+
+<dt><code>obj_i</code></dt><dd><p>The index of this data object within the dataset.</p></dd>
+
+</dl><p></div></p>
 <p><hr>
 <a id="method-create_cells_list"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>create_cells_list()</code></h3>
 <p>Create a list representing the cells in the Seurat object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
@@ -231,37 +248,54 @@ the keys in the interface.</p></dd>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A list that can be converted to JSON.</p>
 <p><hr>
-<a id="method-get_cells"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>get_cells()</code></h3>
-<p>Get the routes and file definitions for the cells data type.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>SeuratWrapper</span><span class='op'>$</span><span class='fu'>get_cells</span><span class='op'>(</span><span class='va'>port</span>, <span class='va'>dataset_uid</span>, <span class='va'>obj_i</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-create_expression_matrix_list"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>create_expression_matrix_list()</code></h3>
+<p>Create a list representing the cluster assignments in the Seurat object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>SeuratWrapper</span><span class='op'>$</span><span class='fu'>create_expression_matrix_list</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
 
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>port</code></dt><dd><p>The port on which the web server is serving.</p></dd>
-
-<dt><code>dataset_uid</code></dt><dd><p>The ID for this dataset.</p></dd>
-
-<dt><code>obj_i</code></dt><dd><p>The index of this data object within the dataset.</p></dd>
-
-</dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A list of <code>routes</code> and <code>file_defs</code> lists.</p>
+<p>A list that can be converted to JSON.</p>
 <p><hr>
-<a id="method-get_cell_sets"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>get_cell_sets()</code></h3>
-<p>Get the routes and file definitions for the cell sets data type.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>SeuratWrapper</span><span class='op'>$</span><span class='fu'>get_cell_sets</span><span class='op'>(</span><span class='va'>port</span>, <span class='va'>dataset_uid</span>, <span class='va'>obj_i</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-make_cells_file_def_creator"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>make_cells_file_def_creator()</code></h3>
+<p>Make the file definition creator function for the cells data type.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>SeuratWrapper</span><span class='op'>$</span><span class='fu'>make_cells_file_def_creator</span><span class='op'>(</span><span class='va'>dataset_uid</span>, <span class='va'>obj_i</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>port</code></dt><dd><p>The port on which the web server is serving.</p></dd>
-
 <dt><code>dataset_uid</code></dt><dd><p>The ID for this dataset.</p></dd>
 
 <dt><code>obj_i</code></dt><dd><p>The index of this data object within the dataset.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A list of <code>routes</code> and <code>file_defs</code> lists.</p>
+<p>A file definition creator function which takes a <code>base_url</code> parameter.</p>
+<p><hr>
+<a id="method-make_cell_sets_file_def_creator"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>make_cell_sets_file_def_creator()</code></h3>
+<p>Make the file definition creator function for the cell sets data type.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>SeuratWrapper</span><span class='op'>$</span><span class='fu'>make_cell_sets_file_def_creator</span><span class='op'>(</span><span class='va'>dataset_uid</span>, <span class='va'>obj_i</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>dataset_uid</code></dt><dd><p>The ID for this dataset.</p></dd>
+
+<dt><code>obj_i</code></dt><dd><p>The index of this data object within the dataset.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>A file definition creator function which takes a <code>base_url</code> parameter.</p>
+<p><hr>
+<a id="method-make_expression_matrix_file_def_creator"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>make_expression_matrix_file_def_creator()</code></h3>
+<p>Make the file definition creator function for the expression matrix data type.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>SeuratWrapper</span><span class='op'>$</span><span class='fu'>make_expression_matrix_file_def_creator</span><span class='op'>(</span><span class='va'>dataset_uid</span>, <span class='va'>obj_i</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>dataset_uid</code></dt><dd><p>The ID for this dataset.</p></dd>
+
+<dt><code>obj_i</code></dt><dd><p>The index of this data object within the dataset.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>A file definition creator function which takes a <code>base_url</code> parameter.</p>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>

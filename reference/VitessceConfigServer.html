@@ -73,7 +73,7 @@ Class representing a local web server to serve dataset objects." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vitessce</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9002</span>
       </span>
     </div>
 
@@ -156,7 +156,7 @@ Class representing a local web server to serve dataset objects." />
 
 <ul>
 <li><p><a href='#method-new'><code>VitessceConfigServer$new()</code></a></p></li>
-<li><p><a href='#method-on_obj'><code>VitessceConfigServer$on_obj()</code></a></p></li>
+<li><p><a href='#method-create_routes'><code>VitessceConfigServer$create_routes()</code></a></p></li>
 <li><p><a href='#method-run'><code>VitessceConfigServer$run()</code></a></p></li>
 <li><p><a href='#method-clone'><code>VitessceConfigServer$clone()</code></a></p></li>
 </ul>
@@ -173,17 +173,14 @@ Class representing a local web server to serve dataset objects." />
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
 <p>A new <code>VitessceConfigServer</code> object.</p>
 <p><hr>
-<a id="method-on_obj"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>on_obj()</code></h3>
-<p>Callback for a dataset object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>VitessceConfigServer</span><span class='op'>$</span><span class='fu'>on_obj</span><span class='op'>(</span><span class='va'>obj</span>, <span class='va'>dataset_uid</span>, <span class='va'>obj_i</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-create_routes"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>create_routes()</code></h3>
+<p>Set up the server routes.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>VitessceConfigServer</span><span class='op'>$</span><span class='fu'>create_routes</span><span class='op'>(</span><span class='va'>routes</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>obj</code></dt><dd><p>The dataset object to serve.</p></dd>
-
-<dt><code>dataset_uid</code></dt><dd><p>The dataset UID.</p></dd>
-
-<dt><code>obj_i</code></dt><dd><p>The object index within the dataset.</p></dd>
+<dt><code>routes</code></dt><dd><p>A list of route definition objects
+(<code>VitessceConfigServerCallbackRoute</code> or <code>VitessceConfigServerStaticRoute</code>).</p></dd>
 
 </dl><p></div></p>
 <p><hr>

@@ -75,7 +75,7 @@ passed to the widget using the config parameter." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vitessce</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9002</span>
       </span>
     </div>
 
@@ -151,6 +151,8 @@ passed to the widget using the <code>config</code> parameter.</p>
   width <span class='op'>=</span> <span class='cn'>NULL</span>,
   height <span class='op'>=</span> <span class='cn'>NULL</span>,
   port <span class='op'>=</span> <span class='cn'>NA</span>,
+  base_url <span class='op'>=</span> <span class='cn'>NA</span>,
+  serve <span class='op'>=</span> <span class='cn'>TRUE</span>,
   element_id <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span></pre>
 
@@ -177,6 +179,15 @@ passed to the widget using the <code>config</code> parameter.</p>
       <th>port</th>
       <td><p>The port for the local web server (which serves local dataset objects to the widget).
 Optional. By default, uses open port between 8000 and 9000.</p></td>
+    </tr>
+    <tr>
+      <th>base_url</th>
+      <td><p>The base URL for the web server. Optional.
+By default, creates a localhost URL which includes the port.</p></td>
+    </tr>
+    <tr>
+      <th>serve</th>
+      <td><p>Should local data be served by running a local web server with R plumber? By default, TRUE.</p></td>
     </tr>
     <tr>
       <th>element_id</th>

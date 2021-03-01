@@ -31,7 +31,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vitessce</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9001</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9002</span>
       </span>
     </div>
 
@@ -102,38 +102,29 @@
 <p>The following is a guide for development of wrapper classes for single-cell data structures. For this guide, we will focus on writing a wrapper class for Seurat objects which supports the <code>cells</code>, <code>cell-sets</code>, and <code>expression-matrix</code> Vitessce data types.</p>
 <p>To begin, we can write a skeleton for the class, which contains functions that we will fill in. Here, we start by overriding the <code>get_cells</code>, <code>get_cell_sets</code>, and <code>get_expression_matrix</code> of the parent <code>AbstractWrapper</code> class.</p>
 <p>The <code>initialize</code> constructor function currently takes one parameter <code>obj</code> which will be the Seurat of interest (i.e., the object that we are wrapping).</p>
+<p>The <code>convert_and_save</code> function performs any required data conversion steps, creates the web server routes, and creates the corresponding file definition creator functions.</p>
+<p>Complete file definitions cannot be finalized at this stage because the file definitions depend on the <code>base_url</code> (the URL on which the files will ultimately be served, typically "<a href="http://localhost:8000" class="uri">http://localhost:8000</a>").</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">SeuratWrapper</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span><span class="st">"SeuratWrapper"</span>,
   inherit <span class="op">=</span> <span class="va">AbstractWrapper</span>,
   public <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
     obj <span class="op">=</span> <span class="cn">NULL</span>,
-    initialize <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">obj</span><span class="op">)</span> <span class="op">{</span>
+    initialize <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">obj</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">super</span><span class="op">$</span><span class="fu">initialize</span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
       <span class="va">self</span><span class="op">$</span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="va">obj</span>
     <span class="op">}</span>,
-    get_cells <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">port</span>, <span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span> <span class="op">{</span>
-        <span class="co"># TODO</span>
-    <span class="op">}</span>,
-    get_cell_sets <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">port</span>, <span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span> <span class="op">{</span>
-        <span class="co"># TODO</span>
-    <span class="op">}</span>,
-    get_expression_matrix <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">port</span>, <span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span> <span class="op">{</span>
-        <span class="co"># TODO</span>
+    convert_and_save <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">super</span><span class="op">$</span><span class="fu">initialize</span><span class="op">(</span><span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span>
+      <span class="co"># TODO</span>
     <span class="op">}</span>
   <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <div id="cells" class="section level2">
 <h2 class="hasAnchor">
 <a href="#cells" class="anchor"></a>Cells</h2>
-<p>We can begin to fill in the <code>get_cells</code> function corresponding to the <code>cells</code> data type. Files with the <code>cells</code> data type can contain cell-level observations, such as dimensionality reduction coordinates for each cell.</p>
+<p>We can begin to create the output files and web server route details for the <code>cells</code> data type. Files with the <code>cells</code> data type can contain cell-level observations, such as dimensionality reduction coordinates for each cell.</p>
 <p>For now, we can create a new function called <code>create_cells_list</code> which we will fill in later.</p>
-<p>The return value for all functions with the <code>get_</code> prefix should be a list with two named values:</p>
-<ul>
-<li>
-<code>routes</code>: a list containing <code>VitessceConfigServerRoute</code> objects, and</li>
-<li>
-<code>file_defs</code>: a list containing file definitions.</li>
-</ul>
-<p>File definitions should be lists with named values:</p>
+<p>The <code>make_cells_file_def_creator</code> is a function which creates and returns a new "file definition creator" function. All file definition creator functions must take the <code>base_url</code> parameter and return a complete file definition. File definitions should be lists with named values:</p>
 <ul>
 <li>
 <code>type</code>: a Vitessce data type string (for convenience, the values in the <code>DataType</code> list can be used),</li>
@@ -144,52 +135,50 @@
 <li>
 <code>options</code>: optional list of extra options (not necessary for any JSON file types).</li>
 </ul>
-<p>The <code>VitessceConfigServerRoute</code> constructor takes two parameters:</p>
-<ul>
-<li>a path for the route (such as <code>/cells</code> which will become <code>http://localhost:8000/cells</code> if the web server is on port 8000), and</li>
-<li>the data to serve on the route (such as an R list which will be automatically converted to a JSON object).</li>
-</ul>
-<p>For convenience, the functions <code>super$get_route</code> and <code>super$get_url</code> can be used to create the route and URL strings. For example, <code>/cells</code> and <code>http://localhost:8000/cells</code>, respectively.</p>
-<p>The final line of the function <code>retval</code> will result in <code>retval</code> being the return value of the function.</p>
+<p>In <code>convert_and_save</code> we append the new file definition creator to the list <code>self$file_def_creators</code> and we append a new web server route to <code>self$routes</code>.</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">SeuratWrapper</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span><span class="st">"SeuratWrapper"</span>,
   inherit <span class="op">=</span> <span class="va">AbstractWrapper</span>,
   public <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
     obj <span class="op">=</span> <span class="cn">NULL</span>,
-    initialize <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">obj</span><span class="op">)</span> <span class="op">{</span>
+    initialize <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">obj</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">super</span><span class="op">$</span><span class="fu">initialize</span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
       <span class="va">self</span><span class="op">$</span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="va">obj</span>
     <span class="op">}</span>,
     create_cells_list <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
         <span class="co"># TODO</span>
     <span class="op">}</span>,
-    get_cells <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">port</span>, <span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span> <span class="op">{</span>
-        <span class="va">retval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-            routes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>,
-            file_defs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>
+    make_cells_file_def_creator <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">get_cells</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">base_url</span><span class="op">)</span> <span class="op">{</span>
+        <span class="va">file_def</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+          type <span class="op">=</span> <span class="va">DataType</span><span class="op">$</span><span class="va">CELLS</span>,
+          fileType <span class="op">=</span> <span class="va">FileType</span><span class="op">$</span><span class="va">CELLS_JSON</span>,
+          url <span class="op">=</span> <span class="va">super</span><span class="op">$</span><span class="fu">get_url</span><span class="op">(</span><span class="va">base_url</span>, <span class="va">dataset_uid</span>, <span class="va">obj_i</span>, <span class="st">"cells.json"</span><span class="op">)</span>
         <span class="op">)</span>
-
-        <span class="va">cells_list</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="fu">create_cells_list</span><span class="op">(</span><span class="op">)</span>
-
-        <span class="va">retval</span><span class="op">$</span><span class="va">routes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-            <span class="va"><a href="../reference/VitessceConfigServerRoute.html">VitessceConfigServerRoute</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-                <span class="va">super</span><span class="op">$</span><span class="fu">get_route</span><span class="op">(</span><span class="va">dataset_uid</span>, <span class="va">obj_i</span>, <span class="st">"cells"</span><span class="op">)</span>,
-                <span class="va">super</span><span class="op">$</span><span class="fu">create_response_json</span><span class="op">(</span><span class="va">cells_list</span><span class="op">)</span>
-            <span class="op">)</span>
-        <span class="op">)</span>
-        <span class="va">retval</span><span class="op">$</span><span class="va">file_defs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-            <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-                type <span class="op">=</span> <span class="va">DataType</span><span class="op">$</span><span class="va">CELLS</span>,
-                fileType <span class="op">=</span> <span class="va">FileType</span><span class="op">$</span><span class="va">CELLS_JSON</span>,
-                url <span class="op">=</span> <span class="va">super</span><span class="op">$</span><span class="fu">get_url</span><span class="op">(</span><span class="va">port</span>, <span class="va">dataset_uid</span>, <span class="va">obj_i</span>, <span class="st">"cells"</span><span class="op">)</span>
-            <span class="op">)</span>
-        <span class="op">)</span>
-        <span class="va">retval</span>
+        <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">file_def</span><span class="op">)</span>
+      <span class="op">}</span>
+      <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">get_cells</span><span class="op">)</span>
     <span class="op">}</span>,
-    get_cell_sets <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">port</span>, <span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span> <span class="op">{</span>
-        <span class="co"># TODO</span>
-    <span class="op">}</span>,
-    get_expression_matrix <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">port</span>, <span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span> <span class="op">{</span>
-        <span class="co"># TODO</span>
+    convert_and_save <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">super</span><span class="op">$</span><span class="fu">initialize</span><span class="op">(</span><span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span>
+      
+      <span class="co"># Get list representations of the data.</span>
+      <span class="va">cells_list</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="fu">create_cells_list</span><span class="op">(</span><span class="op">)</span>
+
+      <span class="co"># Convert the lists to JSON strings.</span>
+      <span class="va">cells_json</span> <span class="op">&lt;-</span> <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html">toJSON</a></span><span class="op">(</span><span class="va">cells_list</span><span class="op">)</span>
+
+      <span class="co"># Save the JSON strings to JSON files.</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/write.html">write</a></span><span class="op">(</span><span class="va">cells_json</span>, file <span class="op">=</span> <span class="va">self</span><span class="op">$</span><span class="fu">get_out_dir</span><span class="op">(</span><span class="va">dataset_uid</span>, <span class="va">obj_i</span>, <span class="st">"cells.json"</span><span class="op">)</span><span class="op">)</span>
+
+      <span class="co"># Get the file definition creator functions.</span>
+      <span class="va">cells_file_creator</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="fu">make_cells_file_def_creator</span><span class="op">(</span><span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span>
+
+      <span class="co"># Append the new file definition creator function to the main list.</span>
+      <span class="va">self</span><span class="op">$</span><span class="va">file_def_creators</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="va">file_def_creators</span>, <span class="va">cells_file_creator</span><span class="op">)</span>
+
+      <span class="co"># Append a new web server route object which corresponds to the directory of JSON files to be served.</span>
+      <span class="va">self</span><span class="op">$</span><span class="va">routes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="va">routes</span>, <span class="va">self</span><span class="op">$</span><span class="fu">get_out_dir_route</span><span class="op">(</span><span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span><span class="op">)</span>
     <span class="op">}</span>
   <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
@@ -224,7 +213,8 @@
   inherit <span class="op">=</span> <span class="va">AbstractWrapper</span>,
   public <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
     obj <span class="op">=</span> <span class="cn">NULL</span>,
-    initialize <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">obj</span><span class="op">)</span> <span class="op">{</span>
+    initialize <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">obj</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">super</span><span class="op">$</span><span class="fu">initialize</span><span class="op">(</span><span class="va">...</span><span class="op">)</span>
       <span class="va">self</span><span class="op">$</span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="va">obj</span>
     <span class="op">}</span>,
     create_cells_list <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
@@ -247,102 +237,39 @@
             <span class="op">}</span>
         <span class="op">}</span>
 
-        <span class="va">cells_list</span>
+        <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">cells_list</span><span class="op">)</span>
     <span class="op">}</span>,
-    get_cells <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">port</span>, <span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span> <span class="op">{</span>
-        <span class="co"># omitted</span>
-    <span class="op">}</span>,
-    get_cell_sets <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">port</span>, <span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span> <span class="op">{</span>
-        <span class="co"># TODO</span>
-    <span class="op">}</span>,
-    get_expression_matrix <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">port</span>, <span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span> <span class="op">{</span>
-        <span class="co"># TODO</span>
-    <span class="op">}</span>
-  <span class="op">)</span>
-<span class="op">)</span></code></pre></div>
-<p>Putting it all together:</p>
-<div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co">#' Seurat object wrapper class</span>
-<span class="co">#' @title SeuratWrapper Class</span>
-<span class="co">#' @docType class</span>
-<span class="co">#' @description</span>
-<span class="co">#' Class representing a local Seurat object in a Vitessce dataset.</span>
-<span class="co">#'</span>
-<span class="co">#' @rdname SeuratWrapper</span>
-<span class="co">#' @export</span>
-<span class="va">SeuratWrapper</span> <span class="op">&lt;-</span> <span class="fu">R6</span><span class="fu">::</span><span class="kw"><a href="https://r6.r-lib.org/reference/R6Class.html">R6Class</a></span><span class="op">(</span><span class="st">"SeuratWrapper"</span>,
-  inherit <span class="op">=</span> <span class="va">AbstractWrapper</span>,
-  public <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-    <span class="co">#' @field obj The object to wrap.</span>
-    <span class="co">#' @keywords internal</span>
-    obj <span class="op">=</span> <span class="cn">NULL</span>,
-    <span class="co">#' @description</span>
-    <span class="co">#' Create a wrapper around a Seurat object.</span>
-    <span class="co">#' @param obj The object to wrap.</span>
-    <span class="co">#' @return A new `SeuratWrapper` object.</span>
-    initialize <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">obj</span><span class="op">)</span> <span class="op">{</span>
-      <span class="va">self</span><span class="op">$</span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="va">obj</span>
-    <span class="op">}</span>,
-    <span class="co">#' @description</span>
-    <span class="co">#' Create a list representing the cells in the Seurat object.</span>
-    <span class="co">#' @return A list that can be converted to JSON.</span>
-    <span class="co">#' @keywords internal</span>
-    create_cells_list <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span>
-        <span class="va">obj</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="va">obj</span>
-        <span class="va">embeddings</span> <span class="op">&lt;-</span> <span class="fu">slot</span><span class="op">(</span><span class="va">obj</span>, <span class="st">"reductions"</span><span class="op">)</span>
-        <span class="va">available_embeddings</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="va">embeddings</span><span class="op">)</span>
-
-        <span class="va">cell_ids</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span><span class="op">(</span><span class="fu">slot</span><span class="op">(</span><span class="va">obj</span>, <span class="st">"active.ident"</span><span class="op">)</span><span class="op">)</span>
-        <span class="va">cells_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/obj_list.html">obj_list</a></span><span class="op">(</span><span class="op">)</span>
-        <span class="kw">for</span><span class="op">(</span><span class="va">cell_id</span> <span class="kw">in</span> <span class="va">cell_ids</span><span class="op">)</span> <span class="op">{</span>
-            <span class="va">cells_list</span><span class="op">[[</span><span class="va">cell_id</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-                mappings <span class="op">=</span> <span class="fu"><a href="../reference/obj_list.html">obj_list</a></span><span class="op">(</span><span class="op">)</span>
-            <span class="op">)</span>
-        <span class="op">}</span>
-        <span class="kw">for</span><span class="op">(</span><span class="va">embedding_name</span> <span class="kw">in</span> <span class="va">available_embeddings</span><span class="op">)</span> <span class="op">{</span>
-            <span class="va">embedding</span> <span class="op">&lt;-</span> <span class="va">embeddings</span><span class="op">[[</span><span class="va">embedding_name</span><span class="op">]</span><span class="op">]</span>
-            <span class="va">embedding_matrix</span> <span class="op">&lt;-</span> <span class="fu">slot</span><span class="op">(</span><span class="va">embedding</span>, <span class="st">"cell.embeddings"</span><span class="op">)</span>
-            <span class="kw">for</span><span class="op">(</span><span class="va">cell_id</span> <span class="kw">in</span> <span class="va">cell_ids</span><span class="op">)</span> <span class="op">{</span>
-                <span class="va">cells_list</span><span class="op">[[</span><span class="va">cell_id</span><span class="op">]</span><span class="op">]</span><span class="op">$</span><span class="va">mappings</span><span class="op">[[</span><span class="va">embedding_name</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/unname.html">unname</a></span><span class="op">(</span><span class="va">embedding_matrix</span><span class="op">[</span><span class="va">cell_id</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">]</span><span class="op">)</span>
-            <span class="op">}</span>
-        <span class="op">}</span>
-
-        <span class="va">cells_list</span>
-    <span class="op">}</span>,
-    <span class="co">#' @description</span>
-    <span class="co">#' Get the routes and file definitions for the cells data type.</span>
-    <span class="co">#' @param port The port on which the web server is serving.</span>
-    <span class="co">#' @param dataset_uid The ID for this dataset.</span>
-    <span class="co">#' @param obj_i The index of this data object within the dataset.</span>
-    <span class="co">#' @return A list of `routes` and `file_defs` lists.</span>
-    get_cells <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">port</span>, <span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span> <span class="op">{</span>
-        <span class="va">retval</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-            routes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>,
-            file_defs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="op">)</span>
+    make_cells_file_def_creator <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">get_cells</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">base_url</span><span class="op">)</span> <span class="op">{</span>
+        <span class="va">file_def</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
+          type <span class="op">=</span> <span class="va">DataType</span><span class="op">$</span><span class="va">CELLS</span>,
+          fileType <span class="op">=</span> <span class="va">FileType</span><span class="op">$</span><span class="va">CELLS_JSON</span>,
+          url <span class="op">=</span> <span class="va">super</span><span class="op">$</span><span class="fu">get_url</span><span class="op">(</span><span class="va">base_url</span>, <span class="va">dataset_uid</span>, <span class="va">obj_i</span>, <span class="st">"cells.json"</span><span class="op">)</span>
         <span class="op">)</span>
-
-        <span class="va">cells_list</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="fu">create_cells_list</span><span class="op">(</span><span class="op">)</span>
-
-        <span class="va">retval</span><span class="op">$</span><span class="va">routes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-            <span class="va"><a href="../reference/VitessceConfigServerRoute.html">VitessceConfigServerRoute</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
-                <span class="va">super</span><span class="op">$</span><span class="fu">get_route</span><span class="op">(</span><span class="va">dataset_uid</span>, <span class="va">obj_i</span>, <span class="st">"cells"</span><span class="op">)</span>,
-                <span class="va">super</span><span class="op">$</span><span class="fu">create_response_json</span><span class="op">(</span><span class="va">cells_list</span><span class="op">)</span>
-            <span class="op">)</span>
-        <span class="op">)</span>
-        <span class="va">retval</span><span class="op">$</span><span class="va">file_defs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-            <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>
-                type <span class="op">=</span> <span class="va">DataType</span><span class="op">$</span><span class="va">CELLS</span>,
-                fileType <span class="op">=</span> <span class="va">FileType</span><span class="op">$</span><span class="va">CELLS_JSON</span>,
-                url <span class="op">=</span> <span class="va">super</span><span class="op">$</span><span class="fu">get_url</span><span class="op">(</span><span class="va">port</span>, <span class="va">dataset_uid</span>, <span class="va">obj_i</span>, <span class="st">"cells"</span><span class="op">)</span>
-            <span class="op">)</span>
-        <span class="op">)</span>
-        <span class="va">retval</span>
+        <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">file_def</span><span class="op">)</span>
+      <span class="op">}</span>
+      <span class="kw"><a href="https://rdrr.io/r/base/function.html">return</a></span><span class="op">(</span><span class="va">get_cells</span><span class="op">)</span>
     <span class="op">}</span>,
-    get_cell_sets <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">port</span>, <span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span> <span class="op">{</span>
-        <span class="co"># TODO</span>
-    <span class="op">}</span>,
-    get_expression_matrix <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">port</span>, <span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span> <span class="op">{</span>
-        <span class="co"># TODO</span>
+    convert_and_save <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span> <span class="op">{</span>
+      <span class="va">super</span><span class="op">$</span><span class="fu">initialize</span><span class="op">(</span><span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span>
+      
+      <span class="co"># Get list representations of the data.</span>
+      <span class="va">cells_list</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="fu">create_cells_list</span><span class="op">(</span><span class="op">)</span>
+
+      <span class="co"># Convert the lists to JSON strings.</span>
+      <span class="va">cells_json</span> <span class="op">&lt;-</span> <span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html">toJSON</a></span><span class="op">(</span><span class="va">cells_list</span><span class="op">)</span>
+
+      <span class="co"># Save the JSON strings to JSON files.</span>
+      <span class="fu"><a href="https://rdrr.io/r/base/write.html">write</a></span><span class="op">(</span><span class="va">cells_json</span>, file <span class="op">=</span> <span class="va">self</span><span class="op">$</span><span class="fu">get_out_dir</span><span class="op">(</span><span class="va">dataset_uid</span>, <span class="va">obj_i</span>, <span class="st">"cells.json"</span><span class="op">)</span><span class="op">)</span>
+
+      <span class="co"># Get the file definition creator functions.</span>
+      <span class="va">cells_file_creator</span> <span class="op">&lt;-</span> <span class="va">self</span><span class="op">$</span><span class="fu">make_cells_file_def_creator</span><span class="op">(</span><span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span>
+
+      <span class="co"># Append the new file definition creator function to the main list.</span>
+      <span class="va">self</span><span class="op">$</span><span class="va">file_def_creators</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="va">file_def_creators</span>, <span class="va">cells_file_creator</span><span class="op">)</span>
+
+      <span class="co"># Append a new web server route object which corresponds to the directory of JSON files to be served.</span>
+      <span class="va">self</span><span class="op">$</span><span class="va">routes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/append.html">append</a></span><span class="op">(</span><span class="va">self</span><span class="op">$</span><span class="va">routes</span>, <span class="va">self</span><span class="op">$</span><span class="fu">get_out_dir_route</span><span class="op">(</span><span class="va">dataset_uid</span>, <span class="va">obj_i</span><span class="op">)</span><span class="op">)</span>
     <span class="op">}</span>
   <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
