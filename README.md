@@ -1,4 +1,4 @@
-<img src="./img/hexsticker.png" width="220" align="right"/> 
+<img src="./img/hexsticker.png" width="230" align="right"/> 
 
 # vitessce-r
 
