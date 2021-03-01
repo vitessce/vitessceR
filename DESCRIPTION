@@ -6,7 +6,7 @@ Authors@R: c(
     person("Gehlenborg Lab", role = c("lbr", "aut")),
     person("Mark", "Keller", email = "7525285+keller-mark@users.noreply.github.com", role = c("cre", "aut"))
   )
-Description: What the package does (one paragraph).
+Description: R API and htmlwidget facilitating interactive visualization of spatial single-cell data with Vitessce.
 License: MIT + file LICENSE
 BugReports: https://github.com/vitessce/vitessce-r/issues
 URL: https://github.com/vitessce/vitessce-r
