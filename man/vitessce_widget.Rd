@@ -10,6 +10,8 @@ vitessce_widget(
   width = NULL,
   height = NULL,
   port = NA,
+  base_url = NA,
+  serve = TRUE,
   element_id = NULL
 )
 }
@@ -24,6 +26,11 @@ vitessce_widget(
 
 \item{port}{The port for the local web server (which serves local dataset objects to the widget).
 Optional. By default, uses open port between 8000 and 9000.}
+
+\item{base_url}{The base URL for the web server. Optional.
+By default, creates a localhost URL which includes the port.}
+
+\item{serve}{Should local data be served by running a local web server with R plumber? By default, TRUE.}
 
 \item{element_id}{An element ID. Optional.}
 }
