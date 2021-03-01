@@ -2,7 +2,7 @@
 title: "Usage with Seurat: Basic Example"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Usage with Seurat}
+  %\VignetteIndexEntry{Usage with Seurat: Basic Example}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -50,7 +50,7 @@ heatmap <- vc$add_view(dataset, Component$HEATMAP)
 vc$layout(hconcat(vconcat(scatterplot, heatmap), vconcat(cell_sets, status)))
 
 # Render the Vitessce widget
-vc$widget()
+vc$widget(theme = "light")
 ```
 
 
