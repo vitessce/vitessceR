@@ -106,7 +106,7 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
     #' @param obj_i The index of this data object within the dataset.
     #' @return A path as a string.
     get_out_dir = function(dataset_uid, obj_i, ...) {
-      retval <- paste(self$out_dir, dataset_uid, obj_i, ..., sep = "/")
+      retval <- file.path(self$out_dir, dataset_uid, obj_i, ...)
       return(retval)
     },
     #' @description
