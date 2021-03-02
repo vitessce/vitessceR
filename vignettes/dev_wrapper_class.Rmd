@@ -29,7 +29,7 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
       self$obj <- obj
     },
     convert_and_save = function(dataset_uid, obj_i) {
-      super$initialize(dataset_uid, obj_i)
+      super$convert_and_save(dataset_uid, obj_i)
       # TODO
     }
   )
@@ -78,7 +78,7 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
       return(get_cells)
     },
     convert_and_save = function(dataset_uid, obj_i) {
-      super$initialize(dataset_uid, obj_i)
+      super$convert_and_save(dataset_uid, obj_i)
       
       # Get list representations of the data.
       cells_list <- self$create_cells_list()
@@ -181,7 +181,7 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
       return(get_cells)
     },
     convert_and_save = function(dataset_uid, obj_i) {
-      super$initialize(dataset_uid, obj_i)
+      super$convert_and_save(dataset_uid, obj_i)
       
       # Get list representations of the data.
       cells_list <- self$create_cells_list()
