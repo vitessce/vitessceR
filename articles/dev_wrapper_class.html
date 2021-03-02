@@ -106,8 +106,8 @@
     
     
 <p>The following is a guide for development of wrapper classes for single-cell data structures. For this guide, we will focus on writing a wrapper class for Seurat objects which supports the <code>cells</code>, <code>cell-sets</code>, and <code>expression-matrix</code> Vitessce data types.</p>
-<p>To begin, we can write a skeleton for the class, which contains functions that we will fill in. Here, we start by overriding the <code>get_cells</code>, <code>get_cell_sets</code>, and <code>get_expression_matrix</code> of the parent <code>AbstractWrapper</code> class.</p>
-<p>The <code>initialize</code> constructor function currently takes one parameter <code>obj</code> which will be the Seurat of interest (i.e., the object that we are wrapping).</p>
+<p>To begin, we can write a skeleton for the class, which contains functions that we will fill in. Here, we start by overriding the <code>convert_and_save</code> function of the parent <code>AbstractWrapper</code> class.</p>
+<p>The <code>initialize</code> constructor function takes the parameter <code>obj</code> which will be the Seurat of interest (i.e., the object that we are wrapping).</p>
 <p>The <code>convert_and_save</code> function performs any required data conversion steps, creates the web server routes, and creates the corresponding file definition creator functions.</p>
 <p>Complete file definitions cannot be finalized at this stage because the file definitions depend on the <code>base_url</code> (the URL on which the files will ultimately be served, typically "<a href="http://localhost:8000" class="uri">http://localhost:8000</a>").</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
