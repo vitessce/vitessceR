@@ -19,7 +19,7 @@ devtools::install_github("vitessce/vitessce-r")
 
 Next, download the dataset, load and preprocess the Seurat object, and configure the Vitessce widget:
 
-```
+```r
 library(vitessce)
 library(Seurat)
 
