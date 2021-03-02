@@ -11,9 +11,9 @@ The following is a guide for development of wrapper classes for single-cell data
 For this guide, we will focus on writing a wrapper class for Seurat objects which supports the `cells`, `cell-sets`, and `expression-matrix` Vitessce data types.
 
 To begin, we can write a skeleton for the class, which contains functions that we will fill in.
-Here, we start by overriding the `get_cells`, `get_cell_sets`, and `get_expression_matrix` of the parent `AbstractWrapper` class.
+Here, we start by overriding the `convert_and_save` function of the parent `AbstractWrapper` class.
 
-The `initialize` constructor function currently takes one parameter `obj` which will be the Seurat of interest (i.e., the object that we are wrapping).
+The `initialize` constructor function takes the parameter `obj` which will be the Seurat of interest (i.e., the object that we are wrapping).
 
 The `convert_and_save` function performs any required data conversion steps, creates the web server routes, and creates the corresponding file definition creator functions.
 
