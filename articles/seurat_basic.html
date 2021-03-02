@@ -112,41 +112,42 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"vitessce/vitessce-r"</span><span class="op">)</span></code></pre></div>
 <p>Next, download the dataset, load and preprocess the Seurat object, and configure the Vitessce widget:</p>
-<pre><code><a href="https://github.com/vitessce/vitessce-r">library(vitessce)
-library(Seurat)
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vitessce/vitessce-r">vitessce</a></span><span class="op">)</span>
+<span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://satijalab.org/seurat">Seurat</a></span><span class="op">)</span>
 
-# Download example dataset
-url &lt;- "https://cf.10xgenomics.com/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz"
-dir.create("seurat")
-download.file(url, destfile = "seurat/filtered_gene_bc_matrices.tar.gz")
-untar("seurat/filtered_gene_bc_matrices.tar.gz", exdir = "seurat")
+<span class="co"># Download example dataset</span>
+<span class="va">url</span> <span class="op">&lt;-</span> <span class="st">"https://cf.10xgenomics.com/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz"</span>
+<span class="fu"><a href="https://rdrr.io/r/base/files2.html">dir.create</a></span><span class="op">(</span><span class="st">"seurat"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/download.file.html">download.file</a></span><span class="op">(</span><span class="va">url</span>, destfile <span class="op">=</span> <span class="st">"seurat/filtered_gene_bc_matrices.tar.gz"</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/untar.html">untar</a></span><span class="op">(</span><span class="st">"seurat/filtered_gene_bc_matrices.tar.gz"</span>, exdir <span class="op">=</span> <span class="st">"seurat"</span><span class="op">)</span>
 
-# Load example dataset
-pbmc.data &lt;- Read10X(data.dir = "seurat/filtered_gene_bc_matrices/hg19")
+<span class="co"># Load example dataset</span>
+<span class="va">pbmc.data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/Read10X.html">Read10X</a></span><span class="op">(</span>data.dir <span class="op">=</span> <span class="st">"seurat/filtered_gene_bc_matrices/hg19"</span><span class="op">)</span>
 
-# Process example dataset (run PCA and cluster)
-pbmc &lt;- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 3, min.features = 200)
-pbmc[["percent.mt"]] &lt;- PercentageFeatureSet(pbmc, pattern = "^MT-")
-pbmc &lt;- subset(pbmc, subset = nFeature_RNA &gt; 200 &amp; nFeature_RNA &lt; 2500 &amp; percent.mt &lt; 5)
-pbmc &lt;- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
-pbmc &lt;- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 2000)
-all.genes &lt;- rownames(pbmc)
-pbmc &lt;- ScaleData(pbmc, features = all.genes)
-pbmc &lt;- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
-pbmc &lt;- FindNeighbors(pbmc, dims = 1:10)
-pbmc &lt;- FindClusters(pbmc, resolution = 0.5)
+<span class="co"># Process example dataset (run PCA and cluster)</span>
+<span class="va">pbmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/CreateSeuratObject.html">CreateSeuratObject</a></span><span class="op">(</span>counts <span class="op">=</span> <span class="va">pbmc.data</span>, project <span class="op">=</span> <span class="st">"pbmc3k"</span>, min.cells <span class="op">=</span> <span class="fl">3</span>, min.features <span class="op">=</span> <span class="fl">200</span><span class="op">)</span>
+<span class="va">pbmc</span><span class="op">[[</span><span class="st">"percent.mt"</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/PercentageFeatureSet.html">PercentageFeatureSet</a></span><span class="op">(</span><span class="va">pbmc</span>, pattern <span class="op">=</span> <span class="st">"^MT-"</span><span class="op">)</span>
+<span class="va">pbmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="va">pbmc</span>, subset <span class="op">=</span> <span class="va">nFeature_RNA</span> <span class="op">&gt;</span> <span class="fl">200</span> <span class="op">&amp;</span> <span class="va">nFeature_RNA</span> <span class="op">&lt;</span> <span class="fl">2500</span> <span class="op">&amp;</span> <span class="va">percent.mt</span> <span class="op">&lt;</span> <span class="fl">5</span><span class="op">)</span>
+<span class="va">pbmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/NormalizeData.html">NormalizeData</a></span><span class="op">(</span><span class="va">pbmc</span>, normalization.method <span class="op">=</span> <span class="st">"LogNormalize"</span>, scale.factor <span class="op">=</span> <span class="fl">10000</span><span class="op">)</span>
+<span class="va">pbmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindVariableFeatures.html">FindVariableFeatures</a></span><span class="op">(</span><span class="va">pbmc</span>, selection.method <span class="op">=</span> <span class="st">"vst"</span>, nfeatures <span class="op">=</span> <span class="fl">2000</span><span class="op">)</span>
+<span class="va">all.genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span><span class="op">(</span><span class="va">pbmc</span><span class="op">)</span>
+<span class="va">pbmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/ScaleData.html">ScaleData</a></span><span class="op">(</span><span class="va">pbmc</span>, features <span class="op">=</span> <span class="va">all.genes</span><span class="op">)</span>
+<span class="va">pbmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/RunPCA.html">RunPCA</a></span><span class="op">(</span><span class="va">pbmc</span>, features <span class="op">=</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/VariableFeatures.html">VariableFeatures</a></span><span class="op">(</span>object <span class="op">=</span> <span class="va">pbmc</span><span class="op">)</span><span class="op">)</span>
+<span class="va">pbmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindNeighbors.html">FindNeighbors</a></span><span class="op">(</span><span class="va">pbmc</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span>
+<span class="va">pbmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindClusters.html">FindClusters</a></span><span class="op">(</span><span class="va">pbmc</span>, resolution <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
 
-# Create Vitessce view config
-vc &lt;- VitessceConfig$new("My config")
-dataset &lt;- vc$add_dataset("My dataset")$add_object(SeuratWrapper$new(pbmc, cell_set_meta_names = list("seurat_clusters"), out_dir = "out"))
-scatterplot &lt;- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
-status &lt;- vc$add_view(dataset, Component$STATUS)
-cell_sets &lt;- vc$add_view(dataset, Component$CELL_SETS)
-heatmap &lt;- vc$add_view(dataset, Component$HEATMAP)
-vc$layout(hconcat(vconcat(scatterplot, heatmap), vconcat(cell_sets, status)))
+<span class="co"># Create Vitessce view config</span>
+<span class="va">vc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/VitessceConfig.html">VitessceConfig</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"My config"</span><span class="op">)</span>
+<span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_dataset</span><span class="op">(</span><span class="st">"My dataset"</span><span class="op">)</span><span class="op">$</span><span class="fu">add_object</span><span class="op">(</span><span class="va"><a href="../reference/SeuratWrapper.html">SeuratWrapper</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">pbmc</span>, cell_set_meta_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="st">"seurat_clusters"</span><span class="op">)</span>, out_dir <span class="op">=</span> <span class="st">"out"</span><span class="op">)</span><span class="op">)</span>
+<span class="va">scatterplot</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_view</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">Component</span><span class="op">$</span><span class="va">SCATTERPLOT</span>, mapping <span class="op">=</span> <span class="st">"pca"</span><span class="op">)</span>
+<span class="va">status</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_view</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">Component</span><span class="op">$</span><span class="va">STATUS</span><span class="op">)</span>
+<span class="va">cell_sets</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_view</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">Component</span><span class="op">$</span><span class="va">CELL_SETS</span><span class="op">)</span>
+<span class="va">heatmap</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_view</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">Component</span><span class="op">$</span><span class="va">HEATMAP</span><span class="op">)</span>
+<span class="va">vc</span><span class="op">$</span><span class="fu">layout</span><span class="op">(</span><span class="fu"><a href="../reference/hconcat.html">hconcat</a></span><span class="op">(</span><span class="fu"><a href="../reference/vconcat.html">vconcat</a></span><span class="op">(</span><span class="va">scatterplot</span>, <span class="va">heatmap</span><span class="op">)</span>, <span class="fu"><a href="../reference/vconcat.html">vconcat</a></span><span class="op">(</span><span class="va">cell_sets</span>, <span class="va">status</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 
-# Render the Vitessce widget
-vc$widget(theme = "light")</a></code></pre>
+<span class="co"># Render the Vitessce widget</span>
+<span class="va">vc</span><span class="op">$</span><span class="fu">widget</span><span class="op">(</span>theme <span class="op">=</span> <span class="st">"light"</span><span class="op">)</span></code></pre></div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
