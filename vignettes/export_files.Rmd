@@ -12,7 +12,6 @@ This page demonstrates this process for an example dataset from [SeuratData](htt
 
 First, install the dependencies:
 ```r
-install.packages("shiny")
 install.packages("devtools")
 devtools::install_github("vitessce/vitessce-r")
 devtools::install_github('satijalab/seurat-data')
@@ -64,4 +63,5 @@ vitessce_url <- paste0("http://vitessce.io/?url=data:,", URLencode(jsonlite::toJ
 print(vitessce_url)
 ```
 
+Open the printed URL in a browser to access the visualization.
 
