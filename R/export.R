@@ -26,7 +26,7 @@ export_to_files <- function(config, out_dir) {
       files_to_copy = list.files(static_dir, full.names = TRUE)
       file.copy(files_to_copy, out_path, recursive = TRUE)
     } else {
-      warning("Export for VitessceConfigServerCallbackRoute in export_to_files not yet implemented.")
+      warning("Unknown route class found in export_to_files.")
     }
   }
 }
