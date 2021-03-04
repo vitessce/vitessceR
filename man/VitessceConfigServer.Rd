@@ -57,8 +57,7 @@ Set up the server routes.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
-\item{\code{routes}}{A list of route definition objects
-(\code{VitessceConfigServerCallbackRoute} or \code{VitessceConfigServerStaticRoute}).}
+\item{\code{routes}}{A list of \code{VitessceConfigServerStaticRoute} objects.}
 }
 \if{html}{\out{</div>}}
 }

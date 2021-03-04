@@ -30,7 +30,6 @@ reference:
 - contents:
   - AbstractWrapper
   - SeuratWrapper
-  - SeuratDimReducWrapper
 
 articles:
   - title: Articles

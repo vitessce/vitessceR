@@ -5,7 +5,7 @@
 \alias{VitessceConfigDataset}
 \title{VitessceConfigDataset Class}
 \value{
-A \code{list} of either \code{VitessceConfigServerCallbackRoute} or \code{VitessceConfigServerStaticRoute}.
+A \code{list} of \code{VitessceConfigServerStaticRoute}.
 }
 \description{
 Class representing a dataset in a Vitessce view config.
