@@ -39,7 +39,6 @@ VitessceConfigServer <- R6::R6Class("VitessceConfigServer",
         res$setHeader("Access-Control-Allow-Origin", "*")
         plumber::forward()
       }
-
       private$server <- plumber::pr()
       private$server <- plumber::pr_set_docs(private$server, FALSE)
       private$server <- plumber::pr_filter(private$server, "CORS", cors)
@@ -51,12 +50,10 @@ VitessceConfigServer <- R6::R6Class("VitessceConfigServer",
     create_routes = function(routes) {
       used_paths <- list()
       for(route in routes) {
-        if(class(route)[1] == "VitessceConfigServerStaticRoute") {
+        if(!(route$path %in% used_paths)) {
           # Reference: https://www.rplumber.io/articles/programmatic-usage.html#mount-static
-          if(!(route$path %in% used_paths)) {
-            private$server <- plumber::pr_static(private$server, route$path, route$directory)
-            used_paths <- append(used_paths, route$path)
-          }
+          private$server <- plumber::pr_static(private$server, route$path, route$directory)
+          used_paths <- append(used_paths, route$path)
         }
       }
     },
