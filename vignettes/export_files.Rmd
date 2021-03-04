@@ -49,8 +49,7 @@ Now that the files have been saved to the `./my_vitessce_files` directory, they 
 If you would like to serve the files locally, we recommend [http-server](https://github.com/http-party/http-server) which can be installed with NPM or Homebrew:
 
 ```sh
-cd my_vitessce_files
-http-server ./ --cors -p 3000
+http-server ./my_vitessce_files/ --cors -p 3000
 ```
 
 ## View on vitessce.io
@@ -64,4 +63,32 @@ print(vitessce_url)
 ```
 
 Open the printed URL in a browser to access the visualization.
+
+## Upload exported files to S3
+
+Rather than serving the data files locally, you may want to upload the files to a remote static file hosting service such as AWS S3, allowing the Vitessce URL to be shared with others.
+Visit our [data hosting](http://beta.vitessce.io/docs/data-hosting/index.html) documentation page to learn more about configuring file hosting services for use with Vitessce.
+Install the AWS S3 command-line interface by following the instructions [here](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html).
+
+Confirm that the CLI has been installed:
+```sh
+aws --version
+```
+
+Configure the AWS CLI by using any of the configuration methods, such as the [environment variable method](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
+
+Finally, upload the files to your bucket (swap out `my_bucket` for your bucket name):
+
+```sh
+aws s3 cp --recursive ./my_vitessce_files s3://my_bucket
+```
+
+Then, re-create the Vitessce URL, specifying the S3 bucket in the `base_url` parameter (swapping out `my_bucket` for your bucket name again):
+
+```r
+vc_list <- vc$to_list(base_url = "https://my_bucket.s3.amazonaws.com")
+vitessce_url <- paste0("http://vitessce.io/?url=data:,", URLencode(jsonlite::toJSON(vc_list, auto_unbox = TRUE)))
+print(vitessce_url)
+```
+
 
