@@ -109,7 +109,7 @@ DataType <- list(
 #'   \item `NEIGHBORHOODS_JSON`: The `neighborhoods.json` file type.
 #'   \item `RASTER_JSON`: The `raster.json` file type.
 #'   \item `CELL_SETS_JSON`: The `cell-sets.json` file type.
-#'   \item `EXPRESSION_MATRIX_JSON`: The `clusters.json` file type.
+#'   \item `CLUSTERS_JSON`: The `clusters.json` file type.
 #'   \item `EXPRESSION_MATRIX_ZARR`: The `expression-matrix.zarr` file type.
 #' }
 #'
@@ -120,7 +120,7 @@ FileType <- list(
   NEIGHBORHOODS_JSON = "neighborhoods.json",
   RASTER_JSON = "raster.json",
   CELL_SETS_JSON = "cell-sets.json",
-  EXPRESSION_MATRIX_JSON = "clusters.json",
+  CLUSTERS_JSON = "clusters.json",
   EXPRESSION_MATRIX_ZARR = "expression-matrix.zarr"
 )
 
