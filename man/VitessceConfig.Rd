@@ -11,7 +11,7 @@ Self, to allow chaining.
 
 A \code{list} that can be serialized to JSON.
 
-A \code{list} of either \code{VitessceConfigServerCallbackRoute} or \code{VitessceConfigServerStaticRoute}.
+A \code{list} of \code{VitessceConfigServerStaticRoute}.
 
 The Vitessce htmlwidget.
 }

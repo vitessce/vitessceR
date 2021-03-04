@@ -125,7 +125,7 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
     },
     #' @description
     #' Get a list of web server route objects corresponding to any local files which will need to be served.
-    #' @returns A `list` of either `VitessceConfigServerCallbackRoute` or `VitessceConfigServerStaticRoute`.
+    #' @returns A `list` of `VitessceConfigServerStaticRoute`.
     get_routes = function() {
       routes <- list()
       for(obj in private$objs) {
@@ -565,7 +565,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     },
     #' @description
     #' Get a list of web server route objects corresponding to any local files which will need to be served.
-    #' @returns A `list` of either `VitessceConfigServerCallbackRoute` or `VitessceConfigServerStaticRoute`.
+    #' @returns A `list` of `VitessceConfigServerStaticRoute`.
     get_routes = function() {
       retval <- list()
       for(d in self$config$datasets) {

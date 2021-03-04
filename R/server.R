@@ -1,24 +1,3 @@
-#' Class representing a local web server route: path + callback.
-#' @keywords internal
-#' @rdname VitessceConfigServerCallbackRoute
-VitessceConfigServerCallbackRoute <- R6::R6Class("VitessceConfigServerCallbackRoute",
-  public = list(
-    #' @field path The path on which the web server should respond to requests using this callback.
-    path = NULL,
-    #' @field callback The response callback.
-    callback = NULL,
-    #' @description
-    #' Create a new server route wrapper object.
-    #' @param path The route path.
-    #' @param callback The response callback.
-    #' @return A new `VitessceConfigServerCallbackRoute` object.
-    initialize = function(path, callback) {
-      self$path <- path
-      self$callback <- callback
-    }
-  )
-)
-
 #' Class representing a local web server static route: path + directory.
 #' @keywords internal
 #' @rdname VitessceConfigServerStaticRoute
@@ -68,14 +47,11 @@ VitessceConfigServer <- R6::R6Class("VitessceConfigServer",
     },
     #' @description
     #' Set up the server routes.
-    #' @param routes A list of route definition objects
-    #' (`VitessceConfigServerCallbackRoute` or `VitessceConfigServerStaticRoute`).
+    #' @param routes A list of `VitessceConfigServerStaticRoute` objects.
     create_routes = function(routes) {
       used_paths <- list()
       for(route in routes) {
-        if(class(route)[1] == "VitessceConfigServerCallbackRoute") {
-          private$server <- plumber::pr_get(private$server, route$path, route$callback)
-        } else {
+        if(class(route)[1] == "VitessceConfigServerStaticRoute") {
           # Reference: https://www.rplumber.io/articles/programmatic-usage.html#mount-static
           if(!(route$path %in% used_paths)) {
             private$server <- plumber::pr_static(private$server, route$path, route$directory)
