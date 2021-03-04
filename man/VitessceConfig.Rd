@@ -85,6 +85,16 @@ dataset <- vc$add_dataset("My dataset")
 description <- vc$add_view(dataset, Component$DESCRIPTION)
 vc$layout(description)
 vc$widget()
+
+## ------------------------------------------------
+## Method `VitessceConfig$export`
+## ------------------------------------------------
+
+vc <- VitessceConfig$new("My config")
+dataset <- vc$add_dataset("My dataset")
+description <- vc$add_view(dataset, Component$DESCRIPTION)
+vc$layout(description)
+vc$export(to = "files", out_dir = "./my_exported_files")
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -105,6 +115,7 @@ vc$widget()
 \item \href{#method-to_list}{\code{VitessceConfig$to_list()}}
 \item \href{#method-get_routes}{\code{VitessceConfig$get_routes()}}
 \item \href{#method-widget}{\code{VitessceConfig$widget()}}
+\item \href{#method-export}{\code{VitessceConfig$export()}}
 \item \href{#method-clone}{\code{VitessceConfig$clone()}}
 }
 }
@@ -380,6 +391,37 @@ dataset <- vc$add_dataset("My dataset")
 description <- vc$add_view(dataset, Component$DESCRIPTION)
 vc$layout(description)
 vc$widget()
+}
+\if{html}{\out{</div>}}
+
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-export"></a>}}
+\if{latex}{\out{\hypertarget{method-export}{}}}
+\subsection{Method \code{export()}}{
+Export the data associated with this configuration to a specified destination.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$export(to, ...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{to}}{Where should the files be exported to? Values currently supported: "files"}
+
+\item{\code{...}}{Extra parameters to pass through to the export function.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{vc <- VitessceConfig$new("My config")
+dataset <- vc$add_dataset("My dataset")
+description <- vc$add_view(dataset, Component$DESCRIPTION)
+vc$layout(description)
+vc$export(to = "files", out_dir = "./my_exported_files")
 }
 \if{html}{\out{</div>}}
 

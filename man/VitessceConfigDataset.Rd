@@ -4,6 +4,9 @@
 \name{VitessceConfigDataset}
 \alias{VitessceConfigDataset}
 \title{VitessceConfigDataset Class}
+\value{
+A \code{list} of either \code{VitessceConfigServerCallbackRoute} or \code{VitessceConfigServerStaticRoute}.
+}
 \description{
 Class representing a dataset in a Vitessce view config.
 }
@@ -98,6 +101,7 @@ Invisible self, to allow chaining.
 \if{html}{\out{<a id="method-get_routes"></a>}}
 \if{latex}{\out{\hypertarget{method-get_routes}{}}}
 \subsection{Method \code{get_routes()}}{
+Get a list of web server route objects corresponding to any local files which will need to be served.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDataset$get_routes()}\if{html}{\out{</div>}}
 }
