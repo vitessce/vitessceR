@@ -123,6 +123,9 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
       private$objs <- append(private$objs, obj)
       invisible(self)
     },
+    #' @description
+    #' Get a list of web server route objects corresponding to any local files which will need to be served.
+    #' @returns A `list` of either `VitessceConfigServerCallbackRoute` or `VitessceConfigServerStaticRoute`.
     get_routes = function() {
       routes <- list()
       for(obj in private$objs) {
@@ -593,6 +596,23 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' vc$widget()
     widget = function(...) {
       return(vitessce_widget(config = self, ...))
+    },
+    #' @description
+    #' Export the data associated with this configuration to a specified destination.
+    #' @param to Where should the files be exported to? Values currently supported: "files"
+    #' @param ... Extra parameters to pass through to the export function.
+    #' @examples
+    #' vc <- VitessceConfig$new("My config")
+    #' dataset <- vc$add_dataset("My dataset")
+    #' description <- vc$add_view(dataset, Component$DESCRIPTION)
+    #' vc$layout(description)
+    #' vc$export(to = "files", out_dir = "./my_exported_files")
+    export = function(to, ...) {
+      if(to == "files") {
+        export_to_files(config = self, ...)
+      } else {
+        stop("Unknown export destination.")
+      }
     }
   )
 )

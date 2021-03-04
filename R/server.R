@@ -31,7 +31,7 @@ VitessceConfigServerStaticRoute <- R6::R6Class("VitessceConfigServerStaticRoute"
    #' @description
    #' Create a new server route wrapper object.
    #' @param path The route path.
-   #' @param callback The response callback.
+   #' @param directory The directory to serve statically on this route.
    #' @return A new `VitessceConfigServerStaticRoute` object.
    initialize = function(path, directory) {
      self$path <- path

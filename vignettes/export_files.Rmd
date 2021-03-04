@@ -1,0 +1,67 @@
+---
+title: "Export data to static files"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Export data to static files}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+After configuring a Vitessce widget, you may want to obtain the static files associated and deploy the same Vitessce configuration as a static website.
+This page demonstrates this process for an example dataset from [SeuratData](https://github.com/satijalab/seurat-data).
+
+First, install the dependencies:
+```r
+install.packages("shiny")
+install.packages("devtools")
+devtools::install_github("vitessce/vitessce-r")
+devtools::install_github('satijalab/seurat-data')
+```
+
+Create the Vitessce configuration:
+
+```r
+library(vitessce)
+library(SeuratData)
+
+SeuratData::InstallData("pbmc3k")
+data("pbmc3k.final")
+force(pbmc3k.final)
+
+vc <- VitessceConfig$new("My config")
+dataset <- vc$add_dataset("My dataset")
+dataset <- dataset$add_object(SeuratWrapper$new(pbmc3k.final))
+scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
+vc$layout(scatterplot)
+```
+
+## Export files
+
+Run the `export` function on the `VitessceConfig` instance with the `to = "files"` parameter. Specify the directory in which to store the exported files with `out_dir`.
+
+```r
+vc$export(to = "files", out_dir = "./my_vitessce_files")
+```
+
+## Serve the exported files
+
+Now that the files have been saved to the `./my_vitessce_files` directory, they can be served by any static web server.
+
+If you would like to serve the files locally, we recommend [http-server](https://github.com/http-party/http-server) which can be installed with NPM or Homebrew:
+
+```sh
+cd my_vitessce_files
+http-server ./ --cors -p 3000
+```
+
+## View on vitessce.io
+
+The returned view config dict can be converted to a URL, and if the files are served on the internet (rather than locally), this URL can be used to share the interactive visualizations with colleagues.
+
+```r
+vc_list <- vc$to_list(base_url = "http://localhost:3000")
+vitessce_url <- paste0("http://vitessce.io/?url=data:,", URLencode(jsonlite::toJSON(vc_list, auto_unbox = TRUE)))
+print(vitessce_url)
+```
+
+
