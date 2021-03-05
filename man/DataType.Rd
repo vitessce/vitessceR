@@ -14,5 +14,13 @@ DataType
 The \code{DataType} list contains an enumeration of
 valid string constant values representing data types
 for dataset files.
+\itemize{
+\item \code{CELLS}: The \code{cells} data type.
+\item \code{CELL_SETS}: The \code{cell-sets} data type.
+\item \code{EXPRESSION_MATRIX}: The \code{expression-matrix} data type.
+\item \code{MOLECULES}: The \code{molecules} data type.
+\item \code{NEIGHBORHOODS}: The \code{neighborhoods} data type.
+\item \code{RASTER}: The \code{raster} data type.
+}
 }
 \keyword{datasets}

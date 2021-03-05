@@ -39,7 +39,7 @@ Create a new server route wrapper object.
 \describe{
 \item{\code{path}}{The route path.}
 
-\item{\code{callback}}{The response callback.}
+\item{\code{directory}}{The directory to serve statically on this route.}
 }
 \if{html}{\out{</div>}}
 }

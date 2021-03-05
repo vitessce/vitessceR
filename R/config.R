@@ -123,6 +123,9 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
       private$objs <- append(private$objs, obj)
       invisible(self)
     },
+    #' @description
+    #' Get a list of web server route objects corresponding to any local files which will need to be served.
+    #' @returns A `list` of `VitessceConfigServerStaticRoute`.
     get_routes = function() {
       routes <- list()
       for(obj in private$objs) {
@@ -562,7 +565,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     },
     #' @description
     #' Get a list of web server route objects corresponding to any local files which will need to be served.
-    #' @returns A `list` of either `VitessceConfigServerCallbackRoute` or `VitessceConfigServerStaticRoute`.
+    #' @returns A `list` of `VitessceConfigServerStaticRoute`.
     get_routes = function() {
       retval <- list()
       for(d in self$config$datasets) {
@@ -593,6 +596,28 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' vc$widget()
     widget = function(...) {
       return(vitessce_widget(config = self, ...))
+    },
+    #' @description
+    #' Export the data associated with this configuration to a specified destination.
+    #' @param to Where should the files be exported to? Values currently supported: "files"
+    #' @param with_config Should the Vitessce configuration be saved in the output directory as a JSON file?
+    #' @param base_url If `with_config` is TRUE, what `base_url` value should be used for creation of the JSON config?
+    #' @param ... Extra parameters to pass through to the export function.
+    #' @returns The Vitessce configuration as a list, with the `base_url` filled in.
+    #' @examples
+    #' vc <- VitessceConfig$new("My config")
+    #' dataset <- vc$add_dataset("My dataset")
+    #' description <- vc$add_view(dataset, Component$DESCRIPTION)
+    #' vc$layout(description)
+    #' vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./my_exported_files")
+    export = function(to = "files", with_config = FALSE, base_url = NA, ...) {
+      vc_list <- NA
+      if(to == "files") {
+        vc_list <- export_to_files(config = self, with_config = with_config, base_url = base_url, ...)
+      } else {
+        stop("Unknown export destination.")
+      }
+      invisible(vc_list)
     }
   )
 )

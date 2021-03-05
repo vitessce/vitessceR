@@ -19,6 +19,34 @@ in the coordination space.
 \item \code{EMBEDDING_TYPE}: The type of embedding to be used in the embedding scatterplot view, for example "UMAP" or "t-SNE".
 \item \code{EMBEDDING_ZOOM}: The zoom level of an embedding scatterplot view.
 \item \code{EMBEDDING_ROTATION}: The rotation of an embedding scatterplot view.
+\item \code{EMBEDDING_TARGET_X}: The x-axis center of an embedding scatterplot view.
+\item \code{EMBEDDING_TARGET_Y}: The y-axis center of an embedding scatterplot view.
+\item \code{EMBEDDING_TARGET_Z}: The z-axis center of an embedding scatterplot view.
+\item \code{SPATIAL_ZOOM}: The zoom level of a spatial view.
+\item \code{SPATIAL_ROTATION}: The rotation of a spatial view.
+\item \code{SPATIAL_TARGET_X}: The x-coordinate of the center of a spatial view.
+\item \code{SPATIAL_TARGET_Y}: The y-coordinate of the center of a spatial view.
+\item \code{SPATIAL_TARGET_Z}: The z-coordinate of the center of a spatial view.
+\item \code{HEATMAP_ZOOM_X}: The x-axis zoom level of a heatmap view.
+\item \code{HEATMAP_ZOOM_Y}: The y-axis zoom level of a heatmap view.
+\item \code{HEATMAP_TARGET_X}: The x-coordinate of the center of a heatmap view.
+\item \code{HEATMAP_TARGET_Y}: The y-coordinate of the center of a heatmap view.
+\item \code{CELL_FILTER}: A subset of cells to include after filtering.
+\item \code{CELL_HIGHLIGHT}: A subset of cells to highlight.
+\item \code{CELL_SET_SELECTION}: A subset of cell sets to select.
+\item \code{CELL_SET_HIGHLIGHT}: A subset of cell sets to highlight.
+\item \code{CELL_SET_COLOR}: A mapping from cell sets to colors.
+\item \code{GENE_FILTER}: A subset of genes to include after filtering.
+\item \code{GENE_HIGHLIGHT}: A subset of genes to highlight.
+\item \code{GENE_SELECTION}: A subset of genes to select.
+\item \code{GENE_EXPRESSION_COLORMAP}: The colormap to use for the gene expression scale.
+\item \code{GENE_EXPRESSION_COLORMAP_RANGE}: The range of gene expression values to map.
+\item \code{CELL_COLOR_ENCODING}: The color encoding to use for cell entities.
+\item \code{SPATIAL_LAYERS}: Layer definitions for the spatial view.
+\item \code{GENOMIC_ZOOM}: The zoom level of a higlass view.
+\item \code{GENOMIC_TARGET_X}: The x-coordinate of the center of a higlass view.
+\item \code{GENOMIC_TARGET_Y}: The y-coordinate of the center of a higlass view.
+\item \code{ADDITIONAL_CELL_SETS}: User-defined cell sets.
 }
 }
 \keyword{datasets}
