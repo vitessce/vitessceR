@@ -5,7 +5,7 @@
 \alias{Component}
 \title{Enumeration of Component values}
 \format{
-An object of class \code{list} of length 9.
+An object of class \code{list} of length 10.
 }
 \usage{
 Component
@@ -22,6 +22,7 @@ valid string constant values representing components.
 \item \code{HEATMAP}: The \code{heatmap} component.
 \item \code{LAYER_CONTROLLER}: The \code{layerController} component.
 \item \code{CELL_SET_SIZES}: The \code{cellSetSizes} component.
+\item \code{GENES}: The \code{genes} component.
 }
 }
 \keyword{datasets}

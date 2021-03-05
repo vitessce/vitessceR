@@ -34,13 +34,20 @@ scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
 vc$layout(scatterplot)
 ```
 
-## Export files
+# Export files for serving locally
 
-Run the `export` function on the `VitessceConfig` instance with the `to = "files"` parameter. Specify the directory in which to store the exported files with `out_dir`.
+Run the `export` function on the `VitessceConfig`.
+Specify the directory in which to store the exported files with `out_dir`.
 
 ```r
-vc$export(to = "files", out_dir = "./my_vitessce_files")
+vc$export(out_dir = "./my_vitessce_files")
 ```
+
+The directory `./my_vitessce_files` should now contain three files:
+
+- `cells.json`
+- `cell-sets.json`
+- `clusters.json`
 
 ## Serve the exported files
 
@@ -62,33 +69,45 @@ vitessce_url <- paste0("http://vitessce.io/?url=data:,", URLencode(jsonlite::toJ
 print(vitessce_url)
 ```
 
-Open the printed URL in a browser to access the visualization.
-
-## Upload exported files to S3
+# Export files for serving from AWS S3
 
 Rather than serving the data files locally, you may want to upload the files to a remote static file hosting service such as AWS S3, allowing the Vitessce URL to be shared with others.
 Visit our [data hosting](http://beta.vitessce.io/docs/data-hosting/index.html) documentation page to learn more about configuring file hosting services for use with Vitessce.
 Install the AWS S3 command-line interface by following the instructions [here](https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html).
 
 Confirm that the CLI has been installed:
+
 ```sh
 aws --version
 ```
 
 Configure the AWS CLI by using any of the configuration methods, such as the [environment variable method](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html).
 
-Finally, upload the files to your bucket (swap out `my_bucket` for your bucket name):
+
+In the case of AWS S3, you know ahead of time that the data files will ultimately be served from your S3 bucket, so you can include the `base_url` and `with_config = TRUE` parameters when calling the export function.
+For instance, if you intend to upload the files to an AWS S3 bucket called `my_bucket`:
+
+```r
+vc$export(with_config = TRUE, base_url = "https://my_bucket.s3.amazonaws.com", out_dir = "./my_vitessce_files")
+```
+
+The directory `./my_vitessce_files` should now contain the three data files, plus the view config as a JSON file (`config.json`):
+
+- `cells.json`
+- `cell-sets.json`
+- `clusters.json`
+- `config.json` (the file URLs in this config will include the `base_url` for the bucket)
+
+## Upload exported files to S3
+
+Upload all four files to your bucket:
 
 ```sh
 aws s3 cp --recursive ./my_vitessce_files s3://my_bucket
 ```
 
-Then, re-create the Vitessce URL, specifying the S3 bucket in the `base_url` parameter (swapping out `my_bucket` for your bucket name again):
+In this case, rather than including the configuration as url-encoded JSON in the URL, you can simply point to the configuration JSON file in the bucket:
 
-```r
-vc_list <- vc$to_list(base_url = "https://my_bucket.s3.amazonaws.com")
-vitessce_url <- paste0("http://vitessce.io/?url=data:,", URLencode(jsonlite::toJSON(vc_list, auto_unbox = TRUE)))
-print(vitessce_url)
-```
+`http://vitessce.io/?url=https://my_bucket.s3.amazonaws.com/config.json`
 
 
