@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Usage with SeuratData • vitessce</title>
+<title>Export data to static files • vitessce</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
 <script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Usage with SeuratData">
+<script src="../pkgdown.js"></script><meta property="og:title" content="Export data to static files">
 <meta property="og:description" content="vitessce">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -98,23 +98,23 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Usage with SeuratData</h1>
+      <h1 data-toc-skip>Export data to static files</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/vitessce/vitessce-r/blob/master/vignettes/seuratdata.Rmd"><code>vignettes/seuratdata.Rmd</code></a></small>
-      <div class="hidden name"><code>seuratdata.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/vitessce/vitessce-r/blob/master/vignettes/export_files.Rmd"><code>vignettes/export_files.Rmd</code></a></small>
+      <div class="hidden name"><code>export_files.Rmd</code></div>
 
     </div>
 
     
     
-<p>The following is an example of usage of the widget with a <a href="https://satijalab.org/seurat/">Seurat</a> object loaded from the <a href="https://github.com/satijalab/seurat-data">SeuratData</a> package.</p>
+<p>After configuring a Vitessce widget, you may want to obtain the static files associated and deploy the same Vitessce configuration as a static website. This page demonstrates this process for an example dataset from <a href="https://github.com/satijalab/seurat-data">SeuratData</a>.</p>
 <p>First, install the dependencies:</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"vitessce/vitessce-r"</span><span class="op">)</span>
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'satijalab/seurat-data'</span><span class="op">)</span></code></pre></div>
-<p>Load the dataset, create the Vitessce configuration <code>vc</code>, and render the widget by calling <code>vc$widget()</code>:</p>
+<p>Create the Vitessce configuration:</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vitessce/vitessce-r">vitessce</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">SeuratData</span><span class="op">)</span>
@@ -127,13 +127,70 @@
 <span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_dataset</span><span class="op">(</span><span class="st">"My dataset"</span><span class="op">)</span>
 <span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">dataset</span><span class="op">$</span><span class="fu">add_object</span><span class="op">(</span><span class="va"><a href="../reference/SeuratWrapper.html">SeuratWrapper</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">pbmc3k.final</span><span class="op">)</span><span class="op">)</span>
 <span class="va">scatterplot</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_view</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">Component</span><span class="op">$</span><span class="va">SCATTERPLOT</span>, mapping <span class="op">=</span> <span class="st">"pca"</span><span class="op">)</span>
-<span class="va">vc</span><span class="op">$</span><span class="fu">layout</span><span class="op">(</span><span class="va">scatterplot</span><span class="op">)</span>
-<span class="va">vc</span><span class="op">$</span><span class="fu">widget</span><span class="op">(</span>theme <span class="op">=</span> <span class="st">"light"</span><span class="op">)</span></code></pre></div>
+<span class="va">vc</span><span class="op">$</span><span class="fu">layout</span><span class="op">(</span><span class="va">scatterplot</span><span class="op">)</span></code></pre></div>
+<div id="export-files-for-serving-locally" class="section level1">
+<h1 class="hasAnchor">
+<a href="#export-files-for-serving-locally" class="anchor"></a>Export files for serving locally</h1>
+<p>Run the <code>export</code> function on the <code>VitessceConfig</code>. Specify the directory in which to store the exported files with <code>out_dir</code>.</p>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">vc</span><span class="op">$</span><span class="fu">export</span><span class="op">(</span>out_dir <span class="op">=</span> <span class="st">"./my_vitessce_files"</span><span class="op">)</span></code></pre></div>
+<p>The directory <code>./my_vitessce_files</code> should now contain three files:</p>
+<ul>
+<li><code>cells.json</code></li>
+<li><code>cell-sets.json</code></li>
+<li><code>clusters.json</code></li>
+</ul>
+<div id="serve-the-exported-files" class="section level2">
+<h2 class="hasAnchor">
+<a href="#serve-the-exported-files" class="anchor"></a>Serve the exported files</h2>
+<p>Now that the files have been saved to the <code>./my_vitessce_files</code> directory, they can be served by any static web server.</p>
+<p>If you would like to serve the files locally, we recommend <a href="https://github.com/http-party/http-server">http-server</a> which can be installed with NPM or Homebrew:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">http-server</span> ./my_vitessce_files/ --cors -p 3000</code></pre></div>
+</div>
+<div id="view-on-vitessce-io" class="section level2">
+<h2 class="hasAnchor">
+<a href="#view-on-vitessce-io" class="anchor"></a>View on vitessce.io</h2>
+<p>The returned view config dict can be converted to a URL, and if the files are served on the internet (rather than locally), this URL can be used to share the interactive visualizations with colleagues.</p>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">vc_list</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">to_list</span><span class="op">(</span>base_url <span class="op">=</span> <span class="st">"http://localhost:3000"</span><span class="op">)</span>
+<span class="va">vitessce_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span><span class="op">(</span><span class="st">"http://vitessce.io/?url=data:,"</span>, <span class="fu"><a href="https://rdrr.io/r/utils/URLencode.html">URLencode</a></span><span class="op">(</span><span class="fu">jsonlite</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/jsonlite/man/fromJSON.html">toJSON</a></span><span class="op">(</span><span class="va">vc_list</span>, auto_unbox <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">vitessce_url</span><span class="op">)</span></code></pre></div>
+</div>
+</div>
+<div id="export-files-for-serving-from-aws-s3" class="section level1">
+<h1 class="hasAnchor">
+<a href="#export-files-for-serving-from-aws-s3" class="anchor"></a>Export files for serving from AWS S3</h1>
+<p>Rather than serving the data files locally, you may want to upload the files to a remote static file hosting service such as AWS S3, allowing the Vitessce URL to be shared with others. Visit our <a href="http://beta.vitessce.io/docs/data-hosting/index.html">data hosting</a> documentation page to learn more about configuring file hosting services for use with Vitessce. Install the AWS S3 command-line interface by following the instructions <a href="https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html">here</a>.</p>
+<p>Confirm that the CLI has been installed:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">aws</span> --version</code></pre></div>
+<p>Configure the AWS CLI by using any of the configuration methods, such as the <a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html">environment variable method</a>.</p>
+<p>In the case of AWS S3, you know ahead of time that the data files will ultimately be served from your S3 bucket, so you can include the <code>base_url</code> and <code>with_config = TRUE</code> parameters when calling the export function. For instance, if you intend to upload the files to an AWS S3 bucket called <code>my_bucket</code>:</p>
+<div class="sourceCode"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">vc</span><span class="op">$</span><span class="fu">export</span><span class="op">(</span>with_config <span class="op">=</span> <span class="cn">TRUE</span>, base_url <span class="op">=</span> <span class="st">"https://my_bucket.s3.amazonaws.com"</span>, out_dir <span class="op">=</span> <span class="st">"./my_vitessce_files"</span><span class="op">)</span></code></pre></div>
+<p>The directory <code>./my_vitessce_files</code> should now contain the three data files, plus the view config as a JSON file (<code>config.json</code>):</p>
+<ul>
+<li><code>cells.json</code></li>
+<li><code>cell-sets.json</code></li>
+<li><code>clusters.json</code></li>
+<li>
+<code>config.json</code> (the file URLs in this config will include the <code>base_url</code> for the bucket)</li>
+</ul>
+<div id="upload-exported-files-to-s3" class="section level2">
+<h2 class="hasAnchor">
+<a href="#upload-exported-files-to-s3" class="anchor"></a>Upload exported files to S3</h2>
+<p>Upload all four files to your bucket:</p>
+<div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">aws</span> s3 cp --recursive ./my_vitessce_files s3://my_bucket</code></pre></div>
+<p>In this case, rather than including the configuration as url-encoded JSON in the URL, you can simply point to the configuration JSON file in the bucket:</p>
+<p><code>http://vitessce.io/?url=https://my_bucket.s3.amazonaws.com/config.json</code></p>
+</div>
+</div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
 
-      </div>
+        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
+    </nav>
+</div>
 
 </div>
 

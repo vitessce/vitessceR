@@ -47,6 +47,34 @@ DATASET: The dataset to be used for a view.
 EMBEDDING_TYPE: The type of embedding to be used in the embedding scatterplot view, for example &quot;UMAP&quot; or &quot;t-SNE&quot;.
 EMBEDDING_ZOOM: The zoom level of an embedding scatterplot view.
 EMBEDDING_ROTATION: The rotation of an embedding scatterplot view.
+EMBEDDING_TARGET_X: The x-axis center of an embedding scatterplot view.
+EMBEDDING_TARGET_Y: The y-axis center of an embedding scatterplot view.
+EMBEDDING_TARGET_Z: The z-axis center of an embedding scatterplot view.
+SPATIAL_ZOOM: The zoom level of a spatial view.
+SPATIAL_ROTATION: The rotation of a spatial view.
+SPATIAL_TARGET_X: The x-coordinate of the center of a spatial view.
+SPATIAL_TARGET_Y: The y-coordinate of the center of a spatial view.
+SPATIAL_TARGET_Z: The z-coordinate of the center of a spatial view.
+HEATMAP_ZOOM_X: The x-axis zoom level of a heatmap view.
+HEATMAP_ZOOM_Y: The y-axis zoom level of a heatmap view.
+HEATMAP_TARGET_X: The x-coordinate of the center of a heatmap view.
+HEATMAP_TARGET_Y: The y-coordinate of the center of a heatmap view.
+CELL_FILTER: A subset of cells to include after filtering.
+CELL_HIGHLIGHT: A subset of cells to highlight.
+CELL_SET_SELECTION: A subset of cell sets to select.
+CELL_SET_HIGHLIGHT: A subset of cell sets to highlight.
+CELL_SET_COLOR: A mapping from cell sets to colors.
+GENE_FILTER: A subset of genes to include after filtering.
+GENE_HIGHLIGHT: A subset of genes to highlight.
+GENE_SELECTION: A subset of genes to select.
+GENE_EXPRESSION_COLORMAP: The colormap to use for the gene expression scale.
+GENE_EXPRESSION_COLORMAP_RANGE: The range of gene expression values to map.
+CELL_COLOR_ENCODING: The color encoding to use for cell entities.
+SPATIAL_LAYERS: Layer definitions for the spatial view.
+GENOMIC_ZOOM: The zoom level of a higlass view.
+GENOMIC_TARGET_X: The x-coordinate of the center of a higlass view.
+GENOMIC_TARGET_Y: The y-coordinate of the center of a higlass view.
+ADDITIONAL_CELL_SETS: User-defined cell sets.
 
 " />
 
@@ -116,6 +144,9 @@ EMBEDDING_ROTATION: The rotation of an embedding scatterplot view.
     <li>
       <a href="../articles/shiny.html">Usage with Shiny</a>
     </li>
+    <li>
+      <a href="../articles/export_files.html">Export data to static files</a>
+    </li>
     <li class="divider"></li>
     <li class="dropdown-header">Developer guides</li>
     <li>
@@ -157,6 +188,34 @@ in the coordination space.</p><ul>
 <li><p><code>EMBEDDING_TYPE</code>: The type of embedding to be used in the embedding scatterplot view, for example "UMAP" or "t-SNE".</p></li>
 <li><p><code>EMBEDDING_ZOOM</code>: The zoom level of an embedding scatterplot view.</p></li>
 <li><p><code>EMBEDDING_ROTATION</code>: The rotation of an embedding scatterplot view.</p></li>
+<li><p><code>EMBEDDING_TARGET_X</code>: The x-axis center of an embedding scatterplot view.</p></li>
+<li><p><code>EMBEDDING_TARGET_Y</code>: The y-axis center of an embedding scatterplot view.</p></li>
+<li><p><code>EMBEDDING_TARGET_Z</code>: The z-axis center of an embedding scatterplot view.</p></li>
+<li><p><code>SPATIAL_ZOOM</code>: The zoom level of a spatial view.</p></li>
+<li><p><code>SPATIAL_ROTATION</code>: The rotation of a spatial view.</p></li>
+<li><p><code>SPATIAL_TARGET_X</code>: The x-coordinate of the center of a spatial view.</p></li>
+<li><p><code>SPATIAL_TARGET_Y</code>: The y-coordinate of the center of a spatial view.</p></li>
+<li><p><code>SPATIAL_TARGET_Z</code>: The z-coordinate of the center of a spatial view.</p></li>
+<li><p><code>HEATMAP_ZOOM_X</code>: The x-axis zoom level of a heatmap view.</p></li>
+<li><p><code>HEATMAP_ZOOM_Y</code>: The y-axis zoom level of a heatmap view.</p></li>
+<li><p><code>HEATMAP_TARGET_X</code>: The x-coordinate of the center of a heatmap view.</p></li>
+<li><p><code>HEATMAP_TARGET_Y</code>: The y-coordinate of the center of a heatmap view.</p></li>
+<li><p><code>CELL_FILTER</code>: A subset of cells to include after filtering.</p></li>
+<li><p><code>CELL_HIGHLIGHT</code>: A subset of cells to highlight.</p></li>
+<li><p><code>CELL_SET_SELECTION</code>: A subset of cell sets to select.</p></li>
+<li><p><code>CELL_SET_HIGHLIGHT</code>: A subset of cell sets to highlight.</p></li>
+<li><p><code>CELL_SET_COLOR</code>: A mapping from cell sets to colors.</p></li>
+<li><p><code>GENE_FILTER</code>: A subset of genes to include after filtering.</p></li>
+<li><p><code>GENE_HIGHLIGHT</code>: A subset of genes to highlight.</p></li>
+<li><p><code>GENE_SELECTION</code>: A subset of genes to select.</p></li>
+<li><p><code>GENE_EXPRESSION_COLORMAP</code>: The colormap to use for the gene expression scale.</p></li>
+<li><p><code>GENE_EXPRESSION_COLORMAP_RANGE</code>: The range of gene expression values to map.</p></li>
+<li><p><code>CELL_COLOR_ENCODING</code>: The color encoding to use for cell entities.</p></li>
+<li><p><code>SPATIAL_LAYERS</code>: Layer definitions for the spatial view.</p></li>
+<li><p><code>GENOMIC_ZOOM</code>: The zoom level of a higlass view.</p></li>
+<li><p><code>GENOMIC_TARGET_X</code>: The x-coordinate of the center of a higlass view.</p></li>
+<li><p><code>GENOMIC_TARGET_Y</code>: The y-coordinate of the center of a higlass view.</p></li>
+<li><p><code>ADDITIONAL_CELL_SETS</code>: User-defined cell sets.</p></li>
 </ul>
 
     </div>

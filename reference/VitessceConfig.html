@@ -108,6 +108,9 @@
     <li>
       <a href="../articles/shiny.html">Usage with Shiny</a>
     </li>
+    <li>
+      <a href="../articles/export_files.html">Export data to static files</a>
+    </li>
     <li class="divider"></li>
     <li class="dropdown-header">Developer guides</li>
     <li>
@@ -152,8 +155,9 @@
     <p>Self, to allow chaining.</p>
 <p>Self, to allow chaining.</p>
 <p>A <code>list</code> that can be serialized to JSON.</p>
-<p>A <code>list</code> of either <code>VitessceConfigServerCallbackRoute</code> or <code>VitessceConfigServerStaticRoute</code>.</p>
+<p>A <code>list</code> of <code>VitessceConfigServerStaticRoute</code>.</p>
 <p>The Vitessce htmlwidget.</p>
+<p>The Vitessce configuration as a list, with the <code>base_url</code> filled in.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>VitessceConfig</p>
@@ -178,6 +182,7 @@
 <li><p><a href='#method-to_list'><code>VitessceConfig$to_list()</code></a></p></li>
 <li><p><a href='#method-get_routes'><code>VitessceConfig$get_routes()</code></a></p></li>
 <li><p><a href='#method-widget'><code>VitessceConfig$widget()</code></a></p></li>
+<li><p><a href='#method-export'><code>VitessceConfig$export()</code></a></p></li>
 <li><p><a href='#method-clone'><code>VitessceConfig$clone()</code></a></p></li>
 </ul>
 <p><hr>
@@ -366,6 +371,30 @@ By default, creates a localhost URL which includes the port.</p></dd>
 </pre><p></div></p>
 
 <p><hr>
+<a id="method-export"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>export()</code></h3>
+<p>Export the data associated with this configuration to a specified destination.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>VitessceConfig</span><span class='op'>$</span><span class='fu'>export</span><span class='op'>(</span>to <span class='op'>=</span> <span class='st'>"files"</span>, with_config <span class='op'>=</span> <span class='cn'>FALSE</span>, base_url <span class='op'>=</span> <span class='cn'>NA</span>, <span class='va'>...</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>to</code></dt><dd><p>Where should the files be exported to? Values currently supported: "files"</p></dd>
+
+<dt><code>with_config</code></dt><dd><p>Should the Vitessce configuration be saved in the output directory as a JSON file?</p></dd>
+
+<dt><code>base_url</code></dt><dd><p>If <code>with_config</code> is TRUE, what <code>base_url</code> value should be used for creation of the JSON config?</p></dd>
+
+<dt><code>...</code></dt><dd><p>Extra parameters to pass through to the export function.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Examples</h4>
+<p><div class="r example copy"></p><pre><span class='va'>vc</span> <span class='op'>&lt;-</span> <span class='va'>VitessceConfig</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"My config"</span><span class='op'>)</span>
+<span class='va'>dataset</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_dataset</span><span class='op'>(</span><span class='st'>"My dataset"</span><span class='op'>)</span>
+<span class='va'>description</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_view</span><span class='op'>(</span><span class='va'>dataset</span>, <span class='va'>Component</span><span class='op'>$</span><span class='va'>DESCRIPTION</span><span class='op'>)</span>
+<span class='va'>vc</span><span class='op'>$</span><span class='fu'>layout</span><span class='op'>(</span><span class='va'>description</span><span class='op'>)</span>
+<span class='va'>vc</span><span class='op'>$</span><span class='fu'>export</span><span class='op'>(</span>with_config <span class='op'>=</span> <span class='cn'>TRUE</span>, base_url <span class='op'>=</span> <span class='st'>"http://localhost:3000"</span>, out_dir <span class='op'>=</span> <span class='st'>"./my_exported_files"</span><span class='op'>)</span>
+</pre><p></div></p>
+
+<p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>VitessceConfig</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
@@ -442,6 +471,16 @@ By default, creates a localhost URL which includes the port.</p></dd>
 <span class='va'>description</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_view</span><span class='op'>(</span><span class='va'>dataset</span>, <span class='va'>Component</span><span class='op'>$</span><span class='va'>DESCRIPTION</span><span class='op'>)</span>
 <span class='va'>vc</span><span class='op'>$</span><span class='fu'>layout</span><span class='op'>(</span><span class='va'>description</span><span class='op'>)</span>
 <span class='va'>vc</span><span class='op'>$</span><span class='fu'>widget</span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='co'>## ------------------------------------------------</span>
+<span class='co'>## Method `VitessceConfig$export`</span>
+<span class='co'>## ------------------------------------------------</span>
+
+<span class='va'>vc</span> <span class='op'>&lt;-</span> <span class='va'>VitessceConfig</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"My config"</span><span class='op'>)</span>
+<span class='va'>dataset</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_dataset</span><span class='op'>(</span><span class='st'>"My dataset"</span><span class='op'>)</span>
+<span class='va'>description</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_view</span><span class='op'>(</span><span class='va'>dataset</span>, <span class='va'>Component</span><span class='op'>$</span><span class='va'>DESCRIPTION</span><span class='op'>)</span>
+<span class='va'>vc</span><span class='op'>$</span><span class='fu'>layout</span><span class='op'>(</span><span class='va'>description</span><span class='op'>)</span>
+<span class='va'>vc</span><span class='op'>$</span><span class='fu'>export</span><span class='op'>(</span>with_config <span class='op'>=</span> <span class='cn'>TRUE</span>, base_url <span class='op'>=</span> <span class='st'>"http://localhost:3000"</span>, out_dir <span class='op'>=</span> <span class='st'>"./my_exported_files"</span><span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

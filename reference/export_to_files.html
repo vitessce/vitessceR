@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Class representing a local web server route: path + callback. — VitessceConfigServerCallbackRoute • vitessce</title>
+<title>Export a Vitessce configuration to a directory of static files. — export_to_files • vitessce</title>
 
 
 <!-- jquery -->
@@ -39,9 +39,9 @@
 
 
 
-<meta property="og:title" content="Class representing a local web server route: path + callback. — VitessceConfigServerCallbackRoute" />
-<meta property="og:description" content="Class representing a local web server route: path + callback.
-Class representing a local web server route: path + callback." />
+<meta property="og:title" content="Export a Vitessce configuration to a directory of static files. — export_to_files" />
+<meta property="og:description" content="A helper function to export files associated with a particular Vitessce configuration to a local directory.
+We do not recommend calling this function directly. Instead, use the export() function on a VitessceConfig instance." />
 
 
 
@@ -109,6 +109,9 @@ Class representing a local web server route: path + callback." />
     <li>
       <a href="../articles/shiny.html">Usage with Shiny</a>
     </li>
+    <li>
+      <a href="../articles/export_files.html">Export data to static files</a>
+    </li>
     <li class="divider"></li>
     <li class="dropdown-header">Developer guides</li>
     <li>
@@ -137,62 +140,50 @@ Class representing a local web server route: path + callback." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Class representing a local web server route: path + callback.</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vitessce/vitessce-r/blob/master/R/server.R'><code>R/server.R</code></a></small>
-    <div class="hidden name"><code>VitessceConfigServerCallbackRoute.Rd</code></div>
+    <h1>Export a Vitessce configuration to a directory of static files.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vitessce/vitessce-r/blob/master/R/export.R'><code>R/export.R</code></a></small>
+    <div class="hidden name"><code>export_to_files.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Class representing a local web server route: path + callback.</p>
-<p>Class representing a local web server route: path + callback.</p>
+    <p>A helper function to export files associated with a particular Vitessce configuration to a local directory.
+We do not recommend calling this function directly. Instead, use the <code>export()</code> function on a <code>VitessceConfig</code> instance.</p>
     </div>
 
+    <pre class="usage"><span class='fu'>export_to_files</span><span class='op'>(</span><span class='va'>config</span>, <span class='va'>with_config</span>, <span class='va'>base_url</span>, <span class='va'>out_dir</span><span class='op'>)</span></pre>
 
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>config</th>
+      <td><p>An instance of <code>VitessceConfig</code></p></td>
+    </tr>
+    <tr>
+      <th>with_config</th>
+      <td><p>Should the config be saved in the <code>out_dir</code> (as a JSON file)?</p></td>
+    </tr>
+    <tr>
+      <th>base_url</th>
+      <td><p>If <code>with_config</code> is TRUE, what <code>base_url</code> value should be used for creation of the JSON config?</p></td>
+    </tr>
+    <tr>
+      <th>out_dir</th>
+      <td><p>The directory for storing exported files.</p></td>
+    </tr>
+    </table>
 
-    <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><div class="r6-fields"></p><dl>
-<dt><code>path</code></dt><dd><p>The path on which the web server should respond to requests using this callback.</p></dd>
+    <p>If <code>with_config = TRUE</code>, returns the config after calling <code>to_list</code> with the specified <code>base_url</code>.</p>
 
-<dt><code>callback</code></dt><dd><p>The response callback.</p></dd>
-
-</dl><p></div></p>
-    <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
-
-    
-<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
-
-<ul>
-<li><p><a href='#method-new'><code>VitessceConfigServerCallbackRoute$new()</code></a></p></li>
-<li><p><a href='#method-clone'><code>VitessceConfigServerCallbackRoute$clone()</code></a></p></li>
-</ul>
-<p><hr>
-<a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Create a new server route wrapper object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>VitessceConfigServerCallbackRoute</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>path</span>, <span class='va'>callback</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>path</code></dt><dd><p>The route path.</p></dd>
-
-<dt><code>callback</code></dt><dd><p>The response callback.</p></dd>
-
-</dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A new <code>VitessceConfigServerCallbackRoute</code> object.</p>
-<p><hr>
-<a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
-<p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>VitessceConfigServerCallbackRoute</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>deep</code></dt><dd><p>Whether to make a deep clone.</p></dd>
-
-</dl><p></div></p>
-
-
-
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='va'>vc</span> <span class='op'>&lt;-</span> <span class='va'><a href='VitessceConfig.html'>VitessceConfig</a></span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='st'>"My config"</span><span class='op'>)</span>
+<span class='va'>dataset</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_dataset</span><span class='op'>(</span><span class='st'>"My dataset"</span><span class='op'>)</span>
+<span class='va'>description</span> <span class='op'>&lt;-</span> <span class='va'>vc</span><span class='op'>$</span><span class='fu'>add_view</span><span class='op'>(</span><span class='va'>dataset</span>, <span class='va'>Component</span><span class='op'>$</span><span class='va'>DESCRIPTION</span><span class='op'>)</span>
+<span class='va'>vc</span><span class='op'>$</span><span class='fu'>layout</span><span class='op'>(</span><span class='va'>description</span><span class='op'>)</span>
+<span class='va'>vc</span><span class='op'>$</span><span class='fu'>export</span><span class='op'>(</span>to <span class='op'>=</span> <span class='st'>"files"</span>, out_dir <span class='op'>=</span> <span class='st'>"./my_exported_files"</span><span class='op'>)</span>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

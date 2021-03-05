@@ -1,0 +1,1 @@
+{"version":"1.0.0","name":"My config","description":"","datasets":[{"uid":"A","name":"My dataset","files":[]}],"coordinationSpace":{"dataset":{"A":"A"}},"layout":[{"component":"description","coordinationScopes":{"dataset":"A"},"x":0,"y":0,"w":12,"h":12}],"initStrategy":"auto"}
