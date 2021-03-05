@@ -5,7 +5,7 @@
 #'
 #' @param config An instance of `VitessceConfig`
 #' @param with_config Should the config be saved in the `out_dir` (as a JSON file)?
-#' @param base_url
+#' @param base_url If `with_config` is TRUE, what `base_url` value should be used for creation of the JSON config?
 #' @param out_dir The directory for storing exported files.
 #' @returns If `with_config = TRUE`, returns the config after calling `to_list` with the specified `base_url`.
 #' @examples
