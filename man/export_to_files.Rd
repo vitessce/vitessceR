@@ -11,6 +11,8 @@ export_to_files(config, with_config, base_url, out_dir)
 
 \item{with_config}{Should the config be saved in the \code{out_dir} (as a JSON file)?}
 
+\item{base_url}{If \code{with_config} is TRUE, what \code{base_url} value should be used for creation of the JSON config?}
+
 \item{out_dir}{The directory for storing exported files.}
 }
 \value{
