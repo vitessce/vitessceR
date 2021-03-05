@@ -28,7 +28,7 @@ devtools::install_github("vitessce/vitessce-r")
 
 ## Examples
 
-The simplest way to instantiate a Vitessce widget is to create a view config based on a single-cell dataset object and pass the view config instance as a parameter to the widget function:
+The simplest way to instantiate a Vitessce widget is to create a view config based on a single-cell dataset object and call the `widget` function on the view config instance:
 
 ```r
 library(vitessce)
