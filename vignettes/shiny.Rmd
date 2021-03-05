@@ -42,7 +42,7 @@ server <- function(input, output, session) {
     dataset <- dataset$add_object(SeuratWrapper$new(pbmc3k.final))
     scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
     vc$layout(scatterplot)
-    vc$widget(theme = "light")
+    vc$widget()
   })
 }
 
@@ -62,4 +62,47 @@ To do so, be sure to set the parameter `out_dir` when calling the `SeuratWrapper
 Then, you can set the parameter `serve` to `FALSE` in `vc$widget()` to prevent the built-in plumber server from starting when you launch the widget.
 
 For example, if you know that your Shiny server will be running at `http://example.com/shiny` and you want to turn off the plumber server, then you would call `vc$widget(base_url = "http://example.com/shiny", serve = FALSE)`.
+
+The following example demonstrates swapping out the Vitessce widget's built-in server for Shiny's [addResourcePath](https://shiny.rstudio.com/reference/shiny/1.0.2/addResourcePath.html):
+
+```r
+library(shiny)
+library(vitessce)
+library(SeuratData)
+
+SeuratData::InstallData("pbmc3k")
+data("pbmc3k.final")
+force(pbmc3k.final)
+
+OUT_DIR <- "./my_vitessce_files"
+
+ui <- fluidPage(
+  "Vitessce in a Shiny app",
+  vitessce_output(output_id = 'vitessce_visualization', height = "600px"),
+)
+
+server <- function(input, output, session) {
+  addResourcePath("vitessce", OUT_DIR)
+  output$vitessce_visualization <- render_vitessce(expr = {
+    vc <- VitessceConfig$new("My config")
+    dataset <- vc$add_dataset("My dataset")
+    dataset <- dataset$add_object(SeuratWrapper$new(pbmc3k.final, out_dir = OUT_DIR))
+    scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
+    vc$layout(scatterplot)
+    
+    BASE_URL <- paste0(
+      session$clientData$url_protocol,
+      "//",
+      session$clientData$url_hostname,
+      ":",
+      session$clientData$url_port,
+      "/vitessce"
+    )
+
+    vc$widget(serve = FALSE, base_url = BASE_URL)
+  })
+}
+
+shinyApp(ui, server)
+```
 
