@@ -14,6 +14,8 @@ A \code{list} that can be serialized to JSON.
 A \code{list} of \code{VitessceConfigServerStaticRoute}.
 
 The Vitessce htmlwidget.
+
+The Vitessce configuration as a list, with the \code{base_url} filled in.
 }
 \description{
 Class representing a Vitessce view config.
@@ -94,7 +96,7 @@ vc <- VitessceConfig$new("My config")
 dataset <- vc$add_dataset("My dataset")
 description <- vc$add_view(dataset, Component$DESCRIPTION)
 vc$layout(description)
-vc$export(to = "files", out_dir = "./my_exported_files")
+vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./my_exported_files")
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -403,13 +405,17 @@ vc$widget()
 \subsection{Method \code{export()}}{
 Export the data associated with this configuration to a specified destination.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$export(to, ...)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$export(to = "files", with_config = FALSE, base_url = NA, ...)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{to}}{Where should the files be exported to? Values currently supported: "files"}
+
+\item{\code{with_config}}{Should the Vitessce configuration be saved in the output directory as a JSON file?}
+
+\item{\code{base_url}}{If \code{with_config} is TRUE, what \code{base_url} value should be used for creation of the JSON config?}
 
 \item{\code{...}}{Extra parameters to pass through to the export function.}
 }
@@ -421,7 +427,7 @@ Export the data associated with this configuration to a specified destination.
 dataset <- vc$add_dataset("My dataset")
 description <- vc$add_view(dataset, Component$DESCRIPTION)
 vc$layout(description)
-vc$export(to = "files", out_dir = "./my_exported_files")
+vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./my_exported_files")
 }
 \if{html}{\out{</div>}}
 

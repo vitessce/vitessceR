@@ -4,12 +4,17 @@
 \alias{export_to_files}
 \title{Export a Vitessce configuration to a directory of static files.}
 \usage{
-export_to_files(config, out_dir)
+export_to_files(config, with_config, base_url, out_dir)
 }
 \arguments{
 \item{config}{An instance of \code{VitessceConfig}}
 
+\item{with_config}{Should the config be saved in the \code{out_dir} (as a JSON file)?}
+
 \item{out_dir}{The directory for storing exported files.}
+}
+\value{
+If \code{with_config = TRUE}, returns the config after calling \code{to_list} with the specified \code{base_url}.
 }
 \description{
 A helper function to export files associated with a particular Vitessce configuration to a local directory.

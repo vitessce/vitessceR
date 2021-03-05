@@ -137,6 +137,7 @@ FileType <- list(
 #'   \item `HEATMAP`: The `heatmap` component.
 #'   \item `LAYER_CONTROLLER`: The `layerController` component.
 #'   \item `CELL_SET_SIZES`: The `cellSetSizes` component.
+#'   \item `GENES`: The `genes` component.
 #' }
 #'
 #' @export
@@ -149,5 +150,6 @@ Component <- list(
   HEATMAP = "heatmap",
   LAYER_CONTROLLER = "layerController",
   HIGLASS = "higlass",
-  CELL_SET_SIZES = "cellSetSizes"
+  CELL_SET_SIZES = "cellSetSizes",
+  GENES = "genes"
 )
