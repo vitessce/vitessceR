@@ -14,5 +14,14 @@ FileType
 The \code{FileType} list contains an enumeration of
 valid string constant values representing file types
 for dataset files.
+\itemize{
+\item \code{CELLS_JSON}: The \code{cells.json} file type.
+\item \code{MOLECULES_JSON}: The \code{molecules.json} file type.
+\item \code{NEIGHBORHOODS_JSON}: The \code{neighborhoods.json} file type.
+\item \code{RASTER_JSON}: The \code{raster.json} file type.
+\item \code{CELL_SETS_JSON}: The \code{cell-sets.json} file type.
+\item \code{CLUSTERS_JSON}: The \code{clusters.json} file type.
+\item \code{EXPRESSION_MATRIX_ZARR}: The \code{expression-matrix.zarr} file type.
+}
 }
 \keyword{datasets}

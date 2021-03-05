@@ -30,7 +30,7 @@ reference:
 - contents:
   - AbstractWrapper
   - SeuratWrapper
-  - SeuratDimReducWrapper
+
 
 articles:
   - title: Articles
@@ -40,6 +40,7 @@ articles:
       - seurat_basic
       - seurat_azimuth
       - shiny
+      - export_files
   - title: Articles
     navbar: Developer guides
     contents:

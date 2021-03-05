@@ -80,9 +80,6 @@ This method is void, should not return anything.
 }
 \if{html}{\out{</div>}}
 }
-\subsection{Returns}{
-A new response function.
-}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-get_routes"></a>}}
