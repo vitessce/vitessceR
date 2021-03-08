@@ -298,11 +298,20 @@ VitessceConfigView <- R6::R6Class("VitessceConfigView",
     #' @param y The y-coordinate of the view in the layout.
     #' @param w The width of the view in the layout.
     #' @param h The height of the view in the layout.
+    #' @returns Self, to allow chaining.
     set_xywh = function(x, y, w, h) {
       private$view$x <- x
       private$view$y <- y
       private$view$w <- w
       private$view$h <- h
+      invisible(self)
+    },
+    #' @description
+    #' Set additional props for this view.
+    #' @param ... Any named props to set.
+    #' @returns Self, to allow chaining.
+    set_props = function(...) {
+      private$view[['props']] <- list(...)
       invisible(self)
     },
     #' @description
