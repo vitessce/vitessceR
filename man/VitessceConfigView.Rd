@@ -4,6 +4,11 @@
 \name{VitessceConfigView}
 \alias{VitessceConfigView}
 \title{VitessceConfigView Class}
+\value{
+Self, to allow chaining.
+
+Self, to allow chaining.
+}
 \description{
 Class representing a view in a Vitessce view config.
 }
@@ -16,6 +21,7 @@ View in a VitessceConfig
 \item \href{#method-new}{\code{VitessceConfigView$new()}}
 \item \href{#method-use_coordination}{\code{VitessceConfigView$use_coordination()}}
 \item \href{#method-set_xywh}{\code{VitessceConfigView$set_xywh()}}
+\item \href{#method-set_props}{\code{VitessceConfigView$set_props()}}
 \item \href{#method-to_list}{\code{VitessceConfigView$to_list()}}
 \item \href{#method-clone}{\code{VitessceConfigView$clone()}}
 }
@@ -89,6 +95,23 @@ Set the dimensions of the view.
 \item{\code{w}}{The width of the view in the layout.}
 
 \item{\code{h}}{The height of the view in the layout.}
+}
+\if{html}{\out{</div>}}
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-set_props"></a>}}
+\if{latex}{\out{\hypertarget{method-set_props}{}}}
+\subsection{Method \code{set_props()}}{
+Set additional props for this view.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigView$set_props(...)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{...}}{Any named props to set.}
 }
 \if{html}{\out{</div>}}
 }
