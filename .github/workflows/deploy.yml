@@ -12,7 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Set up libraries for Ubuntu
-        run: sudo apt-get install -y libsodium-dev libharfbuzz-dev libfribidi-dev libcurl4-openssl-dev texlive-latex-base pandoc
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libsodium-dev libharfbuzz-dev libfribidi-dev libcurl4-openssl-dev texlive-latex-base pandoc
       - name: Set up R 4.0
         uses: r-lib/actions/setup-r@master
         with:
