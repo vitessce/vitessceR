@@ -14,7 +14,76 @@ Here, we extend the `SeuratWrapper` class so that it supports multiple cell sets
 ```r
 library(vitessce)
 
-# Subclass defined here
+#' Subclass of SeuratWrapper to deal with cell sets.
+#' @title MyCustomSeuratWrapper Class
+#' @docType class
+#' @description
+#' Subclass of SeuratWrapper.
+MyCustomSeuratWrapper <- R6::R6Class("MyCustomSeuratWrapper",
+ inherit = SeuratWrapper,
+ public = list(
+   #' @field cell_sets The cell sets.
+   #' @keywords internal
+   cell_sets = NULL,
+   #' @description
+   #' Create a wrapper around a Seurat object.
+   #' @param obj The object to wrap.
+   #' @param cell_sets A list of cell sets.
+   #' @param ... Parameters inherited from `SeuratWrapper`.
+   #' @return A new `SeuratWrapper` object.
+   initialize = function(obj, cell_sets, ...) {
+     super$initialize(obj, ...)
+     self$cell_sets <- cell_sets
+   },
+   #' @description
+   #' Create a list representing the cluster assignments in the cell set list.
+   #' @return A list that can be converted to JSON.
+   #' @keywords internal
+   create_cell_sets_list = function() {
+     obj <- self$obj
+
+     cells <- Seurat::Idents(obj)
+
+     # https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/linnarsson.cell-sets.json
+     cell_sets_list <- list(
+       datatype = jsonlite::unbox("cell"),
+       version = jsonlite::unbox("0.1.3"),
+       tree = list()
+     )
+
+     if(!is.na(self$cell_sets)) {
+       for(cell_set_name in names(self$cell_sets)) {
+         cell_set <- self$cell_sets[[cell_set_name]]
+
+         cell_set_meta_node <- list(
+           name = jsonlite::unbox(cell_set_name),
+           children = list()
+         )
+         cell_set_annotations <- cell_set
+         cell_set_annotation_scores <- NA
+
+         cluster_names <- sort(unique(cell_set_annotations))
+
+         for(cluster_name in cluster_names) {
+           cells_in_cluster <- names(cells[cell_set_annotations == cluster_name])
+
+           # TODO: find out if there is a way to return NULL
+           make_null_tuples <- function(x) { list(jsonlite::unbox(x), jsonlite::unbox(NA)) }
+           cells_in_cluster_with_score <- purrr::map(cells_in_cluster, make_null_tuples)
+
+           cluster_node <- list(
+             name = jsonlite::unbox(cluster_name),
+             set = cells_in_cluster_with_score
+           )
+           cell_set_meta_node$children <- append(cell_set_meta_node$children, list(cluster_node))
+         }
+         cell_sets_list$tree <- append(cell_sets_list$tree, list(cell_set_meta_node))
+       }
+     }
+     cell_sets_list
+   }
+ )
+)
 ```
 
 Next, we can preprocess the dataset.
@@ -45,12 +114,19 @@ pbmc <- FindNeighbors(pbmc, dims = 1:10)
 We can run `FindClusters` with different algorithms and save the clustering results to new variables between each algorithm, since the results in the Seurat object will be overwritten each time.
 
 ```r
-louvain_clusters <- slot(FindClusters(pbmc, algorithm = 1), "meta.data")$seurat_clusters
+louvain_clusters <- slot(FindClusters(pbmc, algorithm = 1, resolution = 0.3), "meta.data")$seurat_clusters
 slm_clusters <- slot(FindClusters(pbmc, algorithm = 3), "meta.data")$seurat_clusters
-cell_sets <- list(louvain = louvain_clusters, SLM = slm_clusters)
+cell_sets_list <- list(louvain = louvain_clusters, SLM = slm_clusters)
+```
 
-my_wrapped_object <- MyCustomSeuratWrapper$new(pbmc, cell_sets = cell_sets, out_dir = "out")
+With this list of cell sets, we can now create an instance of our custom SeuratWrapper subclass:
 
+```r
+my_wrapped_object <- MyCustomSeuratWrapper$new(pbmc, cell_sets = cell_sets_list, out_dir = "out")
+```
+
+Now, we create the Vitessce config as usual:
+```r
 # Create Vitessce view config
 vc <- VitessceConfig$new("My config")
 dataset <- vc$add_dataset("My dataset")$add_object(my_wrapped_object)
@@ -65,15 +141,4 @@ vc$layout(hconcat(
 ))
 # Render the Vitessce widget
 vc$widget(theme = "light")
-```
-
-With this list of cell sets, we can now create an instance of our custom SeuratWrapper subclass:
-
-```r
-
-```
-
-Now, we create the Vitessce config as usual:
-```r
-
 ```

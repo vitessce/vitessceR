@@ -31,6 +31,7 @@ For full examples, visit the [documentation](https://vitessce.github.io/vitessce
 ```sh
 npm install
 npm run build
+sed -i'' -e '1s/^/var globalThis = window; /' inst/htmlwidgets/dist/index.js
 ```
 
 ```r
