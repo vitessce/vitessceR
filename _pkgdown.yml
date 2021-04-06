@@ -45,3 +45,4 @@ articles:
     navbar: Developer guides
     contents:
       - dev_wrapper_class
+      - dev_wrapper_subclass
