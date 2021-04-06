@@ -5,7 +5,7 @@ import 'vitessce/dist/es/production/static/css/index.css';
 import './index.css';
 
 
-export function renderVitessce(el, config, width, height, theme) {
+export function render_vitessce(el, config, width, height, theme) {
     ReactDOM.render(
         <Vitessce
             config={config}
