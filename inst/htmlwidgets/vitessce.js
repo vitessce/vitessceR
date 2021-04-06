@@ -6,7 +6,7 @@ HTMLWidgets.widget({
 
     return {
       renderValue: function(x) {
-        renderVitessce(el, x.config, width, height, x.theme);
+        render_vitessce(el, x.config, width, height, x.theme);
       },
       resize: function(width, height) {
         // TODO: code to re-render the widget with a new size
