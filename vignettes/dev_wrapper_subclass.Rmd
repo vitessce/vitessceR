@@ -9,7 +9,7 @@ vignette: >
 
 The existing data object wrapper classes are not yet very flexible, but they can be extended to support custom use cases.
 
-Here, we extend the `SeuratWrapper` class so that it supports multiple cell sets, to deal with the fact that the Seurat [`FindClusters`](https://satijalab.org/seurat/reference/findclusters)
+Here, we extend the `SeuratWrapper` class so that it supports multiple cell sets, to deal with the fact that the Seurat [`FindClusters`](https://satijalab.org/seurat/reference/findclusters) overwrites its results each time.
 
 ```r
 library(vitessce)
