@@ -25,6 +25,8 @@ jobs:
       - name: Check
         run: rcmdcheck::rcmdcheck(error_on = "error")
         shell: Rscript {0}
+        env: 
+          _R_CHECK_FORCE_SUGGESTS_: false
       - name: Build docs
         run: |
           Rscript -e 'pkgdown::build_site(new_process = FALSE)'
