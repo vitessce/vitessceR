@@ -39,6 +39,7 @@ articles:
       - seuratdata
       - seurat_basic
       - seurat_azimuth
+      - ome_tiff_remote
       - shiny
       - export_files
   - title: Articles

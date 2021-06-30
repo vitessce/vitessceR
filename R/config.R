@@ -60,12 +60,16 @@ VitessceConfigDatasetFile <- R6::R6Class("VitessceConfigDatasetFile",
     #' @param data_type A data type for the file.
     #' @param file_type A file type for the file.
     #' @return A new `VitessceConfigDatasetFile` object.
-    initialize = function(url, data_type, file_type) {
-      private$file <- list(
-        url = url,
-        type = data_type,
-        fileType = file_type
-      )
+    initialize = function(url = NA, data_type = NA, file_type = NA, options = NA) {
+      private$file <- obj_list()
+      if(!is.na(url)) {
+        private$file[['url']] = url
+      }
+      private$file[['type']] = data_type
+      private$file[['fileType']] = file_type
+      if(!is.na(options)) {
+        private$file[['options']] = options
+      }
     },
     #' @description
     #' Convert the object to an R list. Helpful when converting the config to JSON.
@@ -108,9 +112,10 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
     #' @param url The URL to the file.
     #' @param data_type The data type for the file.
     #' @param file_type The file type for the file.
+    #' @param options Optional. An options list for the file.
     #' @return Invisible self, to allow chaining.
-    add_file = function(url, data_type, file_type) {
-      new_file <- VitessceConfigDatasetFile$new(url, data_type, file_type)
+    add_file = function(url = NA, data_type = NA, file_type = NA, options = NA) {
+      new_file <- VitessceConfigDatasetFile$new(url = url, data_type = data_type, file_type = file_type, options = options)
       self$dataset$files <- append(self$dataset$files, new_file)
       invisible(self)
     },
