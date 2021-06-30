@@ -114,6 +114,53 @@ test_that("VitessceConfigDataset add_file twice", {
   ))
 })
 
+test_that("VitessceConfigDataset add_file with options", {
+  vc <- VitessceConfig$new("My config")
+  ds <- vc$add_dataset("My dataset")
+
+  file_options = obj_list(
+    schemaVersion = "0.0.2",
+    images = list(
+        obj_list(
+          name = "Image",
+          type = "ome-tiff",
+          url = "https://vitessce-demo-data.storage.googleapis.com/exemplar-001/exemplar-001.pyramid.ome.tif"
+        )
+    ),
+    renderLayers = list(
+      "Image"
+    )
+  )
+  ds$add_file(data_type = "cells", file_type = "cells.json", options = file_options)
+
+  vc_list <- vc$to_list(base_url = "http://localhost:8000")
+  expect_equal(vc_list, list(
+    version = "1.0.0",
+    name = "My config",
+    description = "",
+    datasets = list(
+      list(
+        uid = "A",
+        name = "My dataset",
+        files = list(
+          list(
+            type = "cells",
+            fileType = "cells.json",
+            options = file_options
+          )
+        )
+      )
+    ),
+    coordinationSpace = list(
+      dataset = list(
+        A = jsonlite::unbox("A")
+      )
+    ),
+    layout = list(),
+    initStrategy = "auto"
+  ))
+})
+
 test_that("VitessceConfigDataset add_object", {
   vc <- VitessceConfig$new("My config")
   ds <- vc$add_dataset("My dataset")
