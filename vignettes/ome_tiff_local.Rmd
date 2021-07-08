@@ -1,0 +1,48 @@
+---
+title: "Usage with OME-TIFF: Local Example"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Usage with OME-TIFF: Local Example}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The following is an example of usage of the widget to visualize a local OME-TIFF image file.
+
+First, install the dependencies:
+
+```r
+install.packages("devtools")
+devtools::install_github("vitessce/vitessce-r")
+```
+
+Next, configure the Vitessce widget:
+
+```r
+library(vitessce)
+
+# Create Vitessce view config
+vc <- VitessceConfig$new("My config")
+dataset <- vc$add_dataset("My dataset")$add_object(
+  MultiImageWrapper$new(
+    image_wrappers = list(
+      OmeTiffWrapper$new(name="Test", img_path="/Users/mkeller/Downloads/exemplar-001.pyramid.ome.tif")
+    )
+  )
+)
+spatial <- vc$add_view(dataset, Component$SPATIAL)
+spatial_layers <- vc$add_view(dataset, Component$LAYER_CONTROLLER)
+status <- vc$add_view(dataset, Component$STATUS)
+desc <- vc$add_view(dataset, Component$DESCRIPTION)
+desc <- desc$set_props(description = "Visualization of an OME-TIFF file.")
+vc$layout(hconcat(
+  spatial,
+  hconcat(spatial_layers, vconcat(desc, status))
+))
+
+# Render the Vitessce widget
+vc$widget(theme = "light")
+```
+
+
+

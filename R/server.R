@@ -19,6 +19,14 @@ VitessceConfigServerStaticRoute <- R6::R6Class("VitessceConfigServerStaticRoute"
  )
 )
 
+ranged <- function(fp, start = 0, end = NA, block_size = 65535) {
+  seek(fp, start)
+  data_length <- min(block_size, end - start)
+  chunk_data <- readBin(fp, "raw", n = data_length)
+
+  return(chunk_data)
+}
+
 #' Class representing a local web server to serve dataset objects.
 #' @keywords internal
 #' @rdname VitessceConfigServer
@@ -52,7 +60,47 @@ VitessceConfigServer <- R6::R6Class("VitessceConfigServer",
       for(route in routes) {
         if(!(route$path %in% used_paths)) {
           # Reference: https://www.rplumber.io/articles/programmatic-usage.html#mount-static
-          private$server <- plumber::pr_static(private$server, route$path, route$directory)
+          #private$server <- plumber::pr_static(private$server, route$path, route$directory)
+
+          private$server <- plumber::pr_handle(private$server, c("GET", "OPTIONS"), route$path, handler = function(req, res) {
+            res$setHeader("Access-Control-Allow-Headers", "range")
+            res$setHeader("Accept-Ranges", "bytes")
+
+            if(req$REQUEST_METHOD == "GET") {
+              file_path <- route$directory
+
+              range_str <- req$HTTP_RANGE
+              range_matches <- stringr::str_match(range_str, "^bytes=([:digit:]+)-([:digit:]+)$")
+              range_start <- 0
+              range_end <- 100
+
+              file_size <- file.size(file_path)
+
+              res$headers <- obj_list()
+
+              res$headers[["Content-Range"]] <- paste0("bytes ", as.character(range_start), "-", as.character(range_end), "/", as.character(file_size))
+              res$headers[["Content-Length"]] <- as.character(range_end - range_start + 1)
+              res$headers[["Access-Control-Allow-Origin"]] <- "*"
+              res$headers[["Access-Control-Allow-Headers"]] <- "bytes"
+              res$headers[["Accept-Ranges"]] <- "bytes"
+              res$status <- 206
+
+              #fp <- file(file_path, "rb")
+              #body <- ranged(fp, range_start, range_end)
+
+              #close(fp)
+
+              res$headers[["Debug"]] <- as.character(body)
+
+              res$body <- rep(as.raw(c(0x4d, 0x4d, 0x00, 0x2b, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00)), times = 10)
+
+
+              res$serializer <- plumber:::serializer_tiff()
+
+
+            }
+            res
+          })
           used_paths <- append(used_paths, route$path)
         }
       }
