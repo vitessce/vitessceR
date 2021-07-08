@@ -71,32 +71,32 @@ VitessceConfigServer <- R6::R6Class("VitessceConfigServer",
 
               range_str <- req$HTTP_RANGE
               range_matches <- stringr::str_match(range_str, "^bytes=([:digit:]+)-([:digit:]+)$")
-              range_start <- 0
-              range_end <- 100
+              range_start <- as.numeric(range_matches[2])
+              range_end <- as.numeric(range_matches[3])
 
               file_size <- file.size(file_path)
 
               res$headers <- obj_list()
 
+              fp <- file("/Users/mkeller/Downloads/exemplar-001.pyramid.ome.tif", "rb")
+              seek(fp, range_start)
+              data_length <- min(65535, range_end - range_start + 1)
+              chunk_data <- readBin(fp, "raw", n = data_length)
+
+              close(fp)
+
               res$headers[["Content-Range"]] <- paste0("bytes ", as.character(range_start), "-", as.character(range_end), "/", as.character(file_size))
-              res$headers[["Content-Length"]] <- as.character(range_end - range_start + 1)
+              res$headers[["Content-Length"]] <- as.character(data_length)
               res$headers[["Access-Control-Allow-Origin"]] <- "*"
               res$headers[["Access-Control-Allow-Headers"]] <- "bytes"
               res$headers[["Accept-Ranges"]] <- "bytes"
+              res$headers[["Content-Type"]] <- "image/tiff"
+
+              res$headers[["Debug"]] <- paste0(as.character(chunk_data), collapse = "")
+
+              res$body <- chunk_data
+
               res$status <- 206
-
-              #fp <- file(file_path, "rb")
-              #body <- ranged(fp, range_start, range_end)
-
-              #close(fp)
-
-              res$headers[["Debug"]] <- as.character(body)
-
-              res$body <- rep(as.raw(c(0x4d, 0x4d, 0x00, 0x2b, 0x00, 0x08, 0x00, 0x00, 0x00, 0x00)), times = 10)
-
-
-              res$serializer <- plumber:::serializer_tiff()
-
 
             }
             res
