@@ -545,7 +545,7 @@ OmeTiffWrapper <- R6::R6Class("OmeTiffWrapper",
        if(self$is_remote) {
          return(list())
        } else {
-         route <- VitessceConfigServerStaticRoute$new(
+         route <- VitessceConfigServerRangeRoute$new(
            self$get_route_str(dataset_uid, obj_i, basename(self$img_path)),
            self$img_path
          )
