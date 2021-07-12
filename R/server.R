@@ -119,7 +119,6 @@ VitessceConfigServer <- R6::R6Class("VitessceConfigServer",
         res$setHeader("Access-Control-Allow-Origin", "*")
         plumber::forward()
       }
-      plumber::options_plumber(maxRequestSize = 0)
       private$server <- plumber::pr()
       private$server <- plumber::pr_set_docs(private$server, FALSE)
       private$server <- plumber::pr_filter(private$server, "CORS", cors)
