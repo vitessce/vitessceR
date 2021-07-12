@@ -403,7 +403,7 @@ MultiImageWrapper <- R6::R6Class("MultiImageWrapper",
        self$use_physical_size_scaling <- use_physical_size_scaling
      },
      #' @description
-     #' Create the JSON output files, web server routes, and file definition creators.
+     #' Create the web server routes and file definition creators.
      #' @param dataset_uid The ID for this dataset.
      #' @param obj_i The index of this data object within the dataset.
      convert_and_save = function(dataset_uid, obj_i) {
@@ -422,8 +422,8 @@ MultiImageWrapper <- R6::R6Class("MultiImageWrapper",
        self$routes <- append(self$routes, routes)
      },
      #' @description
-     #' Create a list representing the cells in the Seurat object.
-     #' @return A list that can be converted to JSON.
+     #' Create a list representing the image routes.
+     #' @return A list of server route objects.
      #' @keywords internal
      make_raster_routes = function() {
        obj_routes <- list()
@@ -435,7 +435,7 @@ MultiImageWrapper <- R6::R6Class("MultiImageWrapper",
        obj_routes
      },
      #' @description
-     #' Make the file definition creator function for the cells data type.
+     #' Make the file definition creator function for the raster data type.
      #' @param dataset_uid The ID for this dataset.
      #' @param obj_i The index of this data object within the dataset.
      #' @return A file definition creator function which takes a `base_url` parameter.
@@ -520,7 +520,7 @@ OmeTiffWrapper <- R6::R6Class("OmeTiffWrapper",
 
      },
      #' @description
-     #' Create the JSON output files, web server routes, and file definition creators.
+     #' Create the web server routes and file definition creators.
      #' @param dataset_uid The ID for this dataset.
      #' @param obj_i The index of this data object within the dataset.
      convert_and_save = function(dataset_uid, obj_i) {
@@ -553,7 +553,7 @@ OmeTiffWrapper <- R6::R6Class("OmeTiffWrapper",
        }
      },
      #' @description
-     #' Create a list representing the cluster assignments in the Seurat object.
+     #' Create an object representing a single image in a raster.json list of images.
      #' @param dataset_uid The ID for this dataset.
      #' @param obj_i The index of this data object within the dataset.
      #' @param base_url The base URL for the server.
@@ -583,7 +583,7 @@ OmeTiffWrapper <- R6::R6Class("OmeTiffWrapper",
        img_def
      },
      #' @description
-     #' Make the file definition creator function for the expression matrix data type.
+     #' Make the file definition creator function for the raster data type.
      #' @param dataset_uid The ID for this dataset.
      #' @param obj_i The index of this data object within the dataset.
      #' @return A file definition creator function which takes a `base_url` parameter.
