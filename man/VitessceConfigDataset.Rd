@@ -59,7 +59,12 @@ A new \code{VitessceConfigDataset} object.
 \subsection{Method \code{add_file()}}{
 Add a file to this dataset.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDataset$add_file(url, data_type, file_type)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDataset$add_file(
+  url = NA,
+  data_type = NA,
+  file_type = NA,
+  options = NA
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -70,6 +75,8 @@ Add a file to this dataset.
 \item{\code{data_type}}{The data type for the file.}
 
 \item{\code{file_type}}{The file type for the file.}
+
+\item{\code{options}}{Optional. An options list for the file.}
 }
 \if{html}{\out{</div>}}
 }
