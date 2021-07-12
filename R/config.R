@@ -59,6 +59,7 @@ VitessceConfigDatasetFile <- R6::R6Class("VitessceConfigDatasetFile",
     #' @param url A URL for the file.
     #' @param data_type A data type for the file.
     #' @param file_type A file type for the file.
+    #' @param options A list of options to include for the file.
     #' @return A new `VitessceConfigDatasetFile` object.
     initialize = function(url = NA, data_type = NA, file_type = NA, options = NA) {
       private$file <- obj_list()

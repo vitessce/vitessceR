@@ -16,6 +16,10 @@ VitessceConfigServerStaticRoute <- R6::R6Class("VitessceConfigServerStaticRoute"
      self$path <- path
      self$directory <- directory
    },
+   #' @description
+   #' Add handler functions to the Plumber server object to respond on this route.
+   #' @param pr_server The server instance.
+   #' @return The modified server instance.
    create_handlers = function(pr_server) {
      # Reference: https://www.rplumber.io/articles/programmatic-usage.html#mount-static
      new_server <- plumber::pr_static(pr_server, self$path, self$directory)
@@ -42,6 +46,10 @@ VitessceConfigServerRangeRoute <- R6::R6Class("VitessceConfigServerRangeRoute",
        self$path <- path
        self$file_path <- file_path
      },
+     #' @description
+     #' Add handler functions to the Plumber server object to respond on this route.
+     #' @param pr_server The server instance.
+     #' @return The modified server instance.
      create_handlers = function(pr_server) {
        # Add the handler for range requests.
        new_server <- plumber::pr_handle(pr_server, c("GET", "OPTIONS"), self$path, handler = function(req, res) {
