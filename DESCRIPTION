@@ -1,7 +1,7 @@
 Package: vitessce
 Type: Package
 Title: Create Interactive Single-cell Visualizations with the 'Vitessce' JavaScript Library
-Version: 0.0.0.9005
+Version: 0.0.0.9006
 Authors@R: c(
     person("Gehlenborg Lab", role = c("lbr", "aut")),
     person("Mark", "Keller", email = "7525285+keller-mark@users.noreply.github.com", role = c("cre", "aut"))
