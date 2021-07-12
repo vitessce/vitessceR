@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>SeuratWrapper Class — SeuratWrapper • vitessce</title>
+<title>OmeTiffWrapper Class — OmeTiffWrapper • vitessce</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="SeuratWrapper Class — SeuratWrapper" />
-<meta property="og:description" content="Class representing a local Seurat object in a Vitessce dataset." />
+<meta property="og:title" content="OmeTiffWrapper Class — OmeTiffWrapper" />
+<meta property="og:description" content="Class representing an OME-TIFF file in a Vitessce dataset." />
 
 
 
@@ -148,40 +148,38 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>SeuratWrapper Class</h1>
+    <h1>OmeTiffWrapper Class</h1>
     <small class="dont-index">Source: <a href='https://github.com/vitessce/vitessce-r/blob/master/R/wrappers.R'><code>R/wrappers.R</code></a></small>
-    <div class="hidden name"><code>SeuratWrapper.Rd</code></div>
+    <div class="hidden name"><code>OmeTiffWrapper.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Class representing a local Seurat object in a Vitessce dataset.</p>
+    <p>Class representing an OME-TIFF file in a Vitessce dataset.</p>
     </div>
 
 
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Seurat object wrapper class</p>
+    <p>OME-TIFF object wrapper class</p>
     <h2 class="hasAnchor" id="super-class"><a class="anchor" href="#super-class"></a>Super class</h2>
 
-    <p><code><a href='AbstractWrapper.html'>vitessce::AbstractWrapper</a></code> -&gt; <code>SeuratWrapper</code></p>
+    <p><code><a href='AbstractWrapper.html'>vitessce::AbstractWrapper</a></code> -&gt; <code>OmeTiffWrapper</code></p>
     <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
     <p><div class="r6-fields"></p><dl>
-<dt><code>obj</code></dt><dd><p>The object to wrap.</p></dd>
+<dt><code>img_path</code></dt><dd><p>A local filepath to an OME-TIFF file.</p></dd>
 
-<dt><code>assay</code></dt><dd><p>The assay name in the Seurat object.</p></dd>
+<dt><code>img_url</code></dt><dd><p>A remote URL of an OME-TIFF file.</p></dd>
 
-<dt><code>cell_set_meta_names</code></dt><dd><p>The keys in the Seurat object's meta.data
-to use for creating cell sets.</p></dd>
+<dt><code>name</code></dt><dd><p>The display name for this OME-TIFF within Vitessce.</p></dd>
 
-<dt><code>cell_set_meta_name_mappings</code></dt><dd><p>The keys in the Seurat object's meta.data
-to use for cell set names mapped to new names.</p></dd>
+<dt><code>transformation_matrix</code></dt><dd><p>A column-major ordered matrix for transforming
+this image (see http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/#homogeneous-coordinates for more information).</p></dd>
 
-<dt><code>cell_set_meta_score_mappings</code></dt><dd><p>The keys in the Seurat object's meta.data
-to use for cell set names mapped to keys for scores.</p></dd>
+<dt><code>is_bitmask</code></dt><dd><p>Whether or not this image is a bitmask.</p></dd>
 
-<dt><code>num_genes</code></dt><dd><p>Number of genes to use for the heatmap.</p></dd>
+<dt><code>is_remote</code></dt><dd><p>Whether or not this image is remote.</p></dd>
 
 </dl><p></div></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
@@ -190,15 +188,12 @@ to use for cell set names mapped to keys for scores.</p></dd>
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
-<li><p><a href='#method-new'><code>SeuratWrapper$new()</code></a></p></li>
-<li><p><a href='#method-convert_and_save'><code>SeuratWrapper$convert_and_save()</code></a></p></li>
-<li><p><a href='#method-create_cells_list'><code>SeuratWrapper$create_cells_list()</code></a></p></li>
-<li><p><a href='#method-create_cell_sets_list'><code>SeuratWrapper$create_cell_sets_list()</code></a></p></li>
-<li><p><a href='#method-create_expression_matrix_list'><code>SeuratWrapper$create_expression_matrix_list()</code></a></p></li>
-<li><p><a href='#method-make_cells_file_def_creator'><code>SeuratWrapper$make_cells_file_def_creator()</code></a></p></li>
-<li><p><a href='#method-make_cell_sets_file_def_creator'><code>SeuratWrapper$make_cell_sets_file_def_creator()</code></a></p></li>
-<li><p><a href='#method-make_expression_matrix_file_def_creator'><code>SeuratWrapper$make_expression_matrix_file_def_creator()</code></a></p></li>
-<li><p><a href='#method-clone'><code>SeuratWrapper$clone()</code></a></p></li>
+<li><p><a href='#method-new'><code>OmeTiffWrapper$new()</code></a></p></li>
+<li><p><a href='#method-convert_and_save'><code>OmeTiffWrapper$convert_and_save()</code></a></p></li>
+<li><p><a href='#method-make_raster_routes'><code>OmeTiffWrapper$make_raster_routes()</code></a></p></li>
+<li><p><a href='#method-make_image_def'><code>OmeTiffWrapper$make_image_def()</code></a></p></li>
+<li><p><a href='#method-make_raster_file_def_creator'><code>OmeTiffWrapper$make_raster_file_def_creator()</code></a></p></li>
+<li><p><a href='#method-clone'><code>OmeTiffWrapper$clone()</code></a></p></li>
 </ul>
 <p><details ><summary>Inherited methods</summary>
 <ul>
@@ -214,45 +209,40 @@ to use for cell set names mapped to keys for scores.</p></dd>
 
 <hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Create a wrapper around a Seurat object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>SeuratWrapper</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
-  <span class='va'>obj</span>,
-  assay <span class='op'>=</span> <span class='st'>"RNA"</span>,
-  cell_set_meta_names <span class='op'>=</span> <span class='cn'>NA</span>,
-  cell_set_meta_score_mappings <span class='op'>=</span> <span class='cn'>NA</span>,
-  cell_set_meta_name_mappings <span class='op'>=</span> <span class='cn'>NA</span>,
-  num_genes <span class='op'>=</span> <span class='fl'>10</span>,
+<p>Create a wrapper around multiple image objects.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>OmeTiffWrapper</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span>
+  img_path <span class='op'>=</span> <span class='cn'>NA</span>,
+  img_url <span class='op'>=</span> <span class='cn'>NA</span>,
+  name <span class='op'>=</span> <span class='st'>""</span>,
+  transformation_matrix <span class='op'>=</span> <span class='cn'>NA</span>,
+  is_bitmask <span class='op'>=</span> <span class='cn'>FALSE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>obj</code></dt><dd><p>The object to wrap.</p></dd>
+<dt><code>img_path</code></dt><dd><p>A local filepath to an OME-TIFF file.</p></dd>
 
-<dt><code>assay</code></dt><dd><p>The assay name under the assays part of the Seurat object.</p></dd>
+<dt><code>img_url</code></dt><dd><p>A remote URL of an OME-TIFF file.</p></dd>
 
-<dt><code>cell_set_meta_names</code></dt><dd><p>An optional list of keys in the object's meta.data
-list to use for creating cell sets.</p></dd>
+<dt><code>name</code></dt><dd><p>The display name for this OME-TIFF within Vitessce.</p></dd>
 
-<dt><code>cell_set_meta_score_mappings</code></dt><dd><p>If cell_set_meta_names is provided, this list can
-also be provided to map between meta.data keys for set annotations
-and keys for annotation scores.</p></dd>
+<dt><code>transformation_matrix</code></dt><dd><p>A column-major ordered matrix for transforming
+this image (see http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-matrices/#homogeneous-coordinates for more information).</p></dd>
 
-<dt><code>cell_set_meta_name_mappings</code></dt><dd><p>If cell_set_meta_names is provided, this list can
-also be provided to map between meta.data keys and new names to replace
-the keys in the interface.</p></dd>
-
-<dt><code>num_genes</code></dt><dd><p>The number of genes to include in the expression matrix. Note: this parameter is temporary and should be changed to something more useful such as number of most variable genes.</p></dd>
+<dt><code>is_bitmask</code></dt><dd><p>Whether or not this image is a bitmask.</p></dd>
 
 <dt><code>...</code></dt><dd><p>Parameters inherited from <code>AbstractWrapper</code>.</p></dd>
 
+<dt><code>use_physical_size_scaling</code></dt><dd><p>Whether or not to scale the image based on the physical size metadata stored in the file.</p></dd>
+
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A new <code>SeuratWrapper</code> object.</p>
+<p>A new <code>OmeTiffWrapper</code> object.</p>
 <p><hr>
 <a id="method-convert_and_save"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>convert_and_save()</code></h3>
 <p>Create the JSON output files, web server routes, and file definition creators.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>SeuratWrapper</span><span class='op'>$</span><span class='fu'>convert_and_save</span><span class='op'>(</span><span class='va'>dataset_uid</span>, <span class='va'>obj_i</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>OmeTiffWrapper</span><span class='op'>$</span><span class='fu'>convert_and_save</span><span class='op'>(</span><span class='va'>dataset_uid</span>, <span class='va'>obj_i</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -262,30 +252,23 @@ the keys in the interface.</p></dd>
 
 </dl><p></div></p>
 <p><hr>
-<a id="method-create_cells_list"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>create_cells_list()</code></h3>
-<p>Create a list representing the cells in the Seurat object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>SeuratWrapper</span><span class='op'>$</span><span class='fu'>create_cells_list</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
+<a id="method-make_raster_routes"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>make_raster_routes()</code></h3>
+<p>Create a list representing the server routes.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>OmeTiffWrapper</span><span class='op'>$</span><span class='fu'>make_raster_routes</span><span class='op'>(</span><span class='va'>dataset_uid</span>, <span class='va'>obj_i</span><span class='op'>)</span></pre><p></div></p>
 
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>dataset_uid</code></dt><dd><p>The ID for this dataset.</p></dd>
+
+<dt><code>obj_i</code></dt><dd><p>The index of this data object within the dataset.</p></dd>
+
+</dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A list that can be converted to JSON.</p>
+<p>A list of server route objects.</p>
 <p><hr>
-<a id="method-create_cell_sets_list"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>create_cell_sets_list()</code></h3>
+<a id="method-make_image_def"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>make_image_def()</code></h3>
 <p>Create a list representing the cluster assignments in the Seurat object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>SeuratWrapper</span><span class='op'>$</span><span class='fu'>create_cell_sets_list</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A list that can be converted to JSON.</p>
-<p><hr>
-<a id="method-create_expression_matrix_list"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>create_expression_matrix_list()</code></h3>
-<p>Create a list representing the cluster assignments in the Seurat object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>SeuratWrapper</span><span class='op'>$</span><span class='fu'>create_expression_matrix_list</span><span class='op'>(</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A list that can be converted to JSON.</p>
-<p><hr>
-<a id="method-make_cells_file_def_creator"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>make_cells_file_def_creator()</code></h3>
-<p>Make the file definition creator function for the cells data type.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>SeuratWrapper</span><span class='op'>$</span><span class='fu'>make_cells_file_def_creator</span><span class='op'>(</span><span class='va'>dataset_uid</span>, <span class='va'>obj_i</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>OmeTiffWrapper</span><span class='op'>$</span><span class='fu'>make_image_def</span><span class='op'>(</span><span class='va'>dataset_uid</span>, <span class='va'>obj_i</span>, <span class='va'>base_url</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -293,27 +276,15 @@ the keys in the interface.</p></dd>
 
 <dt><code>obj_i</code></dt><dd><p>The index of this data object within the dataset.</p></dd>
 
-</dl><p></div></p>
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A file definition creator function which takes a <code>base_url</code> parameter.</p>
-<p><hr>
-<a id="method-make_cell_sets_file_def_creator"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>make_cell_sets_file_def_creator()</code></h3>
-<p>Make the file definition creator function for the cell sets data type.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>SeuratWrapper</span><span class='op'>$</span><span class='fu'>make_cell_sets_file_def_creator</span><span class='op'>(</span><span class='va'>dataset_uid</span>, <span class='va'>obj_i</span><span class='op'>)</span></pre><p></div></p>
-
-<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
-<p><div class="arguments"></p><dl>
-<dt><code>dataset_uid</code></dt><dd><p>The ID for this dataset.</p></dd>
-
-<dt><code>obj_i</code></dt><dd><p>The index of this data object within the dataset.</p></dd>
+<dt><code>base_url</code></dt><dd><p>The base URL for the server.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A file definition creator function which takes a <code>base_url</code> parameter.</p>
+<p>A list that can be converted to JSON.</p>
 <p><hr>
-<a id="method-make_expression_matrix_file_def_creator"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>make_expression_matrix_file_def_creator()</code></h3>
+<a id="method-make_raster_file_def_creator"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>make_raster_file_def_creator()</code></h3>
 <p>Make the file definition creator function for the expression matrix data type.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>SeuratWrapper</span><span class='op'>$</span><span class='fu'>make_expression_matrix_file_def_creator</span><span class='op'>(</span><span class='va'>dataset_uid</span>, <span class='va'>obj_i</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>OmeTiffWrapper</span><span class='op'>$</span><span class='fu'>make_raster_file_def_creator</span><span class='op'>(</span><span class='va'>dataset_uid</span>, <span class='va'>obj_i</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -327,7 +298,7 @@ the keys in the interface.</p></dd>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>SeuratWrapper</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>OmeTiffWrapper</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>

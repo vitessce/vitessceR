@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>VitessceConfigViewVConcat Class — VitessceConfigViewVConcat • vitessce</title>
+<title>Class representing a local web server route for a file which needs to support range requests. — VitessceConfigServerRangeRoute • vitessce</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,9 @@
 
 
 
-<meta property="og:title" content="VitessceConfigViewVConcat Class — VitessceConfigViewVConcat" />
-<meta property="og:description" content="Class representing a vertical view concatenation in a Vitessce view config." />
+<meta property="og:title" content="Class representing a local web server route for a file which needs to support range requests. — VitessceConfigServerRangeRoute" />
+<meta property="og:description" content="Class representing a local web server route for a file which needs to support range requests.
+Class representing a local web server route for a file which needs to support range requests." />
 
 
 
@@ -148,24 +149,24 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>VitessceConfigViewVConcat Class</h1>
-    <small class="dont-index">Source: <a href='https://github.com/vitessce/vitessce-r/blob/master/R/config.R'><code>R/config.R</code></a></small>
-    <div class="hidden name"><code>VitessceConfigViewVConcat.Rd</code></div>
+    <h1>Class representing a local web server route for a file which needs to support range requests.</h1>
+    <small class="dont-index">Source: <a href='https://github.com/vitessce/vitessce-r/blob/master/R/server.R'><code>R/server.R</code></a></small>
+    <div class="hidden name"><code>VitessceConfigServerRangeRoute.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Class representing a vertical view concatenation in a Vitessce view config.</p>
+    <p>Class representing a local web server route for a file which needs to support range requests.</p>
+<p>Class representing a local web server route for a file which needs to support range requests.</p>
     </div>
 
 
 
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>Vertical view concatenation in a VitessceConfig</p>
     <h2 class="hasAnchor" id="public-fields"><a class="anchor" href="#public-fields"></a>Public fields</h2>
 
     <p><div class="r6-fields"></p><dl>
-<dt><code>views</code></dt><dd><p>The views to concatenate.</p></dd>
+<dt><code>path</code></dt><dd><p>The path on which the web server should respond to requests using this callback.</p></dd>
+
+<dt><code>file_path</code></dt><dd><p>The file to serve.</p></dd>
 
 </dl><p></div></p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
@@ -174,25 +175,40 @@
 <h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Public methods</h3>
 
 <ul>
-<li><p><a href='#method-new'><code>VitessceConfigViewVConcat$new()</code></a></p></li>
-<li><p><a href='#method-clone'><code>VitessceConfigViewVConcat$clone()</code></a></p></li>
+<li><p><a href='#method-new'><code>VitessceConfigServerRangeRoute$new()</code></a></p></li>
+<li><p><a href='#method-create_handlers'><code>VitessceConfigServerRangeRoute$create_handlers()</code></a></p></li>
+<li><p><a href='#method-clone'><code>VitessceConfigServerRangeRoute$clone()</code></a></p></li>
 </ul>
 <p><hr>
 <a id="method-new"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>new()</code></h3>
-<p>Create a new view concat object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>VitessceConfigViewVConcat</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>views</span><span class='op'>)</span></pre><p></div></p>
+<p>Create a new server route wrapper object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>VitessceConfigServerRangeRoute</span><span class='op'>$</span><span class='fu'>new</span><span class='op'>(</span><span class='va'>path</span>, <span class='va'>file_path</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
-<dt><code>views</code></dt><dd><p>A list of views.</p></dd>
+<dt><code>path</code></dt><dd><p>The route path.</p></dd>
+
+<dt><code>file_path</code></dt><dd><p>The file to serve on this route.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
-<p>A new <code>VitessceConfigViewVConcat</code> object.</p>
+<p>A new <code>VitessceConfigServerRangeRoute</code> object.</p>
+<p><hr>
+<a id="method-create_handlers"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>create_handlers()</code></h3>
+<p>Add handler functions to the Plumber server object to respond on this route.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p><div class="r"></p><pre><span class='va'>VitessceConfigServerRangeRoute</span><span class='op'>$</span><span class='fu'>create_handlers</span><span class='op'>(</span><span class='va'>pr_server</span><span class='op'>)</span></pre><p></div></p>
+
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
+<p><div class="arguments"></p><dl>
+<dt><code>pr_server</code></dt><dd><p>The server instance.</p></dd>
+
+</dl><p></div></p>
+<h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
+<p>The modified server instance.</p>
 <p><hr>
 <a id="method-clone"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>clone()</code></h3>
 <p>The objects of this class are cloneable with this method.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>VitessceConfigViewVConcat</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>VitessceConfigServerRangeRoute</span><span class='op'>$</span><span class='fu'>clone</span><span class='op'>(</span>deep <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>

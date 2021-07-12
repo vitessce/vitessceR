@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">vitessce</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9006</span>
       </span>
     </div>
 
@@ -106,6 +106,9 @@
     </li>
     <li>
       <a href="articles/ome_tiff_remote.html">Usage with OME-TIFF: Remote Example</a>
+    </li>
+    <li>
+      <a href="articles/ome_tiff_local.html">Usage with OME-TIFF: Local Example</a>
     </li>
     <li>
       <a href="articles/shiny.html">Usage with Shiny</a>
@@ -151,17 +154,34 @@
 
 <div id="section" class="section level2">
 <h2 class="hasAnchor">
-<a href="#section" class="anchor"></a>0.0.0.9005</h2>
+<a href="#section" class="anchor"></a>0.0.0.9006</h2>
 <div id="added" class="section level3">
 <h3 class="hasAnchor">
 <a href="#added" class="anchor"></a>Added</h3>
 <ul>
-<li>Changelog added.</li>
+<li>Added <code>MultiImageWrapper</code> and <code>OmeTiffWrapper</code> classes to simplify visualization of local OME-Tiff image files.</li>
+<li>Added the internal <code>VitessceConfigServerRangeRoute</code> class to enable the Plumber web server to respond to Range requests for OME-Tiff chunks.</li>
+<li>Added a new vignette to demonstrate visualization of a local OME-Tiff file.</li>
 </ul>
 </div>
 <div id="changed" class="section level3">
 <h3 class="hasAnchor">
 <a href="#changed" class="anchor"></a>Changed</h3>
+</div>
+</div>
+<div id="section-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#section-1" class="anchor"></a>0.0.0.9005</h2>
+<div id="added-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#added-1" class="anchor"></a>Added</h3>
+<ul>
+<li>Changelog added.</li>
+</ul>
+</div>
+<div id="changed-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#changed-1" class="anchor"></a>Changed</h3>
 <ul>
 <li>Upgraded to Vitessce JS library version <code>1.1.11</code>.</li>
 <li>Updated <code>VitessceConfigDatasetFile</code> to support the <code>options</code> field, in order to support imaging data visualization via the <code>raster.json</code>file type.</li>

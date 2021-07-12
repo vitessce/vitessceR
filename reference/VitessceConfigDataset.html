@@ -72,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">vitessce</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9005</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.0.0.9006</span>
       </span>
     </div>
 
@@ -107,6 +107,9 @@
     </li>
     <li>
       <a href="../articles/ome_tiff_remote.html">Usage with OME-TIFF: Remote Example</a>
+    </li>
+    <li>
+      <a href="../articles/ome_tiff_local.html">Usage with OME-TIFF: Local Example</a>
     </li>
     <li>
       <a href="../articles/shiny.html">Usage with Shiny</a>
@@ -198,7 +201,12 @@
 <p><hr>
 <a id="method-add_file"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>add_file()</code></h3>
 <p>Add a file to this dataset.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
-<p><div class="r"></p><pre><span class='va'>VitessceConfigDataset</span><span class='op'>$</span><span class='fu'>add_file</span><span class='op'>(</span><span class='va'>url</span>, <span class='va'>data_type</span>, <span class='va'>file_type</span><span class='op'>)</span></pre><p></div></p>
+<p><div class="r"></p><pre><span class='va'>VitessceConfigDataset</span><span class='op'>$</span><span class='fu'>add_file</span><span class='op'>(</span>
+  url <span class='op'>=</span> <span class='cn'>NA</span>,
+  data_type <span class='op'>=</span> <span class='cn'>NA</span>,
+  file_type <span class='op'>=</span> <span class='cn'>NA</span>,
+  options <span class='op'>=</span> <span class='cn'>NA</span>
+<span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
 <p><div class="arguments"></p><dl>
@@ -207,6 +215,8 @@
 <dt><code>data_type</code></dt><dd><p>The data type for the file.</p></dd>
 
 <dt><code>file_type</code></dt><dd><p>The file type for the file.</p></dd>
+
+<dt><code>options</code></dt><dd><p>Optional. An options list for the file.</p></dd>
 
 </dl><p></div></p>
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Returns</h4>
