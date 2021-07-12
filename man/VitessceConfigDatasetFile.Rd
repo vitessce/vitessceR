@@ -24,7 +24,12 @@ File in a dataset in a VitessceConfig
 \subsection{Method \code{new()}}{
 Create a new dataset file object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDatasetFile$new(url, data_type, file_type)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDatasetFile$new(
+  url = NA,
+  data_type = NA,
+  file_type = NA,
+  options = NA
+)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -35,6 +40,8 @@ Create a new dataset file object.
 \item{\code{data_type}}{A data type for the file.}
 
 \item{\code{file_type}}{A file type for the file.}
+
+\item{\code{options}}{A list of options to include for the file.}
 }
 \if{html}{\out{</div>}}
 }

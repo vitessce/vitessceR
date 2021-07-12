@@ -15,8 +15,88 @@ VitessceConfigServerStaticRoute <- R6::R6Class("VitessceConfigServerStaticRoute"
    initialize = function(path, directory) {
      self$path <- path
      self$directory <- directory
+   },
+   #' @description
+   #' Add handler functions to the Plumber server object to respond on this route.
+   #' @param pr_server The server instance.
+   #' @return The modified server instance.
+   create_handlers = function(pr_server) {
+     # Reference: https://www.rplumber.io/articles/programmatic-usage.html#mount-static
+     new_server <- plumber::pr_static(pr_server, self$path, self$directory)
+     return(new_server)
    }
  )
+)
+
+#' Class representing a local web server route for a file which needs to support range requests.
+#' @keywords internal
+#' @rdname VitessceConfigServerRangeRoute
+VitessceConfigServerRangeRoute <- R6::R6Class("VitessceConfigServerRangeRoute",
+   public = list(
+     #' @field path The path on which the web server should respond to requests using this callback.
+     path = NULL,
+     #' @field file_path The file to serve.
+     file_path = NULL,
+     #' @description
+     #' Create a new server route wrapper object.
+     #' @param path The route path.
+     #' @param file_path The file to serve on this route.
+     #' @return A new `VitessceConfigServerRangeRoute` object.
+     initialize = function(path, file_path) {
+       self$path <- path
+       self$file_path <- file_path
+     },
+     #' @description
+     #' Add handler functions to the Plumber server object to respond on this route.
+     #' @param pr_server The server instance.
+     #' @return The modified server instance.
+     create_handlers = function(pr_server) {
+       # Add the handler for range requests.
+       new_server <- plumber::pr_handle(pr_server, c("GET", "OPTIONS"), self$path, handler = function(req, res) {
+         if(req$REQUEST_METHOD == "GET") {
+           file_path <- self$file_path
+
+           range_str <- req$HTTP_RANGE
+           range_matches <- stringr::str_match(range_str, "^bytes=([:digit:]+)-([:digit:]+)$")
+           range_start <- as.numeric(range_matches[2])
+           range_end <- as.numeric(range_matches[3])
+
+           res$headers <- obj_list()
+
+           fp <- file(file_path, "rb")
+           seek(fp, range_start)
+           data_length <- (range_end - range_start + 1)
+
+           chunk_data <- readBin(fp, "raw", n = data_length)
+           close(fp)
+
+           chunk_length <- length(chunk_data)
+           file_size <- file.size(file_path)
+           if(range_end > file_size) {
+             # Pad with zeros if the range_end went beyond the file size.
+             chunk_data <- c(chunk_data, rep(0x00, times = range_end - (range_start + chunk_length) + 1))
+           }
+           # Set headers.
+           res$headers[["Content-Range"]] <- paste0("bytes ", as.character(range_start), "-", as.character(range_end), "/", as.character(file_size))
+           res$headers[["Content-Length"]] <- as.character(data_length)
+           res$headers[["Access-Control-Allow-Origin"]] <- "*"
+           res$headers[["Access-Control-Allow-Headers"]] <- "Range"
+           res$headers[["Accept-Ranges"]] <- "bytes"
+           res$headers[["Content-Type"]] <- "image/tiff; charset=utf-8"
+
+           res$body <- chunk_data
+           res$status <- 206
+         } else {
+           # This is the OPTIONS request.
+           res$setHeader("Access-Control-Allow-Headers", "Range")
+           res$status <- 204
+         }
+         # Return the response object.
+         res
+       })
+       return(new_server)
+     }
+   )
 )
 
 #' Class representing a local web server to serve dataset objects.
@@ -51,8 +131,7 @@ VitessceConfigServer <- R6::R6Class("VitessceConfigServer",
       used_paths <- list()
       for(route in routes) {
         if(!(route$path %in% used_paths)) {
-          # Reference: https://www.rplumber.io/articles/programmatic-usage.html#mount-static
-          private$server <- plumber::pr_static(private$server, route$path, route$directory)
+          private$server <- route$create_handlers(private$server)
           used_paths <- append(used_paths, route$path)
         }
       }

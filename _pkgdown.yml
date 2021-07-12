@@ -30,6 +30,8 @@ reference:
 - contents:
   - AbstractWrapper
   - SeuratWrapper
+  - MultiImageWrapper
+  - OmeTiffWrapper
 
 
 articles:
@@ -40,6 +42,7 @@ articles:
       - seurat_basic
       - seurat_azimuth
       - ome_tiff_remote
+      - ome_tiff_local
       - shiny
       - export_files
   - title: Articles
