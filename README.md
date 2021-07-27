@@ -26,6 +26,8 @@ vc$widget()
 
 For full examples, visit the [documentation](https://vitessce.github.io/vitessce-r/).
 
+For questions and help with using the package, please open a [discussion](https://github.com/vitessce/vitessce-r/discussions).
+
 <img src="./img/screenshot.png" width="600" alt="Screenshot of RStudio">
 
 ## Development
