@@ -71,6 +71,9 @@
       <a href="../articles/ome_tiff_local.html">Usage with OME-TIFF: Local Example</a>
     </li>
     <li>
+      <a href="../articles/json_remote.html">Usage with JSON: Remote Example</a>
+    </li>
+    <li>
       <a href="../articles/shiny.html">Usage with Shiny</a>
     </li>
     <li>
@@ -217,8 +220,8 @@
 <span class="va">pbmc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://satijalab.org/seurat/reference/FindNeighbors.html">FindNeighbors</a></span><span class="op">(</span><span class="va">pbmc</span>, dims <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">10</span><span class="op">)</span></code></pre></div>
 <p>We can run <code>FindClusters</code> with different algorithms and save the clustering results to new variables between each algorithm, since the results in the Seurat object will be overwritten each time.</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">louvain_clusters</span> <span class="op">&lt;-</span> <span class="fu">slot</span><span class="op">(</span><span class="fu"><a href="https://satijalab.org/seurat/reference/FindClusters.html">FindClusters</a></span><span class="op">(</span><span class="va">pbmc</span>, algorithm <span class="op">=</span> <span class="fl">1</span>, resolution <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span>, <span class="st">"meta.data"</span><span class="op">)</span><span class="op">$</span><span class="va">seurat_clusters</span>
-<span class="va">slm_clusters</span> <span class="op">&lt;-</span> <span class="fu">slot</span><span class="op">(</span><span class="fu"><a href="https://satijalab.org/seurat/reference/FindClusters.html">FindClusters</a></span><span class="op">(</span><span class="va">pbmc</span>, algorithm <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>, <span class="st">"meta.data"</span><span class="op">)</span><span class="op">$</span><span class="va">seurat_clusters</span>
+<code class="sourceCode R"><span class="va">louvain_clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/slot.html">slot</a></span><span class="op">(</span><span class="fu"><a href="https://satijalab.org/seurat/reference/FindClusters.html">FindClusters</a></span><span class="op">(</span><span class="va">pbmc</span>, algorithm <span class="op">=</span> <span class="fl">1</span>, resolution <span class="op">=</span> <span class="fl">0.3</span><span class="op">)</span>, <span class="st">"meta.data"</span><span class="op">)</span><span class="op">$</span><span class="va">seurat_clusters</span>
+<span class="va">slm_clusters</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/methods/slot.html">slot</a></span><span class="op">(</span><span class="fu"><a href="https://satijalab.org/seurat/reference/FindClusters.html">FindClusters</a></span><span class="op">(</span><span class="va">pbmc</span>, algorithm <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>, <span class="st">"meta.data"</span><span class="op">)</span><span class="op">$</span><span class="va">seurat_clusters</span>
 <span class="va">cell_sets_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span>louvain <span class="op">=</span> <span class="va">louvain_clusters</span>, SLM <span class="op">=</span> <span class="va">slm_clusters</span><span class="op">)</span></code></pre></div>
 <p>With this list of cell sets, we can now create an instance of our custom SeuratWrapper subclass:</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">

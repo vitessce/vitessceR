@@ -71,6 +71,9 @@
       <a href="../articles/ome_tiff_local.html">Usage with OME-TIFF: Local Example</a>
     </li>
     <li>
+      <a href="../articles/json_remote.html">Usage with JSON: Remote Example</a>
+    </li>
+    <li>
       <a href="../articles/shiny.html">Usage with Shiny</a>
     </li>
     <li>
@@ -221,8 +224,8 @@
 <li>cell barcodes are stored under the key <code>"active.ident"</code>
 </li>
 </ul>
-<p>To generalize our function, we can get a list of names of each dimensionality reduction available with <code><a href="https://rdrr.io/r/base/names.html">names(slot(obj, "reductions"))</a></code>.</p>
-<p>We can get a list of cell IDs with <code><a href="https://rdrr.io/r/base/names.html">names(slot(obj, "active.ident"))</a></code>.</p>
+<p>To generalize our function, we can get a list of names of each dimensionality reduction available with <code>names(slot(obj, "reductions"))</code>.</p>
+<p>We can get a list of cell IDs with <code>names(slot(obj, "active.ident"))</code>.</p>
 <p>Then we can iterate over the cell IDs and set up a new empty object with <code><a href="../reference/obj_list.html">obj_list()</a></code>. Note <a href="https://github.com/vitessce/vitessce-r/blob/8d4d7f9/R/helpers.R#L35"><code>obj_list()</code></a> returns an empty R list that is always translated to a JSON object (rather than the base R <code><a href="https://rdrr.io/r/base/list.html">list()</a></code> which is translated to a JSON <em>array</em> when empty).</p>
 <p>Then we can iterate over each available dimensionality reduction and cell. We obtain the cell's (x,y) coordinates with <code>embedding_matrix[cell_id, 1:2]</code> where <code>embedding_matrix</code> is the dimensionality reduction matrix. For example, if the dimensionality reduction is <code>"pca"</code> then the matrix can be accessed at <code>slot(slot(obj, "reductions")[["pca"]], "cell.embeddings")</code>.</p>
 <p>Finally, we return the R list we created.</p>

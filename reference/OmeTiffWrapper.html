@@ -112,6 +112,9 @@
       <a href="../articles/ome_tiff_local.html">Usage with OME-TIFF: Local Example</a>
     </li>
     <li>
+      <a href="../articles/json_remote.html">Usage with JSON: Remote Example</a>
+    </li>
+    <li>
       <a href="../articles/shiny.html">Usage with Shiny</a>
     </li>
     <li>
@@ -241,7 +244,7 @@ this image (see http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-ma
 <p>A new <code>OmeTiffWrapper</code> object.</p>
 <p><hr>
 <a id="method-convert_and_save"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>convert_and_save()</code></h3>
-<p>Create the JSON output files, web server routes, and file definition creators.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>Create the web server routes and file definition creators.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>OmeTiffWrapper</span><span class='op'>$</span><span class='fu'>convert_and_save</span><span class='op'>(</span><span class='va'>dataset_uid</span>, <span class='va'>obj_i</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
@@ -267,7 +270,7 @@ this image (see http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-ma
 <p>A list of server route objects.</p>
 <p><hr>
 <a id="method-make_image_def"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>make_image_def()</code></h3>
-<p>Create a list representing the cluster assignments in the Seurat object.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>Create an object representing a single image in a raster.json list of images.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>OmeTiffWrapper</span><span class='op'>$</span><span class='fu'>make_image_def</span><span class='op'>(</span><span class='va'>dataset_uid</span>, <span class='va'>obj_i</span>, <span class='va'>base_url</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
@@ -283,7 +286,7 @@ this image (see http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-ma
 <p>A list that can be converted to JSON.</p>
 <p><hr>
 <a id="method-make_raster_file_def_creator"></a></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Method <code>make_raster_file_def_creator()</code></h3>
-<p>Make the file definition creator function for the expression matrix data type.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
+<p>Make the file definition creator function for the raster data type.</p><h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Usage</h4>
 <p><div class="r"></p><pre><span class='va'>OmeTiffWrapper</span><span class='op'>$</span><span class='fu'>make_raster_file_def_creator</span><span class='op'>(</span><span class='va'>dataset_uid</span>, <span class='va'>obj_i</span><span class='op'>)</span></pre><p></div></p>
 
 <h4 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Arguments</h4>
