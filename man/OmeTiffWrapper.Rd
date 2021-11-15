@@ -100,7 +100,7 @@ A new \code{OmeTiffWrapper} object.
 \if{html}{\out{<a id="method-convert_and_save"></a>}}
 \if{latex}{\out{\hypertarget{method-convert_and_save}{}}}
 \subsection{Method \code{convert_and_save()}}{
-Create the JSON output files, web server routes, and file definition creators.
+Create the web server routes and file definition creators.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OmeTiffWrapper$convert_and_save(dataset_uid, obj_i)}\if{html}{\out{</div>}}
 }
@@ -141,7 +141,7 @@ A list of server route objects.
 \if{html}{\out{<a id="method-make_image_def"></a>}}
 \if{latex}{\out{\hypertarget{method-make_image_def}{}}}
 \subsection{Method \code{make_image_def()}}{
-Create a list representing the cluster assignments in the Seurat object.
+Create an object representing a single image in a raster.json list of images.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OmeTiffWrapper$make_image_def(dataset_uid, obj_i, base_url)}\if{html}{\out{</div>}}
 }
@@ -165,7 +165,7 @@ A list that can be converted to JSON.
 \if{html}{\out{<a id="method-make_raster_file_def_creator"></a>}}
 \if{latex}{\out{\hypertarget{method-make_raster_file_def_creator}{}}}
 \subsection{Method \code{make_raster_file_def_creator()}}{
-Make the file definition creator function for the expression matrix data type.
+Make the file definition creator function for the raster data type.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{OmeTiffWrapper$make_raster_file_def_creator(dataset_uid, obj_i)}\if{html}{\out{</div>}}
 }

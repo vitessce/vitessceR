@@ -43,6 +43,7 @@ articles:
       - seurat_azimuth
       - ome_tiff_remote
       - ome_tiff_local
+      - json_remote
       - shiny
       - export_files
   - title: Articles

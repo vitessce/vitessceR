@@ -74,7 +74,7 @@ A new \code{MultiImageWrapper} object.
 \if{html}{\out{<a id="method-convert_and_save"></a>}}
 \if{latex}{\out{\hypertarget{method-convert_and_save}{}}}
 \subsection{Method \code{convert_and_save()}}{
-Create the JSON output files, web server routes, and file definition creators.
+Create the web server routes and file definition creators.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MultiImageWrapper$convert_and_save(dataset_uid, obj_i)}\if{html}{\out{</div>}}
 }
@@ -93,20 +93,20 @@ Create the JSON output files, web server routes, and file definition creators.
 \if{html}{\out{<a id="method-make_raster_routes"></a>}}
 \if{latex}{\out{\hypertarget{method-make_raster_routes}{}}}
 \subsection{Method \code{make_raster_routes()}}{
-Create a list representing the cells in the Seurat object.
+Create a list representing the image routes.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MultiImageWrapper$make_raster_routes()}\if{html}{\out{</div>}}
 }
 
 \subsection{Returns}{
-A list that can be converted to JSON.
+A list of server route objects.
 }
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-make_raster_file_def_creator"></a>}}
 \if{latex}{\out{\hypertarget{method-make_raster_file_def_creator}{}}}
 \subsection{Method \code{make_raster_file_def_creator()}}{
-Make the file definition creator function for the cells data type.
+Make the file definition creator function for the raster data type.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{MultiImageWrapper$make_raster_file_def_creator(dataset_uid, obj_i)}\if{html}{\out{</div>}}
 }
