@@ -10,7 +10,7 @@ Description: R API and htmlwidget facilitating interactive visualization of spat
 License: MIT + file LICENSE
 BugReports: https://github.com/vitessce/vitessce-r/issues
 URL: https://github.com/vitessce/vitessce-r
-Depends: R (>= 3.6.0)
+Depends: R (>= 4.0.0)
 Imports:
     htmlwidgets,
     rjson,
@@ -20,7 +20,8 @@ Imports:
     future,
     purrr,
     httpuv,
-    stringr
+    stringr,
+    reticulate
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
