@@ -5,6 +5,7 @@ articles:
   dev_wrapper_class: dev_wrapper_class.html
   dev_wrapper_subclass: dev_wrapper_subclass.html
   export_files: export_files.html
+  json_local: json_local.html
   json_remote: json_remote.html
   ome_tiff_local: ome_tiff_local.html
   ome_tiff_remote: ome_tiff_remote.html
@@ -13,5 +14,5 @@ articles:
   seurat_basic: seurat_basic.html
   seuratdata: seuratdata.html
   shiny: shiny.html
-last_built: 2021-11-29T20:52Z
+last_built: 2021-11-29T21:45Z
 
