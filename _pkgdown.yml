@@ -51,3 +51,4 @@ articles:
     contents:
       - dev_wrapper_class
       - dev_wrapper_subclass
+      - session_info
