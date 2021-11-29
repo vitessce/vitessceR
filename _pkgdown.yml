@@ -44,6 +44,7 @@ articles:
       - ome_tiff_remote
       - ome_tiff_local
       - json_remote
+      - json_local
       - shiny
       - export_files
   - title: Articles
