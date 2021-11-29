@@ -8,9 +8,10 @@ articles:
   json_remote: json_remote.html
   ome_tiff_local: ome_tiff_local.html
   ome_tiff_remote: ome_tiff_remote.html
+  session_info: session_info.html
   seurat_azimuth: seurat_azimuth.html
   seurat_basic: seurat_basic.html
   seuratdata: seuratdata.html
   shiny: shiny.html
-last_built: 2021-11-27T18:16Z
+last_built: 2021-11-29T20:52Z
 
