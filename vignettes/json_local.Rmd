@@ -1,13 +1,47 @@
 ---
-title: "Usage with JSON: Remote Example"
+title: "Usage with JSON: Local Example"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Usage with JSON: Remote Example}
+  %\VignetteIndexEntry{Usage with JSON: Local Example}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
-The following is an example of usage of the widget with JSON files. In this example, the JSON files are stored on a remote AWS S3 bucket. For information about remote file hosting, please visit the [Hosting Data](http://vitessce.io/docs/data-hosting/) page of the main Vitessce documentation website.
+The following is an example of usage of the widget with JSON files. In this example, the JSON files are stored locally.
+
+## Setup
+
+In this tutorial, we will serve the JSON files using a local web server. 
+
+Any static web server will work, and an easy one to install and configure is [http-server](https://github.com/http-party/http-server#readme).
+
+
+## Download the data
+
+First, download the files used in this example:
+
+- https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/linnarsson.cells.json
+- https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/linnarsson.cell-sets.json
+- https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/linnarsson.molecules.json
+- https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/linnarsson.clusters.json
+- https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/linnarsson.raster.json
+
+## Serve the JSON files locally
+
+To serve the downloaded JSON files, move them to a new folder (for instance `vitessce_json_example` in the `Downloads` folder). Using the terminal, change directories to this folder containing the JSON files.
+
+```
+cd ~/Downloads/vitessce_json_example/
+```
+
+Serve the contents of this directory (the JSON files) using `http-server`:
+
+```
+http-server ./ --cors -p 8000
+```
+
+## Configure the Vitessce widget
+
 
 To get started with this example, install the dependencies:
 
@@ -23,7 +57,7 @@ Add JSON files to the dataset using the `add_file` function. The `add_file` func
 ```r
 library(vitessce)
 
-base_url <- "https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/"
+base_url <- "http://localhost:8000/"
 
 # Create Vitessce view config
 vc <- VitessceConfig$new("Codeluppi et al., Nature Methods 2018")
