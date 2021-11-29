@@ -52,4 +52,8 @@ articles:
     contents:
       - dev_wrapper_class
       - dev_wrapper_subclass
+  - title: Articles
+    navbar: Troubleshooting
+    contents:
+      - debugging
       - session_info
