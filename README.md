@@ -2,7 +2,7 @@
 
 # vitessce-r
 
-[![Vitessce JS dependency version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Fvitessce%2Fvitessce-r%2Fmain%2Fpackage.json&label=vitessce&query=$.dependencies.vitessce&colorB=blue)](https://github.com/vitessce/vitessce/blob/master/CHANGELOG.md)
+![R package version](https://img.shields.io/github/r-package/v/vitessce/vitessce-r) [![Vitessce JS dependency version](https://img.shields.io/badge/dynamic/json.svg?url=https%3A%2F%2Fraw.githubusercontent.com%2Fvitessce%2Fvitessce-r%2Fmain%2Fpackage.json&label=vitessce&query=$.dependencies.vitessce&colorB=blue)](https://github.com/vitessce/vitessce/blob/master/CHANGELOG.md) [![docs](https://img.shields.io/badge/docs-📖-57B4E9.svg)](https://vitessce.github.io/vitessce-r/)
 
 R API and htmlwidget facilitating interactive visualization of spatial single-cell data with [Vitessce](https://github.com/vitessce/vitessce).
 
