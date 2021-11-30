@@ -1,8 +1,48 @@
+url: https://vitessce.github.io/vitessce-r/
+
 authors:
   Gehlenborg Lab:
     href: http://gehlenborglab.org/
   Mark Keller:
     href: https://github.com/keller-mark
+
+
+navbar:
+  structure:
+    left:  [home, reference, examples, articles]
+    right: [core_docs, github]
+  components:
+    examples:
+      text: Examples
+      menu:
+       - text: "Examples with Remote Data"
+       - text: "Usage with OME-TIFF: Remote Example"
+         href: articles/ome_tiff_remote.html
+       - text: "Usage with JSON: Remote Example"
+         href: articles/json_remote.html
+       - text: -------
+       - text: "Examples with Local Data"
+       - text: "Overview: Using the widget with local data"
+         href: articles/local_data_overview.html
+       - text: "Usage with SeuratData"
+         href: articles/seuratdata.html
+       - text: "Usage with Seurat: Basic Example"
+         href: articles/seurat_basic.html
+       - text: "Usage with Seurat: Reference Mapping"
+         href: articles/seurat_azimuth.html
+       - text: "Usage with OME-TIFF: Local Example"
+         href: articles/ome_tiff_local.html
+       - text: "Usage with JSON: Local Example"
+         href: articles/json_local.html
+       - text: -------
+       - text: "Other Examples"
+       - text: "Usage with Shiny"
+         href: articles/shiny.html
+       - text: "Export data to static files"
+         href: articles/export_files.html
+    core_docs:
+      text: "Core Docs"
+      href: http://vitessce.io/docs/
 
 reference:
 - title: "Working with view configs"
@@ -33,23 +73,14 @@ reference:
   - MultiImageWrapper
   - OmeTiffWrapper
 
-
 articles:
-  - title: Articles
-    navbar: Examples
-    contents:
-      - seuratdata
-      - seurat_basic
-      - seurat_azimuth
-      - ome_tiff_remote
-      - ome_tiff_local
-      - json_remote
-      - json_local
-      - shiny
-      - export_files
   - title: Articles
     navbar: Developer guides
     contents:
       - dev_wrapper_class
       - dev_wrapper_subclass
+  - title: Articles
+    navbar: Troubleshooting
+    contents:
+      - debugging
       - session_info

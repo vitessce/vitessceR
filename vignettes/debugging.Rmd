@@ -1,0 +1,63 @@
+---
+title: "Debugging"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Debugging}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+When working with the `vitessce` R package, you may encounter issues, particularly related to file formatting, file permissions, URL typos, etc. Below, we list some debugging methods that may help to resolve these bugs.
+
+If none of these tips help, please write an issue on [GitHub](https://github.com/vitessce/vitessce-r/issues).
+
+The following code snippets assume that `vitessce` has been loaded via `library(vitessce)` and the Vitessce configuration instance is stored in the variable `vc`:
+
+```r
+library(vitessce)
+vc <- VitessceConfig$new("My single-cell data visualization")
+```
+
+## Use the `out_dir` parameter for data object wrapper classes
+
+Rather than using a temporary directory, this will write converted files to the specified directory.
+This way, you can open and explore the converted output files.
+
+```r
+dir.create("./debug")
+
+dataset <- vc$add_dataset("My dataset")
+dataset <- dataset$add_object(SeuratWrapper$new(pbmc3k.final, out_dir = "./debug"))
+```
+
+## Use the `port` parameter
+
+```r
+vc$widget(port = 9000)
+```
+
+## Add the `status` component to the layout
+
+```r
+status <- vc$add_view(dataset, Component$STATUS)
+vc$layout(hconcat(scatterplot, status))
+```
+
+## Write the configuration to JSON
+
+```r
+vc_list <- vc$to_list()
+jsonlite::toJSON(vc_list, auto_unbox = TRUE)
+```
+
+## Open the browser console
+
+If the Vitessce widget loads in the RStudio "Viewer" tab, but the data fails to load or there are issues related to the user interface, you can open the browser console to check for errors or warning messages.
+
+To do so, right click in the Viewer area and select "Inspect Element."
+
+Then, click "Console" in the inspector window that appears.
+
+
+
+
