@@ -2,11 +2,13 @@ pandoc: 1.19.2.4
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
+  debugging: debugging.html
   dev_wrapper_class: dev_wrapper_class.html
   dev_wrapper_subclass: dev_wrapper_subclass.html
   export_files: export_files.html
   json_local: json_local.html
   json_remote: json_remote.html
+  local_data_overview: local_data_overview.html
   ome_tiff_local: ome_tiff_local.html
   ome_tiff_remote: ome_tiff_remote.html
   session_info: session_info.html
@@ -14,5 +16,8 @@ articles:
   seurat_basic: seurat_basic.html
   seuratdata: seuratdata.html
   shiny: shiny.html
-last_built: 2021-11-29T21:45Z
+last_built: 2021-11-30T15:16Z
+urls:
+  reference: https://vitessce.github.io/vitessce-r//reference
+  article: https://vitessce.github.io/vitessce-r//articles
 
