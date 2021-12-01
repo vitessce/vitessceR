@@ -131,7 +131,7 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
     },
     #' @description
     #' Get a list of web server route objects corresponding to any local files which will need to be served.
-    #' @returns A `list` of `VitessceConfigServerStaticRoute`.
+    #' @return A `list` of `VitessceConfigServerStaticRoute`.
     get_routes = function() {
       routes <- list()
       for(obj in private$objs) {
@@ -304,7 +304,7 @@ VitessceConfigView <- R6::R6Class("VitessceConfigView",
     #' @param y The y-coordinate of the view in the layout.
     #' @param w The width of the view in the layout.
     #' @param h The height of the view in the layout.
-    #' @returns Self, to allow chaining.
+    #' @return Self, to allow chaining.
     set_xywh = function(x, y, w, h) {
       private$view$x <- x
       private$view$y <- y
@@ -315,7 +315,7 @@ VitessceConfigView <- R6::R6Class("VitessceConfigView",
     #' @description
     #' Set additional props for this view.
     #' @param ... Any named props to set.
-    #' @returns Self, to allow chaining.
+    #' @return Self, to allow chaining.
     set_props = function(...) {
       private$view[['props']] <- list(...)
       invisible(self)
@@ -462,7 +462,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' @description
     #' Define the layout of views.
     #' @param view_concat A concatenation of views.
-    #' @returns Self, to allow chaining.
+    #' @return Self, to allow chaining.
     #' @examples
     #' vc <- VitessceConfig$new("My config")
     #' ds <- vc$add_dataset("My dataset")
@@ -517,7 +517,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' @param c_types The coordination types on which to coordinate the views.
     #' @param c_values Initial values corresponding to each coordination type.
     #' Should have the same length as the c_types array. Optional.
-    #' @returns Self, to allow chaining.
+    #' @return Self, to allow chaining.
     #' @examples
     #' vc <- VitessceConfig$new("My config")
     #' ref_dataset <- vc$add_dataset("Reference")
@@ -543,7 +543,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' @description
     #' Convert the config to an R list. Helpful when converting the config to JSON.
     #' @param base_url An base URL to prepend to file paths.
-    #' @returns A `list` that can be serialized to JSON.
+    #' @return A `list` that can be serialized to JSON.
     #' @examples
     #' vc <- VitessceConfig$new("My config")
     #' ds <- vc$add_dataset("My dataset")
@@ -580,7 +580,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     },
     #' @description
     #' Get a list of web server route objects corresponding to any local files which will need to be served.
-    #' @returns A `list` of `VitessceConfigServerStaticRoute`.
+    #' @return A `list` of `VitessceConfigServerStaticRoute`.
     get_routes = function() {
       retval <- list()
       for(d in self$config$datasets) {
@@ -602,7 +602,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' By default, creates a localhost URL which includes the port.
     #' @param serve Should local data be served by running a local web server with R plumber? By default, TRUE.
     #' @param element_id An element ID. Optional.
-    #' @returns The Vitessce htmlwidget.
+    #' @return The Vitessce htmlwidget.
     #' @examples
     #' vc <- VitessceConfig$new("My config")
     #' dataset <- vc$add_dataset("My dataset")
@@ -618,7 +618,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' @param with_config Should the Vitessce configuration be saved in the output directory as a JSON file?
     #' @param base_url If `with_config` is TRUE, what `base_url` value should be used for creation of the JSON config?
     #' @param ... Extra parameters to pass through to the export function.
-    #' @returns The Vitessce configuration as a list, with the `base_url` filled in.
+    #' @return The Vitessce configuration as a list, with the `base_url` filled in.
     #' @examples
     #' vc <- VitessceConfig$new("My config")
     #' dataset <- vc$add_dataset("My dataset")
