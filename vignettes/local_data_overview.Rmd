@@ -9,7 +9,7 @@ vignette: >
 
 The main goal of this R package is to enable configuring Vitessce visualizations using R syntax.
 
-We also aim to simplify the data conversion process by providing [dataset wrapper classes](../reference/index.html#section-dataset-wrapper-classes) that automatically convert common single-cell data structures to [file formats supported by Vitessce](http://vitessce.io/docs/data-types-file-types/).
+We also aim to simplify the data conversion process by providing [dataset wrapper classes](../reference/index.html#dataset-wrapper-classes) that automatically convert common single-cell data structures to [file formats supported by Vitessce](http://vitessce.io/docs/data-types-file-types/).
 
 Our effort to develop converters for R formats remains ongoing. However, we provide a guide for R developers to [write data conversion functions](./dev_wrapper_class.html) to support any type of R single-cell data structure (or to improve conversion for already-supported data structures).
 
