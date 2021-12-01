@@ -28,6 +28,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Suggests: 
     testthat,
+    bslib,
     pkgdown,
     Seurat,
     SummarizedExperiment,
