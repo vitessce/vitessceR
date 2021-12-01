@@ -20,7 +20,7 @@ Next, configure the Vitessce widget.
 
 Add JSON files to the dataset using the `add_file` function. The `add_file` function returns the updated dataset, allowing the function calls to be chained.
 
-```r
+```{r echo = TRUE, warning = FALSE}
 library(vitessce)
 
 base_url <- "https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/"
@@ -71,7 +71,7 @@ vc$layout(hconcat(
 ))
 
 # Render the Vitessce widget
-vc$widget(theme = "light")
+vc$widget(theme = "light", width = "100%")
 ```
 
 

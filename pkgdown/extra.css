@@ -1,0 +1,6 @@
+.vitessce-container .bg-primary, .vitessce-container .bg-secondary {
+  background-color: inherit !important;
+}
+.vitessce-container table {
+  display: table;
+}
