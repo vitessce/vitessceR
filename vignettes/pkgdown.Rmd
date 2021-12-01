@@ -1,0 +1,39 @@
+---
+title: "Usage with pkgdown"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Usage with pkgdown}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+chunk <- "```"
+```
+
+[Pkgdown](https://pkgdown.r-lib.org/) is an R package designed to build documentation websites for R packages.
+However, it can also be an easy way to create a static website using R.
+
+The Vitessce widget can be embedded in a static website built with pkgdown. In fact, this documentation website was built with pkgdown, and both of the remote data examples ([Usage with JSON: Remote Example](articles/json_remote.html) and [Usage with OME-TIFF: Remote Example](articles/ome_tiff_remote.html)) take advantage of the ability to render R htmlwidgets into a pkgdown website.
+
+To render a Vitessce widget into a pkgdown article, set the [chunk options](https://r4ds.had.co.nz/r-markdown.html#chunk-options) at the top of the code block such that output is rendered, and execute the widget function in the final line of the code block.
+
+    `r chunk`{r echo = TRUE}
+    library(vitessce)
+    
+    vc <- VitessceConfig$new("My config")
+    
+    # configure vitessce here
+    
+    vc$widget(theme = "light", width = "100%")
+    `r chunk`
+
+Note that because `pkgdown` sites are static, pkgdown cannot be used to serve data to Vitessce, so only remote datasets (with files added via the [dataset$add_file](reference/VitessceConfigDataset.html#method-add_file) method) can be used on pkgdown sites.
+
+The full code for the two examples linked above can be explored on GitHub:
+
+* https://github.com/vitessce/vitessce-r/blob/main/vignettes/json_remote.Rmd
+* https://github.com/vitessce/vitessce-r/blob/main/vignettes/ome_tiff_remote.Rmd
+* Pkgdown configuration files: https://github.com/vitessce/vitessce-r/tree/main/pkgdown
+* GitHub Actions deployment script: https://github.com/vitessce/vitessce-r/blob/main/.github/workflows/deploy.yml#L30
+

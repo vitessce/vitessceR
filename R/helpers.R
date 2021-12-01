@@ -30,6 +30,7 @@ vconcat <- function(...) {
 #'
 #' A helper function to construct an empty list which converts to a JSON object rather than a JSON array.
 #'
+#' @keywords internal
 #' @param ... A variable number of list entries.
 #' @return An empty named list.
 #'
