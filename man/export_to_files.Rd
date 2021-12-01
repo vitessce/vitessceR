@@ -29,3 +29,4 @@ description <- vc$add_view(dataset, Component$DESCRIPTION)
 vc$layout(description)
 vc$export(to = "files", out_dir = "./my_exported_files")
 }
+\keyword{internal}

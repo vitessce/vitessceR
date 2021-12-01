@@ -3,6 +3,7 @@
 #' A helper function to export files associated with a particular Vitessce configuration to a local directory.
 #' We do not recommend calling this function directly. Instead, use the `export()` function on a `VitessceConfig` instance.
 #'
+#' @keywords internal
 #' @param config An instance of `VitessceConfig`
 #' @param with_config Should the config be saved in the `out_dir` (as a JSON file)?
 #' @param base_url If `with_config` is TRUE, what `base_url` value should be used for creation of the JSON config?

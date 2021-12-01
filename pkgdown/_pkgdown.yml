@@ -2,6 +2,8 @@ url: https://vitessce.github.io/vitessce-r/
 
 template:
   bootstrap: 5
+  bslib:
+    base_font: {google: "Inter"}
 
 authors:
   Gehlenborg Lab:
@@ -41,6 +43,8 @@ navbar:
        - text: "Other Examples"
        - text: "Usage with Shiny"
          href: articles/shiny.html
+       - text: "Usage with pkgdown"
+         href: articles/pkgdown.html
        - text: "Export data to static files"
          href: articles/export_files.html
     core_docs:

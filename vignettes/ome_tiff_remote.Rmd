@@ -18,7 +18,7 @@ devtools::install_github("vitessce/vitessce-r")
 
 Next, configure the Vitessce widget:
 
-```r
+```{r echo = TRUE, warning = FALSE}
 library(vitessce)
 
 # Define the image file options object.
@@ -54,7 +54,7 @@ vc$layout(hconcat(
 ))
 
 # Render the Vitessce widget
-vc$widget(theme = "light")
+vc$widget(theme = "light", width = "100%")
 ```
 
 

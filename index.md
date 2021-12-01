@@ -1,3 +1,4 @@
+<br/>
 Vitessce is a visual integration tool for exploration of spatial single-cell experiments. To learn more about the features of Vitessce, please visit our [core docs](http://vitessce.io).
 
 ## Getting Started
@@ -45,6 +46,6 @@ vc$layout(hconcat(scatterplot, vconcat(status, cell_sets)))
 vc$widget()
 ```
 
-For a full example, visit the [Usage with SeuratData](articles/seuratdata.html) page.
+For a full example, visit the [Usage with JSON](articles/json_remote.html) page.
 
-To customize the view config passed into the widget (or to define a view config manually), please see the documentation for the `VitessceConfig` class.
+To customize the view config passed into the widget (or to define a view config manually), please see the documentation for the [`VitessceConfig`](reference/VitessceConfig.html) class.
