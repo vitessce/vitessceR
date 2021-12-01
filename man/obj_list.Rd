@@ -15,3 +15,4 @@ An empty named list.
 \description{
 A helper function to construct an empty list which converts to a JSON object rather than a JSON array.
 }
+\keyword{internal}
