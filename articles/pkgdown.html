@@ -107,7 +107,7 @@
     
     
 <p><a href="https://pkgdown.r-lib.org/" class="external-link">Pkgdown</a> is an R package designed to build documentation websites for R packages. However, it can also be an easy way to create a static website using R.</p>
-<p>The Vitessce widget can be embedded in a static website built with pkgdown. In fact, this documentation website was built with pkgdown, and both of the remote data examples (<a href="articles/json_remote.html">Usage with JSON: Remote Example</a> and <a href="articles/ome_tiff_remote.html">Usage with OME-TIFF: Remote Example</a>) take advantage of the ability to render R htmlwidgets into a pkgdown website.</p>
+<p>The Vitessce widget can be embedded in a static website built with pkgdown. In fact, this documentation website was built with pkgdown, and both of the remote data examples (<a href="./json_remote.html">Usage with JSON: Remote Example</a> and <a href="./ome_tiff_remote.html">Usage with OME-TIFF: Remote Example</a>) take advantage of the ability to render R htmlwidgets into a pkgdown website.</p>
 <p>To render a Vitessce widget into a pkgdown article, set the <a href="https://r4ds.had.co.nz/r-markdown.html#chunk-options" class="external-link">chunk options</a> at the top of the code block such that output is rendered, and execute the widget function in the final line of the code block.</p>
 <pre><code>```{r echo = TRUE}
 library(vitessce)
@@ -118,7 +118,7 @@ vc &lt;- VitessceConfig$new("My config")
 
 vc$widget(theme = "light", width = "100%")
 ```</code></pre>
-<p>Note that because <code>pkgdown</code> sites are static, pkgdown cannot be used to serve data to Vitessce, so only remote datasets (with files added via the <a href="reference/VitessceConfigDataset.html#method-add_file">dataset$add_file</a> method) can be used on pkgdown sites.</p>
+<p>Note that because <code>pkgdown</code> sites are static, pkgdown cannot be used to serve data to Vitessce, so only remote datasets (with files added via the <a href="../reference/VitessceConfigDataset.html#method-add_file">dataset$add_file</a> method) can be used on pkgdown sites.</p>
 <p>The full code for the two examples linked above can be explored on GitHub:</p>
 <ul>
 <li><a href="https://github.com/vitessce/vitessce-r/blob/main/vignettes/json_remote.Rmd" class="external-link uri">https://github.com/vitessce/vitessce-r/blob/main/vignettes/json_remote.Rmd</a></li>
