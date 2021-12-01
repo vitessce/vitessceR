@@ -1,5 +1,8 @@
 url: https://vitessce.github.io/vitessce-r/
 
+template:
+  bootstrap: 5
+
 authors:
   Gehlenborg Lab:
     href: http://gehlenborglab.org/
