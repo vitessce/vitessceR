@@ -11,6 +11,9 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
     #' @field out_dir The directory for processed output files.
     #' @keywords internal
     out_dir = NULL,
+    #' @field overwrite If converted output files already exist, generate again and overwrite?
+    #' @keywords internal
+    overwrite = NULL,
     #' @field is_remote Is the data object fully remote?
     #' @keywords internal
     is_remote = NULL,
@@ -23,14 +26,16 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
     #' @description
     #' Create an abstract wrapper around a data object.
     #' @param out_dir The directory for processed output files.
+    #' @param overwrite If converted output files already exist, generate again and overwrite?
     #' @return A new `AbstractWrapper` object.
-    initialize = function(out_dir = NA) {
+    initialize = function(out_dir = NA, overwrite = FALSE) {
       if(!is.na(out_dir)) {
         self$out_dir <- out_dir
       } else {
         self$out_dir <- tempdir()
       }
       self$is_remote <- FALSE
+      self$overwrite <- overwrite
       self$routes <- list()
       self$file_def_creators <- list()
     },
@@ -134,6 +139,12 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' @field assay The assay name in the Seurat object.
     #' @keywords internal
     assay = NULL,
+    #' @field cell_embedding_names The keys in the Seurat object's reductions/cell.embeddings
+    #' to use for creating dimensionality reduction mappings.
+    #' @keywords internal
+    cell_embeddings = NULL,
+    cell_embedding_names = NULL,
+    cell_embedding_dims = NULL,
     #' @field cell_set_meta_names The keys in the Seurat object's meta.data
     #' to use for creating cell sets.
     #' @keywords internal
@@ -146,9 +157,9 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' to use for cell set names mapped to keys for scores.
     #' @keywords internal
     cell_set_meta_score_mappings = NULL,
-    #' @field num_genes Number of genes to use for the heatmap.
+    #' @field zarr_folder
     #' @keywords internal
-    num_genes = NULL,
+    zarr_folder = NULL,
     #' @description
     #' Create a wrapper around a Seurat object.
     #' @param obj The object to wrap.
@@ -161,17 +172,28 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' @param cell_set_meta_name_mappings If cell_set_meta_names is provided, this list can
     #' also be provided to map between meta.data keys and new names to replace
     #' the keys in the interface.
-    #' @param num_genes The number of genes to include in the expression matrix. Note: this parameter is temporary and should be changed to something more useful such as number of most variable genes.
     #' @param ... Parameters inherited from `AbstractWrapper`.
     #' @return A new `SeuratWrapper` object.
-    initialize = function(obj, assay = "RNA", cell_set_meta_names = NA, cell_set_meta_score_mappings = NA, cell_set_meta_name_mappings = NA, num_genes = 10, ...) {
+    initialize = function(obj, assay = "RNA", cell_embeddings = NA, cell_embedding_names = NA, cell_embedding_dims = NA, cell_set_meta_names = NA, cell_set_meta_score_mappings = NA, cell_set_meta_name_mappings = NA, ...) {
       super$initialize(...)
       self$obj <- obj
       self$assay <- assay
+      self$cell_embeddings <- cell_embeddings
+      self$cell_embedding_names <- cell_embedding_names
+      self$cell_embedding_dims <- cell_embedding_dims
       self$cell_set_meta_names <- cell_set_meta_names
       self$cell_set_meta_score_mappings <- cell_set_meta_score_mappings
       self$cell_set_meta_name_mappings <- cell_set_meta_name_mappings
-      self$num_genes <- num_genes
+
+      self$zarr_folder <- "seurat.zarr"
+    },
+    get_zarr_path = function(dataset_uid, obj_i) {
+      out_dir <- super$get_out_dir(dataset_uid, obj_i)
+      zarr_filepath <- file.path(out_dir, self$zarr_folder)
+      return(zarr_filepath)
+    },
+    get_zarr_url = function(base_url, dataset_uid, obj_i) {
+      return(super$get_url(base_url, dataset_uid, obj_i, self$zarr_folder))
     },
     #' @description
     #' Create the JSON output files, web server routes, and file definition creators.
@@ -180,21 +202,10 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     convert_and_save = function(dataset_uid, obj_i) {
       super$convert_and_save(dataset_uid, obj_i)
 
-      # Get list representations of the data.
-      cells_list <- self$create_cells_list()
-      cell_sets_list <- self$create_cell_sets_list()
-      expression_matrix_list <- self$create_expression_matrix_list()
-
-      # Convert the lists to JSON strings.
-      cells_json <- jsonlite::toJSON(cells_list)
-      cell_sets_json <- jsonlite::toJSON(cell_sets_list)
-      expression_matrix_json <- jsonlite::toJSON(expression_matrix_list)
-
-      # Save the JSON strings to JSON files.
-      write(cells_json, file = self$get_out_dir(dataset_uid, obj_i, "cells.json"))
-      write(cell_sets_json, file = self$get_out_dir(dataset_uid, obj_i, "cell-sets.json"))
-      write(expression_matrix_json, file = self$get_out_dir(dataset_uid, obj_i, "expression-matrix.json"))
-
+      zarr_filepath <- self$get_zarr_path(dataset_uid, obj_i)
+      if(!file.exists(zarr_filepath) || self$overwrite) {
+        seurat_to_anndata_zarr(self$obj, out_path = zarr_filepath)
+      }
 
       # Get the file definition creator functions.
       cells_file_creator <- self$make_cells_file_def_creator(dataset_uid, obj_i)
@@ -210,130 +221,38 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
       self$routes <- append(self$routes, self$get_out_dir_route(dataset_uid, obj_i))
     },
     #' @description
-    #' Create a list representing the cells in the Seurat object.
-    #' @return A list that can be converted to JSON.
-    #' @keywords internal
-    create_cells_list = function() {
-        obj <- self$obj
-        embeddings <- slot(obj, "reductions")
-        available_embeddings <- names(embeddings)
-
-        cell_ids <- names(slot(obj, "active.ident"))
-        cells_list <- obj_list()
-        for(cell_id in cell_ids) {
-            cells_list[[cell_id]] <- list(
-                mappings = obj_list()
-            )
-        }
-        for(embedding_name in available_embeddings) {
-            embedding <- embeddings[[embedding_name]]
-            embedding_matrix <- slot(embedding, "cell.embeddings")
-            for(cell_id in cell_ids) {
-                cells_list[[cell_id]]$mappings[[embedding_name]] <- unname(embedding_matrix[cell_id, 1:2])
-            }
-        }
-        cells_list
-    },
-    #' @description
-    #' Create a list representing the cluster assignments in the Seurat object.
-    #' @return A list that can be converted to JSON.
-    #' @keywords internal
-    create_cell_sets_list = function() {
-      obj <- self$obj
-
-      meta.data <- slot(obj, "meta.data")
-      cells <- Seurat::Idents(obj)
-
-      # https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/linnarsson.cell-sets.json
-      cell_sets_list <- list(
-        datatype = jsonlite::unbox("cell"),
-        version = jsonlite::unbox("0.1.3"),
-        tree = list()
-      )
-
-      if(!is.na(self$cell_set_meta_names)) {
-        for(cell_set_meta_name in self$cell_set_meta_names) {
-          cell_set_meta_name_mapped <- cell_set_meta_name
-          if(!is.na(self$cell_set_meta_name_mappings) && !is.null(self$cell_set_meta_name_mappings[[cell_set_meta_name]])) {
-            cell_set_meta_name_mapped <- self$cell_set_meta_name_mappings[[cell_set_meta_name]]
-          }
-
-          cell_set_meta_node <- list(
-            name = jsonlite::unbox(cell_set_meta_name_mapped),
-            children = list()
-          )
-          cell_set_annotations <- meta.data[[cell_set_meta_name]]
-          cell_set_annotation_scores <- NA
-          if(!is.na(self$cell_set_meta_score_mappings) && !is.null(self$cell_set_meta_score_mappings[[cell_set_meta_name]])) {
-            cell_set_annotation_scores <- meta.data[[self$cell_set_meta_score_mappings[[cell_set_meta_name]]]]
-          }
-
-          cluster_names <- sort(unique(cell_set_annotations))
-
-          for(cluster_name in cluster_names) {
-            cells_in_cluster <- names(cells[cell_set_annotations == cluster_name])
-
-            # TODO: find out if there is a way to return NULL
-            make_null_tuples <- function(x) { list(jsonlite::unbox(x), jsonlite::unbox(NA)) }
-            cells_in_cluster_with_score <- purrr::map(cells_in_cluster, make_null_tuples)
-            if(!is.na(cell_set_annotation_scores)) {
-              # Scores are available
-              score_per_cell <- cell_set_annotation_scores[cell_set_annotations == cluster_name]
-              for(i in 1:length(cells_in_cluster)) {
-                cells_in_cluster_with_score[[i]][[2]] <- jsonlite::unbox(score_per_cell[[i]])
-              }
-            }
-            cluster_node <- list(
-              name = jsonlite::unbox(cluster_name),
-              set = cells_in_cluster_with_score
-            )
-            cell_set_meta_node$children <- append(cell_set_meta_node$children, list(cluster_node))
-          }
-          cell_sets_list$tree <- append(cell_sets_list$tree, list(cell_set_meta_node))
-        }
-      }
-      cell_sets_list
-    },
-    #' @description
-    #' Create a list representing the cluster assignments in the Seurat object.
-    #' @return A list that can be converted to JSON.
-    #' @keywords internal
-    create_expression_matrix_list = function() {
-      # Link to an example clusters.json expression matrix: https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/linnarsson.clusters.json
-
-      result <- list()
-
-      dimnames <- slot(slot(slot(self$obj, "assays")[[self$assay]], "counts"), "Dimnames")
-      gene_ids <- dimnames[[1]]
-      cell_ids <- dimnames[[2]]
-
-      # TODO: add an option to restrict to highly variable genes or some other subset.
-      num_cells <- length(cell_ids)
-      #num_genes <- length(gene_ids)
-      num_genes <- self$num_genes
-
-      result$rows <- gene_ids[1:num_genes]
-      result$cols <- cell_ids
-
-      sparse_matrix <- slot(slot(self$obj, "assays")[[self$assay]], "counts")
-      dense_matrix <- as.matrix(sparse_matrix)
-
-      result$matrix <- dense_matrix[1:num_genes, 1:num_cells]
-      result$matrix <- result$matrix / max(result$matrix)
-
-      result
-    },
-    #' @description
     #' Make the file definition creator function for the cells data type.
     #' @param dataset_uid The ID for this dataset.
     #' @param obj_i The index of this data object within the dataset.
     #' @return A file definition creator function which takes a `base_url` parameter.
     make_cells_file_def_creator = function(dataset_uid, obj_i) {
       get_cells <- function(base_url) {
+        options <- obj_list()
+        if(!is_na(self$cell_embeddings)) {
+          options[['mappings']] <- obj_list()
+          for(i in 1:length(self$cell_embeddings)) {
+            embedding_key <- self$cell_embeddings[i]
+            if(!is_na(self$cell_embedding_names)) {
+              embedding_name <- self$cell_embedding_names[i]
+            } else {
+              embedding_name <- embedding_key
+            }
+            if(!is_na(self$cell_embedding_dims)) {
+              embedding_dims <- self$cell_embedding_dims[i]
+            } else {
+              embedding_dims <- c(0, 1)
+            }
+            options[['mappings']][[embedding_name]] <- obj_list(
+              key = paste0("obsm/X_", embedding_key),
+              dims = embedding_dims
+            )
+          }
+        }
         file_def <- list(
           type = DataType$CELLS,
-          fileType = FileType$CELLS_JSON,
-          url = super$get_url(base_url, dataset_uid, obj_i, "cells.json")
+          fileType = FileType$ANNDATA_CELLS_ZARR,
+          url = self$get_zarr_url(base_url, dataset_uid, obj_i),
+          options = options
         )
         return(file_def)
       }
@@ -346,10 +265,30 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' @return A file definition creator function which takes a `base_url` parameter.
     make_cell_sets_file_def_creator = function(dataset_uid, obj_i) {
       get_cell_sets <- function(base_url) {
+        options <- list()
+        if(!is_na(self$cell_set_meta_names)) {
+          for(i in 1:length(self$cell_set_meta_names)) {
+            cell_set_key <- self$cell_set_meta_names[i]
+            if(!is_na(self$cell_set_meta_name_mappings)) {
+              group_name <- self$cell_set_meta_name_mappings[i]
+            } else {
+              group_name <- cell_set_key
+            }
+
+            # TODO: scoreName
+
+            cell_set_def <- obj_list(
+              groupName = group_name,
+              setName = paste0("obs/", cell_set_key)
+            )
+            options <- append(options, list(cell_set_def))
+          }
+        }
         file_def <- list(
           type = DataType$CELL_SETS,
-          fileType = FileType$CELL_SETS_JSON,
-          url = super$get_url(base_url, dataset_uid, obj_i, "cell-sets.json")
+          fileType = FileType$ANNDATA_CELL_SETS_ZARR,
+          url = self$get_zarr_url(base_url, dataset_uid, obj_i),
+          options = options
         )
         return(file_def)
       }
@@ -362,10 +301,14 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' @return A file definition creator function which takes a `base_url` parameter.
     make_expression_matrix_file_def_creator = function(dataset_uid, obj_i) {
       get_expression_matrix <- function(base_url) {
+        options = obj_list(
+          matrix = "X"
+        )
         file_def <- list(
           type = DataType$EXPRESSION_MATRIX,
-          fileType = FileType$CLUSTERS_JSON,
-          url = super$get_url(base_url, dataset_uid, obj_i, "expression-matrix.json")
+          fileType = FileType$ANNDATA_EXPRESSION_MATRIX_ZARR,
+          url = self$get_zarr_url(base_url, dataset_uid, obj_i),
+          options = options
         )
         return(file_def)
       }
@@ -606,3 +549,4 @@ OmeTiffWrapper <- R6::R6Class("OmeTiffWrapper",
      }
    ),
 )
+

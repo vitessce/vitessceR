@@ -11,16 +11,18 @@ make_numpy_friendly <- function(x, transpose = TRUE) {
   }
 }
 
-seurat_to_anndata_zarr <- function(seurat_obj, out_dir) {
-  h5seurat_path <- file.path(out_dir, "seurat_obj.h5Seurat")
-  h5ad_path <- file.path(out_dir, "seurat_obj.h5ad")
-  zarr_path <- file.path(out_dir, "seurat_obj.zarr")
+seurat_to_anndata_zarr <- function(seurat_obj, out_path) {
+  h5seurat_path <- paste0(out_path, ".h5Seurat")
+  h5ad_path <- paste0(out_path, ".h5ad")
 
-  SeuratDisk::SaveH5Seurat(pbmc3k.final, filename = h5seurat_path)
-  SeuratDisk::Convert(h5seurat_path, dest = "h5ad")
+  # Convert factor columns to string/numeric.
+  seurat_obj@meta.data <- varhandle::unfactor(seurat_obj@meta.data)
+
+  SeuratDisk::SaveH5Seurat(seurat_obj, filename = h5seurat_path, overwrite = TRUE)
+  SeuratDisk::Convert(h5seurat_path, dest = "h5ad", overwrite = TRUE)
 
   adata <- anndata$read_h5ad(h5ad_path)
-  adata$write_zarr(zarr_path)
+  adata$write_zarr(out_path)
 }
 
 sce_to_anndata_zarr <- function(sce_obj, out_dir) {

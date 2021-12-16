@@ -43,3 +43,18 @@ obj_list <- function(...) {
   }
   retval
 }
+
+#' Check if a value, potentially a vector, is NA
+#'
+#' @keywords internal
+#' @param val The value to check
+#' @return Whether the value is NA
+#'
+#' @export
+is_na <- function(val) {
+  if(length(val) > 1) {
+    return(FALSE)
+  } else {
+    return(is.na(val))
+  }
+}
