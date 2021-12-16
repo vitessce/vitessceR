@@ -21,7 +21,8 @@ Imports:
     purrr,
     httpuv,
     stringr,
-    reticulate
+    reticulate,
+    varhandle
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -33,4 +34,9 @@ Suggests:
     Seurat,
     SummarizedExperiment,
     SingleCellExperiment,
-    SpatialExperiment
+    SpatialExperiment,
+    zellkonverter,
+    Matrix,
+    DelayedArray
+    
+    
