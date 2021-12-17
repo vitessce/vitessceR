@@ -25,7 +25,18 @@
 #' @examples
 #' vc <- VitessceConfig$new("My config")
 #' vc$widget()
-vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL, port = NA, base_url = NA, serve = TRUE, element_id = NULL) {
+vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL, port = NA, base_url = NA, serve = TRUE, element_id = NULL, cleanup_past_servers = TRUE) {
+
+  tryCatch({
+    if(is.list(VITESSCE_FUTURES) && cleanup_past_servers) {
+      for(past_f in VITESSCE_FUTURES) {
+        stop_future(past_f)
+      }
+      VITESSCE_FUTURES <<- list()
+    }
+  }, error = function(cond) {
+    print(cond)
+  })
 
   use_port <- port
   if(is.na(port)) {
@@ -45,7 +56,12 @@ vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL,
   if(length(routes) > 0 && serve) {
     # run in a background process
     future::plan(future::multisession)
-    future::future(server$run())
+    f <- future::future(server$run())
+    tryCatch({
+      VITESSCE_FUTURES <<- append(VITESSCE_FUTURES, f)
+    }, error = function(cond) {
+      VITESSCE_FUTURES <<- list(f)
+    })
   }
 
   # forward widget options to javascript
