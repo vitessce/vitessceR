@@ -31,10 +31,14 @@ Next, download the dataset, load and preprocess the Seurat object, and configure
 ```r
 library(vitessce)
 library(SeuratData)
+library(Seurat)
 
 SeuratData::InstallData("pbmc3k")
 data("pbmc3k.final")
 force(pbmc3k.final)
+
+all.genes <- rownames(pbmc3k.final)
+pbmc3k.final <- ScaleData(pbmc3k.final, features = all.genes, do.center = FALSE)
 
 vc <- VitessceConfig$new("My config")
 dataset <- vc$add_dataset("My dataset")
@@ -43,15 +47,26 @@ dataset <- dataset$add_object(SeuratWrapper$new(
   cell_embeddings = c("pca", "umap"),
   cell_embedding_names = c("PCA", "UMAP"),
   cell_set_meta_names = c("seurat_annotations", "seurat_clusters"),
-  out_dir = "seurat"
+  out_dir = file.path("data", "seuratdata")
 ))
 scatterplot_pca <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
 scatterplot_umap <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "UMAP")
 cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
 genes <- vc$add_view(dataset, Component$GENES)
+heatmap <- vc$add_view(dataset, Component$HEATMAP)
+vc$link_views(
+  list(scatterplot_pca, scatterplot_umap, heatmap),
+  list(CoordinationType$GENE_EXPRESSION_COLORMAP_RANGE),
+  list(c(0.0, 0.035))
+)
+vc$link_views(
+  list(scatterplot_pca, scatterplot_umap),
+  list("embeddingCellSetLabelsVisible"),
+  list(TRUE)
+)
 vc$layout(vconcat(
   hconcat(scatterplot_pca, scatterplot_umap),
-  hconcat(cell_sets, genes)
+  hconcat(cell_sets, genes, heatmap)
 ))
 vc$widget(theme = "light")
 ```

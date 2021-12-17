@@ -1,5 +1,3 @@
-
-
 #' Horizontally concatenate views
 #'
 #' A helper function to construct a new `VitessceConfigViewHConcat` object based on multiple views.
@@ -56,5 +54,19 @@ is_na <- function(val) {
     return(FALSE)
   } else {
     return(is.na(val))
+  }
+}
+
+#' Try to stop a future
+#'
+#' @keywords internal
+#' @param f The future to stop
+#'
+#' @export
+stop_future <- function(f){
+  # Reference: https://github.com/HenrikBengtsson/future/issues/93#issuecomment-349625087
+  if(Sys.getpid() != f$job$pid) {
+    tools::pskill(f$job$pid, signal = tools::SIGTERM)
+    tools::pskill(f$job$pid, signal = tools::SIGKILL)
   }
 }
