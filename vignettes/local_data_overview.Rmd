@@ -13,11 +13,42 @@ We also aim to simplify the data conversion process by providing [dataset wrappe
 
 Our effort to develop converters for R formats remains ongoing. However, we provide a guide for R developers to [write data conversion functions](./dev_wrapper_class.html) to support any type of R single-cell data structure (or to improve conversion for already-supported data structures).
 
-The following vignettes in the "Examples with Local Data" section demonstrate how the dataset wrapper classes can be used with relatively small single-cell datasets stored on your local machine.
+The following vignettes in the "Examples with Local Data" section demonstrate how the dataset wrapper classes can be used with single-cell datasets stored on your local machine.
 
-Please note that due to a [lack of native R support for Zarr](https://github.com/vitessce/vitessce-r/issues/7), the R dataset conversion functions are currently slow and convert to uncompressed JSON files. 
-If you aim to visualize a large dataset (thousands of cells and genes) in Vitessce, we suggest using Zarr. 
+## Zarr via Reticulate
 
-In the Vitessce Python package, the [AnnDataWrapper](https://vitessce.github.io/vitessce-python/api_data.html#vitessce.wrappers.AnnDataWrapper) class automatically converts AnnData objects to Zarr stores. Alternatively, you may convert your data structure to a Zarr store manually using any [Zarr implementation](https://github.com/zarr-developers/zarr_implementations), and manually [specify the Zarr store paths](http://vitessce.io/docs/data-file-types/#anndata-as-zarr) in the Vitessce configuration.
+Due to a lack of native R support for Zarr, the R dataset conversion functions currently depend on a Python environment. 
 
-Feel free to subscribe to the [Zarr in R issue](https://github.com/vitessce/vitessce-r/issues/7) for future updates about Zarr support in the Vitessce R package.
+We currently use [reticulate](https://rstudio.github.io/reticulate/) to write to Zarr stores via the ``zarr`` Python package.
+
+We recommend using [conda](https://docs.conda.io/en/latest/) with the following ``environment.yml`` file:
+```
+name: vitessce-r-env
+channels:
+ - conda-forge
+dependencies:
+ - python>=3.8
+ - numpy>=1.14.0
+ - pandas>=1.1.2
+ - anndata>=0.7.4
+ - zarr>=2.5.0
+ - numcodecs>=0.7.2
+ - pip
+ - pip:
+   - ome-zarr>=0.2.1
+```
+
+Create the conda environment in the terminal:
+```
+conda env create -f environment.yml
+```
+
+Then, in R, specify this environment for reticulate:
+```
+library(reticulate)
+use_condaenv("vitessce-r-env", required = TRUE)
+```
+
+## Zarr natively
+
+Subscribe to the [Zarr in R issue](https://github.com/vitessce/vitessce-r/issues/7) for future updates about native Zarr support that would avoid the need for the Python environment.

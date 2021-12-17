@@ -39,10 +39,6 @@ navbar:
          href: articles/ome_tiff_local.html
        - text: "Usage with JSON: Local Example"
          href: articles/json_local.html
-       - text: "Overview: Using the widget with local data via Zarr"
-         href: articles/local_data_overview_zarr.html
-       - text: "Usage with SeuratData via Zarr"
-         href: articles/seuratdata_zarr.html
        - text: -------
        - text: "Other Examples"
        - text: "Usage with Shiny"
