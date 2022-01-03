@@ -4,19 +4,6 @@
 \name{VitessceConfig}
 \alias{VitessceConfig}
 \title{VitessceConfig Class}
-\value{
-Self, to allow chaining.
-
-Self, to allow chaining.
-
-A \code{list} that can be serialized to JSON.
-
-A \code{list} of \code{VitessceConfigServerStaticRoute}.
-
-The Vitessce htmlwidget.
-
-The Vitessce configuration as a list, with the \code{base_url} filled in.
-}
 \description{
 Class representing a Vitessce view config.
 }
@@ -272,6 +259,9 @@ Define the layout of views.
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+Self, to allow chaining.
+}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{vc <- VitessceConfig$new("My config")
@@ -305,6 +295,9 @@ Should have the same length as the c_types array. Optional.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+Self, to allow chaining.
+}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{vc <- VitessceConfig$new("My config")
@@ -335,6 +328,9 @@ Convert the config to an R list. Helpful when converting the config to JSON.
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+A \code{list} that can be serialized to JSON.
+}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{vc <- VitessceConfig$new("My config")
@@ -355,6 +351,9 @@ Get a list of web server route objects corresponding to any local files which wi
 \if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$get_routes()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A \code{list} of \code{VitessceConfigServerStaticRoute}.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-widget"></a>}}
@@ -385,6 +384,9 @@ By default, creates a localhost URL which includes the port.}
 \item{\code{element_id}}{An element ID. Optional.}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+The Vitessce htmlwidget.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
@@ -420,6 +422,9 @@ Export the data associated with this configuration to a specified destination.
 \item{\code{...}}{Extra parameters to pass through to the export function.}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+The Vitessce configuration as a list, with the \code{base_url} filled in.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}

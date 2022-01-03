@@ -16,6 +16,8 @@ Abstract dataset object wrapper class
 \describe{
 \item{\code{out_dir}}{The directory for processed output files.}
 
+\item{\code{overwrite}}{If converted output files already exist, generate again and overwrite?}
+
 \item{\code{is_remote}}{Is the data object fully remote?}
 
 \item{\code{routes}}{A list of \code{VitessceConfigServerRoute} objects.}
@@ -45,13 +47,15 @@ Abstract dataset object wrapper class
 \subsection{Method \code{new()}}{
 Create an abstract wrapper around a data object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$new(out_dir = NA)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$new(out_dir = NA, overwrite = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{out_dir}}{The directory for processed output files.}
+
+\item{\code{overwrite}}{If converted output files already exist, generate again and overwrite?}
 }
 \if{html}{\out{</div>}}
 }

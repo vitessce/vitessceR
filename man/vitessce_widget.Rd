@@ -12,7 +12,8 @@ vitessce_widget(
   port = NA,
   base_url = NA,
   serve = TRUE,
-  element_id = NULL
+  element_id = NULL,
+  cleanup_past_servers = TRUE
 )
 }
 \arguments{

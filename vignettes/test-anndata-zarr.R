@@ -1,20 +1,9 @@
-
-
-
 # Set up reticulate
 library(reticulate)
-use_condaenv("vitessce-jupyter-examples", conda = "/Users/mkeller/miniconda3/bin/conda", required = TRUE)
+use_condaenv("vitessce-r-env", conda = "~/miniconda3/bin/conda", required = TRUE)
 
-# Seurat to Zarr via AnnData
-devtools::install_github("mojaveazure/seurat-disk")
 
-## Data dependencies
-devtools::install_github('satijalab/seurat-data')
-library(SeuratData)
-SeuratData::InstallData("pbmc3k")
-data("pbmc3k.final")
 
-seurat_to_anndata_zarr(pbmc3k.final, out_dir = "seurat")
 
 # SingleCellExperiment to Zarr via AnnData
 BiocManager::install("zellkonverter")
@@ -27,6 +16,9 @@ sce_zeisel <- ZeiselBrainData()
 
 sce_to_anndata_zarr(sce_zeisel, out_dir = "seurat")
 
+
+
+
 # SpatialExperiment to Zarr via AnnData
 BiocManager::install("SpatialExperiment")
 ## Data dependencies
@@ -38,6 +30,9 @@ spe
 
 spe_to_anndata_zarr(spe, out_dir = "seurat")
 spe_to_ome_zarr(spe, out_dir = "seurat")
+
+
+
 
 # Giotto to Zarr via AnnData
 devtools::install_github("RubD/Giotto")
