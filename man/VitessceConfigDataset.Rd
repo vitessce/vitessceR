@@ -4,9 +4,6 @@
 \name{VitessceConfigDataset}
 \alias{VitessceConfigDataset}
 \title{VitessceConfigDataset Class}
-\value{
-A \code{list} of \code{VitessceConfigServerStaticRoute}.
-}
 \description{
 Class representing a dataset in a Vitessce view config.
 }
@@ -113,6 +110,9 @@ Get a list of web server route objects corresponding to any local files which wi
 \if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDataset$get_routes()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A \code{list} of \code{VitessceConfigServerStaticRoute}.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-to_list"></a>}}

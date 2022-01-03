@@ -19,7 +19,7 @@ use_condaenv("vitessce-r-env", required = TRUE)
 Next, install the R dependencies:
 
 ```r
-install.packages("seurat")
+install.packages("Seurat")
 install.packages("devtools")
 install.packages("BiocManager")
 BiocManager::install("glmGamPoi")
@@ -34,6 +34,7 @@ Download the dataset and map the query to the reference:
 library(vitessce)
 library(Seurat)
 library(Azimuth)
+library(Matrix)
 
 # Download query dataset
 url <- "https://www.dropbox.com/s/cmbvq2og93lnl9z/pbmc_10k_v3_filtered_feature_bc_matrix.h5?dl=1"
@@ -51,11 +52,6 @@ reference <- LoadReference(path = "https://seurat.nygenome.org/azimuth/reference
 # Load the query object for mapping
 # Change the file path based on where the query file is located on your system.
 query <- LoadFileInput(path = h5_file)
-query <- ConvertGeneNames(
-  object = query,
-  reference.names = rownames(x = reference$map),
-  homolog.table = 'https://seurat.nygenome.org/azimuth/references/homologs.rds'
-)
 
 # Calculate nCount_RNA and nFeature_RNA if the query does not
 # contain them already
@@ -94,8 +90,8 @@ cells.use <- query[["nCount_RNA", drop = TRUE]] <= 79534 &
 # If the query contains mitochondrial genes, filter cells based on the
 # thresholds for percent.mt you set in the app
 if ("percent.mt" %in% c(colnames(x = query[[]]))) {
-  cells.use <- query[["percent.mt", drop = TRUE]] <= 97 &
-    query[["percent.mt", drop = TRUE]] >= 0
+  cells.use <- cells.use & (query[["percent.mt", drop = TRUE]] <= 97 &
+    query[["percent.mt", drop = TRUE]] >= 0)
 }
 
 # Remove filtered cells from the query
@@ -138,6 +134,7 @@ anchors <- FindTransferAnchors(
 # The maximum prediction score is in a metadata column named "predicted.*.score"
 # The prediction scores for each class are in an assay named "prediction.score.*"
 # The imputed assay is named "impADT" if computed
+
 refdata <- lapply(X = "celltype.l2", function(x) {
   reference$map[[x, drop = TRUE]]
 })
@@ -170,10 +167,11 @@ query <- IntegrateEmbeddings(
 # Calculate the query neighbors in the reference
 # with respect to the integrated embeddings
 query[["query_ref.nn"]] <- FindNeighbors(
-  object = Embeddings(reference$map[["refDR"]]),
+  object = Embeddings(reference$map[["refDR"]])[, 1:50],
   query = Embeddings(query[["integrated_dr"]]),
   return.neighbor = TRUE,
-  l2.norm = TRUE
+  l2.norm = TRUE,
+  n.trees = 20
 )
 
 # The reference used in the app is downsampled compared to the reference on which
@@ -185,7 +183,7 @@ query <- NNTransform(
 )
 
 # Project the query to the reference UMAP.
-query[["proj.umap"]] <- RunUMAP(
+query[["umap.proj"]] <- RunUMAP(
   object = query[["query_ref.nn"]],
   reduction.model = reference$map[["refUMAP"]],
   reduction.key = 'UMAP_'
@@ -222,7 +220,7 @@ qry_dataset <- vc$add_dataset("Query")$add_object(
   SeuratWrapper$new(
     qry_obj,
     assay = Seurat::DefaultAssay(qry_obj),
-    cell_embeddings = c("integrated_dr"),
+    cell_embeddings = c("umap.proj"),
     cell_embedding_names = c("UMAP"),
     cell_set_metas = c("predicted.celltype.l2"),
     cell_set_meta_names = c("celltype.l2"),

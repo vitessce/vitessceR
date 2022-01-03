@@ -4,11 +4,6 @@
 \name{VitessceConfigView}
 \alias{VitessceConfigView}
 \title{VitessceConfigView Class}
-\value{
-Self, to allow chaining.
-
-Self, to allow chaining.
-}
 \description{
 Class representing a view in a Vitessce view config.
 }
@@ -98,6 +93,9 @@ Set the dimensions of the view.
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+Self, to allow chaining.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-set_props"></a>}}
@@ -114,6 +112,9 @@ Set additional props for this view.
 \item{\code{...}}{Any named props to set.}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+Self, to allow chaining.
 }
 }
 \if{html}{\out{<hr>}}
