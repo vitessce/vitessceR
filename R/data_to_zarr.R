@@ -11,7 +11,14 @@ make_numpy_friendly <- function(x, transpose = TRUE) {
   }
 }
 
-seurat_to_anndata_zarr <- function(seurat_obj, out_path) {
+cleanup_colnames <- function(df) {
+  # Reference: https://github.com/theislab/scvelo/issues/255#issuecomment-739995301
+  new_colnames <- colnames(df)
+  new_colnames[new_colnames == "_index"] <- "features"
+  return(new_colnames)
+}
+
+seurat_to_anndata_zarr <- function(seurat_obj, out_path, assay) {
   h5seurat_path <- paste0(out_path, ".h5Seurat")
   h5ad_path <- paste0(out_path, ".h5ad")
 
@@ -19,9 +26,21 @@ seurat_to_anndata_zarr <- function(seurat_obj, out_path) {
   seurat_obj@meta.data <- varhandle::unfactor(seurat_obj@meta.data)
 
   SeuratDisk::SaveH5Seurat(seurat_obj, filename = h5seurat_path, overwrite = TRUE)
-  SeuratDisk::Convert(h5seurat_path, dest = "h5ad", overwrite = TRUE)
+  SeuratDisk::Convert(h5seurat_path, dest = "h5ad", overwrite = TRUE, assay = assay)
 
   adata <- anndata$read_h5ad(h5ad_path)
+
+  tryCatch({
+    colnames(adata$var) <- cleanup_colnames(adata$var)
+  }, error = function(cond) {
+    print(cond)
+  })
+  tryCatch({
+    adata$raw <- NULL
+  }, error = function(cond) {
+    print(cond)
+  })
+
   adata$write_zarr(out_path)
 }
 
