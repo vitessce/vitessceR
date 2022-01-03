@@ -65,7 +65,7 @@ is_na <- function(val) {
 #' @export
 stop_future <- function(f){
   # Reference: https://github.com/HenrikBengtsson/future/issues/93#issuecomment-349625087
-  if(Sys.getpid() != f$job$pid) {
+  if(!is.null(f$job) && Sys.getpid() != f$job$pid) {
     tools::pskill(f$job$pid, signal = tools::SIGTERM)
     tools::pskill(f$job$pid, signal = tools::SIGKILL)
   }

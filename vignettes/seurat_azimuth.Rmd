@@ -9,37 +9,53 @@ vignette: >
 
 The following is an example of using the Vitessce widget to visualize a reference and mapped query dataset, with mapping performed by [Seurat v4](https://satijalab.org/v4preprint) and scripts from [Azimuth](https://satijalab.org/azimuth/).
 
-```r
-# Install Vitessce
-install.packages("devtools")
-devtools::install_github("vitessce/vitessce-r")
+First, set up the [Python environment](./local_data_overview.html):
 
-# Install Seurat v4 and its dependencies
-devtools::install_github("satijalab/seurat", ref = "release/4.0.0")
+```r
+library(reticulate)
+use_condaenv("vitessce-r-env", required = TRUE)
+```
+
+Next, install the R dependencies:
+
+```r
+install.packages("seurat")
+install.packages("devtools")
 install.packages("BiocManager")
 BiocManager::install("glmGamPoi")
-
-# Load helper functions from Azimuth
+devtools::install_github("satijalab/azimuth")
 source("https://raw.githubusercontent.com/satijalab/azimuth/master/R/helpers.R")
+devtools::install_github("vitessce/vitessce-r")
+```
 
-# Load packages
+Download the dataset and map the query to the reference:
+
+```r
 library(vitessce)
 library(Seurat)
+library(Azimuth)
 
 # Download query dataset
 url <- "https://www.dropbox.com/s/cmbvq2og93lnl9z/pbmc_10k_v3_filtered_feature_bc_matrix.h5?dl=1"
-dir.create("seurat")
-download.file(url, destfile = "seurat/pbmc_10k_v3_filtered_feature_bc_matrix.h5")
+data_dir <- file.path("data", "azimuth")
+h5_file <- file.path(data_dir, "pbmc_10k_v3_filtered_feature_bc_matrix.h5")
+dir.create(data_dir, showWarnings = FALSE)
+if(!file.exists(h5_file)) {
+  download.file(url, destfile = h5_file)
+}
 
 # Download the reference
 # Change the file path based on where the reference is located on your system.
-reference <- LoadReference(path = "https://seurat.nygenome.org/references/pbmc/", seconds = 30L)
+reference <- LoadReference(path = "https://seurat.nygenome.org/azimuth/references/v1.0.0/human_pbmc", seconds = 30L)
 
 # Load the query object for mapping
 # Change the file path based on where the query file is located on your system.
-query <- LoadFileInput(path = "seurat/pbmc_10k_v3_filtered_feature_bc_matrix.h5")
-
-#### Use Seurat v4 to perform the reference mapping ####
+query <- LoadFileInput(path = h5_file)
+query <- ConvertGeneNames(
+  object = query,
+  reference.names = rownames(x = reference$map),
+  homolog.table = 'https://seurat.nygenome.org/azimuth/references/homologs.rds'
+)
 
 # Calculate nCount_RNA and nFeature_RNA if the query does not
 # contain them already
@@ -89,7 +105,9 @@ query <- query[, cells.use]
 query <- SCTransform(
   object = query,
   assay = "RNA",
+  new.assay.name = "refAssay",
   residual.features = rownames(x = reference$map),
+  reference.SCT.model = reference$map[["refAssay"]]@SCTModel.list$refmodel,
   method = 'glmGamPoi',
   ncells = 2000,
   n_genes = 2000,
@@ -103,10 +121,10 @@ anchors <- FindTransferAnchors(
   reference = reference$map,
   query = query,
   k.filter = NA,
-  reference.neighbors = "spca.annoy.neighbors",
-  reference.assay = "SCT",
-  query.assay = "SCT",
-  reference.reduction = "spca",
+  reference.neighbors = "refdr.annoy.neighbors",
+  reference.assay = "refAssay",
+  query.assay = "refAssay",
+  reference.reduction = "refDR",
   normalization.method = "SCT",
   features = intersect(rownames(x = reference$map), VariableFeatures(object = query)),
   dims = 1:50,
@@ -116,21 +134,27 @@ anchors <- FindTransferAnchors(
 
 # Transfer cell type labels and impute protein expression
 #
-# Transferred labels are in a metadata column named "predicted.id"
-# The maximum prediction score is in a metadata column named "predicted.id.score"
-# The prediction scores for each class are in an assay named "prediction.score.id"
-# The imputed assay is named "impADT"
+# Transferred labels are in metadata columns named "predicted.*"
+# The maximum prediction score is in a metadata column named "predicted.*.score"
+# The prediction scores for each class are in an assay named "prediction.score.*"
+# The imputed assay is named "impADT" if computed
+refdata <- lapply(X = "celltype.l2", function(x) {
+  reference$map[[x, drop = TRUE]]
+})
+names(x = refdata) <- "celltype.l2"
+if (TRUE) {
+  refdata[["impADT"]] <- GetAssayData(
+    object = reference$map[['ADT']],
+    slot = 'data'
+  )
+}
 query <- TransferData(
   reference = reference$map,
   query = query,
   dims = 1:50,
   anchorset = anchors,
-  refdata = list(
-    id = Idents(reference$map),
-    impADT = GetAssayData(
-    object = reference$map[['ADT']],
-    slot = 'data'
-  )),
+  refdata = refdata,
+  n.trees = 20,
   store.weights = TRUE
 )
 
@@ -146,7 +170,7 @@ query <- IntegrateEmbeddings(
 # Calculate the query neighbors in the reference
 # with respect to the integrated embeddings
 query[["query_ref.nn"]] <- FindNeighbors(
-  object = Embeddings(reference$map[["spca"]]),
+  object = Embeddings(reference$map[["refDR"]]),
   query = Embeddings(query[["integrated_dr"]]),
   return.neighbor = TRUE,
   l2.norm = TRUE
@@ -163,10 +187,9 @@ query <- NNTransform(
 # Project the query to the reference UMAP.
 query[["proj.umap"]] <- RunUMAP(
   object = query[["query_ref.nn"]],
-  reduction.model = reference$map[["jumap"]],
+  reduction.model = reference$map[["refUMAP"]],
   reduction.key = 'UMAP_'
 )
-
 
 # Calculate mapping score and add to metadata
 query <- AddMetaData(
@@ -175,6 +198,11 @@ query <- AddMetaData(
   col.name = "mapping.score"
 )
 
+ref_obj <- reference$plot
+qry_obj <- query
+
+# Trick SeuratDisk into saving the UMAP even though it is not based on an internal assay
+ref_obj@reductions$refUMAP@assay.used <- "RNA"
 
 #### Use Vitessce for visualization ####
 
@@ -182,21 +210,29 @@ query <- AddMetaData(
 vc <- VitessceConfig$new("Azimuth")
 ref_dataset <- vc$add_dataset("Reference")$add_object(
   SeuratWrapper$new(
-    reference[['plot']],
-    cell_set_meta_names = list("id")
+    ref_obj,
+    assay = Seurat::DefaultAssay(ref_obj),
+    cell_embeddings = c("refUMAP"),
+    cell_embedding_names = c("UMAP"),
+    cell_set_metas = c("celltype.l2"),
+    out_dir = file.path(data_dir, "reference"), overwrite = TRUE
   )
 )
 qry_dataset <- vc$add_dataset("Query")$add_object(
   SeuratWrapper$new(
-    query,
-    cell_set_meta_names = list("predicted.id"),
-    cell_set_meta_score_mappings = list(predicted.id = "predicted.id.score"),
-    cell_set_meta_name_mappings = list(predicted.id = "id")
+    qry_obj,
+    assay = Seurat::DefaultAssay(qry_obj),
+    cell_embeddings = c("integrated_dr"),
+    cell_embedding_names = c("UMAP"),
+    cell_set_metas = c("predicted.celltype.l2"),
+    cell_set_meta_names = c("celltype.l2"),
+    cell_set_meta_scores = c("predicted.celltype.l2.score"),
+    out_dir = file.path(data_dir, "query"), overwrite = TRUE
   )
 )
 
-ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "umap")
-qry_plot <- vc$add_view(qry_dataset, Component$SCATTERPLOT, mapping = "proj.umap")
+ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "UMAP")
+qry_plot <- vc$add_view(qry_dataset, Component$SCATTERPLOT, mapping = "UMAP")
 cell_sets <- vc$add_view(ref_dataset, Component$CELL_SETS)
 cell_sets_2 <- vc$add_view(qry_dataset, Component$CELL_SETS)
 
