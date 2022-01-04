@@ -24,7 +24,6 @@ install.packages("devtools")
 install.packages("BiocManager")
 BiocManager::install("glmGamPoi")
 devtools::install_github("satijalab/azimuth")
-source("https://raw.githubusercontent.com/satijalab/azimuth/master/R/helpers.R")
 devtools::install_github("vitessce/vitessce-r")
 ```
 
@@ -34,6 +33,7 @@ Download the dataset and map the query to the reference:
 library(vitessce)
 library(Seurat)
 library(Azimuth)
+source("https://raw.githubusercontent.com/satijalab/azimuth/master/R/helpers.R")
 library(Matrix)
 
 # Download query dataset
