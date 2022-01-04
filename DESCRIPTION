@@ -37,7 +37,6 @@ Imports:
     varhandle,
     tools,
     methods,
-    hdf5r,
     SeuratDisk,
     zellkonverter,
     SingleCellExperiment,
