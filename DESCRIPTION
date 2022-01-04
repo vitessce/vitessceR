@@ -17,11 +17,13 @@ RoxygenNote: 7.1.2
 Depends: R (>= 4.0.0)
 Remotes:
   mojaveazure/seurat-disk,
+  bioc::release/DelayedArray,
   bioc::release/zellkonverter,
   bioc::release/SingleCellExperiment,
-  bioc::release/SpatialExperiment,
-  bioc::release/DelayedArray
+  bioc::release/SpatialExperiment
 Imports:
+    Matrix,
+    DelayedArray,
     htmlwidgets,
     rjson,
     jsonlite,
@@ -34,12 +36,11 @@ Imports:
     reticulate,
     varhandle,
     tools,
-    Matrix,
+    methods,
     SeuratDisk,
     zellkonverter,
     SingleCellExperiment,
-    SpatialExperiment,
-    DelayedArray
+    SpatialExperiment
 Suggests: 
     testthat,
     bslib,
