@@ -15,11 +15,17 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' @field assay The assay name in the Seurat object.
     #' @keywords internal
     assay = NULL,
-    #' @field cell_embedding_names The keys in the Seurat object's reductions/cell.embeddings
+    #' @field cell_embeddings The keys in the Seurat object's reductions/cell.embeddings
     #' to use for creating dimensionality reduction mappings.
     #' @keywords internal
     cell_embeddings = NULL,
+    #' @field cell_embedding_names Names
+    #' to use for creating dimensionality reduction mappings.
+    #' @keywords internal
     cell_embedding_names = NULL,
+    #' @field cell_embedding_dims The dimension indices
+    #' to use for creating dimensionality reduction mappings.
+    #' @keywords internal
     cell_embedding_dims = NULL,
     #' @field cell_set_metas The keys in the Seurat object's meta.data
     #' to use for creating cell sets.
@@ -33,13 +39,18 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' to use for cell set names mapped to keys for scores.
     #' @keywords internal
     cell_set_meta_scores = NULL,
-    #' @field zarr_folder
+    #' @field zarr_folder The name for the folder at the root of the zarr store.
     #' @keywords internal
     zarr_folder = NULL,
     #' @description
     #' Create a wrapper around a Seurat object.
     #' @param obj The object to wrap.
     #' @param assay The assay name under the assays part of the Seurat object.
+    #' @param cell_embeddings The keys in the Seurat object's reductions/cell.embeddings
+    #' to use for creating dimensionality reduction plots.
+    #' @param cell_embedding_names Names
+    #' to use for creating dimensionality reduction plots.
+    #' @param cell_embedding_dims An array of dimension indices to use for each cell_embedding.
     #' @param cell_set_metas An optional list of keys in the object's meta.data
     #' list to use for creating cell sets.
     #' @param cell_set_meta_names If cell_set_metas is provided, this list can

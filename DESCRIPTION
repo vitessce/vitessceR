@@ -4,10 +4,10 @@ Title: Create Interactive Single-cell Visualizations with the 'Vitessce' JavaScr
 Version: 0.0.0.9008
 Authors@R: c(
     person("Mark", "Keller", email = "mark_keller+vitessce_r@g.harvard.edu", role = c("cre", "aut")),
-    person("Gehlenborg Lab", role = "fnd")
+    person("Gehlenborg Lab", role = c("fnd", "lbr"))
   )
 Description: R API and htmlwidget facilitating interactive visualization of spatial single-cell data with Vitessce.
-License: MIT | file LICENSE
+License: MIT + file LICENSE
 BugReports: https://github.com/vitessce/vitessce-r/issues
 URL: https://github.com/vitessce/vitessce-r
 Encoding: UTF-8

@@ -21,17 +21,25 @@ Seurat object wrapper class
 
 \item{\code{assay}}{The assay name in the Seurat object.}
 
-\item{\code{cell_embedding_names}}{The keys in the Seurat object's reductions/cell.embeddings
+\item{\code{cell_embeddings}}{The keys in the Seurat object's reductions/cell.embeddings
 to use for creating dimensionality reduction mappings.}
 
-\item{\code{cell_set_meta_names}}{The keys in the Seurat object's meta.data
+\item{\code{cell_embedding_names}}{Names
+to use for creating dimensionality reduction mappings.}
+
+\item{\code{cell_embedding_dims}}{The dimension indices
+to use for creating dimensionality reduction mappings.}
+
+\item{\code{cell_set_metas}}{The keys in the Seurat object's meta.data
 to use for creating cell sets.}
 
-\item{\code{cell_set_meta_name_mappings}}{The keys in the Seurat object's meta.data
+\item{\code{cell_set_meta_names}}{The keys in the Seurat object's meta.data
 to use for cell set names mapped to new names.}
 
-\item{\code{cell_set_meta_score_mappings}}{The keys in the Seurat object's meta.data
+\item{\code{cell_set_meta_scores}}{The keys in the Seurat object's meta.data
 to use for cell set names mapped to keys for scores.}
+
+\item{\code{zarr_folder}}{The name for the folder at the root of the zarr store.}
 }
 \if{html}{\out{</div>}}
 }
@@ -69,13 +77,13 @@ Create a wrapper around a Seurat object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$new(
   obj,
-  assay = "RNA",
+  assay = NA,
   cell_embeddings = NA,
   cell_embedding_names = NA,
   cell_embedding_dims = NA,
+  cell_set_metas = NA,
   cell_set_meta_names = NA,
-  cell_set_meta_score_mappings = NA,
-  cell_set_meta_name_mappings = NA,
+  cell_set_meta_scores = NA,
   ...
 )}\if{html}{\out{</div>}}
 }
@@ -87,16 +95,24 @@ Create a wrapper around a Seurat object.
 
 \item{\code{assay}}{The assay name under the assays part of the Seurat object.}
 
-\item{\code{cell_set_meta_names}}{An optional list of keys in the object's meta.data
+\item{\code{cell_embeddings}}{The keys in the Seurat object's reductions/cell.embeddings
+to use for creating dimensionality reduction plots.}
+
+\item{\code{cell_embedding_names}}{Names
+to use for creating dimensionality reduction plots.}
+
+\item{\code{cell_embedding_dims}}{An array of dimension indices to use for each cell_embedding.}
+
+\item{\code{cell_set_metas}}{An optional list of keys in the object's meta.data
 list to use for creating cell sets.}
 
-\item{\code{cell_set_meta_score_mappings}}{If cell_set_meta_names is provided, this list can
+\item{\code{cell_set_meta_names}}{If cell_set_metas is provided, this list can
+also be provided to set new names to replace
+the keys in the interface.}
+
+\item{\code{cell_set_meta_scores}}{If cell_set_metas is provided, this list can
 also be provided to map between meta.data keys for set annotations
 and keys for annotation scores.}
-
-\item{\code{cell_set_meta_name_mappings}}{If cell_set_meta_names is provided, this list can
-also be provided to map between meta.data keys and new names to replace
-the keys in the interface.}
 
 \item{\code{...}}{Parameters inherited from \code{AbstractWrapper}.}
 }
