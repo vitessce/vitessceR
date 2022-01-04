@@ -1,5 +1,6 @@
 
 # Reference: https://github.com/theislab/zellkonverter/blob/master/R/SCE2AnnData.R#L237
+#' @importClassesFrom Matrix dgCMatrix
 make_numpy_friendly <- function(x, transpose = TRUE) {
   if (transpose) {
     x <- Matrix::t(x)
