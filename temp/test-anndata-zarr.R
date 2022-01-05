@@ -3,37 +3,6 @@ library(reticulate)
 use_condaenv("vitessce-r-env", conda = "~/miniconda3/bin/conda", required = TRUE)
 
 
-
-
-# SingleCellExperiment to Zarr via AnnData
-BiocManager::install("zellkonverter")
-
-## Data dependencies
-BiocManager::install("scRNAseq")
-library(scRNAseq)
-
-sce_zeisel <- ZeiselBrainData()
-
-sce_to_anndata_zarr(sce_zeisel, out_dir = "seurat")
-
-
-
-
-# SpatialExperiment to Zarr via AnnData
-BiocManager::install("SpatialExperiment")
-## Data dependencies
-BiocManager::install("STexampleData")
-library(STexampleData)
-
-spe <- STexampleData::Visium_mouseCoronal()
-spe
-
-spe_to_anndata_zarr(spe, out_dir = "seurat")
-spe_to_ome_zarr(spe, out_dir = "seurat")
-
-
-
-
 # Giotto to Zarr via AnnData
 devtools::install_github("RubD/Giotto")
 
