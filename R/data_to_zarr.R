@@ -45,73 +45,69 @@ seurat_to_anndata_zarr <- function(seurat_obj, out_path, assay) {
   adata$write_zarr(out_path)
 }
 
-sce_to_anndata_zarr <- function(sce_obj, out_dir) {
-  zarr_path <- file.path(out_dir, "sce_obj.zarr")
-
+sce_to_anndata_zarr <- function(sce_obj, out_path) {
+  obsm_keys <- names(as.list(reducedDims(sce_obj)))
+  for(obsm_key in obsm_keys) {
+    # If there are column names, then the obsm element will be stored as a data.frame,
+    # but Vitessce can only handle array obsm, so we need to remove any column names.
+    # Reference: https://github.com/theislab/zellkonverter/blob/e1e95b1/R/SCE2AnnData.R#L159
+    colnames(reducedDims(sce_obj)[[obsm_key]]) <- NULL
+  }
   adata <- zellkonverter::SCE2AnnData(sce_obj)
-  adata$write_zarr(zarr_path)
+  adata$write_zarr(out_path)
 }
 
-spe_to_anndata_zarr <- function(spe_obj, out_dir) {
-  zarr_path <- file.path(out_dir, "spe_obj.zarr")
-
+spe_to_anndata_zarr <- function(spe_obj, out_path) {
   internal_col_data <- int_colData(spe_obj)
 
   colData(spe_obj) <- cbind(colData(spe_obj), internal_col_data$spatialCoords, internal_col_data$spatialData, internal_col_data$reducedDims)
 
-  adata <- zellkonverter::SCE2AnnData(spe_obj)
-  adata$write_zarr(zarr_path)
+  sce_to_anndata_zarr(spe_obj, out_path)
 }
 
-spe_to_ome_zarr <- function(spe_obj, out_dir) {
-  out_files <- character()
-  img_df <- imgData(spe_obj)
-  for(img_idx in 1:nrow(img_df)) {
-    sample_id <- img_df[img_idx, "sample_id"]
-    image_id <- img_df[img_idx, "image_id"]
+spe_to_ome_zarr <- function(spe_obj, sample_id, image_id, out_path) {
+  zarr_path <- out_path
 
-    zarr_path <- file.path(out_dir, paste0(sample_id, "_", image_id, ".zarr"))
+  img_arr <- apply(as.matrix(as.raster(getImg(spe_obj, image_id = image_id, sample_id = sample_id))), c(1, 2), col2rgb)
 
-    img_arr <- apply(as.matrix(as.raster(getImg(spe_obj, image_id = image_id, sample_id = sample_id))), c(1, 2), col2rgb)
+  z_root <- zarr$open_group(zarr_path, mode = "w")
 
-    z_root <- zarr$open_group(zarr_path, mode = "w")
+  default_window <- obj_list(
+    start = 0,
+    min = 0,
+    max = 255,
+    end = 255
+  )
 
-    default_window <- obj_list(
-      start = 0,
-      min = 0,
-      max = 255,
-      end = 255
-    )
+  ome_zarr$writer$write_image(
+    image = img_arr,
+    group = z_root,
+    axes = "cyx",
+    omero = obj_list(
+      name = image_id,
+      version = "0.3",
+      rdefs = obj_list(
 
-    ome_zarr$writer$write_image(
-      image = img_arr,
-      group = z_root,
-      axes = "cyx",
-      omero = obj_list(
-        name = image_id,
-        version = "0.3",
-        channels = list(
-          obj_list(
-            label = "r",
-            color = "FF0000",
-            window = default_window
-          ),
-          obj_list(
-            label = "g",
-            color = "00FF00",
-            window = default_window
-          ),
-          obj_list(
-            label = "b",
-            color = "0000FF",
-            window = default_window
-          )
+      ),
+      channels = list(
+        obj_list(
+          label = "r",
+          color = "FF0000",
+          window = default_window
+        ),
+        obj_list(
+          label = "g",
+          color = "00FF00",
+          window = default_window
+        ),
+        obj_list(
+          label = "b",
+          color = "0000FF",
+          window = default_window
         )
       )
     )
-    out_files <- c(out_files, zarr_path)
-  }
-  return(out_files)
+  )
 }
 
 

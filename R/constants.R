@@ -119,6 +119,7 @@ FileType <- list(
   MOLECULES_JSON = "molecules.json",
   NEIGHBORHOODS_JSON = "neighborhoods.json",
   RASTER_JSON = "raster.json",
+  RASTER_OME_ZARR = "raster.ome-zarr",
   CELL_SETS_JSON = "cell-sets.json",
   CLUSTERS_JSON = "clusters.json",
   EXPRESSION_MATRIX_ZARR = "expression-matrix.zarr",

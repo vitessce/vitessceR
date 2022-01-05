@@ -1,0 +1,73 @@
+---
+title: "Usage with SingleCellExperiment"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Usage with SingleCellExperiment}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The following is a full example of usage of the widget with a [SingleCellExperiment](https://bioconductor.org/packages/release/bioc/html/SingleCellExperiment.html) object.
+
+First, install the R dependencies:
+
+```r
+install.packages("BiocManager")
+BiocManager::install("scRNAseq")
+BiocManager::install("scater")
+install.packages("devtools")
+devtools::install_github("vitessce/vitessce-r")
+```
+
+Then, set up the [Python environment](./local_data_overview.html):
+
+```r
+library(reticulate)
+use_condaenv("vitessce-r-env", required = TRUE)
+```
+
+Download the dataset, load and preprocess the SingleCellExperiment object, and configure the Vitessce widget:
+
+```r
+library(vitessce)
+library(scRNAseq)
+library(scater)
+
+sce_zeisel <- ZeiselBrainData()
+
+sce_zeisel <- addPerCellQC(sce_zeisel, subsets=list(Mito = grep("mt-", rownames(sce_zeisel))))
+sce_zeisel <- logNormCounts(sce_zeisel) 
+sce_zeisel <- runPCA(sce_zeisel)
+
+
+# Create Vitessce view config
+vc <- VitessceConfig$new("My config")
+dataset <- vc$add_dataset("My dataset")$add_object(SCEWrapper$new(
+  sce_zeisel,
+  cell_set_metas = c("tissue", "level1class", "level2class"),
+  cell_set_meta_names = c("Tissue", "Cell Type Level 1", "Cell Type Level 2"),
+  cell_embeddings = c("PCA"),
+  out_dir = file.path("data", "sce"), overwrite = TRUE
+))
+scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
+status <- vc$add_view(dataset, Component$STATUS)
+desc <- vc$add_view(dataset, Component$DESCRIPTION)
+desc <- desc$set_props(description = "Visualization of a SingleCellExperiment object.")
+cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
+heatmap <- vc$add_view(dataset, Component$HEATMAP)
+vc$link_views(
+  list(scatterplot, heatmap),
+  list(CoordinationType$GENE_EXPRESSION_COLORMAP_RANGE),
+  list(c(0.0, 0.05))
+)
+vc$layout(hconcat(
+  vconcat(scatterplot, heatmap),
+  vconcat(cell_sets, vconcat(desc, status))
+))
+
+# Render the Vitessce widget
+vc$widget(theme = "light")
+```
+
+
+

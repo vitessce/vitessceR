@@ -35,6 +35,10 @@ navbar:
          href: articles/seurat_basic.html
        - text: "Usage with Seurat: Reference Mapping"
          href: articles/seurat_azimuth.html
+       - text: "Usage with SingleCellExperiment"
+         href: articles/single_cell_experiment.html
+       - text: "Usage with SpatialExperiment"
+         href: articles/spatial_experiment.html
        - text: "Usage with OME-TIFF: Local Example"
          href: articles/ome_tiff_local.html
        - text: "Usage with JSON: Local Example"

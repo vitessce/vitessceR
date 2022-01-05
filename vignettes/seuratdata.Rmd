@@ -9,21 +9,21 @@ vignette: >
 
 The following is an example of usage of the widget with a [Seurat](https://satijalab.org/seurat/) object loaded from the [SeuratData](https://github.com/satijalab/seurat-data) package.
 
-First, set up the [Python environment](./local_data_overview.html):
 
-```r
-library(reticulate)
-use_condaenv("vitessce-r-env", required = TRUE)
-```
-
-Next, install the R dependencies:
+First, install the R dependencies:
 
 ```r
 install.packages("seurat")
 install.packages("devtools")
 devtools::install_github("satijalab/seurat-data")
-devtools::install_github("mojaveazure/seurat-disk")
 devtools::install_github("vitessce/vitessce-r")
+```
+
+Then, set up the [Python environment](./local_data_overview.html):
+
+```r
+library(reticulate)
+use_condaenv("vitessce-r-env", required = TRUE)
 ```
 
 Next, download the dataset, load and preprocess the Seurat object, and configure the Vitessce widget:

@@ -9,14 +9,8 @@ vignette: >
 
 The following is an example of using the Vitessce widget to visualize a reference and mapped query dataset, with mapping performed by [Seurat v4](https://satijalab.org/v4preprint) and scripts from [Azimuth](https://satijalab.org/azimuth/).
 
-First, set up the [Python environment](./local_data_overview.html):
 
-```r
-library(reticulate)
-use_condaenv("vitessce-r-env", required = TRUE)
-```
-
-Next, install the R dependencies:
+First, install the R dependencies:
 
 ```r
 install.packages("Seurat")
@@ -25,6 +19,13 @@ install.packages("BiocManager")
 BiocManager::install("glmGamPoi")
 devtools::install_github("satijalab/azimuth")
 devtools::install_github("vitessce/vitessce-r")
+```
+
+Then, set up the [Python environment](./local_data_overview.html):
+
+```r
+library(reticulate)
+use_condaenv("vitessce-r-env", required = TRUE)
 ```
 
 Download the dataset and map the query to the reference:
