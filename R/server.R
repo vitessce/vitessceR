@@ -32,9 +32,9 @@ VitessceConfigServerStaticRoute <- R6::R6Class("VitessceConfigServerStaticRoute"
        res$status <- 200
        res
      }
-     new_server <- plumber::pr_handle(new_server, c("HEAD"), paste0(self$path, "/sample01__lowres.zarr/.zgroup"), handler = head_handler)
-     new_server <- plumber::pr_handle(new_server, c("HEAD"), paste0(self$path, "/sample01__lowres.zarr/.zarray"), handler = head_handler)
-     new_server <- plumber::pr_handle(new_server, c("HEAD"), paste0(self$path, "/sample01__lowres.zarr/<key>/.zarray"), handler = head_handler)
+     new_server <- plumber::pr_head(new_server, paste0(self$path, "/<fname>/.zgroup"), handler = head_handler)
+     new_server <- plumber::pr_head(new_server, paste0(self$path, "/<fname>/.zarray"), handler = head_handler)
+     new_server <- plumber::pr_head(new_server, paste0(self$path, "/<fname>/<zkey>/.zarray"), handler = head_handler)
 
      return(new_server)
    }
