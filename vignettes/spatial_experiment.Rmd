@@ -35,6 +35,8 @@ spe_visium <- STexampleData::Visium_mouseCoronal()
 
 w <- SPEWrapper$new(
   spe_visium,
+  sample_id = "sample01",
+  image_id = "hires",
   out_dir = file.path("data", "spe"), overwrite = TRUE
 )
 
