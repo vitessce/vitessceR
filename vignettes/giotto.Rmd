@@ -126,19 +126,33 @@ library(vitessce)
 
 w <- GiottoWrapper$new(
   SS_seqfish,
-  
-  out_dir = file.path("data", "giotto"), overwrite = TRUE
+  cell_set_metas = c("cell_types"),
+  cell_set_meta_names = c("Cell Types"),
+  cell_embeddings = c("pca", "tsne"),
+  cell_embedding_names = c("PCA", "t-SNE"),
+  out_dir = file.path("data", "giotto")
 )
 
 vc <- VitessceConfig$new("My config")
 dataset <- vc$add_dataset("My dataset")$add_object(w)
 spatial <- vc$add_view(dataset, Component$SPATIAL)
+scatterplot_tsne <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "t-SNE")
+cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
 status <- vc$add_view(dataset, Component$STATUS)
 desc <- vc$add_view(dataset, Component$DESCRIPTION)
-desc <- desc$set_props(description = "Visualization of a SpatialExperiment object.")
+desc <- desc$set_props(description = "Visualization of a Giotto object.")
 
 vc$layout(
-  hconcat(spatial, vconcat(desc, status))
+  hconcat(
+    vconcat(
+      spatial,
+      scatterplot_tsne
+    ),
+    vconcat(
+      cell_sets,
+      hconcat(desc, status)
+    )
+  )
 )
 
 # Render the Vitessce widget

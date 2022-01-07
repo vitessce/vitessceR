@@ -144,17 +144,29 @@ spe_to_ome_zarr <- function(spe_obj, sample_id, image_id, out_path) {
 #' @importFrom methods slot
 giotto_to_anndata_zarr <- function(giotto_obj, out_path, X_slot = "raw_exprs") {
 
-  X <- make_numpy_friendly(slot(giotto_obj, X_slot))
-  obs <- slot(giotto_obj, "cell_metadata")
-  var <- slot(giotto_obj, "gene_metadata")
-
   # Use basilisk
   proc <- basilisk::basiliskStart(py_env)
   on.exit(basilisk::basiliskStop(proc))
 
-  basilisk::basiliskRun(proc, function(giotto_obj, out_path, X, obs, var) {
+  basilisk::basiliskRun(proc, function(giotto_obj, out_path, X_slot) {
     anndata <- reticulate::import("anndata")
     zarr <- reticulate::import("zarr")
+
+    # Reference: https://github.com/theislab/zellkonverter/blob/master/R/SCE2AnnData.R#L237
+    make_numpy_friendly <- function(x, transpose = TRUE) {
+      if (transpose) {
+        x <- Matrix::t(x)
+      }
+      if (DelayedArray::is_sparse(x)) {
+        methods::as(x, "dgCMatrix")
+      } else {
+        as.matrix(x)
+      }
+    }
+
+    X <- make_numpy_friendly(slot(giotto_obj, X_slot))
+    obs <- slot(giotto_obj, "cell_metadata")
+    var <- slot(giotto_obj, "gene_metadata")
 
     adata <- anndata$AnnData(X = X, obs = obs, var = var)
 
@@ -175,11 +187,11 @@ giotto_to_anndata_zarr <- function(giotto_obj, out_path, X_slot = "raw_exprs") {
 
     if(length(obsm) > 0) {
       # TODO make_numpy_friendly is outside scope
-      obsm <- lapply(obsm, vitessce::make_numpy_friendly)
+      obsm <- lapply(obsm, make_numpy_friendly)
       adata$obsm <- obsm
     }
 
     adata$write_zarr(out_path)
     return(TRUE)
-  }, giotto_obj = giotto_obj, out_path = out_path, X_slot = X_slot, X = X, obs = obs, var = var)
+  }, giotto_obj = giotto_obj, out_path = out_path, X_slot = X_slot)
 }

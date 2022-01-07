@@ -123,6 +123,9 @@ GiottoWrapper <- R6::R6Class("GiottoWrapper",
     make_cells_file_def_creator = function(dataset_uid, obj_i) {
       get_cells <- function(base_url) {
         options <- obj_list()
+        if(!is_na(slot(self$obj, "spatial_locs"))) {
+          options[['xy']] <- "obsm/spatial"
+        }
         if(!is_na(self$cell_embeddings)) {
           options[['mappings']] <- obj_list()
           for(i in 1:length(self$cell_embeddings)) {

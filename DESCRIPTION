@@ -44,6 +44,7 @@ Imports:
     reticulate,
     varhandle,
     tools,
+    stats,
     methods,
     grDevices,
     basilisk,
@@ -55,3 +56,4 @@ Suggests:
     bslib,
     pkgdown,
     Seurat
+VignetteEngine: knitr
