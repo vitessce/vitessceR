@@ -478,9 +478,9 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
       layout_aux <- function(obj, x_min, x_max, y_min, y_max) {
         w <- x_max - x_min
         h <- y_max - y_min
-        if(class(obj)[[1]] == "VitessceConfigView") {
+        if(methods::is(obj, "VitessceConfigView")) {
           obj$set_xywh(x_min, y_min, w, h)
-        } else if(class(obj)[[1]] == "VitessceConfigViewHConcat") {
+        } else if(methods::is(obj, "VitessceConfigViewHConcat")) {
           views <- obj$views
           num_views <- length(views)
           for(i in 1:num_views) {
@@ -492,7 +492,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
               y_max
             )
           }
-        } else if(class(obj)[[1]] == "VitessceConfigViewVConcat") {
+        } else if(methods::is(obj, "VitessceConfigViewVConcat")) {
           views <- obj$views
           num_views <- length(views)
           for(i in 1:num_views) {
