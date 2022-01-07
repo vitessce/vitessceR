@@ -1,9 +1,13 @@
-
-# Reference: https://bioconductor.org/packages/release/bioc/vignettes/basilisk/inst/doc/motivation.html
-# Must include all packages from zellkonverter::.AnnDataDependencies
+#' The Python environment
+#'
+#' Defines a conda environment via Basilisk, which is used
+#' to convert R objects to Zarr stores.
+#' This environment has been adapted from zellkonverter::.AnnDataDependencies.
+#' Reference: https://bioconductor.org/packages/release/bioc/vignettes/basilisk/inst/doc/motivation.html
+#'
 #' @export
 py_env <- basilisk::BasiliskEnvironment(
-  envname="vitessce_r_env",
+  envname="vitessce_basilisk_env",
   pkgname="vitessce",
   packages=c(
     "numpy==1.20.2",

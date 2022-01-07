@@ -69,11 +69,24 @@ GiottoWrapper <- R6::R6Class("GiottoWrapper",
 
       self$zarr_folder <- "giotto.zarr"
     },
+    #' @description
+    #' Get the path to the zarr store, relative to the current directory.
+    #' @param dataset_uid The ID for this dataset.
+    #' @param obj_i The index of this data object within the dataset.
+    #' @keywords internal
+    #' @return A path as a string.
     get_zarr_path = function(dataset_uid, obj_i) {
       out_dir <- super$get_out_dir(dataset_uid, obj_i)
       zarr_filepath <- file.path(out_dir, self$zarr_folder)
       return(zarr_filepath)
     },
+    #' @description
+    #' Get the URL to the Zarr store, to fill in the file URL in the file definitions.
+    #' @param base_url The base URL, on which the route will be served.
+    #' @param dataset_uid The ID for this dataset.
+    #' @param obj_i The index of this data object within the dataset.
+    #' @keywords internal
+    #' @return A URL as a string.
     get_zarr_url = function(base_url, dataset_uid, obj_i) {
       return(super$get_url(base_url, dataset_uid, obj_i, self$zarr_folder))
     },

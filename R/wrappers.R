@@ -90,6 +90,7 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
     #' @param base_url The base URL on which the web server is serving.
     #' @param dataset_uid The ID for this dataset.
     #' @param obj_i The index of this data object within the dataset.
+    #' @param ... Passes extra arguments to `get_route_str`
     #' @return A URL as a string.
     get_url = function(base_url, dataset_uid, obj_i, ...) {
         retval <- paste0(base_url, self$get_route_str(dataset_uid, obj_i, ...))
@@ -99,6 +100,7 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
     #' Create a string representing a web server route path (the part following the base URL).
     #' @param dataset_uid The ID for this dataset.
     #' @param obj_i The index of this data object within the dataset.
+    #' @param ... Pastes extra arguments together after `obj_i`, separated by slash.
     #' @return A path as a string.
     get_route_str = function(dataset_uid, obj_i, ...) {
       retval <- paste0("/", paste(dataset_uid, obj_i, ..., sep = "/"))
@@ -108,6 +110,7 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
     #' Create a directory path to a dataset within the base output directory.
     #' @param dataset_uid The ID for this dataset.
     #' @param obj_i The index of this data object within the dataset.
+    #' @param ... Passes extra arguments to `file.path`
     #' @return A path as a string.
     get_out_dir = function(dataset_uid, obj_i, ...) {
       retval <- file.path(self$out_dir, dataset_uid, obj_i, ...)

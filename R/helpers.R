@@ -70,3 +70,24 @@ stop_future <- function(f){
     tools::pskill(f$job$pid, signal = tools::SIGKILL)
   }
 }
+
+#' Make a matrix compatible with NumPy.
+#'
+#' Reference: https://github.com/theislab/zellkonverter/blob/master/R/SCE2AnnData.R#L237
+#' @keywords internal
+#' @param x The matrix
+#' @param transpose Should the matrix be transposed? By default, TRUE.
+#' @returns The matrix.
+#'
+#' @importClassesFrom Matrix dgCMatrix
+#' @export
+make_numpy_friendly <- function(x, transpose = TRUE) {
+  if (transpose) {
+    x <- Matrix::t(x)
+  }
+  if (DelayedArray::is_sparse(x)) {
+    methods::as(x, "dgCMatrix")
+  } else {
+    as.matrix(x)
+  }
+}

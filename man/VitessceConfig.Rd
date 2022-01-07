@@ -367,6 +367,8 @@ Create an htmlwidget based on this config.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{...}}{Passes extra keyword arguments to the \code{vitessce_widget} function.}
+
 \item{\code{theme}}{The theme of the widget, either "dark" or "light". Optional. By default, "dark".}
 
 \item{\code{width}}{The width of the widget as a number or CSS string. Optional.}
