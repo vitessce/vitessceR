@@ -24,6 +24,7 @@ VitessceConfigServerStaticRoute <- R6::R6Class("VitessceConfigServerStaticRoute"
      # Reference: https://www.rplumber.io/articles/programmatic-usage.html#mount-static
      new_server <- plumber::pr_static(pr_server, self$path, self$directory)
 
+     # Handle Zarr stores for OME-Zarr images.
      head_handler <- function(req, res) {
        res$headers[["Accept-Ranges"]] <- "bytes"
        res$headers[["Access-Control-Allow-Origin"]] <- "*"

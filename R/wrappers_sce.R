@@ -85,7 +85,7 @@ SCEWrapper <- R6::R6Class("SCEWrapper",
       super$convert_and_save(dataset_uid, obj_i)
 
       zarr_filepath <- self$get_zarr_path(dataset_uid, obj_i)
-      if(!file.exists(zarr_filepath) || self$overwrite) {
+      if(!file.exists(zarr_filepath) || !self$use_cache) {
         sce_to_anndata_zarr(self$obj, out_path = zarr_filepath)
       }
 

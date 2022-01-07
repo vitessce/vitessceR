@@ -118,7 +118,7 @@ SPEWrapper <- R6::R6Class("SPEWrapper",
 
       zarr_filepath <- self$get_zarr_path(dataset_uid, obj_i)
       img_filepath <- self$get_img_path(dataset_uid, obj_i)
-      if(!file.exists(zarr_filepath) || !file.exists(img_filepath) || self$overwrite) {
+      if(!file.exists(zarr_filepath) || !file.exists(img_filepath) || !self$use_cache) {
         spe_to_anndata_zarr(self$obj, out_path = zarr_filepath)
         spe_to_ome_zarr(self$obj, sample_id = self$img_sample_id, image_id = self$img_image_id, out_path = img_filepath)
       }

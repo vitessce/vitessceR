@@ -12,14 +12,11 @@ make_numpy_friendly <- function(x, transpose = TRUE) {
   }
 }
 
-cleanup_colnames <- function(df) {
-  # Reference: https://github.com/theislab/scvelo/issues/255#issuecomment-739995301
-  new_colnames <- colnames(df)
-  new_colnames[new_colnames == "_index"] <- "features"
-  return(new_colnames)
-}
-
 seurat_to_anndata_zarr <- function(seurat_obj, out_path, assay) {
+  if(!requireNamespace("SeuratDisk", quietly = TRUE)) {
+    stop("Install 'SeuratDisk' to enable conversion of Seurat objects to AnnData objects.")
+  }
+
   h5seurat_path <- paste0(out_path, ".h5Seurat")
   h5ad_path <- paste0(out_path, ".h5ad")
 
@@ -29,20 +26,42 @@ seurat_to_anndata_zarr <- function(seurat_obj, out_path, assay) {
   SeuratDisk::SaveH5Seurat(seurat_obj, filename = h5seurat_path, overwrite = TRUE)
   SeuratDisk::Convert(h5seurat_path, dest = "h5ad", overwrite = TRUE, assay = assay)
 
-  adata <- anndata$read_h5ad(h5ad_path)
+  # Use basilisk
+  proc <- basilisk::basiliskStart(py_env)
+  on.exit(basilisk::basiliskStop(proc))
 
-  tryCatch({
-    colnames(adata$var) <- cleanup_colnames(adata$var)
-  }, error = function(cond) {
-    print(cond)
-  })
-  tryCatch({
-    adata$raw <- NULL
-  }, error = function(cond) {
-    print(cond)
-  })
+  basilisk::basiliskRun(proc, function(h5ad_path, out_path) {
+    anndata <- reticulate::import("anndata")
+    zarr <- reticulate::import("zarr")
 
-  adata$write_zarr(out_path)
+    adata <- anndata$read_h5ad(h5ad_path)
+
+    cleanup_colnames <- function(df) {
+      # Reference: https://github.com/theislab/scvelo/issues/255#issuecomment-739995301
+      new_colnames <- colnames(df)
+      new_colnames[new_colnames == "_index"] <- "features"
+      return(new_colnames)
+    }
+
+    noop <- function(cond) { }
+
+    tryCatch({
+      colnames(adata$var) <- cleanup_colnames(adata$var)
+    }, error = noop)
+
+    # Reconstruct, omitting raw and uns.
+    adata <- anndata$AnnData(
+      X = adata$X,
+      obs = as.data.frame(adata$obs),
+      var = as.data.frame(adata$var),
+      obsm = adata$obsm,
+      varm = adata$varm
+    )
+
+    adata$write_zarr(out_path)
+
+    return(TRUE)
+  }, h5ad_path = h5ad_path, out_path = out_path)
 }
 
 sce_to_anndata_zarr <- function(sce_obj, out_path) {
@@ -53,8 +72,19 @@ sce_to_anndata_zarr <- function(sce_obj, out_path) {
     # Reference: https://github.com/theislab/zellkonverter/blob/e1e95b1/R/SCE2AnnData.R#L159
     colnames(reducedDims(sce_obj)[[obsm_key]]) <- NULL
   }
-  adata <- zellkonverter::SCE2AnnData(sce_obj)
-  adata$write_zarr(out_path)
+
+  # Use basilisk
+  proc <- basilisk::basiliskStart(py_env)
+  on.exit(basilisk::basiliskStop(proc))
+
+  basilisk::basiliskRun(proc, function(sce_obj, out_path) {
+    anndata <- reticulate::import("anndata")
+    zarr <- reticulate::import("zarr")
+
+    adata <- zellkonverter::SCE2AnnData(sce_obj)
+    adata$write_zarr(out_path)
+    return(TRUE)
+  }, sce_obj = sce_obj, out_path = out_path)
 }
 
 spe_to_anndata_zarr <- function(spe_obj, out_path) {
@@ -66,79 +96,95 @@ spe_to_anndata_zarr <- function(spe_obj, out_path) {
 }
 
 spe_to_ome_zarr <- function(spe_obj, sample_id, image_id, out_path) {
-  zarr_path <- out_path
-
   img_arr <- apply(as.matrix(as.raster(getImg(spe_obj, image_id = image_id, sample_id = sample_id))), c(1, 2), col2rgb)
 
-  z_root <- zarr$open_group(zarr_path, mode = "w")
+  # Use basilisk
+  proc <- basilisk::basiliskStart(py_env)
+  on.exit(basilisk::basiliskStop(proc))
 
-  default_window <- obj_list(
-    start = 0,
-    min = 0,
-    max = 255,
-    end = 255
-  )
+  basilisk::basiliskRun(proc, function(img_arr, sample_id, image_id, out_path) {
+    zarr <- reticulate::import("zarr")
+    ome_zarr <- reticulate::import("ome_zarr")
 
-  ome_zarr$writer$write_image(
-    image = img_arr,
-    group = z_root,
-    axes = "cyx",
-    omero = obj_list(
-      name = image_id,
-      version = "0.3",
-      rdefs = obj_list(
+    z_root <- zarr$open_group(out_path, mode = "w")
 
-      ),
-      channels = list(
-        obj_list(
-          label = "r",
-          color = "FF0000",
-          window = default_window
+    default_window <- obj_list(
+      start = 0,
+      min = 0,
+      max = 255,
+      end = 255
+    )
+
+    ome_zarr$writer$write_image(
+      image = img_arr,
+      group = z_root,
+      axes = "cyx",
+      omero = obj_list(
+        name = image_id,
+        version = "0.3",
+        rdefs = obj_list(
+
         ),
-        obj_list(
-          label = "g",
-          color = "00FF00",
-          window = default_window
-        ),
-        obj_list(
-          label = "b",
-          color = "0000FF",
-          window = default_window
+        channels = list(
+          obj_list(
+            label = "r",
+            color = "FF0000",
+            window = default_window
+          ),
+          obj_list(
+            label = "g",
+            color = "00FF00",
+            window = default_window
+          ),
+          obj_list(
+            label = "b",
+            color = "0000FF",
+            window = default_window
+          )
         )
       )
     )
-  )
+    return(TRUE)
+  }, img_arr = img_arr, sample_id = sample_id, image_id = image_id, out_path = out_path)
 }
 
-
-giotto_to_anndata_zarr <- function(giotto_obj, out_dir, X_slot = "raw_exprs") {
-  zarr_path <- file.path(out_dir, "giotto_obj.zarr")
+giotto_to_anndata_zarr <- function(giotto_obj, out_path, X_slot = "raw_exprs") {
 
   X <- make_numpy_friendly(slot(giotto_obj, X_slot))
   obs <- slot(giotto_obj, "cell_metadata")
   var <- slot(giotto_obj, "gene_metadata")
 
-  adata <- anndata$AnnData(X = X, obs = obs, var = var)
+  # Use basilisk
+  proc <- basilisk::basiliskStart(py_env)
+  on.exit(basilisk::basiliskStop(proc))
 
-  obsm <- list()
+  basilisk::basiliskRun(proc, function(giotto_obj, out_path, X, obs, var) {
+    anndata <- reticulate::import("anndata")
+    zarr <- reticulate::import("zarr")
 
-  if(!is.null(slot(giotto_obj, "spatial_locs"))) {
-    spatial_locs <- slot(giotto_obj, "spatial_locs")
-    obsm[['spatial']] <- t(as.matrix(spatial_locs[, c("sdimx", "sdimy")]))
-  }
+    adata <- anndata$AnnData(X = X, obs = obs, var = var)
 
-  if(!is.null(slot(giotto_obj, "dimension_reduction"))) {
-    dim_reducs <- slot(giotto_obj, "dimension_reduction")$cells
-    for(dim_reduc_name in names(dim_reducs)) {
-      dim_reduc_coords <- dim_reducs[[dim_reduc_name]][[dim_reduc_name]]$coordinates
-      obsm[[dim_reduc_name]] <- t(as.matrix(dim_reduc_coords))
+    obsm <- list()
+
+    if(!is.null(slot(giotto_obj, "spatial_locs"))) {
+      spatial_locs <- slot(giotto_obj, "spatial_locs")
+      obsm[['spatial']] <- t(as.matrix(spatial_locs[, c("sdimx", "sdimy")]))
     }
-  }
 
-  if(length(obsm) > 0) {
-    obsm <- lapply(obsm, make_numpy_friendly)
-    adata$obsm <- obsm
-  }
+    if(!is.null(slot(giotto_obj, "dimension_reduction"))) {
+      dim_reducs <- slot(giotto_obj, "dimension_reduction")$cells
+      for(dim_reduc_name in names(dim_reducs)) {
+        dim_reduc_coords <- dim_reducs[[dim_reduc_name]][[dim_reduc_name]]$coordinates
+        obsm[[dim_reduc_name]] <- t(as.matrix(dim_reduc_coords))
+      }
+    }
 
-  adata$write_zarr(zarr_path)
+    if(length(obsm) > 0) {
+      obsm <- lapply(obsm, make_numpy_friendly)
+      adata$obsm <- obsm
+    }
+
+    adata$write_zarr(out_path)
+    return(TRUE)
+  }, giotto_obj = giotto_obj, out_path = out_path, X_slot = X_slot, X = X, obs = obs, var = var)
 }

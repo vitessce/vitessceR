@@ -15,26 +15,12 @@ Our effort to develop converters for R formats remains ongoing. However, we prov
 
 The following vignettes in the "Examples with Local Data" section demonstrate how the dataset wrapper classes can be used with single-cell datasets stored on your local machine.
 
-## Zarr via Reticulate
+## Zarr via Reticulate via Basilisk
 
 Due to a lack of native R support for Zarr, the R dataset conversion functions currently depend on a Python environment. 
 
-We currently use [reticulate](https://rstudio.github.io/reticulate/) to write to Zarr stores via the ``zarr`` Python package.
+We currently use [basilisk](https://github.com/LTLA/basilisk) and [reticulate](https://rstudio.github.io/reticulate/) to write to Zarr stores via the ``zarr`` Python package.
 
-We recommend using [conda](https://docs.conda.io/en/latest/) with the following ``environment.yml`` file:
-
-* https://github.com/vitessce/vitessce-r/blob/main/environment.yml
-
-Create the conda environment in the terminal:
-```
-conda env create -f environment.yml
-```
-
-Then, in R, specify this environment for reticulate:
-```
-library(reticulate)
-use_condaenv("vitessce-r-env", required = TRUE)
-```
 
 ## Zarr natively
 

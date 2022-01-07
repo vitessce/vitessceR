@@ -11,9 +11,9 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
     #' @field out_dir The directory for processed output files.
     #' @keywords internal
     out_dir = NULL,
-    #' @field overwrite If converted output files already exist, generate again and overwrite?
+    #' @field use_cache If converted output files already exist, should they be used?
     #' @keywords internal
-    overwrite = NULL,
+    use_cache = NULL,
     #' @field is_remote Is the data object fully remote?
     #' @keywords internal
     is_remote = NULL,
@@ -26,16 +26,16 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
     #' @description
     #' Create an abstract wrapper around a data object.
     #' @param out_dir The directory for processed output files.
-    #' @param overwrite If converted output files already exist, generate again and overwrite?
+    #' @param use_cache If converted output files already exist, should they be used? By default, FALSE.
     #' @return A new `AbstractWrapper` object.
-    initialize = function(out_dir = NA, overwrite = FALSE) {
+    initialize = function(out_dir = NA, use_cache = FALSE) {
       if(!is.na(out_dir)) {
         self$out_dir <- out_dir
       } else {
         self$out_dir <- tempdir()
       }
       self$is_remote <- FALSE
-      self$overwrite <- overwrite
+      self$use_cache <- use_cache
       self$routes <- list()
       self$file_def_creators <- list()
     },
