@@ -18,13 +18,6 @@ install.packages("devtools")
 devtools::install_github("vitessce/vitessce-r")
 ```
 
-Then, set up the [Python environment](./local_data_overview.html):
-
-```r
-library(reticulate)
-use_condaenv("vitessce-r-env", required = TRUE)
-```
-
 Download the dataset, load and preprocess the SpatialExperiment object, and configure the Vitessce widget:
 
 ```r
@@ -37,7 +30,7 @@ w <- SPEWrapper$new(
   spe_visium,
   sample_id = "sample01",
   image_id = "hires",
-  out_dir = file.path("data", "spe"), overwrite = TRUE
+  out_dir = file.path("data", "spe")
 )
 
 # Create Vitessce view config

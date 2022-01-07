@@ -1,6 +1,7 @@
 ^vitessce\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
+^\.BBSoptions$
 ^.github$
 ^package\.json$
 ^package-lock\.json$
@@ -11,7 +12,7 @@
 ^inst/htmlwidgets/dist/.*\.map$
 ^inst/testdata
 ^LICENSE\.md$
-^_pkgdown\.yml$
+^pkgdown$
 ^vignettes$
 ^docs$
 ^pkgdown$

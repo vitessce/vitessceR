@@ -1,20 +1,17 @@
-#' Seurat object wrapper class
-#' @title SeuratWrapper Class
+#' Giotto object wrapper class
+#' @title GiottoWrapper Class
 #' @docType class
 #' @description
-#' Class representing a local Seurat object in a Vitessce dataset.
+#' Class representing a local Giotto object in a Vitessce dataset.
 #'
-#' @rdname SeuratWrapper
+#' @rdname GiottoWrapper
 #' @export
-SeuratWrapper <- R6::R6Class("SeuratWrapper",
+GiottoWrapper <- R6::R6Class("GiottoWrapper",
   inherit = AbstractWrapper,
   public = list(
     #' @field obj The object to wrap.
     #' @keywords internal
     obj = NULL,
-    #' @field assay The assay name in the Seurat object.
-    #' @keywords internal
-    assay = NULL,
     #' @field cell_embeddings The keys in the Seurat object's reductions/cell.embeddings
     #' to use for creating dimensionality reduction mappings.
     #' @keywords internal
@@ -45,7 +42,6 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' @description
     #' Create a wrapper around a Seurat object.
     #' @param obj The object to wrap.
-    #' @param assay The assay name under the assays part of the Seurat object.
     #' @param cell_embeddings The keys in the Seurat object's reductions/cell.embeddings
     #' to use for creating dimensionality reduction plots.
     #' @param cell_embedding_names Names
@@ -60,15 +56,10 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' also be provided to map between meta.data keys for set annotations
     #' and keys for annotation scores.
     #' @param ... Parameters inherited from `AbstractWrapper`.
-    #' @return A new `SeuratWrapper` object.
-    initialize = function(obj, assay = NA, cell_embeddings = NA, cell_embedding_names = NA, cell_embedding_dims = NA, cell_set_metas = NA, cell_set_meta_names = NA, cell_set_meta_scores = NA, ...) {
+    #' @return A new `GiottoWrapper` object.
+    initialize = function(obj, cell_embeddings = NA, cell_embedding_names = NA, cell_embedding_dims = NA, cell_set_metas = NA, cell_set_meta_names = NA, cell_set_meta_scores = NA, ...) {
       super$initialize(...)
       self$obj <- obj
-      if(is.na(assay)) {
-        self$assay <- "RNA"
-      } else {
-        self$assay <- assay
-      }
       self$cell_embeddings <- cell_embeddings
       self$cell_embedding_names <- cell_embedding_names
       self$cell_embedding_dims <- cell_embedding_dims
@@ -76,7 +67,7 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
       self$cell_set_meta_names <- cell_set_meta_names
       self$cell_set_meta_scores <- cell_set_meta_scores
 
-      self$zarr_folder <- "seurat.zarr"
+      self$zarr_folder <- "giotto.zarr"
     },
     get_zarr_path = function(dataset_uid, obj_i) {
       out_dir <- super$get_out_dir(dataset_uid, obj_i)
@@ -95,7 +86,7 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
 
       zarr_filepath <- self$get_zarr_path(dataset_uid, obj_i)
       if(!file.exists(zarr_filepath) || !self$use_cache) {
-        seurat_to_anndata_zarr(self$obj, out_path = zarr_filepath, assay = self$assay)
+        giotto_to_anndata_zarr(self$obj, out_path = zarr_filepath)
       }
 
       # Get the file definition creator functions.
@@ -134,7 +125,7 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
               embedding_dims <- c(0, 1)
             }
             options[['mappings']][[embedding_name]] <- obj_list(
-              key = paste0("obsm/X_", embedding_key),
+              key = paste0("obsm/", embedding_key),
               dims = embedding_dims
             )
           }

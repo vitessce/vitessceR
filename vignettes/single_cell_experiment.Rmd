@@ -19,13 +19,6 @@ install.packages("devtools")
 devtools::install_github("vitessce/vitessce-r")
 ```
 
-Then, set up the [Python environment](./local_data_overview.html):
-
-```r
-library(reticulate)
-use_condaenv("vitessce-r-env", required = TRUE)
-```
-
 Download the dataset, load and preprocess the SingleCellExperiment object, and configure the Vitessce widget:
 
 ```r
@@ -47,7 +40,7 @@ dataset <- vc$add_dataset("My dataset")$add_object(SCEWrapper$new(
   cell_set_metas = c("tissue", "level1class", "level2class"),
   cell_set_meta_names = c("Tissue", "Cell Type Level 1", "Cell Type Level 2"),
   cell_embeddings = c("PCA"),
-  out_dir = file.path("data", "sce"), overwrite = TRUE
+  out_dir = file.path("data", "sce")
 ))
 scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
 status <- vc$add_view(dataset, Component$STATUS)
