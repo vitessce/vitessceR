@@ -1,16 +1,4 @@
 
-# Reference: https://github.com/theislab/zellkonverter/blob/master/R/SCE2AnnData.R#L237
-#' @importClassesFrom Matrix dgCMatrix
-make_numpy_friendly <- function(x, transpose = TRUE) {
-  if (transpose) {
-    x <- Matrix::t(x)
-  }
-  if (DelayedArray::is_sparse(x)) {
-    methods::as(x, "dgCMatrix")
-  } else {
-    as.matrix(x)
-  }
-}
 
 seurat_to_anndata_zarr <- function(seurat_obj, out_path, assay) {
   if(!requireNamespace("SeuratDisk", quietly = TRUE)) {
@@ -65,12 +53,12 @@ seurat_to_anndata_zarr <- function(seurat_obj, out_path, assay) {
 }
 
 sce_to_anndata_zarr <- function(sce_obj, out_path) {
-  obsm_keys <- names(as.list(reducedDims(sce_obj)))
+  obsm_keys <- names(as.list(SingleCellExperiment::reducedDims(sce_obj)))
   for(obsm_key in obsm_keys) {
     # If there are column names, then the obsm element will be stored as a data.frame,
     # but Vitessce can only handle array obsm, so we need to remove any column names.
     # Reference: https://github.com/theislab/zellkonverter/blob/e1e95b1/R/SCE2AnnData.R#L159
-    colnames(reducedDims(sce_obj)[[obsm_key]]) <- NULL
+    colnames(SingleCellExperiment::reducedDims(sce_obj)[[obsm_key]]) <- NULL
   }
 
   # Use basilisk
@@ -88,15 +76,20 @@ sce_to_anndata_zarr <- function(sce_obj, out_path) {
 }
 
 spe_to_anndata_zarr <- function(spe_obj, out_path) {
-  internal_col_data <- int_colData(spe_obj)
+  internal_col_data <- SingleCellExperiment::int_colData(spe_obj)
 
-  colData(spe_obj) <- cbind(colData(spe_obj), internal_col_data$spatialCoords, internal_col_data$spatialData, internal_col_data$reducedDims)
+  SpatialExperiment::colData(spe_obj) <- cbind(
+    SpatialExperiment::colData(spe_obj),
+    internal_col_data$spatialCoords,
+    internal_col_data$spatialData,
+    internal_col_data$reducedDims
+  )
 
   sce_to_anndata_zarr(spe_obj, out_path)
 }
 
 spe_to_ome_zarr <- function(spe_obj, sample_id, image_id, out_path) {
-  img_arr <- apply(as.matrix(as.raster(getImg(spe_obj, image_id = image_id, sample_id = sample_id))), c(1, 2), col2rgb)
+  img_arr <- apply(as.matrix(grDevices::as.raster(SpatialExperiment::getImg(spe_obj, image_id = image_id, sample_id = sample_id))), c(1, 2), grDevices::col2rgb)
 
   # Use basilisk
   proc <- basilisk::basiliskStart(py_env)
@@ -108,7 +101,7 @@ spe_to_ome_zarr <- function(spe_obj, sample_id, image_id, out_path) {
 
     z_root <- zarr$open_group(out_path, mode = "w")
 
-    default_window <- obj_list(
+    default_window <- vitessce::obj_list(
       start = 0,
       min = 0,
       max = 255,
@@ -148,6 +141,7 @@ spe_to_ome_zarr <- function(spe_obj, sample_id, image_id, out_path) {
   }, img_arr = img_arr, sample_id = sample_id, image_id = image_id, out_path = out_path)
 }
 
+#' @importFrom methods slot
 giotto_to_anndata_zarr <- function(giotto_obj, out_path, X_slot = "raw_exprs") {
 
   X <- make_numpy_friendly(slot(giotto_obj, X_slot))
@@ -180,7 +174,8 @@ giotto_to_anndata_zarr <- function(giotto_obj, out_path, X_slot = "raw_exprs") {
     }
 
     if(length(obsm) > 0) {
-      obsm <- lapply(obsm, make_numpy_friendly)
+      # TODO make_numpy_friendly is outside scope
+      obsm <- lapply(obsm, vitessce::make_numpy_friendly)
       adata$obsm <- obsm
     }
 

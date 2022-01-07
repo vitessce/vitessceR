@@ -39,7 +39,7 @@ jobs:
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       - name: Check
-        run: rcmdcheck::rcmdcheck(error_on = "error")
+        run: rcmdcheck::rcmdcheck(error_on = "warning")
         shell: Rscript {0}
         env:
           _R_CHECK_FORCE_SUGGESTS_: false

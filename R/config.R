@@ -606,6 +606,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' By default, creates a localhost URL which includes the port.
     #' @param serve Should local data be served by running a local web server with R plumber? By default, TRUE.
     #' @param element_id An element ID. Optional.
+    #' @param ... Passes extra keyword arguments to the `vitessce_widget` function.
     #' @return The Vitessce htmlwidget.
     #' @examples
     #' vc <- VitessceConfig$new("My config")
