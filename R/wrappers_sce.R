@@ -125,7 +125,7 @@ SCEWrapper <- R6::R6Class("SCEWrapper",
         options <- obj_list()
         if(!is_na(self$cell_embeddings)) {
           options[['mappings']] <- obj_list()
-          for(i in 1:length(self$cell_embeddings)) {
+          for(i in seq_len(length(self$cell_embeddings))) {
             embedding_key <- self$cell_embeddings[i]
             if(!is_na(self$cell_embedding_names)) {
               embedding_name <- self$cell_embedding_names[i]
@@ -162,7 +162,7 @@ SCEWrapper <- R6::R6Class("SCEWrapper",
       get_cell_sets <- function(base_url) {
         options <- list()
         if(!is_na(self$cell_set_metas)) {
-          for(i in 1:length(self$cell_set_metas)) {
+          for(i in seq_len(length(self$cell_set_metas))) {
             cell_set_key <- self$cell_set_metas[i]
             if(!is_na(self$cell_set_meta_names)) {
               group_name <- self$cell_set_meta_names[i]
