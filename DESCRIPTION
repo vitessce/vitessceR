@@ -29,16 +29,15 @@ LazyData: true
 StagedInstall: no
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
+VignetteEngine: knitr
 Imports:
     Matrix,
     DelayedArray,
     htmlwidgets,
-    rjson,
     jsonlite,
     R6,
     plumber,
     future,
-    purrr,
     httpuv,
     stringr,
     reticulate,
@@ -49,11 +48,15 @@ Imports:
     grDevices,
     basilisk,
     zellkonverter,
+    SummarizedExperiment,
     SingleCellExperiment,
     SpatialExperiment
 Suggests: 
     testthat,
+    knitr,
     bslib,
     pkgdown,
-    Seurat
-VignetteEngine: knitr
+    purrr,
+    rjson,
+    Seurat,
+    SeuratDisk

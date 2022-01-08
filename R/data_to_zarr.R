@@ -1,5 +1,12 @@
 
-
+#' Save a Seurat object to an AnnData-Zarr store.
+#'
+#' @keywords internal
+#' @param seurat_obj The object to save.
+#' @param out_path A path to the output Zarr store.
+#' @param assay The name of the assay to save.
+#'
+#' @export
 seurat_to_anndata_zarr <- function(seurat_obj, out_path, assay) {
   if(!requireNamespace("SeuratDisk", quietly = TRUE)) {
     stop("Install 'SeuratDisk' to enable conversion of Seurat objects to AnnData objects.")
@@ -52,13 +59,21 @@ seurat_to_anndata_zarr <- function(seurat_obj, out_path, assay) {
   }, h5ad_path = h5ad_path, out_path = out_path)
 }
 
+#' Save a SingleCellExperiment to an AnnData-Zarr store.
+#'
+#' @keywords internal
+#' @param sce_obj The object to save.
+#' @param out_path A path to the output Zarr store.
+#'
+#' @export
+#' @importFrom SingleCellExperiment reducedDims reducedDims<-
 sce_to_anndata_zarr <- function(sce_obj, out_path) {
-  obsm_keys <- names(as.list(SingleCellExperiment::reducedDims(sce_obj)))
+  obsm_keys <- names(as.list(reducedDims(sce_obj)))
   for(obsm_key in obsm_keys) {
     # If there are column names, then the obsm element will be stored as a data.frame,
     # but Vitessce can only handle array obsm, so we need to remove any column names.
     # Reference: https://github.com/theislab/zellkonverter/blob/e1e95b1/R/SCE2AnnData.R#L159
-    colnames(SingleCellExperiment::reducedDims(sce_obj)[[obsm_key]]) <- NULL
+    colnames(reducedDims(sce_obj)[[obsm_key]]) <- NULL
   }
 
   # Use basilisk
@@ -75,11 +90,21 @@ sce_to_anndata_zarr <- function(sce_obj, out_path) {
   }, sce_obj = sce_obj, out_path = out_path)
 }
 
+#' Save a SpatialExperiment to an AnnData-Zarr store.
+#'
+#' @keywords internal
+#' @param spe_obj The object to save.
+#' @param out_path A path to the output Zarr store.
+#'
+#' @export
+#' @importFrom SummarizedExperiment colData
+#' @importFrom SingleCellExperiment int_colData
+#' @importFrom SpatialExperiment colData<-
 spe_to_anndata_zarr <- function(spe_obj, out_path) {
-  internal_col_data <- SingleCellExperiment::int_colData(spe_obj)
+  internal_col_data <- int_colData(spe_obj)
 
-  SpatialExperiment::colData(spe_obj) <- cbind(
-    SpatialExperiment::colData(spe_obj),
+  colData(spe_obj) <- cbind(
+    colData(spe_obj),
     internal_col_data$spatialCoords,
     internal_col_data$spatialData,
     internal_col_data$reducedDims
@@ -88,8 +113,19 @@ spe_to_anndata_zarr <- function(spe_obj, out_path) {
   sce_to_anndata_zarr(spe_obj, out_path)
 }
 
+#' Save an image in a SpatialExperiment to an OME-Zarr store
+#'
+#' @keywords internal
+#' @param spe_obj The object containing the image.
+#' @param sample_id The sample_id in the imgData data frame.
+#' @param image_id The image_id in the imgData data frame.
+#' @param out_path A path to the output Zarr store.
+#'
+#' @export
+#' @importFrom SpatialExperiment getImg
+#' @importFrom grDevices as.raster col2rgb
 spe_to_ome_zarr <- function(spe_obj, sample_id, image_id, out_path) {
-  img_arr <- apply(as.matrix(grDevices::as.raster(SpatialExperiment::getImg(spe_obj, image_id = image_id, sample_id = sample_id))), c(1, 2), grDevices::col2rgb)
+  img_arr <- apply(as.matrix(as.raster(getImg(spe_obj, image_id = image_id, sample_id = sample_id))), c(1, 2), col2rgb)
 
   # Use basilisk
   proc <- basilisk::basiliskStart(py_env)
@@ -101,7 +137,17 @@ spe_to_ome_zarr <- function(spe_obj, sample_id, image_id, out_path) {
 
     z_root <- zarr$open_group(out_path, mode = "w")
 
-    default_window <- vitessce::obj_list(
+    # Need to copy this here since can't refer to functions in the outside environment.
+    obj_list <- function(...) {
+      retval <- stats::setNames(list(), character(0))
+      param_list <- list(...)
+      for(key in names(param_list)) {
+        retval[[key]] = param_list[[key]]
+      }
+      retval
+    }
+
+    default_window <- obj_list(
       start = 0,
       min = 0,
       max = 255,
@@ -141,6 +187,14 @@ spe_to_ome_zarr <- function(spe_obj, sample_id, image_id, out_path) {
   }, img_arr = img_arr, sample_id = sample_id, image_id = image_id, out_path = out_path)
 }
 
+#' Save a Giotto object to an AnnData-Zarr store
+#'
+#' @keywords internal
+#' @param giotto_obj The object to save.
+#' @param out_path A path to the output Zarr store.
+#' @param X_slot The name of the slot in the Giotto object to use for adata.X
+#'
+#' @export
 #' @importFrom methods slot
 giotto_to_anndata_zarr <- function(giotto_obj, out_path, X_slot = "raw_exprs") {
 

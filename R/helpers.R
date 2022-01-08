@@ -47,8 +47,6 @@ obj_list <- function(...) {
 #' @keywords internal
 #' @param val The value to check
 #' @return Whether the value is NA
-#'
-#' @export
 is_na <- function(val) {
   if(length(val) > 1) {
     return(FALSE)
@@ -61,8 +59,6 @@ is_na <- function(val) {
 #'
 #' @keywords internal
 #' @param f The future to stop
-#'
-#' @export
 stop_future <- function(f){
   # Reference: https://github.com/HenrikBengtsson/future/issues/93#issuecomment-349625087
   if(!is.null(f$job) && Sys.getpid() != f$job$pid) {
