@@ -7,3 +7,4 @@ node_modules/
 docs/
 tests/testthat/seurat/
 data/
+check/

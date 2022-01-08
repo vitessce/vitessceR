@@ -17,3 +17,4 @@
 ^docs$
 ^pkgdown$
 ^data$
+^check$
