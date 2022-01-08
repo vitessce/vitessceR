@@ -52,7 +52,12 @@ jobs:
       - name: BiocCheck
         run: |
           BiocCheck::BiocCheck(
-            dir('check', 'tar.gz$', full.names = TRUE)
+            dir('check', 'tar.gz$', full.names = TRUE),
+            `no-check-version-num` = TRUE,
+            `no-check-R-ver` = TRUE,
+            `no-check-pkg-size` = TRUE,
+            `no-check-file-size` = TRUE,
+            `no-check-vignettes` = TRUE
           )
         shell: Rscript {0}
         env:
