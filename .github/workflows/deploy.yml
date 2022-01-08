@@ -6,13 +6,14 @@ jobs:
   build:
     runs-on: ubuntu-18.04
     env:
-      cache-version: 1
+      cache-version: 2
     steps:
       - uses: actions/checkout@v2
       - name: Set up libraries for Ubuntu
         run: |
           sudo apt-get update
-          sudo apt-get install -y libsodium-dev libharfbuzz-dev libfribidi-dev libcurl4-openssl-dev texlive-latex-base pandoc libmagick++-dev libhdf5-dev
+          sudo apt-get install -y libsodium-dev libharfbuzz-dev libfribidi-dev libcurl4-openssl-dev texlive-latex-base texlive-fonts-extra pandoc libmagick++-dev libhdf5-dev
+
       - name: Set up R 4.0
         uses: r-lib/actions/setup-r@master
         with:
