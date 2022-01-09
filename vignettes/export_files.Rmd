@@ -1,6 +1,7 @@
 ---
 title: "Export data to static files"
-output: rmarkdown::html_vignette
+output: BiocStyle::html_document
+package: vitessce
 vignette: >
   %\VignetteIndexEntry{Export data to static files}
   %\VignetteEngine{knitr::rmarkdown}
@@ -11,15 +12,15 @@ After configuring a Vitessce widget, you may want to obtain the static files ass
 This page demonstrates this process for an example dataset from [SeuratData](https://github.com/satijalab/seurat-data).
 
 First, install the dependencies:
-```r
+
+```{r echo = TRUE, warning = FALSE}
 install.packages("devtools")
-devtools::install_github("vitessce/vitessce-r")
-devtools::install_github('satijalab/seurat-data')
+devtools::install_github("satijalab/seurat-data")
 ```
 
 Create the Vitessce configuration:
 
-```r
+```{r echo = TRUE, warning = FALSE}
 library(vitessce)
 library(SeuratData)
 
@@ -29,8 +30,16 @@ force(pbmc3k.final)
 
 vc <- VitessceConfig$new("My config")
 dataset <- vc$add_dataset("My dataset")
-dataset <- dataset$add_object(SeuratWrapper$new(pbmc3k.final))
-scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
+dataset <- dataset$add_object(
+  SeuratWrapper$new(
+    pbmc3k.final,
+    cell_embeddings = c("pca", "umap"),
+    cell_embedding_names = c("PCA", "UMAP"),
+    cell_set_meta_names = c("seurat_annotations", "seurat_clusters"),
+    out_dir = file.path("data", "seuratdata")
+  )
+)
+scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
 vc$layout(scatterplot)
 ```
 
@@ -63,7 +72,7 @@ http-server ./my_vitessce_files/ --cors -p 3000
 
 The returned view config dict can be converted to a URL, and if the files are served on the internet (rather than locally), this URL can be used to share the interactive visualizations with colleagues.
 
-```r
+```{r echo = TRUE, warning = FALSE}
 vc_list <- vc$to_list(base_url = "http://localhost:3000")
 vitessce_url <- paste0("http://vitessce.io/?url=data:,", URLencode(jsonlite::toJSON(vc_list, auto_unbox = TRUE)))
 print(vitessce_url)
@@ -111,3 +120,8 @@ In this case, rather than including the configuration as url-encoded JSON in the
 `http://vitessce.io/?url=https://my_bucket.s3.amazonaws.com/config.json`
 
 
+## Session information
+
+```{r}
+sessionInfo()
+```

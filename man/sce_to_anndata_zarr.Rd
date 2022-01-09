@@ -11,6 +11,9 @@ sce_to_anndata_zarr(sce_obj, out_path)
 
 \item{out_path}{A path to the output Zarr store.}
 }
+\value{
+TRUE if the conversion succeeds.
+}
 \description{
 Save a SingleCellExperiment to an AnnData-Zarr store.
 }

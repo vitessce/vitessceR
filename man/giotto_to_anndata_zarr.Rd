@@ -13,6 +13,9 @@ giotto_to_anndata_zarr(giotto_obj, out_path, X_slot = "raw_exprs")
 
 \item{X_slot}{The name of the slot in the Giotto object to use for adata.X}
 }
+\value{
+TRUE if the conversion succeeds.
+}
 \description{
 Save a Giotto object to an AnnData-Zarr store
 }

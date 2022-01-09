@@ -13,6 +13,9 @@ seurat_to_anndata_zarr(seurat_obj, out_path, assay)
 
 \item{assay}{The name of the assay to save.}
 }
+\value{
+TRUE if the conversion succeeds.
+}
 \description{
 Save a Seurat object to an AnnData-Zarr store.
 }

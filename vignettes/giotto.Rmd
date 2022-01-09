@@ -1,6 +1,7 @@
 ---
 title: "Usage with Giotto"
-output: rmarkdown::html_vignette
+output: BiocStyle::html_document
+package: vitessce
 vignette: >
   %\VignetteIndexEntry{Usage with Giotto}
   %\VignetteEngine{knitr::rmarkdown}

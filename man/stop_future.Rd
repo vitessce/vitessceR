@@ -9,6 +9,9 @@ stop_future(f)
 \arguments{
 \item{f}{The future to stop}
 }
+\value{
+Nothing
+}
 \description{
 Try to stop a future
 }

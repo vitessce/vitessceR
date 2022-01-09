@@ -1,8 +1,10 @@
 ---
 title: "Debugging"
-output: rmarkdown::html_vignette
+output: BiocStyle::html_document
+package: vitessce
 vignette: >
   %\VignetteIndexEntry{Debugging}
+  %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
 
@@ -56,7 +58,5 @@ If the Vitessce widget loads in the RStudio "Viewer" tab, but the data fails to 
 To do so, right click in the Viewer area and select "Inspect Element."
 
 Then, click "Console" in the inspector window that appears.
-
-
 
 

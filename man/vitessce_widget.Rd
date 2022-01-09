@@ -34,6 +34,9 @@ By default, creates a localhost URL which includes the port.}
 
 \item{element_id}{An element ID. Optional.}
 }
+\value{
+The htmlwidget.
+}
 \description{
 This function creates a new Vitessce htmlwidget.
 A Vitessce widget is defined by a config which specifies dataset(s),

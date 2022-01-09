@@ -15,6 +15,9 @@ spe_to_ome_zarr(spe_obj, sample_id, image_id, out_path)
 
 \item{out_path}{A path to the output Zarr store.}
 }
+\value{
+TRUE if the conversion succeeds.
+}
 \description{
 Save an image in a SpatialExperiment to an OME-Zarr store
 }

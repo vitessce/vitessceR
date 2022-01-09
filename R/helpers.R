@@ -6,6 +6,13 @@
 #' @return A `VitessceConfigViewHConcat` object.
 #'
 #' @export
+#' @examples
+#' vc <- VitessceConfig$new("My config")
+#' ds <- vc$add_dataset("My dataset")
+#' spatial <- vc$add_view(ds, Component$SPATIAL)
+#' gene_list <- vc$add_view(ds, Component$GENES)
+#' vc$layout(hconcat(spatial, gene_list))
+#' vc$widget()
 hconcat <- function(...) {
   vcvhc <- VitessceConfigViewHConcat$new(list(...))
   vcvhc
@@ -19,6 +26,13 @@ hconcat <- function(...) {
 #' @return A `VitessceConfigViewVConcat` object.
 #'
 #' @export
+#' @examples
+#' vc <- VitessceConfig$new("My config")
+#' ds <- vc$add_dataset("My dataset")
+#' spatial <- vc$add_view(ds, Component$SPATIAL)
+#' gene_list <- vc$add_view(ds, Component$GENES)
+#' vc$layout(vconcat(spatial, gene_list))
+#' vc$widget()
 vconcat <- function(...) {
   vcvvc <- VitessceConfigViewVConcat$new(list(...))
   vcvvc
@@ -33,6 +47,11 @@ vconcat <- function(...) {
 #' @return An empty named list.
 #'
 #' @export
+#' @examples
+#' default_window <- obj_list(
+#'   min = 0,
+#'   max = 255
+#' )
 obj_list <- function(...) {
   retval <- stats::setNames(list(), character(0))
   param_list <- list(...)
@@ -59,6 +78,7 @@ is_na <- function(val) {
 #'
 #' @keywords internal
 #' @param f The future to stop
+#' @return Nothing
 stop_future <- function(f){
   # Reference: https://github.com/HenrikBengtsson/future/issues/93#issuecomment-349625087
   if(!is.null(f$job) && Sys.getpid() != f$job$pid) {

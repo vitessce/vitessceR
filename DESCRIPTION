@@ -19,17 +19,16 @@ Description:
   The htmlwidget is a wrapper around the Vitessce JavaScript
   library and can be used in the Viewer tab of RStudio or Shiny
   apps.
-biocViews: SingleCell, Spatial, Visualization
+biocViews: SingleCell, Spatial, Visualization, ShinyApps
 License: MIT + file LICENSE
 BugReports: https://github.com/vitessce/vitessce-r/issues
 URL: https://github.com/vitessce/vitessce-r
 Encoding: UTF-8
 Language: en-US
-LazyData: true
 StagedInstall: no
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
-VignetteEngine: knitr
+VignetteBuilder: knitr
 Imports:
     Matrix,
     DelayedArray,
@@ -56,6 +55,7 @@ Suggests:
     knitr,
     bslib,
     pkgdown,
+    BiocStyle,
     purrr,
     rjson,
     Seurat,

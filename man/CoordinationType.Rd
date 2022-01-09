@@ -49,4 +49,16 @@ in the coordination space.
 \item \code{ADDITIONAL_CELL_SETS}: User-defined cell sets.
 }
 }
+\examples{
+vc <- VitessceConfig$new("My config")
+ref_dataset <- vc$add_dataset("Reference")
+qry_dataset <- vc$add_dataset("Query")
+ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "umap")
+qry_plot <- vc$add_view(qry_dataset, Component$SCATTERPLOT, mapping = "proj.umap")
+vc$link_views(
+  c(ref_plot, qry_plot),
+  c(CoordinationType$EMBEDDING_TARGET_X, CoordinationType$EMBEDDING_TARGET_Y),
+  c_values = c(0, 0)
+)
+}
 \keyword{datasets}

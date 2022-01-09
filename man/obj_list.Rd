@@ -15,4 +15,10 @@ An empty named list.
 \description{
 A helper function to construct an empty list which converts to a JSON object rather than a JSON array.
 }
+\examples{
+default_window <- obj_list(
+  min = 0,
+  max = 255
+)
+}
 \keyword{internal}

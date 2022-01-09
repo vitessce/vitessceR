@@ -1,6 +1,7 @@
 ---
 title: "Developer guide: Writing a data wrapper class"
-output: rmarkdown::html_vignette
+output: BiocStyle::html_document
+package: vitessce
 vignette: >
   %\VignetteIndexEntry{Developer guide: Writing a data wrapper class}
   %\VignetteEngine{knitr::rmarkdown}
@@ -206,11 +207,3 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
 ```
 
 
-
-## Cell sets
-
-TO DO
-
-## Expression matrix
-
-TO DO
