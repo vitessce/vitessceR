@@ -9,14 +9,7 @@ vignette: >
 
 The following is an example of usage of the widget to visualize a remote OME-TIFF image file.
 
-First, install the dependencies:
-
-```r
-install.packages("devtools")
-devtools::install_github("vitessce/vitessce-r")
-```
-
-Next, configure the Vitessce widget:
+First, configure the Vitessce widget:
 
 ```{r echo = TRUE, warning = FALSE}
 library(vitessce)
@@ -55,6 +48,13 @@ vc$layout(hconcat(
 
 # Render the Vitessce widget
 vc$widget(theme = "light", width = "100%")
+```
+
+
+## Session information
+
+```{r}
+sessionInfo()
 ```
 
 

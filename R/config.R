@@ -115,6 +115,14 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
     #' @param file_type The file type for the file.
     #' @param options Optional. An options list for the file.
     #' @return Invisible self, to allow chaining.
+    #' @examples
+    #' base_url <- "http://localhost:8000/"
+    #' vc <- VitessceConfig$new("My config")
+    #' dataset <- vc$add_dataset("My dataset")$add_file(
+    #'   url = paste0(base_url, "cells.json"),
+    #'   data_type = DataType$CELLS,
+    #'   file_type = FileType$CELLS_JSON
+    #' )
     add_file = function(url = NA, data_type = NA, file_type = NA, options = NA) {
       new_file <- VitessceConfigDatasetFile$new(url = url, data_type = data_type, file_type = file_type, options = options)
       self$dataset$files <- append(self$dataset$files, new_file)

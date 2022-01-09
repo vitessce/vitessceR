@@ -11,6 +11,9 @@ spe_to_anndata_zarr(spe_obj, out_path)
 
 \item{out_path}{A path to the output Zarr store.}
 }
+\value{
+TRUE if the conversion succeeds.
+}
 \description{
 Save a SpatialExperiment to an AnnData-Zarr store.
 }

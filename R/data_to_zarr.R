@@ -5,6 +5,7 @@
 #' @param seurat_obj The object to save.
 #' @param out_path A path to the output Zarr store.
 #' @param assay The name of the assay to save.
+#' @return TRUE if the conversion succeeds.
 #'
 #' @export
 seurat_to_anndata_zarr <- function(seurat_obj, out_path, assay) {
@@ -25,7 +26,7 @@ seurat_to_anndata_zarr <- function(seurat_obj, out_path, assay) {
   proc <- basilisk::basiliskStart(py_env)
   on.exit(basilisk::basiliskStop(proc))
 
-  basilisk::basiliskRun(proc, function(h5ad_path, out_path) {
+  success <- basilisk::basiliskRun(proc, function(h5ad_path, out_path) {
     anndata <- reticulate::import("anndata")
     zarr <- reticulate::import("zarr")
 
@@ -57,6 +58,7 @@ seurat_to_anndata_zarr <- function(seurat_obj, out_path, assay) {
 
     return(TRUE)
   }, h5ad_path = h5ad_path, out_path = out_path)
+  return(success)
 }
 
 #' Save a SingleCellExperiment to an AnnData-Zarr store.
@@ -64,6 +66,7 @@ seurat_to_anndata_zarr <- function(seurat_obj, out_path, assay) {
 #' @keywords internal
 #' @param sce_obj The object to save.
 #' @param out_path A path to the output Zarr store.
+#' @return TRUE if the conversion succeeds.
 #'
 #' @export
 #' @importFrom SingleCellExperiment reducedDims reducedDims<-
@@ -80,7 +83,7 @@ sce_to_anndata_zarr <- function(sce_obj, out_path) {
   proc <- basilisk::basiliskStart(py_env)
   on.exit(basilisk::basiliskStop(proc))
 
-  basilisk::basiliskRun(proc, function(sce_obj, out_path) {
+  success <- basilisk::basiliskRun(proc, function(sce_obj, out_path) {
     anndata <- reticulate::import("anndata")
     zarr <- reticulate::import("zarr")
 
@@ -88,6 +91,7 @@ sce_to_anndata_zarr <- function(sce_obj, out_path) {
     adata$write_zarr(out_path)
     return(TRUE)
   }, sce_obj = sce_obj, out_path = out_path)
+  return(success)
 }
 
 #' Save a SpatialExperiment to an AnnData-Zarr store.
@@ -95,6 +99,7 @@ sce_to_anndata_zarr <- function(sce_obj, out_path) {
 #' @keywords internal
 #' @param spe_obj The object to save.
 #' @param out_path A path to the output Zarr store.
+#' @return TRUE if the conversion succeeds.
 #'
 #' @export
 #' @importFrom SummarizedExperiment colData
@@ -110,7 +115,8 @@ spe_to_anndata_zarr <- function(spe_obj, out_path) {
     internal_col_data$reducedDims
   )
 
-  sce_to_anndata_zarr(spe_obj, out_path)
+  success <- sce_to_anndata_zarr(spe_obj, out_path)
+  return(success)
 }
 
 #' Save an image in a SpatialExperiment to an OME-Zarr store
@@ -120,6 +126,7 @@ spe_to_anndata_zarr <- function(spe_obj, out_path) {
 #' @param sample_id The sample_id in the imgData data frame.
 #' @param image_id The image_id in the imgData data frame.
 #' @param out_path A path to the output Zarr store.
+#' @return TRUE if the conversion succeeds.
 #'
 #' @export
 #' @importFrom SpatialExperiment getImg
@@ -131,7 +138,7 @@ spe_to_ome_zarr <- function(spe_obj, sample_id, image_id, out_path) {
   proc <- basilisk::basiliskStart(py_env)
   on.exit(basilisk::basiliskStop(proc))
 
-  basilisk::basiliskRun(proc, function(img_arr, sample_id, image_id, out_path) {
+  success <- basilisk::basiliskRun(proc, function(img_arr, sample_id, image_id, out_path) {
     zarr <- reticulate::import("zarr")
     ome_zarr <- reticulate::import("ome_zarr")
 
@@ -185,6 +192,7 @@ spe_to_ome_zarr <- function(spe_obj, sample_id, image_id, out_path) {
     )
     return(TRUE)
   }, img_arr = img_arr, sample_id = sample_id, image_id = image_id, out_path = out_path)
+  return(success)
 }
 
 #' Save a Giotto object to an AnnData-Zarr store
@@ -193,6 +201,7 @@ spe_to_ome_zarr <- function(spe_obj, sample_id, image_id, out_path) {
 #' @param giotto_obj The object to save.
 #' @param out_path A path to the output Zarr store.
 #' @param X_slot The name of the slot in the Giotto object to use for adata.X
+#' @return TRUE if the conversion succeeds.
 #'
 #' @export
 #' @importFrom methods slot
@@ -202,7 +211,7 @@ giotto_to_anndata_zarr <- function(giotto_obj, out_path, X_slot = "raw_exprs") {
   proc <- basilisk::basiliskStart(py_env)
   on.exit(basilisk::basiliskStop(proc))
 
-  basilisk::basiliskRun(proc, function(giotto_obj, out_path, X_slot) {
+  success <- basilisk::basiliskRun(proc, function(giotto_obj, out_path, X_slot) {
     anndata <- reticulate::import("anndata")
     zarr <- reticulate::import("zarr")
 
@@ -248,4 +257,5 @@ giotto_to_anndata_zarr <- function(giotto_obj, out_path, X_slot = "raw_exprs") {
     adata$write_zarr(out_path)
     return(TRUE)
   }, giotto_obj = giotto_obj, out_path = out_path, X_slot = X_slot)
+  return(success)
 }

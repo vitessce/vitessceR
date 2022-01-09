@@ -39,6 +39,17 @@
 #' }
 #'
 #' @export
+#' @examples
+#' vc <- VitessceConfig$new("My config")
+#' ref_dataset <- vc$add_dataset("Reference")
+#' qry_dataset <- vc$add_dataset("Query")
+#' ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "umap")
+#' qry_plot <- vc$add_view(qry_dataset, Component$SCATTERPLOT, mapping = "proj.umap")
+#' vc$link_views(
+#'   c(ref_plot, qry_plot),
+#'   c(CoordinationType$EMBEDDING_TARGET_X, CoordinationType$EMBEDDING_TARGET_Y),
+#'   c_values = c(0, 0)
+#' )
 CoordinationType <- list(
   DATASET = "dataset",
   EMBEDDING_TYPE = "embeddingType",
@@ -89,6 +100,14 @@ CoordinationType <- list(
 #' }
 #'
 #' @export
+#' @examples
+#' base_url <- "http://localhost:8000/"
+#' vc <- VitessceConfig$new("My config")
+#' dataset <- vc$add_dataset("My dataset")$add_file(
+#'   url = paste0(base_url, "cells.json"),
+#'   data_type = DataType$CELLS,
+#'   file_type = FileType$CELLS_JSON
+#' )
 DataType <- list(
   CELLS = "cells",
   CELL_SETS = "cell-sets",
@@ -114,6 +133,14 @@ DataType <- list(
 #' }
 #'
 #' @export
+#' @examples
+#' base_url <- "http://localhost:8000/"
+#' vc <- VitessceConfig$new("My config")
+#' dataset <- vc$add_dataset("My dataset")$add_file(
+#'   url = paste0(base_url, "cells.json"),
+#'   data_type = DataType$CELLS,
+#'   file_type = FileType$CELLS_JSON
+#' )
 FileType <- list(
   CELLS_JSON = "cells.json",
   MOLECULES_JSON = "molecules.json",
@@ -144,7 +171,14 @@ FileType <- list(
 #'   \item `GENES`: The `genes` component.
 #' }
 #'
+#'
 #' @export
+#' @examples
+#' vc <- VitessceConfig$new("My config")
+#' dataset <- vc$add_dataset("My dataset")
+#' description <- vc$add_view(dataset, Component$DESCRIPTION)
+#' vc$layout(description)
+#' vc$widget()
 Component <- list(
   SCATTERPLOT = "scatterplot",
   SPATIAL = "spatial",

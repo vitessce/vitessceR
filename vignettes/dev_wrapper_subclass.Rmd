@@ -1,6 +1,7 @@
 ---
 title: "Developer guide: Extending a data wrapper class"
-output: rmarkdown::html_vignette
+output: BiocStyle::html_document
+package: vitessce
 vignette: >
   %\VignetteIndexEntry{Developer guide: Extending a data wrapper class}
   %\VignetteEngine{knitr::rmarkdown}
