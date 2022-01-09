@@ -81,6 +81,9 @@ reference:
 - contents:
   - AbstractWrapper
   - SeuratWrapper
+  - SCEWrapper
+  - SPEWrapper
+  - GiottoWrapper
   - MultiImageWrapper
   - OmeTiffWrapper
 

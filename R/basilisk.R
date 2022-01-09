@@ -5,7 +5,7 @@
 #' This environment has been adapted from zellkonverter::.AnnDataDependencies.
 #' Reference: https://bioconductor.org/packages/release/bioc/vignettes/basilisk/inst/doc/motivation.html
 #'
-#' @export
+#' @keywords internal
 py_env <- basilisk::BasiliskEnvironment(
   envname="vitessce_basilisk_env",
   pkgname="vitessce",

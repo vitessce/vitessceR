@@ -16,4 +16,4 @@ to convert R objects to Zarr stores.
 This environment has been adapted from zellkonverter::.AnnDataDependencies.
 Reference: https://bioconductor.org/packages/release/bioc/vignettes/basilisk/inst/doc/motivation.html
 }
-\keyword{datasets}
+\keyword{internal}
