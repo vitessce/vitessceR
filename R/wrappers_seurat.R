@@ -6,6 +6,13 @@
 #'
 #' @rdname SeuratWrapper
 #' @export
+#' @examples
+#' obj <- get_seurat_obj()
+#' w <- SeuratWrapper$new(
+#'   obj,
+#'   cell_embeddings = c("pca"),
+#'   cell_embedding_names = c("PCA")
+#' )
 SeuratWrapper <- R6::R6Class("SeuratWrapper",
   inherit = AbstractWrapper,
   public = list(
@@ -77,6 +84,32 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
       self$cell_set_meta_scores <- cell_set_meta_scores
 
       self$zarr_folder <- "seurat.zarr"
+
+      self$check_obj()
+    },
+    #' @description
+    #' Check that the object is valid
+    #' @keywords internal
+    #' @return Success or failure.
+    check_obj = function() {
+      success <- TRUE
+      if(!methods::is(self$obj, "Seurat")) {
+        warning("Object is not of type Seurat.")
+        success <- FALSE
+      }
+      if(!(self$assay %in% names(self$obj@assays))) {
+        warning("Specified assay not present in Seurat object assays slot.")
+        success <- FALSE
+      }
+      if(!is_na(self$cell_embeddings) && !all(self$cell_embeddings %in% names(self$obj@reductions))) {
+        warning("Specified cell_embeddings not all present in Seurat object reductions slot.")
+        success <- FALSE
+      }
+      if(!is_na(self$cell_set_metas) && !all(self$cell_set_metas %in% colnames(self$obj@meta.data))) {
+        warning("Specified cell_set_metas not all present in columns of the Seurat object meta.data data frame.")
+        success <- FALSE
+      }
+      return(success)
     },
     #' @description
     #' Get the path to the zarr store, relative to the current directory.

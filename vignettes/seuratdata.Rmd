@@ -17,7 +17,6 @@ install.packages("seurat")
 install.packages("devtools")
 devtools::install_github("satijalab/seurat-data")
 devtools::install_github("mojaveazure/seurat-disk")
-devtools::install_github("vitessce/vitessce-r")
 ```
 
 Download the dataset, load and preprocess the Seurat object, and configure the Vitessce widget:
@@ -40,7 +39,7 @@ dataset <- dataset$add_object(SeuratWrapper$new(
   pbmc3k.final,
   cell_embeddings = c("pca", "umap"),
   cell_embedding_names = c("PCA", "UMAP"),
-  cell_set_meta_names = c("seurat_annotations", "seurat_clusters"),
+  cell_set_metas = c("seurat_annotations", "seurat_clusters"),
   out_dir = file.path("data", "seuratdata")
 ))
 scatterplot_pca <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")

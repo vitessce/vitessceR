@@ -10,6 +10,14 @@ Class representing a local Seurat object in a Vitessce dataset.
 \details{
 Seurat object wrapper class
 }
+\examples{
+obj <- get_seurat_obj()
+w <- SeuratWrapper$new(
+  obj,
+  cell_embeddings = c("pca"),
+  cell_embedding_names = c("PCA")
+)
+}
 \keyword{internal}
 \section{Super class}{
 \code{\link[vitessce:AbstractWrapper]{vitessce::AbstractWrapper}} -> \code{SeuratWrapper}
@@ -47,6 +55,7 @@ to use for cell set names mapped to keys for scores.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{SeuratWrapper$new()}}
+\item \href{#method-check_obj}{\code{SeuratWrapper$check_obj()}}
 \item \href{#method-get_zarr_path}{\code{SeuratWrapper$get_zarr_path()}}
 \item \href{#method-get_zarr_url}{\code{SeuratWrapper$get_zarr_url()}}
 \item \href{#method-convert_and_save}{\code{SeuratWrapper$convert_and_save()}}
@@ -120,6 +129,19 @@ and keys for annotation scores.}
 }
 \subsection{Returns}{
 A new \code{SeuratWrapper} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-check_obj"></a>}}
+\if{latex}{\out{\hypertarget{method-check_obj}{}}}
+\subsection{Method \code{check_obj()}}{
+Check that the object is valid
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SeuratWrapper$check_obj()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Success or failure.
 }
 }
 \if{html}{\out{<hr>}}

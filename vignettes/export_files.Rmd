@@ -1,7 +1,6 @@
 ---
 title: "Export data to static files"
 output: rmarkdown::html_vignette
-package: vitessce
 vignette: >
   %\VignetteIndexEntry{Export data to static files}
   %\VignetteEngine{knitr::rmarkdown}
@@ -119,9 +118,3 @@ In this case, rather than including the configuration as url-encoded JSON in the
 
 `http://vitessce.io/?url=https://my_bucket.s3.amazonaws.com/config.json`
 
-
-## Session information
-
-```{r}
-sessionInfo()
-```

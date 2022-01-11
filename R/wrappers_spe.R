@@ -6,6 +6,13 @@
 #'
 #' @rdname SPEWrapper
 #' @export
+#' @examples
+#' obj <- get_spe_obj()
+#' w <- SPEWrapper$new(
+#'   obj,
+#'   cell_embeddings = c("pca"),
+#'   cell_embedding_names = c("PCA")
+#' )
 SPEWrapper <- R6::R6Class("SPEWrapper",
   inherit = AbstractWrapper,
   public = list(
@@ -72,7 +79,7 @@ SPEWrapper <- R6::R6Class("SPEWrapper",
       super$initialize(...)
       self$obj <- obj
       if(is_na(sample_id) && is_na(image_id)) {
-        img_df <- imgData(obj)
+        img_df <- SpatialExperiment::imgData(obj)
         if(nrow(img_df) >= 1) {
           warning("sample_id and image_id not provided, using first image in imgData")
           self$img_sample_id <- img_df[1, "sample_id"]
@@ -92,6 +99,33 @@ SPEWrapper <- R6::R6Class("SPEWrapper",
 
       self$zarr_folder <- "spe.zarr"
       self$img_filename <- paste0(self$img_sample_id, "__", self$img_image_id, ".zarr")
+
+      self$check_obj()
+    },
+    #' @description
+    #' Check that the object is valid
+    #' @keywords internal
+    #' @return Success or failure.
+    check_obj = function() {
+      success <- TRUE
+      if(!methods::is(self$obj, "SpatialExperiment")) {
+        warning("Object is not of type SpatialExperiment.")
+        success <- FALSE
+      }
+      if(!is_na(self$cell_embeddings) && !all(self$cell_embeddings %in% SingleCellExperiment::reducedDimNames(self$obj))) {
+        warning("Specified cell_embeddings not all present in SPE object reducedDims.")
+        success <- FALSE
+      }
+      if(!is_na(self$cell_set_metas) && !all(self$cell_set_metas %in% colnames(SingleCellExperiment::colData(self$obj)))) {
+        warning("Specified cell_set_metas not all present in SPE object colData.")
+        success <- FALSE
+      }
+      img_df <- SpatialExperiment::imgData(self$obj)
+      if(!is_na(self$img_sample_id) && !is_na(self$img_image_id) && !(self$img_sample_id %in% img_df$sample_id && self$img_image_id %in% img_df$image_id)) {
+        warning("Specified sample_id and/or image_id not present in SPE object imgData.")
+        success <- FALSE
+      }
+      return(success)
     },
     #' @description
     #' Get the path to the zarr store, relative to the current directory.

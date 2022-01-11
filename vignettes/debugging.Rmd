@@ -1,7 +1,6 @@
 ---
 title: "Debugging"
 output: rmarkdown::html_vignette
-package: vitessce
 vignette: >
   %\VignetteIndexEntry{Debugging}
   %\VignetteEngine{knitr::rmarkdown}
@@ -14,10 +13,6 @@ If none of these tips help, please write an issue on [GitHub](https://github.com
 
 The following code snippets assume that `vitessce` has been loaded via `library(vitessce)` and the Vitessce configuration instance is stored in the variable `vc`:
 
-
-```{r echo = TRUE}
-knitr::opts_knit$get("rmarkdown.pandoc.to")
-```
 
 ```r
 library(vitessce)
@@ -63,5 +58,4 @@ If the Vitessce widget loads in the RStudio "Viewer" tab, but the data fails to 
 To do so, right click in the Viewer area and select "Inspect Element."
 
 Then, click "Console" in the inspector window that appears.
-
 
