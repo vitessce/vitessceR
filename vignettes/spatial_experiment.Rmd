@@ -14,8 +14,6 @@ First, install the R dependencies:
 ```r
 install.packages("BiocManager")
 BiocManager::install("STexampleData")
-install.packages("devtools")
-devtools::install_github("vitessce/vitessce-r")
 ```
 
 Download the dataset, load and preprocess the SpatialExperiment object, and configure the Vitessce widget:

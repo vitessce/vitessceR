@@ -1,6 +1,6 @@
 ---
 title: "Export data to static files"
-output: BiocStyle::html_document
+output: rmarkdown::html_vignette
 package: vitessce
 vignette: >
   %\VignetteIndexEntry{Export data to static files}
@@ -13,14 +13,14 @@ This page demonstrates this process for an example dataset from [SeuratData](htt
 
 First, install the dependencies:
 
-```{r echo = TRUE, warning = FALSE}
+```r
 install.packages("devtools")
 devtools::install_github("satijalab/seurat-data")
 ```
 
 Create the Vitessce configuration:
 
-```{r echo = TRUE, warning = FALSE}
+```r
 library(vitessce)
 library(SeuratData)
 
@@ -72,7 +72,7 @@ http-server ./my_vitessce_files/ --cors -p 3000
 
 The returned view config dict can be converted to a URL, and if the files are served on the internet (rather than locally), this URL can be used to share the interactive visualizations with colleagues.
 
-```{r echo = TRUE, warning = FALSE}
+```r
 vc_list <- vc$to_list(base_url = "http://localhost:3000")
 vitessce_url <- paste0("http://vitessce.io/?url=data:,", URLencode(jsonlite::toJSON(vc_list, auto_unbox = TRUE)))
 print(vitessce_url)

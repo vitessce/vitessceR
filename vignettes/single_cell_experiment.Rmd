@@ -15,8 +15,6 @@ First, install the R dependencies:
 install.packages("BiocManager")
 BiocManager::install("scRNAseq")
 BiocManager::install("scater")
-install.packages("devtools")
-devtools::install_github("vitessce/vitessce-r")
 ```
 
 Download the dataset, load and preprocess the SingleCellExperiment object, and configure the Vitessce widget:

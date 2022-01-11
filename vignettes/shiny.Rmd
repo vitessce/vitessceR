@@ -13,8 +13,7 @@ First, install the dependencies:
 ```r
 install.packages("shiny")
 install.packages("devtools")
-devtools::install_github("vitessce/vitessce-r")
-devtools::install_github('satijalab/seurat-data')
+devtools::install_github("satijalab/seurat-data")
 ```
 
 Next, create an output element in the UI with `vitessce_output` and a corresponding server response with `render_vitessce`.

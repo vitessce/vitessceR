@@ -11,7 +11,6 @@ authors:
   Mark Keller:
     href: https://github.com/keller-mark
 
-
 navbar:
   structure:
     left:  [home, reference, examples, articles]
@@ -22,9 +21,9 @@ navbar:
       menu:
        - text: "Examples with Remote Data"
        - text: "Usage with OME-TIFF: Remote Example"
-         href: articles/ome_tiff_remote.html
+         href: articles/web_only/ome_tiff_remote.html
        - text: "Usage with JSON: Remote Example"
-         href: articles/json_remote.html
+         href: articles/web_only/json_remote.html
        - text: -------
        - text: "Examples with Local Data"
        - text: "Overview: Using the widget with local data"
@@ -54,6 +53,13 @@ navbar:
     core_docs:
       text: "Core Docs"
       href: http://vitessce.io/docs/
+
+footer:
+  structure:
+    left: [authors]
+    right: built_with
+  components:
+    authors: Developed by the Gehlenborg Lab
 
 reference:
 - title: "Working with view configs"

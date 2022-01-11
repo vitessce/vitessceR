@@ -45,9 +45,17 @@ vc$layout(hconcat(
   spatial,
   hconcat(spatial_layers, vconcat(desc, status))
 ))
+```
 
+```{r eval = FALSE, echo = TRUE}
 # Render the Vitessce widget
 vc$widget(theme = "light", width = "100%")
+```
+
+```{r eval = TRUE, echo = FALSE}
+if(knitr::opts_knit$get("rmarkdown.pandoc.to") == "html") {
+  vc$widget(theme = "light", width = "100%")
+}
 ```
 
 

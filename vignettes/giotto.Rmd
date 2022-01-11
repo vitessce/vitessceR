@@ -1,6 +1,6 @@
 ---
 title: "Usage with Giotto"
-output: BiocStyle::html_document
+output: rmarkdown::html_vignette
 package: vitessce
 vignette: >
   %\VignetteIndexEntry{Usage with Giotto}
@@ -15,7 +15,6 @@ First, install the R dependencies:
 ```r
 install.packages("devtools")
 devtools::install_github("RubD/Giotto")
-devtools::install_github("vitessce/vitessce-r")
 ```
 
 

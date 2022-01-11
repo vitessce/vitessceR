@@ -19,14 +19,6 @@ install.packages("BiocManager")
 BiocManager::install("glmGamPoi")
 devtools::install_github("satijalab/azimuth")
 devtools::install_github("mojaveazure/seurat-disk")
-devtools::install_github("vitessce/vitessce-r")
-```
-
-Then, set up the [Python environment](./local_data_overview.html):
-
-```r
-library(reticulate)
-use_condaenv("vitessce-r-env", required = TRUE)
 ```
 
 Download the dataset and map the query to the reference:
