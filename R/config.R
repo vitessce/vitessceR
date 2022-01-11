@@ -11,7 +11,7 @@ get_next_scope <- function(prev_scopes) {
       r <- c(chars[char_index], r)
     }
     increment <- TRUE
-    for(i in 1:length(next_char_indices)) {
+    for(i in seq_len(length(next_char_indices))) {
       next_char_indices[i] <- next_char_indices[i] + 1
       val <- next_char_indices[i]
       if(val > length(chars)) {
@@ -63,12 +63,12 @@ VitessceConfigDatasetFile <- R6::R6Class("VitessceConfigDatasetFile",
     #' @return A new `VitessceConfigDatasetFile` object.
     initialize = function(url = NA, data_type = NA, file_type = NA, options = NA) {
       private$file <- obj_list()
-      if(!is.na(url)) {
+      if(!is_na(url)) {
         private$file[['url']] = url
       }
       private$file[['type']] = data_type
       private$file[['fileType']] = file_type
-      if(!is.na(options)) {
+      if(!is_na(options)) {
         private$file[['options']] = options
       }
     },
@@ -115,6 +115,14 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
     #' @param file_type The file type for the file.
     #' @param options Optional. An options list for the file.
     #' @return Invisible self, to allow chaining.
+    #' @examples
+    #' base_url <- "http://localhost:8000/"
+    #' vc <- VitessceConfig$new("My config")
+    #' dataset <- vc$add_dataset("My dataset")$add_file(
+    #'   url = paste0(base_url, "cells.json"),
+    #'   data_type = DataType$CELLS,
+    #'   file_type = FileType$CELLS_JSON
+    #' )
     add_file = function(url = NA, data_type = NA, file_type = NA, options = NA) {
       new_file <- VitessceConfigDatasetFile$new(url = url, data_type = data_type, file_type = file_type, options = options)
       self$dataset$files <- append(self$dataset$files, new_file)
@@ -199,7 +207,11 @@ VitessceConfigCoordinationScope <- R6::R6Class("VitessceConfigCoordinationScope"
     #' @param c_value The value to set.
     #' @return Invisible self, to allow chaining.
     set_value = function(c_value) {
-      self$c_value <- jsonlite::unbox(c_value)
+      if(length(c_value) > 1) {
+        self$c_value <- c_value
+      } else {
+        self$c_value <- jsonlite::unbox(c_value)
+      }
       invisible(self)
     },
     #' @description
@@ -349,8 +361,8 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     initialize = function(name = NA, description = NA) {
       self$config <- list(
         version = "1.0.0",
-        name = ifelse(is.na(name), "", name),
-        description = ifelse(is.na(description), "", description),
+        name = ifelse(is_na(name), "", name),
+        description = ifelse(is_na(description), "", description),
         datasets = list(),
         coordinationSpace = obj_list(),
         layout = list(),
@@ -370,7 +382,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
       for(d in self$config$datasets) {
         prev_dataset_uids <- c(prev_dataset_uids, d$dataset$uid)
       }
-      uid <- ifelse(is.na(uid), get_next_scope(prev_dataset_uids), uid)
+      uid <- ifelse(is_na(uid), get_next_scope(prev_dataset_uids), uid)
       new_dataset <- VitessceConfigDataset$new(uid, name)
       self$config$datasets <- append(self$config$datasets, new_dataset)
 
@@ -409,7 +421,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
       coordination_scopes[[CoordinationType$DATASET]] <- dataset_scope_name
       new_view <- VitessceConfigView$new(component, coordination_scopes, x, y, w, h)
 
-      if(!is.na(mapping)) {
+      if(!is_na(mapping)) {
         et_scopes <- self$add_coordination(CoordinationType$EMBEDDING_TYPE)
         et_scope <- et_scopes[[1]]
         et_scope$set_value(mapping)
@@ -474,12 +486,12 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
       layout_aux <- function(obj, x_min, x_max, y_min, y_max) {
         w <- x_max - x_min
         h <- y_max - y_min
-        if(class(obj)[[1]] == "VitessceConfigView") {
+        if(methods::is(obj, "VitessceConfigView")) {
           obj$set_xywh(x_min, y_min, w, h)
-        } else if(class(obj)[[1]] == "VitessceConfigViewHConcat") {
+        } else if(methods::is(obj, "VitessceConfigViewHConcat")) {
           views <- obj$views
           num_views <- length(views)
-          for(i in 1:num_views) {
+          for(i in seq_len(num_views)) {
             layout_aux(
               views[[i]],
               x_min+(w/num_views)*(i-1),
@@ -488,10 +500,10 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
               y_max
             )
           }
-        } else if(class(obj)[[1]] == "VitessceConfigViewVConcat") {
+        } else if(methods::is(obj, "VitessceConfigViewVConcat")) {
           views <- obj$views
           num_views <- length(views)
-          for(i in 1:num_views) {
+          for(i in seq_len(num_views)) {
             layout_aux(
               views[[i]],
               x_min,
@@ -524,7 +536,11 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' qry_dataset <- vc$add_dataset("Query")
     #' ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "umap")
     #' qry_plot <- vc$add_view(qry_dataset, Component$SCATTERPLOT, mapping = "proj.umap")
-    #' vc$link_views(c(ref_plot, qry_plot), c(CoordinationType$EMBEDDING_TARGET_X, CoordinationType$EMBEDDING_TARGET_Y), c_values = c(0, 0))
+    #' vc$link_views(
+    #'   c(ref_plot, qry_plot),
+    #'   c(CoordinationType$EMBEDDING_TARGET_X, CoordinationType$EMBEDDING_TARGET_Y),
+    #'   c_values = c(0, 0)
+    #' )
     link_views = function(views, c_types, c_values = NA) {
       c_scopes <- self$add_coordination(c_types)
       for(view in views) {
@@ -532,8 +548,8 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
           view$use_coordination(c(c_scope))
         }
       }
-      if(!is.na(c_values) && length(c_types) == length(c_values)) {
-        for(i in 1:length(c_scopes)) {
+      if(!is_na(c_values) && length(c_types) == length(c_values)) {
+        for(i in seq_len(length(c_scopes))) {
           c_scope <- c_scopes[[i]]
           c_scope$set_value(c_values[[i]])
         }
@@ -602,6 +618,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' By default, creates a localhost URL which includes the port.
     #' @param serve Should local data be served by running a local web server with R plumber? By default, TRUE.
     #' @param element_id An element ID. Optional.
+    #' @param ... Passes extra keyword arguments to the `vitessce_widget` function.
     #' @return The Vitessce htmlwidget.
     #' @examples
     #' vc <- VitessceConfig$new("My config")
@@ -624,7 +641,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' dataset <- vc$add_dataset("My dataset")
     #' description <- vc$add_view(dataset, Component$DESCRIPTION)
     #' vc$layout(description)
-    #' vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./my_exported_files")
+    #' vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./data")
     export = function(to = "files", with_config = FALSE, base_url = NA, ...) {
       vc_list <- NA
       if(to == "files") {

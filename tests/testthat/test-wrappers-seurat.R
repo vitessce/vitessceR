@@ -15,17 +15,50 @@ test_that("SeuratWrapper create_cells_list", {
   pbmc <- FindNeighbors(pbmc, dims = 1:10)
   pbmc <- FindClusters(pbmc, resolution = 0.5)
 
-  w <- SeuratWrapper$new(pbmc)
+  w <- SeuratWrapper$new(
+    pbmc,
+    cell_embeddings = c("pca"),
+    cell_embedding_names = c("PCA"),
+    cell_set_metas = c("seurat_clusters"),
+    cell_set_meta_names = c("Clusters"),
+    out_dir = file.path("seurat", "out")
+  )
 
-  cells_list <- w$create_cells_list()
+  cells_file_def <- w$make_cells_file_def_creator("A", "1")("http://localhost")
+  cell_sets_file_def <- w$make_cell_sets_file_def_creator("A", "1")("http://localhost")
+  expr_mtx_file_def <- w$make_expression_matrix_file_def_creator("A", "1")("http://localhost")
 
-  expect_equal(length(cells_list), 2638)
-  expect_equal(names(cells_list[['CATTTGTGGGATCT-1']]), c("mappings"))
-  expect_equal(names(cells_list[['CATTTGTGGGATCT-1']]$mappings), c("pca"))
-  expect_equal(length(cells_list[['CATTTGTGGGATCT-1']]$mappings$pca), 2)
-  expect_equal(cells_list[['CATTTGTGGGATCT-1']]$mappings$pca[[1]], -2.372751, tolerance = 0.1)
-  expect_equal(cells_list[['CATTTGTGGGATCT-1']]$mappings$pca[[2]], 7.776640, tolerance = 0.1)
-
-  cell_sets_list <- w$create_cell_sets_list()
+  expect_equal(cells_file_def, list(
+    type = "cells",
+    fileType = "anndata-cells.zarr",
+    url = "http://localhost/A/1/seurat.zarr",
+    options = list(
+      mappings = list(
+        PCA = list(
+          key = "obsm/X_pca",
+          dims = c(0, 1)
+        )
+      )
+    )
+  ))
+  expect_equal(cell_sets_file_def, list(
+    type = "cell-sets",
+    fileType = "anndata-cell-sets.zarr",
+    url = "http://localhost/A/1/seurat.zarr",
+    options = list(
+      list(
+        groupName = "Clusters",
+        setName = "obs/seurat_clusters"
+      )
+    )
+  ))
+  expect_equal(expr_mtx_file_def, list(
+    type = "expression-matrix",
+    fileType = "anndata-expression-matrix.zarr",
+    url = "http://localhost/A/1/seurat.zarr",
+    options = list(
+      matrix = "X"
+    )
+  ))
 
 })

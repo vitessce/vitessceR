@@ -24,6 +24,11 @@ string and have \code{'px'} appended.}
 \item{quoted}{Is \code{expr} a quoted expression (with \code{quote()})? This
 is useful if you want to save an expression in a variable.}
 }
+\value{
+The Shiny UI element.
+
+The Shiny server output.
+}
 \description{
 Output and render functions for using vitessce within Shiny
 applications and interactive Rmd documents.

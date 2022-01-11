@@ -4,19 +4,6 @@
 \name{VitessceConfig}
 \alias{VitessceConfig}
 \title{VitessceConfig Class}
-\value{
-Self, to allow chaining.
-
-Self, to allow chaining.
-
-A \code{list} that can be serialized to JSON.
-
-A \code{list} of \code{VitessceConfigServerStaticRoute}.
-
-The Vitessce htmlwidget.
-
-The Vitessce configuration as a list, with the \code{base_url} filled in.
-}
 \description{
 Class representing a Vitessce view config.
 }
@@ -68,7 +55,11 @@ ref_dataset <- vc$add_dataset("Reference")
 qry_dataset <- vc$add_dataset("Query")
 ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "umap")
 qry_plot <- vc$add_view(qry_dataset, Component$SCATTERPLOT, mapping = "proj.umap")
-vc$link_views(c(ref_plot, qry_plot), c(CoordinationType$EMBEDDING_TARGET_X, CoordinationType$EMBEDDING_TARGET_Y), c_values = c(0, 0))
+vc$link_views(
+  c(ref_plot, qry_plot),
+  c(CoordinationType$EMBEDDING_TARGET_X, CoordinationType$EMBEDDING_TARGET_Y),
+  c_values = c(0, 0)
+)
 
 ## ------------------------------------------------
 ## Method `VitessceConfig$to_list`
@@ -96,7 +87,7 @@ vc <- VitessceConfig$new("My config")
 dataset <- vc$add_dataset("My dataset")
 description <- vc$add_view(dataset, Component$DESCRIPTION)
 vc$layout(description)
-vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./my_exported_files")
+vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./data")
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -272,6 +263,9 @@ Define the layout of views.
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+Self, to allow chaining.
+}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{vc <- VitessceConfig$new("My config")
@@ -305,6 +299,9 @@ Should have the same length as the c_types array. Optional.}
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+Self, to allow chaining.
+}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{vc <- VitessceConfig$new("My config")
@@ -312,7 +309,11 @@ ref_dataset <- vc$add_dataset("Reference")
 qry_dataset <- vc$add_dataset("Query")
 ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "umap")
 qry_plot <- vc$add_view(qry_dataset, Component$SCATTERPLOT, mapping = "proj.umap")
-vc$link_views(c(ref_plot, qry_plot), c(CoordinationType$EMBEDDING_TARGET_X, CoordinationType$EMBEDDING_TARGET_Y), c_values = c(0, 0))
+vc$link_views(
+  c(ref_plot, qry_plot),
+  c(CoordinationType$EMBEDDING_TARGET_X, CoordinationType$EMBEDDING_TARGET_Y),
+  c_values = c(0, 0)
+)
 }
 \if{html}{\out{</div>}}
 
@@ -335,6 +336,9 @@ Convert the config to an R list. Helpful when converting the config to JSON.
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+A \code{list} that can be serialized to JSON.
+}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{vc <- VitessceConfig$new("My config")
@@ -355,6 +359,9 @@ Get a list of web server route objects corresponding to any local files which wi
 \if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$get_routes()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A \code{list} of \code{VitessceConfigServerStaticRoute}.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-widget"></a>}}
@@ -368,6 +375,8 @@ Create an htmlwidget based on this config.
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{...}}{Passes extra keyword arguments to the \code{vitessce_widget} function.}
+
 \item{\code{theme}}{The theme of the widget, either "dark" or "light". Optional. By default, "dark".}
 
 \item{\code{width}}{The width of the widget as a number or CSS string. Optional.}
@@ -385,6 +394,9 @@ By default, creates a localhost URL which includes the port.}
 \item{\code{element_id}}{An element ID. Optional.}
 }
 \if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+The Vitessce htmlwidget.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
@@ -421,13 +433,16 @@ Export the data associated with this configuration to a specified destination.
 }
 \if{html}{\out{</div>}}
 }
+\subsection{Returns}{
+The Vitessce configuration as a list, with the \code{base_url} filled in.
+}
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{vc <- VitessceConfig$new("My config")
 dataset <- vc$add_dataset("My dataset")
 description <- vc$add_view(dataset, Component$DESCRIPTION)
 vc$layout(description)
-vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./my_exported_files")
+vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./data")
 }
 \if{html}{\out{</div>}}
 

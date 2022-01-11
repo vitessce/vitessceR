@@ -27,6 +27,6 @@ vc <- VitessceConfig$new("My config")
 dataset <- vc$add_dataset("My dataset")
 description <- vc$add_view(dataset, Component$DESCRIPTION)
 vc$layout(description)
-vc$export(to = "files", out_dir = "./my_exported_files")
+vc$export(to = "files", out_dir = "./data")
 }
 \keyword{internal}

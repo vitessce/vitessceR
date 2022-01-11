@@ -9,15 +9,17 @@ vignette: >
 
 The following is a full example of usage of the widget with a [Seurat](https://satijalab.org/seurat/) object.
 
-First, install the dependencies:
+
+First, install the R dependencies:
 
 ```r
 install.packages("seurat")
 install.packages("devtools")
-devtools::install_github("vitessce/vitessce-r")
+devtools::install_github("mojaveazure/seurat-disk")
 ```
 
-Next, download the dataset, load and preprocess the Seurat object, and configure the Vitessce widget:
+
+Download the dataset, load and preprocess the Seurat object, and configure the Vitessce widget:
 
 ```r
 library(vitessce)
@@ -25,12 +27,13 @@ library(Seurat)
 
 # Download example dataset
 url <- "https://cf.10xgenomics.com/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz"
-dir.create("seurat")
-download.file(url, destfile = "seurat/filtered_gene_bc_matrices.tar.gz")
-untar("seurat/filtered_gene_bc_matrices.tar.gz", exdir = "seurat")
+save_dir <- file.path("data", "seurat")
+dir.create(save_dir)
+download.file(url, destfile = file.path(save_dir, "filtered_gene_bc_matrices.tar.gz"))
+untar(file.path(save_dir, "filtered_gene_bc_matrices.tar.gz"), exdir = save_dir)
 
 # Load example dataset
-pbmc.data <- Read10X(data.dir = "seurat/filtered_gene_bc_matrices/hg19")
+pbmc.data <- Read10X(data.dir = file.path(save_dir, "filtered_gene_bc_matrices", "hg19"))
 
 # Process example dataset (run PCA and cluster)
 pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 3, min.features = 200)
@@ -44,18 +47,31 @@ pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
 pbmc <- FindNeighbors(pbmc, dims = 1:10)
 pbmc <- FindClusters(pbmc, resolution = 0.5)
 
+pbmc <- ScaleData(pbmc, features = all.genes, do.center = FALSE)
+
 # Create Vitessce view config
 vc <- VitessceConfig$new("My config")
-dataset <- vc$add_dataset("My dataset")$add_object(SeuratWrapper$new(pbmc, cell_set_meta_names = list("seurat_clusters"), out_dir = "out"))
-scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
+dataset <- vc$add_dataset("My dataset")$add_object(SeuratWrapper$new(
+  pbmc,
+  cell_set_metas = c("seurat_clusters"),
+  cell_embeddings = c("pca"),
+  cell_embedding_names = c("PCA"),
+  out_dir = file.path("data", "seurat_basic"), use_cache = TRUE
+))
+scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
 status <- vc$add_view(dataset, Component$STATUS)
 desc <- vc$add_view(dataset, Component$DESCRIPTION)
 desc <- desc$set_props(description = "Visualization of a Seurat object containing the PBMC 3K dataset.")
-cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
+genes <- vc$add_view(dataset, Component$GENES)
 heatmap <- vc$add_view(dataset, Component$HEATMAP)
+vc$link_views(
+  list(scatterplot, heatmap),
+  list(CoordinationType$GENE_EXPRESSION_COLORMAP_RANGE),
+  list(c(0.0, 0.05))
+)
 vc$layout(hconcat(
   vconcat(scatterplot, heatmap),
-  vconcat(cell_sets, vconcat(desc, status))
+  vconcat(genes, vconcat(desc, status))
 ))
 
 # Render the Vitessce widget

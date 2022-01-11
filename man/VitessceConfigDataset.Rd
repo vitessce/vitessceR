@@ -4,14 +4,25 @@
 \name{VitessceConfigDataset}
 \alias{VitessceConfigDataset}
 \title{VitessceConfigDataset Class}
-\value{
-A \code{list} of \code{VitessceConfigServerStaticRoute}.
-}
 \description{
 Class representing a dataset in a Vitessce view config.
 }
 \details{
 Dataset in a VitessceConfig
+}
+\examples{
+
+## ------------------------------------------------
+## Method `VitessceConfigDataset$add_file`
+## ------------------------------------------------
+
+base_url <- "http://localhost:8000/"
+vc <- VitessceConfig$new("My config")
+dataset <- vc$add_dataset("My dataset")$add_file(
+  url = paste0(base_url, "cells.json"),
+  data_type = DataType$CELLS,
+  file_type = FileType$CELLS_JSON
+)
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -83,6 +94,20 @@ Add a file to this dataset.
 \subsection{Returns}{
 Invisible self, to allow chaining.
 }
+\subsection{Examples}{
+\if{html}{\out{<div class="r example copy">}}
+\preformatted{base_url <- "http://localhost:8000/"
+vc <- VitessceConfig$new("My config")
+dataset <- vc$add_dataset("My dataset")$add_file(
+  url = paste0(base_url, "cells.json"),
+  data_type = DataType$CELLS,
+  file_type = FileType$CELLS_JSON
+)
+}
+\if{html}{\out{</div>}}
+
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-add_object"></a>}}
@@ -113,6 +138,9 @@ Get a list of web server route objects corresponding to any local files which wi
 \if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDataset$get_routes()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+A \code{list} of \code{VitessceConfigServerStaticRoute}.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-to_list"></a>}}

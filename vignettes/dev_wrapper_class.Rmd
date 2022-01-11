@@ -206,11 +206,3 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
 ```
 
 
-
-## Cell sets
-
-TO DO
-
-## Expression matrix
-
-TO DO

@@ -5,7 +5,7 @@
 \alias{FileType}
 \title{Enumeration of File Type values}
 \format{
-An object of class \code{list} of length 7.
+An object of class \code{list} of length 11.
 }
 \usage{
 FileType
@@ -23,5 +23,14 @@ for dataset files.
 \item \code{CLUSTERS_JSON}: The \code{clusters.json} file type.
 \item \code{EXPRESSION_MATRIX_ZARR}: The \code{expression-matrix.zarr} file type.
 }
+}
+\examples{
+base_url <- "http://localhost:8000/"
+vc <- VitessceConfig$new("My config")
+dataset <- vc$add_dataset("My dataset")$add_file(
+  url = paste0(base_url, "cells.json"),
+  data_type = DataType$CELLS,
+  file_type = FileType$CELLS_JSON
+)
 }
 \keyword{datasets}

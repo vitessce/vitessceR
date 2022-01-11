@@ -16,6 +16,8 @@ Abstract dataset object wrapper class
 \describe{
 \item{\code{out_dir}}{The directory for processed output files.}
 
+\item{\code{use_cache}}{If converted output files already exist, should they be used?}
+
 \item{\code{is_remote}}{Is the data object fully remote?}
 
 \item{\code{routes}}{A list of \code{VitessceConfigServerRoute} objects.}
@@ -45,13 +47,15 @@ Abstract dataset object wrapper class
 \subsection{Method \code{new()}}{
 Create an abstract wrapper around a data object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$new(out_dir = NA)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$new(out_dir = NA, use_cache = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
 \item{\code{out_dir}}{The directory for processed output files.}
+
+\item{\code{use_cache}}{If converted output files already exist, should they be used? By default, FALSE.}
 }
 \if{html}{\out{</div>}}
 }
@@ -153,6 +157,8 @@ Create a local web server URL for a dataset object.
 \item{\code{dataset_uid}}{The ID for this dataset.}
 
 \item{\code{obj_i}}{The index of this data object within the dataset.}
+
+\item{\code{...}}{Passes extra arguments to \code{get_route_str}}
 }
 \if{html}{\out{</div>}}
 }
@@ -175,6 +181,8 @@ Create a string representing a web server route path (the part following the bas
 \item{\code{dataset_uid}}{The ID for this dataset.}
 
 \item{\code{obj_i}}{The index of this data object within the dataset.}
+
+\item{\code{...}}{Pastes extra arguments together after \code{obj_i}, separated by slash.}
 }
 \if{html}{\out{</div>}}
 }
@@ -197,6 +205,8 @@ Create a directory path to a dataset within the base output directory.
 \item{\code{dataset_uid}}{The ID for this dataset.}
 
 \item{\code{obj_i}}{The index of this data object within the dataset.}
+
+\item{\code{...}}{Passes extra arguments to \code{file.path}}
 }
 \if{html}{\out{</div>}}
 }

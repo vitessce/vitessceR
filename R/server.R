@@ -23,6 +23,20 @@ VitessceConfigServerStaticRoute <- R6::R6Class("VitessceConfigServerStaticRoute"
    create_handlers = function(pr_server) {
      # Reference: https://www.rplumber.io/articles/programmatic-usage.html#mount-static
      new_server <- plumber::pr_static(pr_server, self$path, self$directory)
+
+     # Handle Zarr stores for OME-Zarr images.
+     head_handler <- function(req, res) {
+       res$headers[["Accept-Ranges"]] <- "bytes"
+       res$headers[["Access-Control-Allow-Origin"]] <- "*"
+       res$headers[["Access-Control-Expose-Headers"]] <- "Access-Control-Allow-Origin, Content-Length, Content-Range, Content-Type, Date, Server, Transfer-Encoding, range"
+       res$headers[["Content-Type"]] <- "application/octet-stream"
+       res$status <- 200
+       res
+     }
+     new_server <- plumber::pr_head(new_server, paste0(self$path, "/<fname>/.zgroup"), handler = head_handler)
+     new_server <- plumber::pr_head(new_server, paste0(self$path, "/<fname>/.zarray"), handler = head_handler)
+     new_server <- plumber::pr_head(new_server, paste0(self$path, "/<fname>/<zkey>/.zarray"), handler = head_handler)
+
      return(new_server)
    }
  )
