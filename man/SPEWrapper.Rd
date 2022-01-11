@@ -14,8 +14,8 @@ SpatialExperiment object wrapper class
 obj <- get_spe_obj()
 w <- SPEWrapper$new(
   obj,
-  cell_embeddings = c("pca"),
-  cell_embedding_names = c("PCA")
+  sample_id = "sample1",
+  image_id = "image1"
 )
 }
 \keyword{internal}

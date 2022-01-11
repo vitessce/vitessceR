@@ -34,8 +34,9 @@ jobs:
       - name: Install dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
         run: |
-          install.packages(c("remotes", "rcmdcheck", "BiocManager"))
+          install.packages(c("remotes", "rcmdcheck", "BiocManager", "Seurat"))
           BiocManager::install("BiocCheck")
+          remotes::install_github(c("RubD/Giotto", "mojaveazure/seurat-disk"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
         env:

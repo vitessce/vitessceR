@@ -10,8 +10,8 @@
 #' obj <- get_spe_obj()
 #' w <- SPEWrapper$new(
 #'   obj,
-#'   cell_embeddings = c("pca"),
-#'   cell_embedding_names = c("PCA")
+#'   sample_id = "sample1",
+#'   image_id = "image1"
 #' )
 SPEWrapper <- R6::R6Class("SPEWrapper",
   inherit = AbstractWrapper,
@@ -78,7 +78,7 @@ SPEWrapper <- R6::R6Class("SPEWrapper",
     initialize = function(obj, sample_id = NA, image_id = NA, cell_embeddings = NA, cell_embedding_names = NA, cell_embedding_dims = NA, cell_set_metas = NA, cell_set_meta_names = NA, cell_set_meta_scores = NA, ...) {
       super$initialize(...)
       self$obj <- obj
-      if(!is.null(obj) && is_na(sample_id) && is_na(image_id)) {
+      if(is_na(sample_id) && is_na(image_id)) {
         img_df <- SpatialExperiment::imgData(obj)
         if(nrow(img_df) >= 1) {
           warning("sample_id and image_id not provided, using first image in imgData")
@@ -108,10 +108,6 @@ SPEWrapper <- R6::R6Class("SPEWrapper",
     #' @return Success or failure.
     check_obj = function() {
       success <- TRUE
-      if(is.null(self$obj)) {
-        warning("Object is NULL.")
-        return(FALSE)
-      }
       if(!methods::is(self$obj, "SpatialExperiment")) {
         warning("Object is not of type SpatialExperiment.")
         success <- FALSE

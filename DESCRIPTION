@@ -44,6 +44,7 @@ Imports:
     tools,
     stats,
     methods,
+    S4Vectors,
     grDevices,
     basilisk,
     zellkonverter,
@@ -59,4 +60,5 @@ Suggests:
     purrr,
     rjson,
     Seurat,
-    SeuratDisk
+    SeuratDisk,
+    Giotto
