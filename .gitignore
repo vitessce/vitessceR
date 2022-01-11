@@ -9,3 +9,4 @@ tests/testthat/seurat/
 data/
 check/
 vignettes/data/
+*.Rproj
