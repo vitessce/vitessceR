@@ -1,6 +1,6 @@
 ---
 title: "Usage with JSON: Local Example"
-output: BiocStyle::html_document
+output: rmarkdown::html_vignette
 package: vitessce
 vignette: >
   %\VignetteIndexEntry{Usage with JSON: Local Example}

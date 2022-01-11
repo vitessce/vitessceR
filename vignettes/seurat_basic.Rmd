@@ -16,7 +16,6 @@ First, install the R dependencies:
 install.packages("seurat")
 install.packages("devtools")
 devtools::install_github("mojaveazure/seurat-disk")
-devtools::install_github("vitessce/vitessce-r")
 ```
 
 

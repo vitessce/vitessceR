@@ -1,6 +1,6 @@
 ---
 title: "Debugging"
-output: BiocStyle::html_document
+output: rmarkdown::html_vignette
 package: vitessce
 vignette: >
   %\VignetteIndexEntry{Debugging}
@@ -13,6 +13,11 @@ When working with the `vitessce` R package, you may encounter issues, particular
 If none of these tips help, please write an issue on [GitHub](https://github.com/vitessce/vitessce-r/issues).
 
 The following code snippets assume that `vitessce` has been loaded via `library(vitessce)` and the Vitessce configuration instance is stored in the variable `vc`:
+
+
+```{r echo = TRUE}
+knitr::opts_knit$get("rmarkdown.pandoc.to")
+```
 
 ```r
 library(vitessce)

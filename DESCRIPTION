@@ -55,7 +55,7 @@ Suggests:
     knitr,
     bslib,
     pkgdown,
-    BiocStyle,
+    rmarkdown,
     purrr,
     rjson,
     Seurat,
