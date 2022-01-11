@@ -34,7 +34,7 @@ jobs:
       - name: Install dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
         run: |
-          install.packages(c("remotes", "rcmdcheck", "BiocManager", "Seurat"))
+          install.packages(c("remotes", "rcmdcheck", "BiocManager", "Seurat", "covr"))
           BiocManager::install("BiocCheck")
           remotes::install_github(c("RubD/Giotto", "mojaveazure/seurat-disk"))
           remotes::install_deps(dependencies = TRUE)
@@ -63,6 +63,10 @@ jobs:
         shell: Rscript {0}
         env:
           _R_CHECK_FORCE_SUGGESTS_: false
+      - name: Run covr
+        run: |
+          covr::package_coverage()
+        shell: Rscript {0}
       - name: Build docs
         run: |
           Rscript -e 'pkgdown::build_site(new_process = FALSE)'

@@ -1,7 +1,7 @@
 Package: vitessce
 Type: Package
 Title: Create Interactive Single-cell Visualizations with the 'Vitessce' JavaScript Library
-Version: 0.0.0.9008
+Version: 0.99.0
 Authors@R: c(
     person(
       given = "Mark",
@@ -54,6 +54,7 @@ Imports:
 Suggests: 
     testthat,
     knitr,
+    covr,
     bslib,
     pkgdown,
     rmarkdown,
