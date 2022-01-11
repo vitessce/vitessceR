@@ -108,6 +108,10 @@ SPEWrapper <- R6::R6Class("SPEWrapper",
     #' @return Success or failure.
     check_obj = function() {
       success <- TRUE
+      if(is.null(self$obj)) {
+        warning("Object is NULL.")
+        return(FALSE)
+      }
       if(!methods::is(self$obj, "SpatialExperiment")) {
         warning("Object is not of type SpatialExperiment.")
         success <- FALSE

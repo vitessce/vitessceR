@@ -93,6 +93,10 @@ SeuratWrapper <- R6::R6Class("SeuratWrapper",
     #' @return Success or failure.
     check_obj = function() {
       success <- TRUE
+      if(is.null(self$obj)) {
+        warning("Object is NULL.")
+        return(FALSE)
+      }
       if(!methods::is(self$obj, "Seurat")) {
         warning("Object is not of type Seurat.")
         success <- FALSE
