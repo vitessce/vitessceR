@@ -6,6 +6,13 @@
 #'
 #' @rdname GiottoWrapper
 #' @export
+#' @examples
+#' obj <- get_giotto_obj()
+#' w <- GiottoWrapper$new(
+#'   obj,
+#'   cell_embeddings = c("pca"),
+#'   cell_embedding_names = c("PCA")
+#' )
 GiottoWrapper <- R6::R6Class("GiottoWrapper",
   inherit = AbstractWrapper,
   public = list(
@@ -68,6 +75,28 @@ GiottoWrapper <- R6::R6Class("GiottoWrapper",
       self$cell_set_meta_scores <- cell_set_meta_scores
 
       self$zarr_folder <- "giotto.zarr"
+
+      self$check_obj()
+    },
+    #' @description
+    #' Check that the object is valid
+    #' @keywords internal
+    #' @return Success or failure.
+    check_obj = function() {
+      success <- TRUE
+      if(!methods::is(self$obj, "giotto")) {
+        warning("Object is not of type giotto.")
+        success <- FALSE
+      }
+      if(!is_na(self$cell_embeddings) && !all(self$cell_embeddings %in% names(self$obj@dimension_reduction$cells))) {
+        warning("Specified cell_embeddings not all present in Giotto object dimension_reduction")
+        success <- FALSE
+      }
+      if(!is_na(self$cell_set_metas) && !all(self$cell_set_metas %in% colnames(self$obj@cell_metadata))) {
+        warning("Specified cell_set_metas not all present in Giotto object cell_metadata.")
+        success <- FALSE
+      }
+      return(success)
     },
     #' @description
     #' Get the path to the zarr store, relative to the current directory.

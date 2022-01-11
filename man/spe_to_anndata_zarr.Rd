@@ -17,4 +17,8 @@ TRUE if the conversion succeeds.
 \description{
 Save a SpatialExperiment to an AnnData-Zarr store.
 }
+\examples{
+obj <- get_spe_obj()
+spe_to_anndata_zarr(obj, out_path = "data/spe.zarr")
+}
 \keyword{internal}

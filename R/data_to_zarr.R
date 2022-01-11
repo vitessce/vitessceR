@@ -8,6 +8,9 @@
 #' @return TRUE if the conversion succeeds.
 #'
 #' @export
+#' @examples
+#' obj <- get_seurat_obj()
+#' seurat_to_anndata_zarr(obj, out_path = "data/seurat.zarr", assay = "RNA")
 seurat_to_anndata_zarr <- function(seurat_obj, out_path, assay) {
   if(!requireNamespace("SeuratDisk", quietly = TRUE)) {
     stop("Install 'SeuratDisk' to enable conversion of Seurat objects to AnnData objects.")
@@ -69,6 +72,9 @@ seurat_to_anndata_zarr <- function(seurat_obj, out_path, assay) {
 #' @return TRUE if the conversion succeeds.
 #'
 #' @export
+#' @examples
+#' obj <- get_sce_obj()
+#' sce_to_anndata_zarr(obj, out_path = "data/sce.zarr")
 #' @importFrom SingleCellExperiment reducedDims reducedDims<-
 sce_to_anndata_zarr <- function(sce_obj, out_path) {
   obsm_keys <- names(as.list(reducedDims(sce_obj)))
@@ -102,6 +108,9 @@ sce_to_anndata_zarr <- function(sce_obj, out_path) {
 #' @return TRUE if the conversion succeeds.
 #'
 #' @export
+#' @examples
+#' obj <- get_spe_obj()
+#' spe_to_anndata_zarr(obj, out_path = "data/spe.zarr")
 #' @importFrom SummarizedExperiment colData
 #' @importFrom SingleCellExperiment int_colData
 #' @importFrom SpatialExperiment colData<-
@@ -129,6 +138,9 @@ spe_to_anndata_zarr <- function(spe_obj, out_path) {
 #' @return TRUE if the conversion succeeds.
 #'
 #' @export
+#' @examples
+#' obj <- get_spe_obj()
+#' spe_to_ome_zarr(obj, "sample01", "image01", "data/spe_image.zarr")
 #' @importFrom SpatialExperiment getImg
 #' @importFrom grDevices as.raster col2rgb
 spe_to_ome_zarr <- function(spe_obj, sample_id, image_id, out_path) {
@@ -204,6 +216,9 @@ spe_to_ome_zarr <- function(spe_obj, sample_id, image_id, out_path) {
 #' @return TRUE if the conversion succeeds.
 #'
 #' @export
+#' @examples
+#' obj <- get_giotto_obj()
+#' giotto_to_anndata_zarr(obj, "data/giotto.zarr")
 #' @importFrom methods slot
 giotto_to_anndata_zarr <- function(giotto_obj, out_path, X_slot = "raw_exprs") {
 

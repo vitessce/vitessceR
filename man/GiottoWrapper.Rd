@@ -10,6 +10,14 @@ Class representing a local Giotto object in a Vitessce dataset.
 \details{
 Giotto object wrapper class
 }
+\examples{
+obj <- get_giotto_obj()
+w <- GiottoWrapper$new(
+  obj,
+  cell_embeddings = c("pca"),
+  cell_embedding_names = c("PCA")
+)
+}
 \keyword{internal}
 \section{Super class}{
 \code{\link[vitessce:AbstractWrapper]{vitessce::AbstractWrapper}} -> \code{GiottoWrapper}
@@ -45,6 +53,7 @@ to use for cell set names mapped to keys for scores.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{GiottoWrapper$new()}}
+\item \href{#method-check_obj}{\code{GiottoWrapper$check_obj()}}
 \item \href{#method-get_zarr_path}{\code{GiottoWrapper$get_zarr_path()}}
 \item \href{#method-get_zarr_url}{\code{GiottoWrapper$get_zarr_url()}}
 \item \href{#method-convert_and_save}{\code{GiottoWrapper$convert_and_save()}}
@@ -115,6 +124,19 @@ and keys for annotation scores.}
 }
 \subsection{Returns}{
 A new \code{GiottoWrapper} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-check_obj"></a>}}
+\if{latex}{\out{\hypertarget{method-check_obj}{}}}
+\subsection{Method \code{check_obj()}}{
+Check that the object is valid
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{GiottoWrapper$check_obj()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Success or failure.
 }
 }
 \if{html}{\out{<hr>}}

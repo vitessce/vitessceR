@@ -17,4 +17,8 @@ TRUE if the conversion succeeds.
 \description{
 Save a SingleCellExperiment to an AnnData-Zarr store.
 }
+\examples{
+obj <- get_sce_obj()
+sce_to_anndata_zarr(obj, out_path = "data/sce.zarr")
+}
 \keyword{internal}

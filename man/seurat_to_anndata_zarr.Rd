@@ -19,4 +19,8 @@ TRUE if the conversion succeeds.
 \description{
 Save a Seurat object to an AnnData-Zarr store.
 }
+\examples{
+obj <- get_seurat_obj()
+seurat_to_anndata_zarr(obj, out_path = "data/seurat.zarr", assay = "RNA")
+}
 \keyword{internal}

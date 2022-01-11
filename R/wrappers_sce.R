@@ -6,6 +6,13 @@
 #'
 #' @rdname SCEWrapper
 #' @export
+#' @examples
+#' obj <- get_sce_obj()
+#' w <- SCEWrapper$new(
+#'   obj,
+#'   cell_embeddings = c("pca"),
+#'   cell_embedding_names = c("PCA")
+#' )
 SCEWrapper <- R6::R6Class("SCEWrapper",
   inherit = AbstractWrapper,
   public = list(
@@ -68,6 +75,27 @@ SCEWrapper <- R6::R6Class("SCEWrapper",
       self$cell_set_meta_scores <- cell_set_meta_scores
 
       self$zarr_folder <- "sce.zarr"
+      self$check_obj()
+    },
+    #' @description
+    #' Check that the object is valid
+    #' @keywords internal
+    #' @return Success or failure.
+    check_obj = function() {
+      success <- TRUE
+      if(!methods::is(self$obj, "SingleCellExperiment")) {
+        warning("Object is not of type SingleCellExperiment.")
+        success <- FALSE
+      }
+      if(!is_na(self$cell_embeddings) && !all(self$cell_embeddings %in% SingleCellExperiment::reducedDimNames(self$obj))) {
+        warning("Specified cell_embeddings not all present in SCE object reducedDims.")
+        success <- FALSE
+      }
+      if(!is_na(self$cell_set_metas) && !all(self$cell_set_metas %in% colnames(SingleCellExperiment::colData(self$obj)))) {
+        warning("Specified cell_set_metas not all present in SCE object colData.")
+        success <- FALSE
+      }
+      return(success)
     },
     #' @description
     #' Get the path to the zarr store, relative to the current directory.

@@ -19,4 +19,8 @@ TRUE if the conversion succeeds.
 \description{
 Save a Giotto object to an AnnData-Zarr store
 }
+\examples{
+obj <- get_giotto_obj()
+giotto_to_anndata_zarr(obj, "data/giotto.zarr")
+}
 \keyword{internal}

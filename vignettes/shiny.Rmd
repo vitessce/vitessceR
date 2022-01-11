@@ -31,7 +31,7 @@ force(pbmc3k.final)
 
 ui <- fluidPage(
   "Vitessce in a Shiny app",
-  vitessce_output(output_id = 'vitessce_visualization', height = "600px"),
+  vitessce_output(output_id = "vitessce_visualization", height = "600px"),
 )
 
 server <- function(input, output, session) {

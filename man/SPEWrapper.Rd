@@ -10,6 +10,14 @@ Class representing a local SpatialExperiment object in a Vitessce dataset.
 \details{
 SpatialExperiment object wrapper class
 }
+\examples{
+obj <- get_spe_obj()
+w <- SPEWrapper$new(
+  obj,
+  cell_embeddings = c("pca"),
+  cell_embedding_names = c("PCA")
+)
+}
 \keyword{internal}
 \section{Super class}{
 \code{\link[vitessce:AbstractWrapper]{vitessce::AbstractWrapper}} -> \code{SPEWrapper}
@@ -51,6 +59,7 @@ to use for cell set names mapped to keys for scores.}
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-new}{\code{SPEWrapper$new()}}
+\item \href{#method-check_obj}{\code{SPEWrapper$check_obj()}}
 \item \href{#method-get_zarr_path}{\code{SPEWrapper$get_zarr_path()}}
 \item \href{#method-get_zarr_url}{\code{SPEWrapper$get_zarr_url()}}
 \item \href{#method-get_img_path}{\code{SPEWrapper$get_img_path()}}
@@ -130,6 +139,19 @@ and keys for annotation scores.}
 }
 \subsection{Returns}{
 A new \code{SPEWrapper} object.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-check_obj"></a>}}
+\if{latex}{\out{\hypertarget{method-check_obj}{}}}
+\subsection{Method \code{check_obj()}}{
+Check that the object is valid
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{SPEWrapper$check_obj()}\if{html}{\out{</div>}}
+}
+
+\subsection{Returns}{
+Success or failure.
 }
 }
 \if{html}{\out{<hr>}}

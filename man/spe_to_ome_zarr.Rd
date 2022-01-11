@@ -21,4 +21,8 @@ TRUE if the conversion succeeds.
 \description{
 Save an image in a SpatialExperiment to an OME-Zarr store
 }
+\examples{
+obj <- get_spe_obj()
+spe_to_ome_zarr(obj, "sample01", "image01", "data/spe_image.zarr")
+}
 \keyword{internal}
