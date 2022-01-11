@@ -1,36 +1,64 @@
 Package: vitessce
 Type: Package
 Title: Create Interactive Single-cell Visualizations with the 'Vitessce' JavaScript Library
-Version: 0.0.0.9007
+Version: 0.0.0.9008
 Authors@R: c(
-    person("Gehlenborg Lab", role = c("lbr", "aut")),
-    person("Mark", "Keller", email = "7525285+keller-mark@users.noreply.github.com", role = c("cre", "aut"))
+    person(
+      given = "Mark",
+      family = "Keller",
+      email = "mark_keller+vitessce_r@g.harvard.edu",
+      role = c("cre", "aut"),
+      comment = c(ORCID = "0000-0003-3003-874X")
+    )
   )
-Description: R API and htmlwidget facilitating interactive visualization of spatial single-cell data with Vitessce.
+Description:
+  R API and htmlwidget facilitating interactive visualization
+  of spatial single-cell data with Vitessce. The R API contains
+  classes and functions for loading single-cell data stored as
+  SingleCellExperiment, SpatialExperiment, and Seurat objects.
+  The htmlwidget is a wrapper around the Vitessce JavaScript
+  library and can be used in the Viewer tab of RStudio or Shiny
+  apps.
+biocViews: SingleCell, Spatial, Visualization, ShinyApps
 License: MIT + file LICENSE
 BugReports: https://github.com/vitessce/vitessce-r/issues
 URL: https://github.com/vitessce/vitessce-r
-Depends: R (>= 4.0.0)
+Encoding: UTF-8
+Language: en-US
+StagedInstall: no
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+VignetteBuilder: knitr
 Imports:
+    Matrix,
+    DelayedArray,
     htmlwidgets,
-    rjson,
     jsonlite,
     R6,
     plumber,
     future,
-    purrr,
     httpuv,
     stringr,
-    reticulate
-Encoding: UTF-8
-LazyData: true
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.1
-Suggests: 
-    testthat,
-    bslib,
-    pkgdown,
-    Seurat,
+    reticulate,
+    varhandle,
+    tools,
+    stats,
+    methods,
+    S4Vectors,
+    grDevices,
+    basilisk,
+    zellkonverter,
     SummarizedExperiment,
     SingleCellExperiment,
     SpatialExperiment
+Suggests: 
+    testthat,
+    knitr,
+    bslib,
+    pkgdown,
+    rmarkdown,
+    purrr,
+    rjson,
+    Seurat,
+    SeuratDisk,
+    Giotto

@@ -1,0 +1,162 @@
+---
+title: "Usage with Giotto"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Usage with Giotto}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The following is a full example of usage of the widget with a [Giotto](https://github.com/RubD/Giotto) object.
+
+First, install the R dependencies:
+
+```r
+install.packages("devtools")
+devtools::install_github("RubD/Giotto")
+```
+
+
+Download and preprocess the Giotto object (adapted from this [tutorial](https://rubd.github.io/Giotto_site/articles/mouse_seqFISH_cortex_200914.html)):
+
+(replace ``python_path`` appropriately)
+
+```r
+library(Giotto)
+
+save_dir <- file.path("data", "giotto", "save_dir")
+dir.create(save_dir, showWarnings = FALSE)
+instrs <- createGiottoInstructions(
+  save_plot = TRUE,
+  show_plot = FALSE,
+  save_dir = save_dir,
+  python_path = "~/miniconda3/envs/vitessce-r-env/bin/python"
+)
+
+getSpatialDataset(dataset = "seqfish_SS_cortex", directory = save_dir, method = "wget")
+
+expr_path <- file.path(save_dir, "cortex_svz_expression.txt")
+loc_path <- file.path(save_dir, "cortex_svz_centroids_coord.txt")
+meta_path <- file.path(save_dir, "cortex_svz_centroids_annot.txt")
+
+# First, merge location and additional metadata.
+SS_locations = data.table::fread(loc_path)
+cortex_fields = data.table::fread(meta_path)
+SS_loc_annot = data.table::merge.data.table(SS_locations, cortex_fields, by = 'ID')
+SS_loc_annot[, ID := factor(ID, levels = paste0('cell_',1:913))]
+data.table::setorder(SS_loc_annot, ID)
+# Create file with offset information.
+my_offset_file = data.table::data.table(field = c(0, 1, 2, 3, 4, 5, 6), x_offset = c(0, 1654.97, 1750.75, 1674.35, 675.5, 2048, 675), y_offset = c(0, 0, 0, 0, -1438.02, -1438.02, 0))
+# Create a stitch file.
+stitch_file = stitchFieldCoordinates(
+  location_file = SS_loc_annot,
+  offset_file = my_offset_file,
+  cumulate_offset_x = T,
+  cumulate_offset_y = F,
+  field_col = 'FOV',
+  reverse_final_x = F,
+  reverse_final_y = T
+)
+stitch_file = stitch_file[,.(ID, X_final, Y_final)]
+my_offset_file = my_offset_file[,.(field, x_offset_final, y_offset_final)]
+# Create Giotto object
+SS_seqfish <- createGiottoObject(
+  raw_exprs = expr_path,
+  spatial_locs = stitch_file,
+  offset_file = my_offset_file,
+  instructions = instrs
+)
+# Filtering, normalization
+SS_seqfish = addCellMetadata(
+  SS_seqfish,
+  new_metadata = cortex_fields,
+  by_column = T,
+  column_cell_ID = 'ID'
+)
+cell_metadata = pDataDT(SS_seqfish)
+cortex_cell_ids = cell_metadata[FOV %in% 0:4]$cell_ID
+SS_seqfish = subsetGiotto(
+  SS_seqfish,
+  cell_ids = cortex_cell_ids
+)
+SS_seqfish <- filterGiotto(
+  gobject = SS_seqfish,
+  expression_threshold = 1,
+  gene_det_in_min_cells = 10,
+  min_det_genes_per_cell = 10,
+  expression_values = c('raw'),
+  verbose = T
+)
+# Normalize
+SS_seqfish <- normalizeGiotto(
+  gobject = SS_seqfish,
+  scalefactor = 6000,
+  verbose = T
+)
+# Add gene & cell statistics
+SS_seqfish <- addStatistics(gobject = SS_seqfish)
+# Adjust expression matrix for technical or known variables
+SS_seqfish <- adjustGiottoMatrix(
+  gobject = SS_seqfish,
+  expression_values = c('normalized'),
+  batch_columns = NULL,
+  covariate_columns = c('nr_genes', 'total_expr'),
+  return_gobject = TRUE,
+  update_slot = c('custom')
+)
+SS_seqfish <- calculateHVG(
+  gobject = SS_seqfish,
+  method = 'cov_loess',
+  difference_in_cov = 0.1,
+  save_param = list(save_name = '3_a_HVGplot', base_height = 5, base_width = 5)
+)
+# Select genes based on HVG and gene statistics, both found in gene metadata
+gene_metadata = fDataDT(SS_seqfish)
+featgenes = gene_metadata[hvg == 'yes' & perc_cells > 4 & mean_expr_det > 0.5]$gene_ID
+# Run PCA
+SS_seqfish <- runPCA(gobject = SS_seqfish, genes_to_use = featgenes, scale_unit = F, center = T)
+SS_seqfish <- runtSNE(SS_seqfish, dimensions_to_use = 1:15)
+```
+
+Set up the Vitessce widget:
+
+```r
+library(vitessce)
+
+w <- GiottoWrapper$new(
+  SS_seqfish,
+  cell_set_metas = c("cell_types"),
+  cell_set_meta_names = c("Cell Types"),
+  cell_embeddings = c("pca", "tsne"),
+  cell_embedding_names = c("PCA", "t-SNE"),
+  out_dir = file.path("data", "giotto")
+)
+
+vc <- VitessceConfig$new("My config")
+dataset <- vc$add_dataset("My dataset")$add_object(w)
+spatial <- vc$add_view(dataset, Component$SPATIAL)
+scatterplot_tsne <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "t-SNE")
+cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
+status <- vc$add_view(dataset, Component$STATUS)
+desc <- vc$add_view(dataset, Component$DESCRIPTION)
+desc <- desc$set_props(description = "Visualization of a Giotto object.")
+
+vc$layout(
+  hconcat(
+    vconcat(
+      spatial,
+      scatterplot_tsne
+    ),
+    vconcat(
+      cell_sets,
+      hconcat(desc, status)
+    )
+  )
+)
+
+# Render the Vitessce widget
+vc$widget(theme = "light")
+```
+
+
+

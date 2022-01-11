@@ -11,10 +11,10 @@ After configuring a Vitessce widget, you may want to obtain the static files ass
 This page demonstrates this process for an example dataset from [SeuratData](https://github.com/satijalab/seurat-data).
 
 First, install the dependencies:
+
 ```r
 install.packages("devtools")
-devtools::install_github("vitessce/vitessce-r")
-devtools::install_github('satijalab/seurat-data')
+devtools::install_github("satijalab/seurat-data")
 ```
 
 Create the Vitessce configuration:
@@ -29,8 +29,16 @@ force(pbmc3k.final)
 
 vc <- VitessceConfig$new("My config")
 dataset <- vc$add_dataset("My dataset")
-dataset <- dataset$add_object(SeuratWrapper$new(pbmc3k.final))
-scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
+dataset <- dataset$add_object(
+  SeuratWrapper$new(
+    pbmc3k.final,
+    cell_embeddings = c("pca", "umap"),
+    cell_embedding_names = c("PCA", "UMAP"),
+    cell_set_meta_names = c("seurat_annotations", "seurat_clusters"),
+    out_dir = file.path("data", "seuratdata")
+  )
+)
+scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
 vc$layout(scatterplot)
 ```
 
@@ -109,5 +117,4 @@ aws s3 cp --recursive ./my_vitessce_files s3://my_bucket
 In this case, rather than including the configuration as url-encoded JSON in the URL, you can simply point to the configuration JSON file in the bucket:
 
 `http://vitessce.io/?url=https://my_bucket.s3.amazonaws.com/config.json`
-
 

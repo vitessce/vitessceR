@@ -15,3 +15,11 @@ A \code{VitessceConfigViewVConcat} object.
 \description{
 A helper function to construct a new \code{VitessceConfigViewVConcat} object based on multiple views.
 }
+\examples{
+vc <- VitessceConfig$new("My config")
+ds <- vc$add_dataset("My dataset")
+spatial <- vc$add_view(ds, Component$SPATIAL)
+gene_list <- vc$add_view(ds, Component$GENES)
+vc$layout(vconcat(spatial, gene_list))
+vc$widget()
+}

@@ -6,13 +6,14 @@ jobs:
   build:
     runs-on: ubuntu-18.04
     env:
-      cache-version: 1
+      cache-version: 4
     steps:
       - uses: actions/checkout@v2
       - name: Set up libraries for Ubuntu
         run: |
           sudo apt-get update
-          sudo apt-get install -y libsodium-dev libharfbuzz-dev libfribidi-dev libcurl4-openssl-dev texlive-latex-base pandoc
+          sudo apt-get install -y libsodium-dev libharfbuzz-dev libfribidi-dev libcurl4-openssl-dev texlive-latex-base texlive-fonts-extra pandoc libmagick++-dev libhdf5-dev
+
       - name: Set up R 4.0
         uses: r-lib/actions/setup-r@master
         with:
@@ -33,12 +34,32 @@ jobs:
       - name: Install dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
         run: |
-          install.packages(c("remotes", "rcmdcheck", "BiocManager"))
-          BiocManager::install(c("SummarizedExperiment", "SingleCellExperiment", "SpatialExperiment"))
+          install.packages(c("remotes", "rcmdcheck", "BiocManager", "Seurat"))
+          BiocManager::install("BiocCheck")
+          remotes::install_github(c("RubD/Giotto", "mojaveazure/seurat-disk"))
           remotes::install_deps(dependencies = TRUE)
         shell: Rscript {0}
-      - name: Check
-        run: rcmdcheck::rcmdcheck(error_on = "error")
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+      - name: rcmdcheck
+        run: |
+          rcmdcheck::rcmdcheck(
+            error_on = "warning",
+            check_dir = "check"
+          )
+        shell: Rscript {0}
+        env:
+          _R_CHECK_FORCE_SUGGESTS_: false
+      - name: BiocCheck
+        run: |
+          BiocCheck::BiocCheck(
+            dir('check', 'tar.gz$', full.names = TRUE),
+            `no-check-version-num` = TRUE,
+            `no-check-R-ver` = TRUE,
+            `no-check-pkg-size` = TRUE,
+            `no-check-file-size` = TRUE,
+            `no-check-vignettes` = TRUE
+          )
         shell: Rscript {0}
         env:
           _R_CHECK_FORCE_SUGGESTS_: false

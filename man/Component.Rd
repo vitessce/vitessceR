@@ -25,4 +25,11 @@ valid string constant values representing components.
 \item \code{GENES}: The \code{genes} component.
 }
 }
+\examples{
+vc <- VitessceConfig$new("My config")
+dataset <- vc$add_dataset("My dataset")
+description <- vc$add_view(dataset, Component$DESCRIPTION)
+vc$layout(description)
+vc$widget()
+}
 \keyword{datasets}

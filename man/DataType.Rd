@@ -23,4 +23,13 @@ for dataset files.
 \item \code{RASTER}: The \code{raster} data type.
 }
 }
+\examples{
+base_url <- "http://localhost:8000/"
+vc <- VitessceConfig$new("My config")
+dataset <- vc$add_dataset("My dataset")$add_file(
+  url = paste0(base_url, "cells.json"),
+  data_type = DataType$CELLS,
+  file_type = FileType$CELLS_JSON
+)
+}
 \keyword{datasets}

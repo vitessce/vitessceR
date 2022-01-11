@@ -9,14 +9,7 @@ vignette: >
 
 The following is an example of usage of the widget to visualize a local OME-TIFF image file.
 
-First, install the dependencies:
-
-```r
-install.packages("devtools")
-devtools::install_github("vitessce/vitessce-r")
-```
-
-Next, configure the Vitessce widget:
+Configure the Vitessce widget:
 
 ```r
 library(vitessce)

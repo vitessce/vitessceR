@@ -1,6 +1,7 @@
 ---
 title: "Usage with JSON: Remote Example"
 output: rmarkdown::html_vignette
+package: vitessce
 vignette: >
   %\VignetteIndexEntry{Usage with JSON: Remote Example}
   %\VignetteEngine{knitr::rmarkdown}
@@ -9,14 +10,7 @@ vignette: >
 
 The following is an example of usage of the widget with JSON files. In this example, the JSON files are stored on a remote AWS S3 bucket. For information about remote file hosting, please visit the [Hosting Data](http://vitessce.io/docs/data-hosting/) page of the main Vitessce documentation website.
 
-To get started with this example, install the dependencies:
-
-```r
-install.packages("devtools")
-devtools::install_github("vitessce/vitessce-r")
-```
-
-Next, configure the Vitessce widget. 
+## Configure the Vitessce widget
 
 Add JSON files to the dataset using the `add_file` function. The `add_file` function returns the updated dataset, allowing the function calls to be chained.
 
@@ -69,9 +63,17 @@ vc$layout(hconcat(
   vconcat(scatterplot_tsne, scatterplot_pca),
   vconcat(gene_list, cell_sets)
 ))
+```
 
+```{r eval = FALSE, echo = TRUE}
 # Render the Vitessce widget
 vc$widget(theme = "light", width = "100%")
+```
+
+```{r eval = TRUE, echo = FALSE}
+if(knitr::opts_knit$get("rmarkdown.pandoc.to") == "html") {
+  vc$widget(theme = "light", width = "100%")
+}
 ```
 
 

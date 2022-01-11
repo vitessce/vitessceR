@@ -9,29 +9,58 @@ vignette: >
 
 The following is an example of usage of the widget with a [Seurat](https://satijalab.org/seurat/) object loaded from the [SeuratData](https://github.com/satijalab/seurat-data) package.
 
-First, install the dependencies:
+
+First, install the R dependencies:
 
 ```r
+install.packages("seurat")
 install.packages("devtools")
-devtools::install_github("vitessce/vitessce-r")
-devtools::install_github('satijalab/seurat-data')
+devtools::install_github("satijalab/seurat-data")
+devtools::install_github("mojaveazure/seurat-disk")
 ```
 
-Load the dataset, create the Vitessce configuration `vc`, and render the widget by calling `vc$widget()`:
+Download the dataset, load and preprocess the Seurat object, and configure the Vitessce widget:
 
 ```r
 library(vitessce)
 library(SeuratData)
+library(Seurat)
 
 SeuratData::InstallData("pbmc3k")
 data("pbmc3k.final")
 force(pbmc3k.final)
 
+all.genes <- rownames(pbmc3k.final)
+pbmc3k.final <- ScaleData(pbmc3k.final, features = all.genes, do.center = FALSE)
+
 vc <- VitessceConfig$new("My config")
 dataset <- vc$add_dataset("My dataset")
-dataset <- dataset$add_object(SeuratWrapper$new(pbmc3k.final))
-scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
-vc$layout(scatterplot)
+dataset <- dataset$add_object(SeuratWrapper$new(
+  pbmc3k.final,
+  cell_embeddings = c("pca", "umap"),
+  cell_embedding_names = c("PCA", "UMAP"),
+  cell_set_metas = c("seurat_annotations", "seurat_clusters"),
+  out_dir = file.path("data", "seuratdata")
+))
+scatterplot_pca <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
+scatterplot_umap <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "UMAP")
+cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
+genes <- vc$add_view(dataset, Component$GENES)
+heatmap <- vc$add_view(dataset, Component$HEATMAP)
+vc$link_views(
+  list(scatterplot_pca, scatterplot_umap, heatmap),
+  list(CoordinationType$GENE_EXPRESSION_COLORMAP_RANGE),
+  list(c(0.0, 0.035))
+)
+vc$link_views(
+  list(scatterplot_pca, scatterplot_umap),
+  list("embeddingCellSetLabelsVisible"),
+  list(TRUE)
+)
+vc$layout(vconcat(
+  hconcat(scatterplot_pca, scatterplot_umap),
+  hconcat(cell_sets, genes, heatmap)
+))
 vc$widget(theme = "light")
 ```
 

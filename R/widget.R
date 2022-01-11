@@ -19,6 +19,7 @@
 #' By default, creates a localhost URL which includes the port.
 #' @param serve Should local data be served by running a local web server with R plumber? By default, TRUE.
 #' @param element_id An element ID. Optional.
+#' @return The htmlwidget.
 #'
 #' @export
 #'
@@ -45,7 +46,12 @@ vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL,
   if(length(routes) > 0 && serve) {
     # run in a background process
     future::plan(future::multisession)
-    future::future(server$run())
+    f <- future::future(server$run())
+    on.exit({
+      try({
+        stop_future(f)
+      }, silent = TRUE)
+    })
   }
 
   # forward widget options to javascript
@@ -78,6 +84,7 @@ vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL,
 #' @param env The environment in which to evaluate \code{expr}.
 #' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
 #'   is useful if you want to save an expression in a variable.
+#' @return The Shiny UI element.
 #'
 #' @rdname vitessce-shiny
 #' @export
@@ -86,6 +93,7 @@ vitessce_output <- function(output_id, width = '100%', height = '400px'){
 }
 
 #' @name vitessce-shiny
+#' @return The Shiny server output.
 #' @export
 render_vitessce <- function(expr, env = parent.frame(), quoted = FALSE) {
   if (!quoted) { expr <- substitute(expr) } # force quoted
