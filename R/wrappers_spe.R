@@ -78,7 +78,7 @@ SPEWrapper <- R6::R6Class("SPEWrapper",
     initialize = function(obj, sample_id = NA, image_id = NA, cell_embeddings = NA, cell_embedding_names = NA, cell_embedding_dims = NA, cell_set_metas = NA, cell_set_meta_names = NA, cell_set_meta_scores = NA, ...) {
       super$initialize(...)
       self$obj <- obj
-      if(is_na(sample_id) && is_na(image_id)) {
+      if(!is.null(obj) && is_na(sample_id) && is_na(image_id)) {
         img_df <- SpatialExperiment::imgData(obj)
         if(nrow(img_df) >= 1) {
           warning("sample_id and image_id not provided, using first image in imgData")
