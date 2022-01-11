@@ -87,7 +87,7 @@ vc <- VitessceConfig$new("My config")
 dataset <- vc$add_dataset("My dataset")
 description <- vc$add_view(dataset, Component$DESCRIPTION)
 vc$layout(description)
-vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./my_exported_files")
+vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./data")
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -442,7 +442,7 @@ The Vitessce configuration as a list, with the \code{base_url} filled in.
 dataset <- vc$add_dataset("My dataset")
 description <- vc$add_view(dataset, Component$DESCRIPTION)
 vc$layout(description)
-vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./my_exported_files")
+vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./data")
 }
 \if{html}{\out{</div>}}
 

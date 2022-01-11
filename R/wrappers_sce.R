@@ -83,10 +83,6 @@ SCEWrapper <- R6::R6Class("SCEWrapper",
     #' @return Success or failure.
     check_obj = function() {
       success <- TRUE
-      if(is.null(self$obj)) {
-        warning("Object is NULL.")
-        return(FALSE)
-      }
       if(!methods::is(self$obj, "SingleCellExperiment")) {
         warning("Object is not of type SingleCellExperiment.")
         success <- FALSE

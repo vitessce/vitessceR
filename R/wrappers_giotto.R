@@ -84,10 +84,6 @@ GiottoWrapper <- R6::R6Class("GiottoWrapper",
     #' @return Success or failure.
     check_obj = function() {
       success <- TRUE
-      if(is.null(self$obj)) {
-        warning("Object is NULL.")
-        return(FALSE)
-      }
       if(!methods::is(self$obj, "giotto")) {
         warning("Object is not of type giotto.")
         success <- FALSE

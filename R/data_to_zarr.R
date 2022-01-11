@@ -140,7 +140,7 @@ spe_to_anndata_zarr <- function(spe_obj, out_path) {
 #' @export
 #' @examples
 #' obj <- get_spe_obj()
-#' spe_to_ome_zarr(obj, "sample01", "image01", "data/spe_image.zarr")
+#' spe_to_ome_zarr(obj, "sample1", "image1", "data/spe_image.zarr")
 #' @importFrom SpatialExperiment getImg
 #' @importFrom grDevices as.raster col2rgb
 spe_to_ome_zarr <- function(spe_obj, sample_id, image_id, out_path) {

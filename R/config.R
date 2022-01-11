@@ -641,7 +641,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' dataset <- vc$add_dataset("My dataset")
     #' description <- vc$add_view(dataset, Component$DESCRIPTION)
     #' vc$layout(description)
-    #' vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./my_exported_files")
+    #' vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./data")
     export = function(to = "files", with_config = FALSE, base_url = NA, ...) {
       vc_list <- NA
       if(to == "files") {
