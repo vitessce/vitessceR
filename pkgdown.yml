@@ -20,7 +20,7 @@ articles:
   spatial_experiment: spatial_experiment.html
   json_remote: web_only/json_remote.html
   ome_tiff_remote: web_only/ome_tiff_remote.html
-last_built: 2022-01-12T00:55Z
+last_built: 2022-01-12T01:01Z
 urls:
   reference: https://vitessce.github.io/vitessce-r/reference
   article: https://vitessce.github.io/vitessce-r/articles
