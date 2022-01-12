@@ -4,9 +4,6 @@
     <loc>https://vitessce.github.io/vitessce-r/404.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/CHANGELOG.html</loc>
-  </url>
-  <url>
     <loc>https://vitessce.github.io/vitessce-r/LICENSE-text.html</loc>
   </url>
   <url>
@@ -25,22 +22,19 @@
     <loc>https://vitessce.github.io/vitessce-r/articles/export_files.html</loc>
   </url>
   <url>
+    <loc>https://vitessce.github.io/vitessce-r/articles/giotto.html</loc>
+  </url>
+  <url>
     <loc>https://vitessce.github.io/vitessce-r/articles/index.html</loc>
   </url>
   <url>
     <loc>https://vitessce.github.io/vitessce-r/articles/json_local.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/json_remote.html</loc>
-  </url>
-  <url>
     <loc>https://vitessce.github.io/vitessce-r/articles/local_data_overview.html</loc>
   </url>
   <url>
     <loc>https://vitessce.github.io/vitessce-r/articles/ome_tiff_local.html</loc>
-  </url>
-  <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/ome_tiff_remote.html</loc>
   </url>
   <url>
     <loc>https://vitessce.github.io/vitessce-r/articles/pkgdown.html</loc>
@@ -61,10 +55,25 @@
     <loc>https://vitessce.github.io/vitessce-r/articles/shiny.html</loc>
   </url>
   <url>
+    <loc>https://vitessce.github.io/vitessce-r/articles/single_cell_experiment.html</loc>
+  </url>
+  <url>
+    <loc>https://vitessce.github.io/vitessce-r/articles/spatial_experiment.html</loc>
+  </url>
+  <url>
+    <loc>https://vitessce.github.io/vitessce-r/articles/web_only/json_remote.html</loc>
+  </url>
+  <url>
+    <loc>https://vitessce.github.io/vitessce-r/articles/web_only/ome_tiff_remote.html</loc>
+  </url>
+  <url>
     <loc>https://vitessce.github.io/vitessce-r/authors.html</loc>
   </url>
   <url>
     <loc>https://vitessce.github.io/vitessce-r/index.html</loc>
+  </url>
+  <url>
+    <loc>https://vitessce.github.io/vitessce-r/news/index.html</loc>
   </url>
   <url>
     <loc>https://vitessce.github.io/vitessce-r/reference/AbstractWrapper.html</loc>
@@ -82,10 +91,19 @@
     <loc>https://vitessce.github.io/vitessce-r/reference/FileType.html</loc>
   </url>
   <url>
+    <loc>https://vitessce.github.io/vitessce-r/reference/GiottoWrapper.html</loc>
+  </url>
+  <url>
     <loc>https://vitessce.github.io/vitessce-r/reference/MultiImageWrapper.html</loc>
   </url>
   <url>
     <loc>https://vitessce.github.io/vitessce-r/reference/OmeTiffWrapper.html</loc>
+  </url>
+  <url>
+    <loc>https://vitessce.github.io/vitessce-r/reference/SCEWrapper.html</loc>
+  </url>
+  <url>
+    <loc>https://vitessce.github.io/vitessce-r/reference/SPEWrapper.html</loc>
   </url>
   <url>
     <loc>https://vitessce.github.io/vitessce-r/reference/SeuratWrapper.html</loc>
@@ -130,7 +148,22 @@
     <loc>https://vitessce.github.io/vitessce-r/reference/export_to_files.html</loc>
   </url>
   <url>
+    <loc>https://vitessce.github.io/vitessce-r/reference/get_giotto_obj.html</loc>
+  </url>
+  <url>
     <loc>https://vitessce.github.io/vitessce-r/reference/get_next_scope.html</loc>
+  </url>
+  <url>
+    <loc>https://vitessce.github.io/vitessce-r/reference/get_sce_obj.html</loc>
+  </url>
+  <url>
+    <loc>https://vitessce.github.io/vitessce-r/reference/get_seurat_obj.html</loc>
+  </url>
+  <url>
+    <loc>https://vitessce.github.io/vitessce-r/reference/get_spe_obj.html</loc>
+  </url>
+  <url>
+    <loc>https://vitessce.github.io/vitessce-r/reference/giotto_to_anndata_zarr.html</loc>
   </url>
   <url>
     <loc>https://vitessce.github.io/vitessce-r/reference/hconcat.html</loc>
@@ -139,7 +172,28 @@
     <loc>https://vitessce.github.io/vitessce-r/reference/index.html</loc>
   </url>
   <url>
+    <loc>https://vitessce.github.io/vitessce-r/reference/is_na.html</loc>
+  </url>
+  <url>
     <loc>https://vitessce.github.io/vitessce-r/reference/obj_list.html</loc>
+  </url>
+  <url>
+    <loc>https://vitessce.github.io/vitessce-r/reference/py_env.html</loc>
+  </url>
+  <url>
+    <loc>https://vitessce.github.io/vitessce-r/reference/sce_to_anndata_zarr.html</loc>
+  </url>
+  <url>
+    <loc>https://vitessce.github.io/vitessce-r/reference/seurat_to_anndata_zarr.html</loc>
+  </url>
+  <url>
+    <loc>https://vitessce.github.io/vitessce-r/reference/spe_to_anndata_zarr.html</loc>
+  </url>
+  <url>
+    <loc>https://vitessce.github.io/vitessce-r/reference/spe_to_ome_zarr.html</loc>
+  </url>
+  <url>
+    <loc>https://vitessce.github.io/vitessce-r/reference/stop_future.html</loc>
   </url>
   <url>
     <loc>https://vitessce.github.io/vitessce-r/reference/vconcat.html</loc>

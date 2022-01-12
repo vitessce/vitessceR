@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">vitessce</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9008</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,14 +25,16 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-examples">Examples</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-examples">
     <h6 class="dropdown-header" data-toc-skip>Examples with Remote Data</h6>
-    <a class="dropdown-item" href="../articles/ome_tiff_remote.html">Usage with OME-TIFF: Remote Example</a>
-    <a class="dropdown-item" href="../articles/json_remote.html">Usage with JSON: Remote Example</a>
+    <a class="dropdown-item" href="../articles/web_only/ome_tiff_remote.html">Usage with OME-TIFF: Remote Example</a>
+    <a class="dropdown-item" href="../articles/web_only/json_remote.html">Usage with JSON: Remote Example</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Examples with Local Data</h6>
     <a class="dropdown-item" href="../articles/local_data_overview.html">Overview: Using the widget with local data</a>
     <a class="dropdown-item" href="../articles/seuratdata.html">Usage with SeuratData</a>
     <a class="dropdown-item" href="../articles/seurat_basic.html">Usage with Seurat: Basic Example</a>
     <a class="dropdown-item" href="../articles/seurat_azimuth.html">Usage with Seurat: Reference Mapping</a>
+    <a class="dropdown-item" href="../articles/single_cell_experiment.html">Usage with SingleCellExperiment</a>
+    <a class="dropdown-item" href="../articles/spatial_experiment.html">Usage with SpatialExperiment</a>
     <a class="dropdown-item" href="../articles/ome_tiff_local.html">Usage with OME-TIFF: Local Example</a>
     <a class="dropdown-item" href="../articles/json_local.html">Usage with JSON: Local Example</a>
     <div class="dropdown-divider"></div>
@@ -82,14 +84,7 @@
     <p>Class representing a dataset in a Vitessce view config.</p>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    </div>
 
-    <div class="section level2">
-    <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A <code>list</code> of <code>VitessceConfigServerStaticRoute</code>.</p>
-    </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
     <p>Dataset in a VitessceConfig</p>
@@ -174,6 +169,17 @@
 <h4 id="returns-1">Returns<a class="anchor" aria-label="anchor" href="#returns-1"></a></h4>
 <p>Invisible self, to allow chaining.</p>
 </div>
+<div class="section">
+<h4 id="examples">Examples<a class="anchor" aria-label="anchor" href="#examples"></a></h4>
+<p></p><div class="r example copy"><div class="sourceCode"><pre><code><span class="va">base_url</span> <span class="op">&lt;-</span> <span class="st">"http://localhost:8000/"</span>
+<span class="va">vc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/VitessceConfig.html">VitessceConfig</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"My config"</span><span class="op">)</span>
+<span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_dataset</span><span class="op">(</span><span class="st">"My dataset"</span><span class="op">)</span><span class="op">$</span><span class="fu">add_file</span><span class="op">(</span>
+  url <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">base_url</span>, <span class="st">"cells.json"</span><span class="op">)</span>,
+  data_type <span class="op">=</span> <span class="va">DataType</span><span class="op">$</span><span class="va">CELLS</span>,
+  file_type <span class="op">=</span> <span class="va">FileType</span><span class="op">$</span><span class="va">CELLS_JSON</span>
+<span class="op">)</span></code></pre></div><p></p></div>
+</div>
+
 
 </div><p></p><hr><a id="method-add_object"></a><div class="section">
 <h3 id="method-add-object-">Method <code>add_object()</code><a class="anchor" aria-label="anchor" href="#method-add-object-"></a></h3>
@@ -202,6 +208,10 @@
 <p></p><div class="r"><div class="sourceCode"><pre><code><span class="va">VitessceConfigDataset</span><span class="op">$</span><span class="fu">get_routes</span><span class="op">(</span><span class="op">)</span></code></pre></div><p></p></div>
 </div>
 
+<div class="section">
+<h4 id="returns-3">Returns<a class="anchor" aria-label="anchor" href="#returns-3"></a></h4>
+<p>A <code>list</code> of <code>VitessceConfigServerStaticRoute</code>.</p>
+</div>
 
 </div><p></p><hr><a id="method-to_list"></a><div class="section">
 <h3 id="method-to-list-">Method <code>to_list()</code><a class="anchor" aria-label="anchor" href="#method-to-list-"></a></h3>
@@ -219,7 +229,7 @@
 </dl><p></p></div>
 </div>
 <div class="section">
-<h4 id="returns-3">Returns<a class="anchor" aria-label="anchor" href="#returns-3"></a></h4>
+<h4 id="returns-4">Returns<a class="anchor" aria-label="anchor" href="#returns-4"></a></h4>
 <p>A <code>list</code> that can be serialized to JSON using <code>rjson</code>.</p>
 </div>
 
@@ -243,16 +253,32 @@
 
     </div>
 
+    <div class="section level2">
+    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
+<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
+<span class="r-in"><span class="co">## Method `VitessceConfigDataset$add_file`</span></span>
+<span class="r-in"><span class="co">## ------------------------------------------------</span></span>
+<span class="r-in"></span>
+<span class="r-in"><span class="va">base_url</span> <span class="op">&lt;-</span> <span class="st">"http://localhost:8000/"</span></span>
+<span class="r-in"><span class="va">vc</span> <span class="op">&lt;-</span> <span class="va"><a href="VitessceConfig.html">VitessceConfig</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"My config"</span><span class="op">)</span></span>
+<span class="r-in"><span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_dataset</span><span class="op">(</span><span class="st">"My dataset"</span><span class="op">)</span><span class="op">$</span><span class="fu">add_file</span><span class="op">(</span></span>
+<span class="r-in">  url <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="va">base_url</span>, <span class="st">"cells.json"</span><span class="op">)</span>,</span>
+<span class="r-in">  data_type <span class="op">=</span> <span class="va">DataType</span><span class="op">$</span><span class="va">CELLS</span>,</span>
+<span class="r-in">  file_type <span class="op">=</span> <span class="va">FileType</span><span class="op">$</span><span class="va">CELLS_JSON</span></span>
+<span class="r-in"><span class="op">)</span></span>
+</code></pre></div>
+    </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="http://gehlenborglab.org/" class="external-link">Gehlenborg Lab</a>, <a href="https://github.com/keller-mark" class="external-link">Mark Keller</a>.</p>
+  <p></p><p>Developed by the Gehlenborg Lab</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
     </footer></div>

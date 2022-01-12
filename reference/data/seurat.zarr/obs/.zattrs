@@ -1,0 +1,11 @@
+{
+    "_index": "_index",
+    "column-order": [
+        "orig.ident",
+        "nCount_RNA",
+        "nFeature_RNA",
+        "cluster_id"
+    ],
+    "encoding-type": "dataframe",
+    "encoding-version": "0.1.0"
+}

@@ -28,7 +28,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">vitessce</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9008</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,14 +44,16 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-examples">Examples</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-examples">
     <h6 class="dropdown-header" data-toc-skip>Examples with Remote Data</h6>
-    <a class="dropdown-item" href="../articles/ome_tiff_remote.html">Usage with OME-TIFF: Remote Example</a>
-    <a class="dropdown-item" href="../articles/json_remote.html">Usage with JSON: Remote Example</a>
+    <a class="dropdown-item" href="../articles/web_only/ome_tiff_remote.html">Usage with OME-TIFF: Remote Example</a>
+    <a class="dropdown-item" href="../articles/web_only/json_remote.html">Usage with JSON: Remote Example</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Examples with Local Data</h6>
     <a class="dropdown-item" href="../articles/local_data_overview.html">Overview: Using the widget with local data</a>
     <a class="dropdown-item" href="../articles/seuratdata.html">Usage with SeuratData</a>
     <a class="dropdown-item" href="../articles/seurat_basic.html">Usage with Seurat: Basic Example</a>
     <a class="dropdown-item" href="../articles/seurat_azimuth.html">Usage with Seurat: Reference Mapping</a>
+    <a class="dropdown-item" href="../articles/single_cell_experiment.html">Usage with SingleCellExperiment</a>
+    <a class="dropdown-item" href="../articles/spatial_experiment.html">Usage with SpatialExperiment</a>
     <a class="dropdown-item" href="../articles/ome_tiff_local.html">Usage with OME-TIFF: Local Example</a>
     <a class="dropdown-item" href="../articles/json_local.html">Usage with JSON: Local Example</a>
     <div class="dropdown-divider"></div>
@@ -111,8 +113,7 @@
 <div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"shiny"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"devtools"</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"vitessce/vitessce-r"</span><span class="op">)</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">'satijalab/seurat-data'</span><span class="op">)</span></code></pre></div>
+<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"satijalab/seurat-data"</span><span class="op">)</span></code></pre></div>
 <p>Next, create an output element in the UI with <code>vitessce_output</code> and a corresponding server response with <code>render_vitessce</code>.</p>
 <p>The value for the <code>output_id</code> parameter in the <code>vitessce_output</code> function should match the key for the result of <code>render_vitessce</code> in the server.</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
@@ -126,7 +127,7 @@
 
 <span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span>
   <span class="st">"Vitessce in a Shiny app"</span>,
-  <span class="fu"><a href="../reference/vitessce-shiny.html">vitessce_output</a></span><span class="op">(</span>output_id <span class="op">=</span> <span class="st">'vitessce_visualization'</span>, height <span class="op">=</span> <span class="st">"600px"</span><span class="op">)</span>,
+  <span class="fu"><a href="../reference/vitessce-shiny.html">vitessce_output</a></span><span class="op">(</span>output_id <span class="op">=</span> <span class="st">"vitessce_visualization"</span>, height <span class="op">=</span> <span class="st">"600px"</span><span class="op">)</span>,
 <span class="op">)</span>
 
 <span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span>
@@ -236,12 +237,12 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by <a href="http://gehlenborglab.org/" class="external-link">Gehlenborg Lab</a>, <a href="https://github.com/keller-mark" class="external-link">Mark Keller</a>.</p>
+<p>Developed by the Gehlenborg Lab</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
     </footer>

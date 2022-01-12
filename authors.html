@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="index.html">vitessce</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9008</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,14 +25,16 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-examples">Examples</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-examples">
     <h6 class="dropdown-header" data-toc-skip>Examples with Remote Data</h6>
-    <a class="dropdown-item" href="articles/ome_tiff_remote.html">Usage with OME-TIFF: Remote Example</a>
-    <a class="dropdown-item" href="articles/json_remote.html">Usage with JSON: Remote Example</a>
+    <a class="dropdown-item" href="articles/web_only/ome_tiff_remote.html">Usage with OME-TIFF: Remote Example</a>
+    <a class="dropdown-item" href="articles/web_only/json_remote.html">Usage with JSON: Remote Example</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Examples with Local Data</h6>
     <a class="dropdown-item" href="articles/local_data_overview.html">Overview: Using the widget with local data</a>
     <a class="dropdown-item" href="articles/seuratdata.html">Usage with SeuratData</a>
     <a class="dropdown-item" href="articles/seurat_basic.html">Usage with Seurat: Basic Example</a>
     <a class="dropdown-item" href="articles/seurat_azimuth.html">Usage with Seurat: Reference Mapping</a>
+    <a class="dropdown-item" href="articles/single_cell_experiment.html">Usage with SingleCellExperiment</a>
+    <a class="dropdown-item" href="articles/spatial_experiment.html">Usage with SpatialExperiment</a>
     <a class="dropdown-item" href="articles/ome_tiff_local.html">Usage with OME-TIFF: Local Example</a>
     <a class="dropdown-item" href="articles/json_local.html">Usage with JSON: Local Example</a>
     <div class="dropdown-divider"></div>
@@ -80,11 +82,7 @@
       <h2>Authors</h2>
       
       <ul class="list-unstyled"><li>
-          <p><strong><a href="http://gehlenborglab.org/" class="external-link">Gehlenborg Lab</a></strong>. Laboratory, author. 
-          </p>
-        </li>
-        <li>
-          <p><strong><a href="https://github.com/keller-mark" class="external-link">Mark Keller</a></strong>. Maintainer, author. 
+          <p><strong><a href="https://github.com/keller-mark" class="external-link">Mark Keller</a></strong>. Maintainer, author. <a href="https://orcid.org/0000-0003-3003-874X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a>
           </p>
         </li>
       </ul></div>
@@ -93,15 +91,15 @@
       <h2 id="citation">Citation</h2>
       <p><small class="dont-index">Source: <a href="https://github.com/vitessce/vitessce-r/blob/HEAD/DESCRIPTION" class="external-link"><code>DESCRIPTION</code></a></small></p>
 
-      <p>Gehlenborg Lab, Keller M (2021).
+      <p>Keller M (2022).
 <em>vitessce: Create Interactive Single-cell Visualizations with the 'Vitessce' JavaScript Library</em>.
-R package version 0.0.0.9007, <a href="https://github.com/vitessce/vitessce-r" class="external-link">https://github.com/vitessce/vitessce-r</a>. 
+R package version 0.0.0.9008, <a href="https://github.com/vitessce/vitessce-r" class="external-link">https://github.com/vitessce/vitessce-r</a>. 
 </p>
       <pre>@Manual{,
   title = {vitessce: Create Interactive Single-cell Visualizations with the 'Vitessce' JavaScript Library},
-  author = {{Gehlenborg Lab} and Mark Keller},
-  year = {2021},
-  note = {R package version 0.0.0.9007},
+  author = {Mark Keller},
+  year = {2022},
+  note = {R package version 0.0.0.9008},
   url = {https://github.com/vitessce/vitessce-r},
 }</pre>
     </div>
@@ -110,11 +108,11 @@ R package version 0.0.0.9007, <a href="https://github.com/vitessce/vitessce-r" c
 
 
     <footer><div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="http://gehlenborglab.org/" class="external-link">Gehlenborg Lab</a>, <a href="https://github.com/keller-mark" class="external-link">Mark Keller</a>.</p>
+  <p></p><p>Developed by the Gehlenborg Lab</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
     </footer></div>

@@ -28,7 +28,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">vitessce</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9008</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,14 +44,16 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-examples">Examples</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-examples">
     <h6 class="dropdown-header" data-toc-skip>Examples with Remote Data</h6>
-    <a class="dropdown-item" href="../articles/ome_tiff_remote.html">Usage with OME-TIFF: Remote Example</a>
-    <a class="dropdown-item" href="../articles/json_remote.html">Usage with JSON: Remote Example</a>
+    <a class="dropdown-item" href="../articles/web_only/ome_tiff_remote.html">Usage with OME-TIFF: Remote Example</a>
+    <a class="dropdown-item" href="../articles/web_only/json_remote.html">Usage with JSON: Remote Example</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Examples with Local Data</h6>
     <a class="dropdown-item" href="../articles/local_data_overview.html">Overview: Using the widget with local data</a>
     <a class="dropdown-item" href="../articles/seuratdata.html">Usage with SeuratData</a>
     <a class="dropdown-item" href="../articles/seurat_basic.html">Usage with Seurat: Basic Example</a>
     <a class="dropdown-item" href="../articles/seurat_azimuth.html">Usage with Seurat: Reference Mapping</a>
+    <a class="dropdown-item" href="../articles/single_cell_experiment.html">Usage with SingleCellExperiment</a>
+    <a class="dropdown-item" href="../articles/spatial_experiment.html">Usage with SpatialExperiment</a>
     <a class="dropdown-item" href="../articles/ome_tiff_local.html">Usage with OME-TIFF: Local Example</a>
     <a class="dropdown-item" href="../articles/json_local.html">Usage with JSON: Local Example</a>
     <div class="dropdown-divider"></div>
@@ -128,18 +130,48 @@
 <span class="co">## [1] stats     graphics  grDevices utils     datasets  methods   base     </span>
 <span class="co">## </span>
 <span class="co">## other attached packages:</span>
-<span class="co">## [1] vitessce_0.0.0.9007</span>
+<span class="co">## [1] vitessce_0.0.0.9008</span>
 <span class="co">## </span>
 <span class="co">## loaded via a namespace (and not attached):</span>
-<span class="co">##  [1] Rcpp_1.0.7        knitr_1.36        magrittr_2.0.1    lattice_0.20-45  </span>
-<span class="co">##  [5] R6_2.5.1          ragg_1.2.0        rlang_0.4.12      fastmap_1.1.0    </span>
-<span class="co">##  [9] stringr_1.4.0     tools_4.1.2       grid_4.1.2        xfun_0.28        </span>
-<span class="co">## [13] png_0.1-7         jquerylib_0.1.4   htmltools_0.5.2   systemfonts_1.0.3</span>
-<span class="co">## [17] yaml_2.2.1        digest_0.6.29     rprojroot_2.0.2   pkgdown_2.0.0    </span>
-<span class="co">## [21] crayon_1.4.2      textshaping_0.3.6 Matrix_1.3-4      purrr_0.3.4      </span>
-<span class="co">## [25] sass_0.4.0        fs_1.5.1          memoise_2.0.1     cachem_1.0.6     </span>
-<span class="co">## [29] evaluate_0.14     rmarkdown_2.11    stringi_1.7.6     compiler_4.1.2   </span>
-<span class="co">## [33] bslib_0.3.1       desc_1.4.0        reticulate_1.22   jsonlite_1.7.2</span></code></pre>
+<span class="co">##  [1] locfit_1.5-9.4              Rcpp_1.0.7                 </span>
+<span class="co">##  [3] lattice_0.20-45             rprojroot_2.0.2            </span>
+<span class="co">##  [5] digest_0.6.29               SingleCellExperiment_1.16.0</span>
+<span class="co">##  [7] R6_2.5.1                    GenomeInfoDb_1.30.0        </span>
+<span class="co">##  [9] stats4_4.1.2                evaluate_0.14              </span>
+<span class="co">## [11] sparseMatrixStats_1.6.0     zlibbioc_1.40.0            </span>
+<span class="co">## [13] rlang_0.4.12                jquerylib_0.1.4            </span>
+<span class="co">## [15] magick_2.7.3                R.oo_1.24.0                </span>
+<span class="co">## [17] S4Vectors_0.32.3            R.utils_2.11.0             </span>
+<span class="co">## [19] Matrix_1.3-4                rmarkdown_2.11             </span>
+<span class="co">## [21] pkgdown_2.0.1               textshaping_0.3.6          </span>
+<span class="co">## [23] desc_1.4.0                  webutils_1.1               </span>
+<span class="co">## [25] BiocParallel_1.28.3         stringr_1.4.0              </span>
+<span class="co">## [27] beachmat_2.10.0             RCurl_1.98-1.5             </span>
+<span class="co">## [29] DelayedArray_0.20.0         HDF5Array_1.22.1           </span>
+<span class="co">## [31] compiler_4.1.2              xfun_0.29                  </span>
+<span class="co">## [33] DropletUtils_1.14.2         systemfonts_1.0.3          </span>
+<span class="co">## [35] BiocGenerics_0.40.0         htmltools_0.5.2            </span>
+<span class="co">## [37] SummarizedExperiment_1.24.0 GenomeInfoDbData_1.2.7     </span>
+<span class="co">## [39] edgeR_3.36.0                IRanges_2.28.0             </span>
+<span class="co">## [41] matrixStats_0.61.0          crayon_1.4.2               </span>
+<span class="co">## [43] later_1.3.0                 bitops_1.0-7               </span>
+<span class="co">## [45] rhdf5filters_1.6.0          R.methodsS3_1.8.1          </span>
+<span class="co">## [47] grid_4.1.2                  jsonlite_1.7.2             </span>
+<span class="co">## [49] lifecycle_1.0.1             magrittr_2.0.1             </span>
+<span class="co">## [51] dqrng_0.3.0                 scuttle_1.4.0              </span>
+<span class="co">## [53] stringi_1.7.6               cachem_1.0.6               </span>
+<span class="co">## [55] plumber_1.1.0               XVector_0.34.0             </span>
+<span class="co">## [57] swagger_3.33.1              fs_1.5.2                   </span>
+<span class="co">## [59] promises_1.2.0.1            SpatialExperiment_1.4.0    </span>
+<span class="co">## [61] limma_3.50.0                bslib_0.3.1                </span>
+<span class="co">## [63] DelayedMatrixStats_1.16.0   ragg_1.2.1                 </span>
+<span class="co">## [65] rjson_0.2.21                Rhdf5lib_1.16.0            </span>
+<span class="co">## [67] tools_4.1.2                 Biobase_2.54.0             </span>
+<span class="co">## [69] purrr_0.3.4                 MatrixGenerics_1.6.0       </span>
+<span class="co">## [71] parallel_4.1.2              fastmap_1.1.0              </span>
+<span class="co">## [73] yaml_2.2.1                  rhdf5_2.38.0               </span>
+<span class="co">## [75] GenomicRanges_1.46.1        memoise_2.0.1              </span>
+<span class="co">## [77] knitr_1.37                  sass_0.4.0</span></code></pre>
   </main>
 </div>
 
@@ -147,12 +179,12 @@
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by <a href="http://gehlenborglab.org/" class="external-link">Gehlenborg Lab</a>, <a href="https://github.com/keller-mark" class="external-link">Mark Keller</a>.</p>
+<p>Developed by the Gehlenborg Lab</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
     </footer>

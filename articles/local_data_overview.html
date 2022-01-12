@@ -28,7 +28,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">vitessce</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9008</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -44,14 +44,16 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-examples">Examples</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-examples">
     <h6 class="dropdown-header" data-toc-skip>Examples with Remote Data</h6>
-    <a class="dropdown-item" href="../articles/ome_tiff_remote.html">Usage with OME-TIFF: Remote Example</a>
-    <a class="dropdown-item" href="../articles/json_remote.html">Usage with JSON: Remote Example</a>
+    <a class="dropdown-item" href="../articles/web_only/ome_tiff_remote.html">Usage with OME-TIFF: Remote Example</a>
+    <a class="dropdown-item" href="../articles/web_only/json_remote.html">Usage with JSON: Remote Example</a>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header" data-toc-skip>Examples with Local Data</h6>
     <a class="dropdown-item" href="../articles/local_data_overview.html">Overview: Using the widget with local data</a>
     <a class="dropdown-item" href="../articles/seuratdata.html">Usage with SeuratData</a>
     <a class="dropdown-item" href="../articles/seurat_basic.html">Usage with Seurat: Basic Example</a>
     <a class="dropdown-item" href="../articles/seurat_azimuth.html">Usage with Seurat: Reference Mapping</a>
+    <a class="dropdown-item" href="../articles/single_cell_experiment.html">Usage with SingleCellExperiment</a>
+    <a class="dropdown-item" href="../articles/spatial_experiment.html">Usage with SpatialExperiment</a>
     <a class="dropdown-item" href="../articles/ome_tiff_local.html">Usage with OME-TIFF: Local Example</a>
     <a class="dropdown-item" href="../articles/json_local.html">Usage with JSON: Local Example</a>
     <div class="dropdown-divider"></div>
@@ -109,23 +111,32 @@
 <p>The main goal of this R package is to enable configuring Vitessce visualizations using R syntax.</p>
 <p>We also aim to simplify the data conversion process by providing <a href="../reference/index.html#dataset-wrapper-classes">dataset wrapper classes</a> that automatically convert common single-cell data structures to <a href="http://vitessce.io/docs/data-types-file-types/" class="external-link">file formats supported by Vitessce</a>.</p>
 <p>Our effort to develop converters for R formats remains ongoing. However, we provide a guide for R developers to <a href="./dev_wrapper_class.html">write data conversion functions</a> to support any type of R single-cell data structure (or to improve conversion for already-supported data structures).</p>
-<p>The following vignettes in the "Examples with Local Data" section demonstrate how the dataset wrapper classes can be used with relatively small single-cell datasets stored on your local machine.</p>
-<p>Please note that due to a <a href="https://github.com/vitessce/vitessce-r/issues/7" class="external-link">lack of native R support for Zarr</a>, the R dataset conversion functions are currently slow and convert to uncompressed JSON files. If you aim to visualize a large dataset (thousands of cells and genes) in Vitessce, we suggest using Zarr.</p>
-<p>In the Vitessce Python package, the <a href="https://vitessce.github.io/vitessce-python/api_data.html#vitessce.wrappers.AnnDataWrapper" class="external-link">AnnDataWrapper</a> class automatically converts AnnData objects to Zarr stores. Alternatively, you may convert your data structure to a Zarr store manually using any <a href="https://github.com/zarr-developers/zarr_implementations" class="external-link">Zarr implementation</a>, and manually <a href="http://vitessce.io/docs/data-file-types/#anndata-as-zarr" class="external-link">specify the Zarr store paths</a> in the Vitessce configuration.</p>
-<p>Feel free to subscribe to the <a href="https://github.com/vitessce/vitessce-r/issues/7" class="external-link">Zarr in R issue</a> for future updates about Zarr support in the Vitessce R package.</p>
-  </main>
+<p>The following vignettes in the "Examples with Local Data" section demonstrate how the dataset wrapper classes can be used with single-cell datasets stored on your local machine.</p>
+<div class="section level2">
+<h2 id="zarr-via-reticulate-via-basilisk">Zarr via Reticulate via Basilisk<a class="anchor" aria-label="anchor" href="#zarr-via-reticulate-via-basilisk"></a>
+</h2>
+<p>Due to a lack of native R support for Zarr, the R dataset conversion functions currently depend on a Python environment.</p>
+<p>We currently use <a href="https://github.com/LTLA/basilisk" class="external-link">basilisk</a> and <a href="https://rstudio.github.io/reticulate/" class="external-link">reticulate</a> to write to Zarr stores via the <code>zarr</code> Python package.</p>
+</div>
+<div class="section level2">
+<h2 id="zarr-natively">Zarr natively<a class="anchor" aria-label="anchor" href="#zarr-natively"></a>
+</h2>
+<p>Subscribe to the <a href="https://github.com/vitessce/vitessce-r/issues/7" class="external-link">Zarr in R issue</a> for future updates about native Zarr support that would avoid the need for the Python environment.</p>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
     <footer><div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by <a href="http://gehlenborglab.org/" class="external-link">Gehlenborg Lab</a>, <a href="https://github.com/keller-mark" class="external-link">Mark Keller</a>.</p>
+<p>Developed by the Gehlenborg Lab</p>
 </div>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.0.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
 </div>
 
     </footer>
