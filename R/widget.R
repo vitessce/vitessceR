@@ -62,18 +62,18 @@ vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL,
 
   # create widget
   htmlwidgets::createWidget(
-    name = 'vitessce',
+    name = 'vitessceR',
     params,
     width = width,
     height = height,
-    package = 'vitessce',
+    package = 'vitessceR',
     elementId = element_id
   )
 }
 
-#' Shiny bindings for vitessce
+#' Shiny bindings for vitessceR
 #'
-#' Output and render functions for using vitessce within Shiny
+#' Output and render functions for using vitessceR within Shiny
 #' applications and interactive Rmd documents.
 #'
 #' @param output_id output variable to read from
@@ -89,7 +89,7 @@ vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL,
 #' @rdname vitessce-shiny
 #' @export
 vitessce_output <- function(output_id, width = '100%', height = '400px'){
-  htmlwidgets::shinyWidgetOutput(output_id, 'vitessce', width, height, package = 'vitessce')
+  htmlwidgets::shinyWidgetOutput(output_id, 'vitessceR', width, height, package = 'vitessceR')
 }
 
 #' @name vitessce-shiny

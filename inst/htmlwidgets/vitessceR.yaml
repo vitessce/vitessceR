@@ -1,5 +1,5 @@
 dependencies:
-  - name: vitessce
+  - name: vitessceR
     version: 0.1.0
     src: htmlwidgets/dist
     script:

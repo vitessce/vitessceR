@@ -24,7 +24,7 @@ devtools::install_github("mojaveazure/seurat-disk")
 Download the dataset and map the query to the reference:
 
 ```r
-library(vitessce)
+library(vitessceR)
 library(Seurat)
 library(Azimuth)
 source("https://raw.githubusercontent.com/satijalab/azimuth/master/R/helpers.R")

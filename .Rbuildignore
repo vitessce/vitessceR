@@ -1,4 +1,5 @@
 ^vitessce\.Rproj$
+^vitessceR\.Rproj$
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^\.BBSoptions$

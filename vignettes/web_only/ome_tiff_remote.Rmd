@@ -12,7 +12,7 @@ The following is an example of usage of the widget to visualize a remote OME-TIF
 First, configure the Vitessce widget:
 
 ```{r echo = TRUE, warning = FALSE}
-library(vitessce)
+library(vitessceR)
 
 # Define the image file options object.
 file_options = obj_list(

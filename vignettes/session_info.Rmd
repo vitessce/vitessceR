@@ -11,6 +11,6 @@ This page runs the `sessionInfo()` function and prints the results.
 The output can be used to check the dependency versions that were used to run tests.
 
 ```{r include=TRUE, echo=TRUE}
-library(vitessce)
+library(vitessceR)
 sessionInfo()
 ```

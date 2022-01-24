@@ -12,13 +12,13 @@ Installation requires R 4.0.0 or greater.
 
 ```r
 install.packages("devtools")
-devtools::install_github("vitessce/vitessce-r")
+devtools::install_github("vitessce/vitessceR")
 ```
 
 ## Usage
 
 ```r
-library(vitessce)
+library(vitessceR)
 
 vc <- VitessceConfig$new()
 vc$widget()
@@ -39,7 +39,7 @@ sed -i'' -e '1s/^/var globalThis = window; /' inst/htmlwidgets/dist/index.js
 ```
 
 ```r
-setwd("path/to/vitessce-r")
+setwd("path/to/vitessceR")
 install.packages("htmlwidgets")
 install.packages("devtools")
 devtools::install()
