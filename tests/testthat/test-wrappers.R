@@ -1,4 +1,4 @@
-library(vitessce)
+library(vitessceR)
 
 test_that("AbstractWrapper get_url", {
   w <- AbstractWrapper$new()

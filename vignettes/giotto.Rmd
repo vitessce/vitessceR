@@ -121,7 +121,7 @@ SS_seqfish <- runtSNE(SS_seqfish, dimensions_to_use = 1:15)
 Set up the Vitessce widget:
 
 ```r
-library(vitessce)
+library(vitessceR)
 
 w <- GiottoWrapper$new(
   SS_seqfish,

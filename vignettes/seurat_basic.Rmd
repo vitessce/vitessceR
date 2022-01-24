@@ -22,7 +22,7 @@ devtools::install_github("mojaveazure/seurat-disk")
 Download the dataset, load and preprocess the Seurat object, and configure the Vitessce widget:
 
 ```r
-library(vitessce)
+library(vitessceR)
 library(Seurat)
 
 # Download example dataset

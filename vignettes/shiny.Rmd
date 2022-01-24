@@ -22,7 +22,7 @@ The value for the `output_id` parameter in the `vitessce_output` function should
 
 ```r
 library(shiny)
-library(vitessce)
+library(vitessceR)
 library(SeuratData)
 
 SeuratData::InstallData("pbmc3k")
@@ -66,7 +66,7 @@ The following example demonstrates swapping out the Vitessce widget's built-in s
 
 ```r
 library(shiny)
-library(vitessce)
+library(vitessceR)
 library(SeuratData)
 
 SeuratData::InstallData("pbmc3k")
@@ -114,7 +114,7 @@ One solution is add CSS to reset the font sizes for the root element of the Shin
 
 ```r
 library(shiny)
-library(vitessce)
+library(vitessceR)
 library(SeuratData)
 
 SeuratData::InstallData("pbmc3k")

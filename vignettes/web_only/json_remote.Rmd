@@ -15,7 +15,7 @@ The following is an example of usage of the widget with JSON files. In this exam
 Add JSON files to the dataset using the `add_file` function. The `add_file` function returns the updated dataset, allowing the function calls to be chained.
 
 ```{r echo = TRUE, warning = FALSE}
-library(vitessce)
+library(vitessceR)
 
 base_url <- "https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/"
 

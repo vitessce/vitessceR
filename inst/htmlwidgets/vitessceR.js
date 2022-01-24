@@ -1,5 +1,5 @@
 HTMLWidgets.widget({
-  name: 'vitessce',
+  name: 'vitessceR',
   type: 'output',
   factory: function(el, width, height) {
     // TODO: define shared variables for this instance

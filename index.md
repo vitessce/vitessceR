@@ -3,7 +3,7 @@ Vitessce is a visual integration tool for exploration of spatial single-cell exp
 
 ## Getting Started
 
-The ``vitessce`` R package includes:
+The ``vitessceR`` package includes:
 
 * **Vitessce as an htmlwidget**
 
@@ -24,7 +24,7 @@ Installation requires R 4.0.0 or greater.
 
 ```r
 install.packages("devtools")
-devtools::install_github("vitessce/vitessce-r")
+devtools::install_github("vitessce/vitessceR")
 ```
 
 ## Examples
@@ -32,7 +32,7 @@ devtools::install_github("vitessce/vitessce-r")
 The simplest way to instantiate a Vitessce widget is to create a view config based on a single-cell dataset object and call the `widget` function on the view config instance:
 
 ```r
-library(vitessce)
+library(vitessceR)
 
 # Create Vitessce view config
 vc <- VitessceConfig$new("My config")

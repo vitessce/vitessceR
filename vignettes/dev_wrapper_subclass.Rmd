@@ -12,7 +12,7 @@ The existing data object wrapper classes are not yet very flexible, but they can
 Here, we extend the `SeuratWrapper` class so that it supports multiple cell sets, to deal with the fact that the Seurat [`FindClusters`](https://satijalab.org/seurat/reference/findclusters) overwrites its results each time.
 
 ```r
-library(vitessce)
+library(vitessceR)
 
 #' Subclass of SeuratWrapper to deal with cell sets.
 #' @title MyCustomSeuratWrapper Class
