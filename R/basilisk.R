@@ -8,7 +8,7 @@
 #' @keywords internal
 py_env <- basilisk::BasiliskEnvironment(
   envname="vitessce_basilisk_env",
-  pkgname="vitessce",
+  pkgname="vitessceR",
   packages=c(
     "numpy==1.20.2",
     "pandas==1.2.4",

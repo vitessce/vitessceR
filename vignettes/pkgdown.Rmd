@@ -19,7 +19,7 @@ The Vitessce widget can be embedded in a static website built with pkgdown. In f
 To render a Vitessce widget into a pkgdown article, set the [chunk options](https://r4ds.had.co.nz/r-markdown.html#chunk-options) at the top of the code block such that output is rendered, and execute the widget function in the final line of the code block.
 
     `r chunk`{r echo = TRUE}
-    library(vitessce)
+    library(vitessceR)
     
     vc <- VitessceConfig$new("My config")
     

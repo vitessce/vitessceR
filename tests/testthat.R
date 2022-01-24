@@ -1,4 +1,4 @@
 library(testthat)
-library(vitessce)
+library(vitessceR)
 
-test_check("vitessce")
+test_check("vitessceR")

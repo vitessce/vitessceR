@@ -1,12 +1,12 @@
-Package: vitessce
+Package: vitessceR
 Type: Package
 Title: Create Interactive Single-cell Visualizations with the 'Vitessce' JavaScript Library
-Version: 0.0.0.9008
+Version: 0.99.0
 Authors@R: c(
     person(
       given = "Mark",
       family = "Keller",
-      email = "mark_keller+vitessce_r@g.harvard.edu",
+      email = "mark_keller@g.harvard.edu",
       role = c("cre", "aut"),
       comment = c(ORCID = "0000-0003-3003-874X")
     )
@@ -21,8 +21,8 @@ Description:
   apps.
 biocViews: SingleCell, Spatial, Visualization, ShinyApps
 License: MIT + file LICENSE
-BugReports: https://github.com/vitessce/vitessce-r/issues
-URL: https://github.com/vitessce/vitessce-r
+BugReports: https://github.com/vitessce/vitessceR/issues
+URL: https://github.com/vitessce/vitessceR
 Encoding: UTF-8
 Language: en-US
 StagedInstall: no
@@ -54,6 +54,7 @@ Imports:
 Suggests: 
     testthat,
     knitr,
+    covr,
     bslib,
     pkgdown,
     rmarkdown,

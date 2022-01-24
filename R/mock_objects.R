@@ -96,8 +96,8 @@ get_giotto_obj <- function() {
     stop("Install 'Giotto' to enable creation of Giotto objects.")
   }
 
-  expr_path <- system.file("extdata", "giotto", "visium_DG_expr.txt", package = "vitessce")
-  loc_path <- system.file("extdata", "giotto", "visium_DG_locs.txt", package = "vitessce")
+  expr_path <- system.file("extdata", "giotto", "visium_DG_expr.txt", package = "vitessceR")
+  loc_path <- system.file("extdata", "giotto", "visium_DG_locs.txt", package = "vitessceR")
 
   obj <- Giotto::createGiottoObject(raw_exprs = expr_path, spatial_locs = loc_path)
 

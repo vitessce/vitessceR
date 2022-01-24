@@ -12,7 +12,7 @@ OME-TIFF object wrapper class
 }
 \keyword{internal}
 \section{Super class}{
-\code{\link[vitessce:AbstractWrapper]{vitessce::AbstractWrapper}} -> \code{OmeTiffWrapper}
+\code{\link[vitessceR:AbstractWrapper]{vitessceR::AbstractWrapper}} -> \code{OmeTiffWrapper}
 }
 \section{Public fields}{
 \if{html}{\out{<div class="r6-fields">}}
@@ -46,13 +46,13 @@ this image (see http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-ma
 \if{html}{
 \out{<details ><summary>Inherited methods</summary>}
 \itemize{
-\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="auto_view_config">}\href{../../vitessce/html/AbstractWrapper.html#method-auto_view_config}{\code{vitessce::AbstractWrapper$auto_view_config()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_file_defs">}\href{../../vitessce/html/AbstractWrapper.html#method-get_file_defs}{\code{vitessce::AbstractWrapper$get_file_defs()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_out_dir">}\href{../../vitessce/html/AbstractWrapper.html#method-get_out_dir}{\code{vitessce::AbstractWrapper$get_out_dir()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_out_dir_route">}\href{../../vitessce/html/AbstractWrapper.html#method-get_out_dir_route}{\code{vitessce::AbstractWrapper$get_out_dir_route()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_route_str">}\href{../../vitessce/html/AbstractWrapper.html#method-get_route_str}{\code{vitessce::AbstractWrapper$get_route_str()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_routes">}\href{../../vitessce/html/AbstractWrapper.html#method-get_routes}{\code{vitessce::AbstractWrapper$get_routes()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessce" data-topic="AbstractWrapper" data-id="get_url">}\href{../../vitessce/html/AbstractWrapper.html#method-get_url}{\code{vitessce::AbstractWrapper$get_url()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="auto_view_config">}\href{../../vitessceR/html/AbstractWrapper.html#method-auto_view_config}{\code{vitessceR::AbstractWrapper$auto_view_config()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_file_defs">}\href{../../vitessceR/html/AbstractWrapper.html#method-get_file_defs}{\code{vitessceR::AbstractWrapper$get_file_defs()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_out_dir">}\href{../../vitessceR/html/AbstractWrapper.html#method-get_out_dir}{\code{vitessceR::AbstractWrapper$get_out_dir()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_out_dir_route">}\href{../../vitessceR/html/AbstractWrapper.html#method-get_out_dir_route}{\code{vitessceR::AbstractWrapper$get_out_dir_route()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_route_str">}\href{../../vitessceR/html/AbstractWrapper.html#method-get_route_str}{\code{vitessceR::AbstractWrapper$get_route_str()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_routes">}\href{../../vitessceR/html/AbstractWrapper.html#method-get_routes}{\code{vitessceR::AbstractWrapper$get_routes()}}\out{</span>}
+\item \out{<span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_url">}\href{../../vitessceR/html/AbstractWrapper.html#method-get_url}{\code{vitessceR::AbstractWrapper$get_url()}}\out{</span>}
 }
 \out{</details>}
 }

@@ -45,7 +45,7 @@ http-server ./ --cors -p 8000
 Add JSON files to the dataset using the `add_file` function. The `add_file` function returns the updated dataset, allowing the function calls to be chained.
 
 ```r
-library(vitessce)
+library(vitessceR)
 
 base_url <- "http://localhost:8000/"
 

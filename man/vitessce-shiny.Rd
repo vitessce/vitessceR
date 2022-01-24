@@ -4,7 +4,7 @@
 \alias{vitessce_output}
 \alias{vitessce-shiny}
 \alias{render_vitessce}
-\title{Shiny bindings for vitessce}
+\title{Shiny bindings for vitessceR}
 \usage{
 vitessce_output(output_id, width = "100\%", height = "400px")
 
@@ -30,6 +30,6 @@ The Shiny UI element.
 The Shiny server output.
 }
 \description{
-Output and render functions for using vitessce within Shiny
+Output and render functions for using vitessceR within Shiny
 applications and interactive Rmd documents.
 }

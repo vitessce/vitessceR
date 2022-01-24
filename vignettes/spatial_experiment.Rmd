@@ -19,7 +19,7 @@ BiocManager::install("STexampleData")
 Download the dataset, load and preprocess the SpatialExperiment object, and configure the Vitessce widget:
 
 ```r
-library(vitessce)
+library(vitessceR)
 library(STexampleData)
 
 spe_visium <- STexampleData::Visium_mouseCoronal()

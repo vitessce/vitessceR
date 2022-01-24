@@ -1,4 +1,4 @@
-library(vitessce)
+library(vitessceR)
 library(Seurat)
 
 test_that("SeuratWrapper create_cells_list", {
