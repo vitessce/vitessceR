@@ -5,8 +5,8 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="vitessce">
-<title>Export data to static files • vitessce</title>
+<meta name="description" content="vitessceR">
+<title>Export data to static files • vitessceR</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><link href="../deps/_Inter-0.4.0/font.css" rel="stylesheet">
@@ -14,7 +14,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><link href="../extra.css" rel="stylesheet">
 <meta property="og:title" content="Export data to static files">
-<meta property="og:description" content="vitessce">
+<meta property="og:description" content="vitessceR">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -26,16 +26,16 @@
 
     <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-light"><div class="container">
     
-    <a class="navbar-brand me-2" href="../index.html">vitessce</a>
+    <a class="navbar-brand me-2" href="../index.html">vitessceR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9008</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div id="navbar" class="collapse navbar-collapse ms-2">
+    <div id="navbar" class="collapse navbar-collapse ms-3">
       <ul class="navbar-nav me-auto">
 <li class="nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
@@ -85,7 +85,7 @@
   <a class="external-link nav-link" href="http://vitessce.io/docs/">Core Docs</a>
 </li>
 <li class="nav-item">
-  <a class="external-link nav-link" href="https://github.com/vitessce/vitessce-r/" aria-label="github">
+  <a class="external-link nav-link" href="https://github.com/vitessce/vitessceR/" aria-label="github">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -102,7 +102,7 @@
       <img src="" class="logo" alt=""><h1>Export data to static files</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/vitessce/vitessce-r/blob/HEAD/vignettes/export_files.Rmd" class="external-link"><code>vignettes/export_files.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/vitessce/vitessceR/blob/HEAD/vignettes/export_files.Rmd" class="external-link"><code>vignettes/export_files.Rmd</code></a></small>
       <div class="d-none name"><code>export_files.Rmd</code></div>
     </div>
 
@@ -115,7 +115,7 @@
 <span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"satijalab/seurat-data"</span><span class="op">)</span></code></pre></div>
 <p>Create the Vitessce configuration:</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vitessce/vitessce-r" class="external-link">vitessce</a></span><span class="op">)</span>
+<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/vitessce/vitessceR" class="external-link">vitessceR</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">SeuratData</span><span class="op">)</span>
 
 <span class="fu">SeuratData</span><span class="fu">::</span><span class="fu">InstallData</span><span class="op">(</span><span class="st">"pbmc3k"</span><span class="op">)</span>
@@ -135,9 +135,9 @@
 <span class="op">)</span>
 <span class="va">scatterplot</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_view</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">Component</span><span class="op">$</span><span class="va">SCATTERPLOT</span>, mapping <span class="op">=</span> <span class="st">"PCA"</span><span class="op">)</span>
 <span class="va">vc</span><span class="op">$</span><span class="fu">layout</span><span class="op">(</span><span class="va">scatterplot</span><span class="op">)</span></code></pre></div>
-<div class="section level1">
-<h1 id="export-files-for-serving-locally">Export files for serving locally<a class="anchor" aria-label="anchor" href="#export-files-for-serving-locally"></a>
-</h1>
+<div class="section level2">
+<h2 id="export-files-for-serving-locally">Export files for serving locally<a class="anchor" aria-label="anchor" href="#export-files-for-serving-locally"></a>
+</h2>
 <p>Run the <code>export</code> function on the <code>VitessceConfig</code>. Specify the directory in which to store the exported files with <code>out_dir</code>.</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">vc</span><span class="op">$</span><span class="fu">export</span><span class="op">(</span>out_dir <span class="op">=</span> <span class="st">"./my_vitessce_files"</span><span class="op">)</span></code></pre></div>
@@ -147,16 +147,16 @@
 <li><code>cell-sets.json</code></li>
 <li><code>clusters.json</code></li>
 </ul>
-<div class="section level2">
-<h2 id="serve-the-exported-files">Serve the exported files<a class="anchor" aria-label="anchor" href="#serve-the-exported-files"></a>
-</h2>
+<div class="section level3">
+<h3 id="serve-the-exported-files">Serve the exported files<a class="anchor" aria-label="anchor" href="#serve-the-exported-files"></a>
+</h3>
 <p>Now that the files have been saved to the <code>./my_vitessce_files</code> directory, they can be served by any static web server.</p>
 <p>If you would like to serve the files locally, we recommend <a href="https://github.com/http-party/http-server" class="external-link">http-server</a> which can be installed with NPM or Homebrew:</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">http-server</span> ./my_vitessce_files/ --cors -p 3000</code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="view-on-vitessce-io">View on vitessce.io<a class="anchor" aria-label="anchor" href="#view-on-vitessce-io"></a>
-</h2>
+<div class="section level3">
+<h3 id="view-on-vitessce-io">View on vitessce.io<a class="anchor" aria-label="anchor" href="#view-on-vitessce-io"></a>
+</h3>
 <p>The returned view config dict can be converted to a URL, and if the files are served on the internet (rather than locally), this URL can be used to share the interactive visualizations with colleagues.</p>
 <div class="sourceCode"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">vc_list</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">to_list</span><span class="op">(</span>base_url <span class="op">=</span> <span class="st">"http://localhost:3000"</span><span class="op">)</span>
@@ -164,9 +164,9 @@
 <span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">vitessce_url</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
-<div class="section level1">
-<h1 id="export-files-for-serving-from-aws-s3">Export files for serving from AWS S3<a class="anchor" aria-label="anchor" href="#export-files-for-serving-from-aws-s3"></a>
-</h1>
+<div class="section level2">
+<h2 id="export-files-for-serving-from-aws-s3">Export files for serving from AWS S3<a class="anchor" aria-label="anchor" href="#export-files-for-serving-from-aws-s3"></a>
+</h2>
 <p>Rather than serving the data files locally, you may want to upload the files to a remote static file hosting service such as AWS S3, allowing the Vitessce URL to be shared with others. Visit our <a href="http://beta.vitessce.io/docs/data-hosting/index.html" class="external-link">data hosting</a> documentation page to learn more about configuring file hosting services for use with Vitessce. Install the AWS S3 command-line interface by following the instructions <a href="https://docs.aws.amazon.com/cli/latest/userguide/install-cliv2.html" class="external-link">here</a>.</p>
 <p>Confirm that the CLI has been installed:</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">aws</span> --version</code></pre></div>
@@ -182,9 +182,9 @@
 <li>
 <code>config.json</code> (the file URLs in this config will include the <code>base_url</code> for the bucket)</li>
 </ul>
-<div class="section level2">
-<h2 id="upload-exported-files-to-s3">Upload exported files to S3<a class="anchor" aria-label="anchor" href="#upload-exported-files-to-s3"></a>
-</h2>
+<div class="section level3">
+<h3 id="upload-exported-files-to-s3">Upload exported files to S3<a class="anchor" aria-label="anchor" href="#upload-exported-files-to-s3"></a>
+</h3>
 <p>Upload all four files to your bucket:</p>
 <div class="sourceCode"><pre class="sourceCode sh"><code class="sourceCode bash"><span class="ex">aws</span> s3 cp --recursive ./my_vitessce_files s3://my_bucket</code></pre></div>
 <p>In this case, rather than including the configuration as url-encoded JSON in the URL, you can simply point to the configuration JSON file in the bucket:</p>
@@ -204,7 +204,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.1.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
 </div>
 
     </footer>

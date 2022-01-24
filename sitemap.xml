@@ -1,207 +1,207 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/404.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/404.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/LICENSE-text.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/LICENSE-text.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/LICENSE.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/debugging.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/debugging.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/dev_wrapper_class.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/dev_wrapper_class.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/dev_wrapper_subclass.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/dev_wrapper_subclass.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/export_files.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/export_files.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/giotto.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/giotto.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/index.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/index.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/json_local.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/json_local.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/local_data_overview.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/local_data_overview.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/ome_tiff_local.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/ome_tiff_local.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/pkgdown.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/pkgdown.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/session_info.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/session_info.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/seurat_azimuth.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/seurat_azimuth.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/seurat_basic.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/seurat_basic.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/seuratdata.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/seuratdata.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/shiny.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/shiny.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/single_cell_experiment.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/single_cell_experiment.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/spatial_experiment.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/spatial_experiment.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/web_only/json_remote.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/web_only/json_remote.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/articles/web_only/ome_tiff_remote.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/articles/web_only/ome_tiff_remote.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/authors.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/authors.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/index.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/index.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/news/index.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/news/index.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/AbstractWrapper.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/AbstractWrapper.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/Component.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/Component.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/CoordinationType.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/CoordinationType.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/DataType.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/DataType.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/FileType.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/FileType.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/GiottoWrapper.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/GiottoWrapper.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/MultiImageWrapper.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/MultiImageWrapper.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/OmeTiffWrapper.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/OmeTiffWrapper.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/SCEWrapper.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/SCEWrapper.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/SPEWrapper.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/SPEWrapper.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/SeuratWrapper.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/SeuratWrapper.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/VitessceConfig-cash-from_list.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/VitessceConfig-cash-from_list.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/VitessceConfig-cash-from_object.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/VitessceConfig-cash-from_object.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/VitessceConfig.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/VitessceConfig.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/VitessceConfigCoordinationScope.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/VitessceConfigCoordinationScope.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/VitessceConfigDataset.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/VitessceConfigDataset.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/VitessceConfigDatasetFile.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/VitessceConfigDatasetFile.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/VitessceConfigServer.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/VitessceConfigServer.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/VitessceConfigServerRangeRoute.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/VitessceConfigServerRangeRoute.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/VitessceConfigServerStaticRoute.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/VitessceConfigServerStaticRoute.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/VitessceConfigView.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/VitessceConfigView.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/VitessceConfigViewHConcat.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/VitessceConfigViewHConcat.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/VitessceConfigViewVConcat.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/VitessceConfigViewVConcat.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/export_to_files.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/export_to_files.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/get_giotto_obj.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/get_giotto_obj.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/get_next_scope.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/get_next_scope.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/get_sce_obj.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/get_sce_obj.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/get_seurat_obj.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/get_seurat_obj.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/get_spe_obj.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/get_spe_obj.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/giotto_to_anndata_zarr.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/giotto_to_anndata_zarr.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/hconcat.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/hconcat.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/index.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/is_na.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/is_na.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/obj_list.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/obj_list.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/py_env.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/py_env.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/sce_to_anndata_zarr.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/sce_to_anndata_zarr.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/seurat_to_anndata_zarr.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/seurat_to_anndata_zarr.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/spe_to_anndata_zarr.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/spe_to_anndata_zarr.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/spe_to_ome_zarr.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/spe_to_ome_zarr.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/stop_future.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/stop_future.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/vconcat.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/vconcat.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/vitessce-shiny.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/vitessce-shiny.html</loc>
   </url>
   <url>
-    <loc>https://vitessce.github.io/vitessce-r/reference/vitessce_widget.html</loc>
+    <loc>https://vitessce.github.io/vitessceR/reference/vitessce_widget.html</loc>
   </url>
 </urlset>

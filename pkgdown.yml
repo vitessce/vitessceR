@@ -1,5 +1,5 @@
 pandoc: 1.19.2.4
-pkgdown: 2.0.1
+pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   debugging: debugging.html
@@ -20,8 +20,8 @@ articles:
   spatial_experiment: spatial_experiment.html
   json_remote: web_only/json_remote.html
   ome_tiff_remote: web_only/ome_tiff_remote.html
-last_built: 2022-01-12T01:01Z
+last_built: 2022-01-24T19:55Z
 urls:
-  reference: https://vitessce.github.io/vitessce-r/reference
-  article: https://vitessce.github.io/vitessce-r/articles
+  reference: https://vitessce.github.io/vitessceR/reference
+  article: https://vitessce.github.io/vitessceR/articles
 
