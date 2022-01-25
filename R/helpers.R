@@ -123,8 +123,12 @@ merge_js <- function(force = FALSE) {
     package = pkg_name
   )
   if(dist_dir == "") {
-    warning("Could not find inst/htmlwidgets/dist directory")
-    return(FALSE)
+    warning("Could not locate inst/htmlwidgets/dist by system.file")
+    dist_dir <- file.path("inst", "htmlwidgets", "dist")
+    if(!file.exists(dist_dir)) {
+      warning("Could not locate inst/htmlwidgets/dist relatively")
+      return(FALSE)
+    }
   }
   js_bundle <- file.path(dist_dir, "index.js")
   map_bundle <- file.path(dist_dir, "index.js.map")
