@@ -10,7 +10,7 @@ merge_js(force = FALSE)
 \item{force}{Should the merging be done even if the merged file already exists? By default, FALSE.}
 }
 \value{
-Nothing
+Success.
 }
 \description{
 Merge JS file chunks
