@@ -7,6 +7,13 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r, setup, include=FALSE}
+knitr::opts_knit$set(
+  root.dir = dirname(dirname(getwd())),
+  rmarkdown.pandoc.to = knitr::opts_knit$get("rmarkdown.pandoc.to")
+)
+```
+
 The following is an example of usage of the widget to visualize a remote OME-TIFF image file.
 
 First, configure the Vitessce widget:
@@ -53,7 +60,7 @@ vc$widget(theme = "light", width = "100%")
 ```
 
 ```{r eval = TRUE, echo = FALSE}
-if(knitr::opts_knit$get("rmarkdown.pandoc.to") == "html") {
+if(!is.null(knitr::opts_knit$get("rmarkdown.pandoc.to")) && knitr::opts_knit$get("rmarkdown.pandoc.to") == "html") {
   vc$widget(theme = "light", width = "100%")
 }
 ```
