@@ -115,13 +115,17 @@ merge_files <- function(chunk_paths, out_path) {
 #'
 #' @keywords internal
 #' @param force Should the merging be done even if the merged file already exists? By default, FALSE.
-#' @return Nothing
+#' @return Success.
 merge_js <- function(force = FALSE) {
   pkg_name <- "vitessceR"
   dist_dir <- system.file(
     "inst", "htmlwidgets", "dist",
     package = pkg_name
   )
+  if(dist_dir == "") {
+    warning("Could not find inst/htmlwidgets/dist directory")
+    return(FALSE)
+  }
   js_bundle <- file.path(dist_dir, "index.js")
   map_bundle <- file.path(dist_dir, "index.js.map")
   merged_paths <- c(js_bundle, map_bundle)
@@ -134,6 +138,7 @@ merge_js <- function(force = FALSE) {
 
   merge_files(js_files, js_bundle)
   merge_files(map_files, map_bundle)
+  return(TRUE)
 }
 
 
