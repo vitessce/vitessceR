@@ -35,7 +35,7 @@ For questions and help with using the package, please open a [discussion](https:
 ```sh
 npm install
 npm run build
-sed -i'' -e '1s/^/var globalThis = window; /' inst/htmlwidgets/dist/index.js
+npm run split
 ```
 
 ```r

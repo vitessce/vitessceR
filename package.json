@@ -15,9 +15,14 @@
     "shiny"
   ],
   "scripts": {
-    "build": "webpack",
+    "build": "webpack && npm run fix-globalthis && rm ./inst/htmlwidgets/dist/index.js-e",
     "watch": "webpack --watch --mode=development",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "fix-globalthis": "sed -i'' -e '1s/^/var globalThis = window; /' inst/htmlwidgets/dist/index.js",
+    "split-js": "split -b 4m ./inst/htmlwidgets/dist/index.js ./inst/htmlwidgets/dist/index.js.chunk.",
+    "split-map": "split -b 4m ./inst/htmlwidgets/dist/index.js.map ./inst/htmlwidgets/dist/index.js.map.chunk.",
+    "post-split": "rm ./inst/htmlwidgets/dist/index.js && rm ./inst/htmlwidgets/dist/index.js.map",
+    "split": "npm run split-js && npm run split-map && npm run post-split"
   },
   "devDependencies": {
     "@babel/core": "7.9.0",
