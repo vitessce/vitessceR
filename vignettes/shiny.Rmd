@@ -38,8 +38,13 @@ server <- function(input, output, session) {
   output$vitessce_visualization <- render_vitessce(expr = {
     vc <- VitessceConfig$new("My config")
     dataset <- vc$add_dataset("My dataset")
-    dataset <- dataset$add_object(SeuratWrapper$new(pbmc3k.final))
-    scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
+    dataset <- dataset$add_object(SeuratWrapper$new(
+      pbmc3k.final,
+      cell_embeddings = c("pca", "umap"),
+      cell_embedding_names = c("PCA", "UMAP"),
+      cell_set_metas = c("seurat_annotations", "seurat_clusters")
+    ))
+    scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
     vc$layout(scatterplot)
     vc$widget()
   })

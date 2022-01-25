@@ -28,8 +28,6 @@
 #' vc$widget()
 vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL, port = NA, base_url = NA, serve = TRUE, element_id = NULL) {
 
-  merge_js()
-
   use_port <- port
   if(is.na(port)) {
     use_port <- httpuv::randomPort(min = 8000, max = 9000, n = 1000)
