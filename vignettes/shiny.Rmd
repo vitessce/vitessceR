@@ -29,6 +29,13 @@ SeuratData::InstallData("pbmc3k")
 data("pbmc3k.final")
 force(pbmc3k.final)
 
+w <- SeuratWrapper$new(
+  pbmc3k.final,
+  cell_embeddings = c("pca", "umap"),
+  cell_embedding_names = c("PCA", "UMAP"),
+  cell_set_metas = c("seurat_annotations", "seurat_clusters")
+)
+
 ui <- fluidPage(
   "Vitessce in a Shiny app",
   vitessce_output(output_id = "vitessce_visualization", height = "600px"),
@@ -38,12 +45,7 @@ server <- function(input, output, session) {
   output$vitessce_visualization <- render_vitessce(expr = {
     vc <- VitessceConfig$new("My config")
     dataset <- vc$add_dataset("My dataset")
-    dataset <- dataset$add_object(SeuratWrapper$new(
-      pbmc3k.final,
-      cell_embeddings = c("pca", "umap"),
-      cell_embedding_names = c("PCA", "UMAP"),
-      cell_set_metas = c("seurat_annotations", "seurat_clusters")
-    ))
+    dataset <- dataset$add_object(w)
     scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
     vc$layout(scatterplot)
     vc$widget()
@@ -78,11 +80,19 @@ SeuratData::InstallData("pbmc3k")
 data("pbmc3k.final")
 force(pbmc3k.final)
 
-OUT_DIR <- "./my_vitessce_files"
+OUT_DIR <- file.path("data", "shiny")
+
+w <- SeuratWrapper$new(
+  pbmc3k.final,
+  cell_embeddings = c("pca", "umap"),
+  cell_embedding_names = c("PCA", "UMAP"),
+  cell_set_metas = c("seurat_annotations", "seurat_clusters"),
+  out_dir = OUT_DIR
+)
 
 ui <- fluidPage(
   "Vitessce in a Shiny app",
-  vitessce_output(output_id = 'vitessce_visualization', height = "600px"),
+  vitessce_output(output_id = "vitessce_visualization", height = "600px"),
 )
 
 server <- function(input, output, session) {
@@ -90,8 +100,8 @@ server <- function(input, output, session) {
   output$vitessce_visualization <- render_vitessce(expr = {
     vc <- VitessceConfig$new("My config")
     dataset <- vc$add_dataset("My dataset")
-    dataset <- dataset$add_object(SeuratWrapper$new(pbmc3k.final, out_dir = OUT_DIR))
-    scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
+    dataset <- dataset$add_object(w)
+    scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
     vc$layout(scatterplot)
     
     BASE_URL <- paste0(
@@ -126,6 +136,13 @@ SeuratData::InstallData("pbmc3k")
 data("pbmc3k.final")
 force(pbmc3k.final)
 
+w <- SeuratWrapper$new(
+  pbmc3k.final,
+  cell_embeddings = c("pca", "umap"),
+  cell_embedding_names = c("PCA", "UMAP"),
+  cell_set_metas = c("seurat_annotations", "seurat_clusters")
+)
+
 ui <- fluidPage(
   tags$head(
     tags$style(HTML("
@@ -135,15 +152,15 @@ ui <- fluidPage(
     "))
   ),
   "Vitessce in a Shiny app",
-  vitessce_output(output_id = 'vitessce_visualization', height = "600px"),
+  vitessce_output(output_id = "vitessce_visualization", height = "600px"),
 )
 
 server <- function(input, output, session) {
   output$vitessce_visualization <- render_vitessce(expr = {
     vc <- VitessceConfig$new("My config")
     dataset <- vc$add_dataset("My dataset")
-    dataset <- dataset$add_object(SeuratWrapper$new(pbmc3k.final))
-    scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
+    dataset <- dataset$add_object(w)
+    scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
     vc$layout(scatterplot)
     vc$widget()
   })
