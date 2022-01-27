@@ -46,6 +46,6 @@ vc$layout(hconcat(scatterplot, vconcat(status, cell_sets)))
 vc$widget()
 ```
 
-For a full example, visit the [Usage with JSON](articles/json_remote.html) page.
+For a full example, visit the [Usage with JSON](articles/web_only/json_remote.html) page.
 
 To customize the view config passed into the widget (or to define a view config manually), please see the documentation for the [`VitessceConfig`](reference/VitessceConfig.html) class.
