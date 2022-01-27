@@ -27,7 +27,9 @@ w <- GiottoWrapper$new(
 \describe{
 \item{\code{obj}}{The object to wrap.}
 
-\item{\code{cell_embeddings}}{The keys in the Seurat object's reductions/cell.embeddings
+\item{\code{expr_matrix}}{The key for the expression matrix.}
+
+\item{\code{cell_embeddings}}{The keys in the Giotto object's reductions/cell.embeddings
 to use for creating dimensionality reduction mappings.}
 
 \item{\code{cell_embedding_names}}{Names
@@ -36,13 +38,13 @@ to use for creating dimensionality reduction mappings.}
 \item{\code{cell_embedding_dims}}{The dimension indices
 to use for creating dimensionality reduction mappings.}
 
-\item{\code{cell_set_metas}}{The keys in the Seurat object's meta.data
+\item{\code{cell_set_metas}}{The keys in the Giotto object's cell_metadata
 to use for creating cell sets.}
 
-\item{\code{cell_set_meta_names}}{The keys in the Seurat object's meta.data
+\item{\code{cell_set_meta_names}}{The keys in the Giotto object's cell_metadata
 to use for cell set names mapped to new names.}
 
-\item{\code{cell_set_meta_scores}}{The keys in the Seurat object's meta.data
+\item{\code{cell_set_meta_scores}}{The keys in the Giotto object's cell_metadata
 to use for cell set names mapped to keys for scores.}
 
 \item{\code{zarr_folder}}{The name for the folder at the root of the zarr store.}
@@ -80,10 +82,11 @@ to use for cell set names mapped to keys for scores.}
 \if{html}{\out{<a id="method-new"></a>}}
 \if{latex}{\out{\hypertarget{method-new}{}}}
 \subsection{Method \code{new()}}{
-Create a wrapper around a Seurat object.
+Create a wrapper around a Giotto object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{GiottoWrapper$new(
   obj,
+  expr_matrix = NA,
   cell_embeddings = NA,
   cell_embedding_names = NA,
   cell_embedding_dims = NA,
@@ -99,7 +102,9 @@ Create a wrapper around a Seurat object.
 \describe{
 \item{\code{obj}}{The object to wrap.}
 
-\item{\code{cell_embeddings}}{The keys in the Seurat object's reductions/cell.embeddings
+\item{\code{expr_matrix}}{The name of the slot in the Giotto object.}
+
+\item{\code{cell_embeddings}}{The keys in the Giotto object's reductions/cell.embeddings
 to use for creating dimensionality reduction plots.}
 
 \item{\code{cell_embedding_names}}{Names

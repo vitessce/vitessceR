@@ -4,7 +4,7 @@
 \alias{giotto_to_anndata_zarr}
 \title{Save a Giotto object to an AnnData-Zarr store}
 \usage{
-giotto_to_anndata_zarr(giotto_obj, out_path, X_slot = "raw_exprs")
+giotto_to_anndata_zarr(giotto_obj, out_path, X_slot)
 }
 \arguments{
 \item{giotto_obj}{The object to save.}

@@ -22,7 +22,7 @@ GiottoWrapper <- R6::R6Class("GiottoWrapper",
     #' @field expr_matrix The key for the expression matrix.
     #' @keywords internal
     expr_matrix = NULL,
-    #' @field cell_embeddings The keys in the Seurat object's reductions/cell.embeddings
+    #' @field cell_embeddings The keys in the Giotto object's reductions/cell.embeddings
     #' to use for creating dimensionality reduction mappings.
     #' @keywords internal
     cell_embeddings = NULL,
@@ -34,15 +34,15 @@ GiottoWrapper <- R6::R6Class("GiottoWrapper",
     #' to use for creating dimensionality reduction mappings.
     #' @keywords internal
     cell_embedding_dims = NULL,
-    #' @field cell_set_metas The keys in the Seurat object's meta.data
+    #' @field cell_set_metas The keys in the Giotto object's cell_metadata
     #' to use for creating cell sets.
     #' @keywords internal
     cell_set_metas = NULL,
-    #' @field cell_set_meta_names The keys in the Seurat object's meta.data
+    #' @field cell_set_meta_names The keys in the Giotto object's cell_metadata
     #' to use for cell set names mapped to new names.
     #' @keywords internal
     cell_set_meta_names = NULL,
-    #' @field cell_set_meta_scores The keys in the Seurat object's meta.data
+    #' @field cell_set_meta_scores The keys in the Giotto object's cell_metadata
     #' to use for cell set names mapped to keys for scores.
     #' @keywords internal
     cell_set_meta_scores = NULL,
@@ -50,9 +50,10 @@ GiottoWrapper <- R6::R6Class("GiottoWrapper",
     #' @keywords internal
     zarr_folder = NULL,
     #' @description
-    #' Create a wrapper around a Seurat object.
+    #' Create a wrapper around a Giotto object.
     #' @param obj The object to wrap.
-    #' @param cell_embeddings The keys in the Seurat object's reductions/cell.embeddings
+    #' @param expr_matrix The name of the slot in the Giotto object.
+    #' @param cell_embeddings The keys in the Giotto object's reductions/cell.embeddings
     #' to use for creating dimensionality reduction plots.
     #' @param cell_embedding_names Names
     #' to use for creating dimensionality reduction plots.
