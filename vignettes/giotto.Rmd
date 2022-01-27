@@ -125,6 +125,7 @@ library(vitessceR)
 
 w <- GiottoWrapper$new(
   SS_seqfish,
+  expr_matrix = "raw_exprs",
   cell_set_metas = c("cell_types"),
   cell_set_meta_names = c("Cell Types"),
   cell_embeddings = c("pca", "tsne"),
