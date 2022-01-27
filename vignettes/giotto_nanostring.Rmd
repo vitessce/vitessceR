@@ -7,7 +7,7 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-The following is a full example of usage of the widget with a [Giotto](https://github.com/RubD/Giotto) object.
+The following is an example of usage of the widget with a [Giotto](https://github.com/RubD/Giotto) object from [NanoString](https://www.nanostring.com/products/cosmx-spatial-molecular-imager/ffpe-dataset/).
 
 First, install the R dependencies:
 
@@ -16,15 +16,16 @@ install.packages("devtools")
 devtools::install_github("RubD/Giotto")
 ```
 
-Download and un-tar the giotto object: https://nanostring-public-share.s3.us-west-2.amazonaws.com/SMI-Compressed/All+SMI+Giotto+object.tar.gz
+Download and un-tar the Giotto object: https://nanostring-public-share.s3.us-west-2.amazonaws.com/SMI-Compressed/All+SMI+Giotto+object.tar.gz
 
 
-Load the giotto object:
+Load the Giotto object in R:
 
 ```r
 rdata_path <- file.path("data", "giotto", "SMI_Giotto_Object.RData")
 load(rdata_path)
 
+# Clean up
 gem@cell_metadata <- gem@cell_metadata$rna
 gem@spatial_locs <- gem@spatial_locs$raw
 gem@raw_exprs <- NULL
