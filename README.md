@@ -51,6 +51,7 @@ devtools::load_all()
 ```r
 devtools::check()
 devtools::test()
+devtools::run_examples()
 ```
 
 ## Documentation

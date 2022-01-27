@@ -21,6 +21,6 @@ Save a Giotto object to an AnnData-Zarr store
 }
 \examples{
 obj <- get_giotto_obj()
-giotto_to_anndata_zarr(obj, "data/giotto.zarr")
+giotto_to_anndata_zarr(obj, "data/giotto.zarr", "raw_exprs")
 }
 \keyword{internal}

@@ -218,7 +218,7 @@ spe_to_ome_zarr <- function(spe_obj, sample_id, image_id, out_path) {
 #' @export
 #' @examples
 #' obj <- get_giotto_obj()
-#' giotto_to_anndata_zarr(obj, "data/giotto.zarr")
+#' giotto_to_anndata_zarr(obj, "data/giotto.zarr", "raw_exprs")
 #' @importFrom methods slot
 giotto_to_anndata_zarr <- function(giotto_obj, out_path, X_slot) {
 
