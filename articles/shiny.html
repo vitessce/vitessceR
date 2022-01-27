@@ -125,6 +125,13 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"pbmc3k.final"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/force.html" class="external-link">force</a></span><span class="op">(</span><span class="va">pbmc3k.final</span><span class="op">)</span>
 
+<span class="va">w</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SeuratWrapper.html">SeuratWrapper</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
+  <span class="va">pbmc3k.final</span>,
+  cell_embeddings <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pca"</span>, <span class="st">"umap"</span><span class="op">)</span>,
+  cell_embedding_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PCA"</span>, <span class="st">"UMAP"</span><span class="op">)</span>,
+  cell_set_metas <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"seurat_annotations"</span>, <span class="st">"seurat_clusters"</span><span class="op">)</span>
+<span class="op">)</span>
+
 <span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span>
   <span class="st">"Vitessce in a Shiny app"</span>,
   <span class="fu"><a href="../reference/vitessce-shiny.html">vitessce_output</a></span><span class="op">(</span>output_id <span class="op">=</span> <span class="st">"vitessce_visualization"</span>, height <span class="op">=</span> <span class="st">"600px"</span><span class="op">)</span>,
@@ -134,8 +141,8 @@
   <span class="va">output</span><span class="op">$</span><span class="va">vitessce_visualization</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vitessce-shiny.html">render_vitessce</a></span><span class="op">(</span>expr <span class="op">=</span> <span class="op">{</span>
     <span class="va">vc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/VitessceConfig.html">VitessceConfig</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"My config"</span><span class="op">)</span>
     <span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_dataset</span><span class="op">(</span><span class="st">"My dataset"</span><span class="op">)</span>
-    <span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">dataset</span><span class="op">$</span><span class="fu">add_object</span><span class="op">(</span><span class="va"><a href="../reference/SeuratWrapper.html">SeuratWrapper</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">pbmc3k.final</span><span class="op">)</span><span class="op">)</span>
-    <span class="va">scatterplot</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_view</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">Component</span><span class="op">$</span><span class="va">SCATTERPLOT</span>, mapping <span class="op">=</span> <span class="st">"pca"</span><span class="op">)</span>
+    <span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">dataset</span><span class="op">$</span><span class="fu">add_object</span><span class="op">(</span><span class="va">w</span><span class="op">)</span>
+    <span class="va">scatterplot</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_view</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">Component</span><span class="op">$</span><span class="va">SCATTERPLOT</span>, mapping <span class="op">=</span> <span class="st">"PCA"</span><span class="op">)</span>
     <span class="va">vc</span><span class="op">$</span><span class="fu">layout</span><span class="op">(</span><span class="va">scatterplot</span><span class="op">)</span>
     <span class="va">vc</span><span class="op">$</span><span class="fu">widget</span><span class="op">(</span><span class="op">)</span>
   <span class="op">}</span><span class="op">)</span>
@@ -159,11 +166,19 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"pbmc3k.final"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/force.html" class="external-link">force</a></span><span class="op">(</span><span class="va">pbmc3k.final</span><span class="op">)</span>
 
-<span class="va">OUT_DIR</span> <span class="op">&lt;-</span> <span class="st">"./my_vitessce_files"</span>
+<span class="va">OUT_DIR</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="st">"data"</span>, <span class="st">"shiny"</span><span class="op">)</span>
+
+<span class="va">w</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SeuratWrapper.html">SeuratWrapper</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
+  <span class="va">pbmc3k.final</span>,
+  cell_embeddings <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pca"</span>, <span class="st">"umap"</span><span class="op">)</span>,
+  cell_embedding_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PCA"</span>, <span class="st">"UMAP"</span><span class="op">)</span>,
+  cell_set_metas <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"seurat_annotations"</span>, <span class="st">"seurat_clusters"</span><span class="op">)</span>,
+  out_dir <span class="op">=</span> <span class="va">OUT_DIR</span>
+<span class="op">)</span>
 
 <span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span>
   <span class="st">"Vitessce in a Shiny app"</span>,
-  <span class="fu"><a href="../reference/vitessce-shiny.html">vitessce_output</a></span><span class="op">(</span>output_id <span class="op">=</span> <span class="st">'vitessce_visualization'</span>, height <span class="op">=</span> <span class="st">"600px"</span><span class="op">)</span>,
+  <span class="fu"><a href="../reference/vitessce-shiny.html">vitessce_output</a></span><span class="op">(</span>output_id <span class="op">=</span> <span class="st">"vitessce_visualization"</span>, height <span class="op">=</span> <span class="st">"600px"</span><span class="op">)</span>,
 <span class="op">)</span>
 
 <span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span>
@@ -171,8 +186,8 @@
   <span class="va">output</span><span class="op">$</span><span class="va">vitessce_visualization</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vitessce-shiny.html">render_vitessce</a></span><span class="op">(</span>expr <span class="op">=</span> <span class="op">{</span>
     <span class="va">vc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/VitessceConfig.html">VitessceConfig</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"My config"</span><span class="op">)</span>
     <span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_dataset</span><span class="op">(</span><span class="st">"My dataset"</span><span class="op">)</span>
-    <span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">dataset</span><span class="op">$</span><span class="fu">add_object</span><span class="op">(</span><span class="va"><a href="../reference/SeuratWrapper.html">SeuratWrapper</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">pbmc3k.final</span>, out_dir <span class="op">=</span> <span class="va">OUT_DIR</span><span class="op">)</span><span class="op">)</span>
-    <span class="va">scatterplot</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_view</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">Component</span><span class="op">$</span><span class="va">SCATTERPLOT</span>, mapping <span class="op">=</span> <span class="st">"pca"</span><span class="op">)</span>
+    <span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">dataset</span><span class="op">$</span><span class="fu">add_object</span><span class="op">(</span><span class="va">w</span><span class="op">)</span>
+    <span class="va">scatterplot</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_view</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">Component</span><span class="op">$</span><span class="va">SCATTERPLOT</span>, mapping <span class="op">=</span> <span class="st">"PCA"</span><span class="op">)</span>
     <span class="va">vc</span><span class="op">$</span><span class="fu">layout</span><span class="op">(</span><span class="va">scatterplot</span><span class="op">)</span>
     
     <span class="va">BASE_URL</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span>
@@ -204,6 +219,13 @@
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="st">"pbmc3k.final"</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/base/force.html" class="external-link">force</a></span><span class="op">(</span><span class="va">pbmc3k.final</span><span class="op">)</span>
 
+<span class="va">w</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/SeuratWrapper.html">SeuratWrapper</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span>
+  <span class="va">pbmc3k.final</span>,
+  cell_embeddings <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"pca"</span>, <span class="st">"umap"</span><span class="op">)</span>,
+  cell_embedding_names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PCA"</span>, <span class="st">"UMAP"</span><span class="op">)</span>,
+  cell_set_metas <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"seurat_annotations"</span>, <span class="st">"seurat_clusters"</span><span class="op">)</span>
+<span class="op">)</span>
+
 <span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span>
   <span class="va">tags</span><span class="op">$</span><span class="fu">head</span><span class="op">(</span>
     <span class="va">tags</span><span class="op">$</span><span class="fu">style</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/HTML.html" class="external-link">HTML</a></span><span class="op">(</span><span class="st">"
@@ -213,15 +235,15 @@
     "</span><span class="op">)</span><span class="op">)</span>
   <span class="op">)</span>,
   <span class="st">"Vitessce in a Shiny app"</span>,
-  <span class="fu"><a href="../reference/vitessce-shiny.html">vitessce_output</a></span><span class="op">(</span>output_id <span class="op">=</span> <span class="st">'vitessce_visualization'</span>, height <span class="op">=</span> <span class="st">"600px"</span><span class="op">)</span>,
+  <span class="fu"><a href="../reference/vitessce-shiny.html">vitessce_output</a></span><span class="op">(</span>output_id <span class="op">=</span> <span class="st">"vitessce_visualization"</span>, height <span class="op">=</span> <span class="st">"600px"</span><span class="op">)</span>,
 <span class="op">)</span>
 
 <span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span>
   <span class="va">output</span><span class="op">$</span><span class="va">vitessce_visualization</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vitessce-shiny.html">render_vitessce</a></span><span class="op">(</span>expr <span class="op">=</span> <span class="op">{</span>
     <span class="va">vc</span> <span class="op">&lt;-</span> <span class="va"><a href="../reference/VitessceConfig.html">VitessceConfig</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="st">"My config"</span><span class="op">)</span>
     <span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_dataset</span><span class="op">(</span><span class="st">"My dataset"</span><span class="op">)</span>
-    <span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">dataset</span><span class="op">$</span><span class="fu">add_object</span><span class="op">(</span><span class="va"><a href="../reference/SeuratWrapper.html">SeuratWrapper</a></span><span class="op">$</span><span class="fu">new</span><span class="op">(</span><span class="va">pbmc3k.final</span><span class="op">)</span><span class="op">)</span>
-    <span class="va">scatterplot</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_view</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">Component</span><span class="op">$</span><span class="va">SCATTERPLOT</span>, mapping <span class="op">=</span> <span class="st">"pca"</span><span class="op">)</span>
+    <span class="va">dataset</span> <span class="op">&lt;-</span> <span class="va">dataset</span><span class="op">$</span><span class="fu">add_object</span><span class="op">(</span><span class="va">w</span><span class="op">)</span>
+    <span class="va">scatterplot</span> <span class="op">&lt;-</span> <span class="va">vc</span><span class="op">$</span><span class="fu">add_view</span><span class="op">(</span><span class="va">dataset</span>, <span class="va">Component</span><span class="op">$</span><span class="va">SCATTERPLOT</span>, mapping <span class="op">=</span> <span class="st">"PCA"</span><span class="op">)</span>
     <span class="va">vc</span><span class="op">$</span><span class="fu">layout</span><span class="op">(</span><span class="va">scatterplot</span><span class="op">)</span>
     <span class="va">vc</span><span class="op">$</span><span class="fu">widget</span><span class="op">(</span><span class="op">)</span>
   <span class="op">}</span><span class="op">)</span>
