@@ -144,7 +144,3 @@ merge_js <- function(force = FALSE) {
   merge_files(map_files, map_bundle)
   return(TRUE)
 }
-
-
-
-
