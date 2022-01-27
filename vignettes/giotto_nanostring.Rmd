@@ -1,8 +1,8 @@
 ---
-title: "Usage with Giotto"
+title: "Usage with Giotto: NanoString dataset"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Usage with Giotto}
+  %\VignetteIndexEntry{Usage with Giotto: NanoString dataset}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

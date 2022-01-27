@@ -1,8 +1,8 @@
 ---
-title: "Usage with Giotto"
+title: "Usage with Giotto: Basic Example"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Usage with Giotto}
+  %\VignetteIndexEntry{Usage with Giotto: Basic Example}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -116,6 +116,22 @@ featgenes = gene_metadata[hvg == 'yes' & perc_cells > 4 & mean_expr_det > 0.5]$g
 # Run PCA
 SS_seqfish <- runPCA(gobject = SS_seqfish, genes_to_use = featgenes, scale_unit = F, center = T)
 SS_seqfish <- runtSNE(SS_seqfish, dimensions_to_use = 1:15)
+```
+
+Rescale the coordinates to help with saving as a NumPy array:
+
+```r
+# Rescale dimensionality reduction coordinates
+for(dr in names(SS_seqfish@dimension_reduction$cells)) {
+  old_coord_2d <- SS_seqfish@dimension_reduction$cells[[dr]][[dr]]$coordinates[, c(1, 2)]
+  old_coord_2d[, 1] <- old_coord_2d[, 1] - min(old_coord_2d[, 1])
+  old_coord_2d[, 1] <- (old_coord_2d[, 1] / max(old_coord_2d[, 1])) * 10000
+  old_coord_2d[, 2] <- old_coord_2d[, 2] - min(old_coord_2d[, 2])
+  old_coord_2d[, 2] <- (old_coord_2d[, 2] / max(old_coord_2d[, 2])) * 10000
+  
+  new_coord_2d <- old_coord_2d
+  SS_seqfish@dimension_reduction$cells[[dr]][[dr]]$coordinates[, c(1, 2)] <- new_coord_2d
+}
 ```
 
 Set up the Vitessce widget:

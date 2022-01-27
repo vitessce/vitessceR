@@ -232,7 +232,7 @@ giotto_to_anndata_zarr <- function(giotto_obj, out_path, X_slot) {
     np <- reticulate::import("numpy", convert=FALSE)
 
     # Reference: https://github.com/theislab/zellkonverter/blob/master/R/SCE2AnnData.R#L237
-    make_numpy_friendly <- function(x, transpose = TRUE) {
+    make_numpy_friendly <- function(x, transpose = TRUE, as_type = NA) {
       if (transpose) {
         x <- Matrix::t(x)
       }
@@ -241,11 +241,12 @@ giotto_to_anndata_zarr <- function(giotto_obj, out_path, X_slot) {
       } else {
         x <- as.matrix(x)
       }
+      if(!is.na(as_type)) {
+        x <- np$array(x)
+        x <- x$astype(as_type)
+      }
 
-      y <- np$array(x)
-      y <- y$astype("<i4")
-
-      return(y)
+      return(x)
     }
 
     if(!is.na(X_slot)) {
@@ -275,7 +276,7 @@ giotto_to_anndata_zarr <- function(giotto_obj, out_path, X_slot) {
     }
 
     if(length(obsm) > 0) {
-      obsm <- lapply(obsm, make_numpy_friendly)
+      obsm <- lapply(obsm, make_numpy_friendly, as_type = "<i4")
       adata$obsm <- obsm
     }
 

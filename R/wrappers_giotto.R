@@ -92,7 +92,7 @@ GiottoWrapper <- R6::R6Class("GiottoWrapper",
         warning("Object is not of type giotto.")
         success <- FALSE
       }
-      if(!is_na(self$expr_matrix) && self$expr_matrix %in% slotNames(self$obj)) {
+      if(!is_na(self$expr_matrix) && !(self$expr_matrix %in% slotNames(self$obj))) {
         warning("Specified expr_matrix not present in Giotto object slot names.")
         success <- FALSE
       }
