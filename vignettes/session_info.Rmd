@@ -1,6 +1,7 @@
 ---
 title: "R Session Info"
 output: rmarkdown::html_vignette
+package: vitessceR
 vignette: >
   %\VignetteIndexEntry{R Session Info}
   %\VignetteEngine{knitr::rmarkdown}
