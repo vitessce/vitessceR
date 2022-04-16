@@ -76,7 +76,7 @@ seurat_to_anndata_zarr <- function(seurat_obj, out_path, assay) {
 #' obj <- get_sce_obj()
 #' sce_to_anndata_zarr(obj, out_path = "data/sce.zarr")
 #' @importFrom SingleCellExperiment reducedDims reducedDims<-
-sce_to_anndata_zarr <- function(sce_obj, out_path) {
+sce_to_anndata_zarr <- function(sce_obj, out_path, assay) {
   obsm_keys <- names(as.list(reducedDims(sce_obj)))
   for(obsm_key in obsm_keys) {
     # If there are column names, then the obsm element will be stored as a data.frame,
@@ -93,7 +93,7 @@ sce_to_anndata_zarr <- function(sce_obj, out_path) {
     anndata <- reticulate::import("anndata")
     zarr <- reticulate::import("zarr")
 
-    adata <- zellkonverter::SCE2AnnData(sce_obj)
+    adata <- zellkonverter::SCE2AnnData(sce_obj, X_name = assay)
     adata$write_zarr(out_path)
     return(TRUE)
   }, sce_obj = sce_obj, out_path = out_path)

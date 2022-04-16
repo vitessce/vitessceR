@@ -35,30 +35,31 @@ sce_zeisel <- runPCA(sce_zeisel)
 vc <- VitessceConfig$new("My config")
 dataset <- vc$add_dataset("My dataset")$add_object(SCEWrapper$new(
   sce_zeisel,
+  assay = "logcounts",
   cell_set_metas = c("tissue", "level1class", "level2class"),
   cell_set_meta_names = c("Tissue", "Cell Type Level 1", "Cell Type Level 2"),
   cell_embeddings = c("PCA"),
   out_dir = file.path("data", "sce")
 ))
-scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
-status <- vc$add_view(dataset, Component$STATUS)
-desc <- vc$add_view(dataset, Component$DESCRIPTION)
-desc <- desc$set_props(description = "Visualization of a SingleCellExperiment object.")
+scatterplot_cs <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
+scatterplot_g <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
 cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
-heatmap <- vc$add_view(dataset, Component$HEATMAP)
+genes <- vc$add_view(dataset, Component$GENES)
 vc$link_views(
-  list(scatterplot, heatmap),
-  list(CoordinationType$GENE_EXPRESSION_COLORMAP_RANGE),
-  list(c(0.0, 0.05))
+  list(scatterplot_cs, scatterplot_g),
+  list(CoordinationType$EMBEDDING_ZOOM),
+  list(0.0)
 )
-vc$layout(hconcat(
-  vconcat(scatterplot, heatmap),
-  vconcat(cell_sets, vconcat(desc, status))
+vc$link_views(
+  list(scatterplot_cs),
+  list("cellColorEncoding"),
+  list("cellSetSelection")
+)
+vc$layout(vconcat(
+  hconcat(scatterplot_cs, scatterplot_g),
+  hconcat(cell_sets, genes)
 ))
 
 # Render the Vitessce widget
 vc$widget(theme = "light")
 ```
-
-
-

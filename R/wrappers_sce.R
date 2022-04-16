@@ -19,6 +19,9 @@ SCEWrapper <- R6::R6Class("SCEWrapper",
     #' @field obj The object to wrap.
     #' @keywords internal
     obj = NULL,
+    #' @field assay The assay name in the Seurat object.
+    #' @keywords internal
+    assay = NULL,
     #' @field cell_embeddings The keys in the Seurat object's reductions/cell.embeddings
     #' to use for creating dimensionality reduction mappings.
     #' @keywords internal
@@ -64,9 +67,14 @@ SCEWrapper <- R6::R6Class("SCEWrapper",
     #' and keys for annotation scores.
     #' @param ... Parameters inherited from `AbstractWrapper`.
     #' @return A new `SCEWrapper` object.
-    initialize = function(obj, cell_embeddings = NA, cell_embedding_names = NA, cell_embedding_dims = NA, cell_set_metas = NA, cell_set_meta_names = NA, cell_set_meta_scores = NA, ...) {
+    initialize = function(obj, assay = NA, cell_embeddings = NA, cell_embedding_names = NA, cell_embedding_dims = NA, cell_set_metas = NA, cell_set_meta_names = NA, cell_set_meta_scores = NA, ...) {
       super$initialize(...)
       self$obj <- obj
+      if(is.na(assay)) {
+        self$assay <- "counts"
+      } else {
+        self$assay <- assay
+      }
       self$cell_embeddings <- cell_embeddings
       self$cell_embedding_names <- cell_embedding_names
       self$cell_embedding_dims <- cell_embedding_dims
@@ -127,7 +135,7 @@ SCEWrapper <- R6::R6Class("SCEWrapper",
 
       zarr_filepath <- self$get_zarr_path(dataset_uid, obj_i)
       if(!file.exists(zarr_filepath) || !self$use_cache) {
-        sce_to_anndata_zarr(self$obj, out_path = zarr_filepath)
+        sce_to_anndata_zarr(self$obj, out_path = zarr_filepath, assay = self$assay)
       }
 
       # Get the file definition creator functions.
