@@ -10,5 +10,4 @@ data/
 check/
 vignettes/data/
 *.Rproj
-inst/htmlwidgets/dist/index.js
-inst/htmlwidgets/dist/index.js.map
+.RData

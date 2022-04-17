@@ -24,6 +24,7 @@ License: MIT + file LICENSE
 BugReports: https://github.com/vitessce/vitessceR/issues
 URL: https://github.com/vitessce/vitessceR
 Encoding: UTF-8
+LazyData: false
 Language: en-US
 StagedInstall: no
 Roxygen: list(markdown = TRUE)
