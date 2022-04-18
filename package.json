@@ -33,6 +33,7 @@
     "react-dev-utils": "^10.2.1",
     "resolve": "^1.17.0",
     "style-loader": "^0.23.1",
+    "uglifyjs-webpack-plugin": "^2.2.0",
     "webpack": "^4.37.0",
     "webpack-cli": "^3.3.6"
   },

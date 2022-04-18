@@ -35,7 +35,6 @@ For questions and help with using the package, please open a [discussion](https:
 ```sh
 npm install
 npm run build
-npm run split
 ```
 
 ```r
