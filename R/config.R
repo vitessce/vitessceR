@@ -207,7 +207,7 @@ VitessceConfigCoordinationScope <- R6::R6Class("VitessceConfigCoordinationScope"
     #' @param c_value The value to set.
     #' @return Invisible self, to allow chaining.
     set_value = function(c_value) {
-      if(length(c_value) > 1) {
+      if(is.list(c_value) || length(c_value) > 1) {
         self$c_value <- c_value
       } else {
         self$c_value <- jsonlite::unbox(c_value)
