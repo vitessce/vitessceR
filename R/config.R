@@ -360,7 +360,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' @return A new `VitessceConfig` object.
     initialize = function(name = NA, description = NA) {
       self$config <- list(
-        version = "1.0.0",
+        version = "1.0.9",
         name = ifelse(is_na(name), "", name),
         description = ifelse(is_na(description), "", description),
         datasets = list(),
