@@ -2,8 +2,9 @@ const path = require('path');
 const fs = require('fs');
 const PnpWebpackPlugin = require('pnp-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const webpack = require('webpack');
 
-const mode = 'production';
+const mode = 'development';
 process.env.NODE_ENV = mode;
 
 // Custom webpack rules are generally the same for all webpack bundles, hence
@@ -63,15 +64,5 @@ module.exports = [
         },
         resolve,
         resolveLoader,
-        optimization: {
-          minimizer: [
-            new UglifyJsPlugin({
-              sourceMap: true,
-              uglifyOptions: {
-                keep_fnames: true,
-              },
-            })
-          ],
-        },
     },
 ];

@@ -1,2 +1,45 @@
-(window.webpackJsonp=window.webpackJsonp||[]).push([[6],{1291:function(e,t,r){"use strict";r.r(t),r.d(t,"default",function(){return WebImageDecoder});class WebImageDecoder extends r(688).a{constructor(){if(super(),"undefined"==typeof createImageBitmap)throw new Error("Cannot decode WebImage as `createImageBitmap` is not available");if("undefined"==typeof document&&"undefined"==typeof OffscreenCanvas)throw new Error("Cannot decode WebImage as neither `document` nor `OffscreenCanvas` is not available")}async decode(e,t){t=new Blob([t]),t=await createImageBitmap(t);let r;"undefined"!=typeof document?((r=document.createElement("canvas")).width=t.width,r.height=t.height):r=new OffscreenCanvas(t.width,t.height);const n=r.getContext("2d");return n.drawImage(t,0,0),n.getImageData(0,0,t.width,t.height).data.buffer}}},688:function(e,t,r){"use strict";function applyPredictor(r,n,a,e,o,t){if(!n||1===n)return r;for(let e=0;e<o.length;++e){if(o[e]%8!=0)throw new Error("When decoding with predictor, only multiple of 8 bits are supported.");if(o[e]!==o[0])throw new Error("When decoding with predictor, all samples must have the same size.")}var i=o[0]/8,d=2===t?1:o.length;for(let t=0;t<e&&!(t*d*a*i>=r.byteLength);++t){let e;if(2===n){switch(o[0]){case 8:e=new Uint8Array(r,t*d*a*i,d*a*i);break;case 16:e=new Uint16Array(r,t*d*a*i,d*a*i/2);break;case 32:e=new Uint32Array(r,t*d*a*i,d*a*i/4);break;default:throw new Error(`Predictor 2 not allowed with ${o[0]} bits per sample.`)}!function decodeRowAcc(t,r){let e=t.length-r,n=0;do{for(let e=r;0<e;e--)t[n+r]+=t[n],n++}while(0<(e-=r))}(e,d)}else 3===n&&!function decodeRowFloatingPoint(r,t,n){let a=0,e=r.length;for(var o=e/n;e>t;){for(let e=t;0<e;--e)r[a+t]+=r[a],++a;e-=t}var i=r.slice();for(let t=0;t<o;++t)for(let e=0;e<n;++e)r[n*t+e]=i[(n-e-1)*o+t]}(e=new Uint8Array(r,t*d*a*i,d*a*i),d,i)}return r}r.d(t,"a",function(){return basedecoder_BaseDecoder});class basedecoder_BaseDecoder{async decode(e,t){var t=await this.decodeBlock(t),r=e.Predictor||1;return 1!==r?applyPredictor(t,r,(r=!e.StripOffsets)?e.TileWidth:e.ImageWidth,r?e.TileLength:e.RowsPerStrip||e.ImageLength,e.BitsPerSample,e.PlanarConfiguration):t}}}}]);
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([[6],{
+
+/***/ "./node_modules/geotiff/dist-module/compression/packbits.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/geotiff/dist-module/compression/packbits.js ***!
+  \******************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PackbitsDecoder; });
+/* harmony import */ var _basedecoder_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./basedecoder.js */ "./node_modules/geotiff/dist-module/compression/basedecoder.js");
+
+
+class PackbitsDecoder extends _basedecoder_js__WEBPACK_IMPORTED_MODULE_0__["default"] {
+  decodeBlock(buffer) {
+    const dataView = new DataView(buffer);
+    const out = [];
+
+    for (let i = 0; i < buffer.byteLength; ++i) {
+      let header = dataView.getInt8(i);
+      if (header < 0) {
+        const next = dataView.getUint8(i + 1);
+        header = -header;
+        for (let j = 0; j <= header; ++j) {
+          out.push(next);
+        }
+        i += 1;
+      } else {
+        for (let j = 0; j <= header; ++j) {
+          out.push(dataView.getUint8(i + j + 1));
+        }
+        i += header + 1;
+      }
+    }
+    return new Uint8Array(out).buffer;
+  }
+}
+
+
+/***/ })
+
+}]);
 //# sourceMappingURL=6.index.js.map
