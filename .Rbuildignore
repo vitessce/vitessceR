@@ -3,6 +3,8 @@
 ^\.Rproj\.user$
 ^\.travis\.yml$
 ^\.BBSoptions$
+^\.envrc$
+^\.nvmrc$
 ^.github$
 ^package\.json$
 ^package-lock\.json$
