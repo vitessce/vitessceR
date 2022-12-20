@@ -67,7 +67,12 @@ vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL,
     width = width,
     height = height,
     package = 'vitessceR',
-    elementId = element_id
+    elementId = element_id,
+    sizingPolicy = htmlwidgets::sizingPolicy(
+      viewer.padding = 0,
+      browser.padding = 0,
+      browser.fill = TRUE
+    )
   )
 }
 

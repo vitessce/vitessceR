@@ -2,13 +2,18 @@ name: R
 
 on: [push, pull_request]
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build:
     runs-on: ubuntu-18.04
     env:
       cache-version: 4
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Set up libraries for Ubuntu
         run: |
           sudo apt-get update
@@ -69,9 +74,18 @@ jobs:
         run: |
           Rscript -e 'pkgdown::build_site(new_process = FALSE)'
           touch docs/.nojekyll
-      - name: Deploy docs to gh-pages branch
+      - uses: actions/upload-pages-artifact@v1
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-        uses: alex-page/blazing-fast-gh-pages-deploy@v1.1.0
         with:
-          repo-token: ${{ secrets.GH_TOKEN }}
-          site-directory: docs
+          path: ./docs
+  deploy:
+    runs-on: ubuntu-18.04
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        id: deployment
+        uses: actions/deploy-pages@v1
