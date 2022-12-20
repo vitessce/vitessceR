@@ -9,7 +9,7 @@ permissions:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     env:
       cache-version: 4
     steps:
@@ -79,7 +79,7 @@ jobs:
         with:
           path: ./docs
   deploy:
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-22.04
     needs: build
     environment:
       name: github-pages
