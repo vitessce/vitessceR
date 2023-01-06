@@ -5,7 +5,7 @@ test_that("VitessceConfig new", {
 
   vc_list <- vc$to_list(base_url = "http://localhost:8000")
   expect_equal(vc_list, list(
-    version = "1.0.0",
+    version = "1.0.9",
     name = "My config",
     description = "",
     datasets = list(),
@@ -23,7 +23,7 @@ test_that("VitessceConfig add_dataset", {
 
 
   expect_equal(vc_list, list(
-    version = "1.0.0",
+    version = "1.0.9",
     name = "My config",
     description = "",
     datasets = list(
@@ -50,7 +50,7 @@ test_that("VitessceConfigDataset add_file", {
 
   vc_list <- vc$to_list(base_url = "http://localhost:8000")
   expect_equal(vc_list, list(
-    version = "1.0.0",
+    version = "1.0.9",
     name = "My config",
     description = "",
     datasets = list(
@@ -83,7 +83,7 @@ test_that("VitessceConfigDataset add_file twice", {
 
   vc_list <- vc$to_list(base_url = "http://localhost:8000")
   expect_equal(vc_list, list(
-    version = "1.0.0",
+    version = "1.0.9",
     name = "My config",
     description = "",
     datasets = list(
@@ -135,7 +135,7 @@ test_that("VitessceConfigDataset add_file with options", {
 
   vc_list <- vc$to_list(base_url = "http://localhost:8000")
   expect_equal(vc_list, list(
-    version = "1.0.0",
+    version = "1.0.9",
     name = "My config",
     description = "",
     datasets = list(
@@ -186,7 +186,7 @@ test_that("VitessceConfigDataset add_object", {
 
   vc_list <- vc$to_list(base_url = "http://localhost:8000")
   expect_equal(vc_list, list(
-    version = "1.0.0",
+    version = "1.0.9",
     name = "My config",
     description = "",
     datasets = list(
@@ -220,7 +220,7 @@ test_that("VitessceConfig add_view", {
 
   vc_list <- vc$to_list(base_url = "http://localhost:8000")
   expect_equal(vc_list, list(
-    version = "1.0.0",
+    version = "1.0.9",
     name = "My config",
     description = "",
     datasets = list(
@@ -273,7 +273,7 @@ test_that("VitessceConfig add_coordination", {
 
   vc_list <- vc$to_list(base_url = "http://localhost:8000")
   expect_equal(vc_list, list(
-    version = "1.0.0",
+    version = "1.0.9",
     name = "My config",
     description = "",
     datasets = list(
@@ -329,7 +329,7 @@ test_that("VitessceConfig layout", {
 
   vc_list <- vc$to_list(base_url = "http://localhost:8000")
   expect_equal(vc_list, list(
-    version = "1.0.0",
+    version = "1.0.9",
     name = "My config",
     description = "",
     datasets = list(
@@ -373,7 +373,7 @@ test_that("VitessceConfig layout", {
 
 test_that("VitessceConfig from list", {
   vc_list_orig <- list(
-    version = "1.0.0",
+    version = "1.0.9",
     name = "My config",
     description = "",
     datasets = list(
