@@ -12,7 +12,7 @@ py_env <- basilisk::BasiliskEnvironment(
   packages=c(
     "numpy==1.*",
     "pandas==1.*",
-    "anndata>=0.7.6,<0.9",
+    "anndata==0.7.*",
     "h5py==3.*",
     "hdf5==1.*",
     "natsort==7.*",
@@ -20,7 +20,7 @@ py_env <- basilisk::BasiliskEnvironment(
     "scipy==1.*",
     "sqlite==3.*",
     "zarr==2.*",
-    "numcodecs>=0.7.2,<0.12"
+    "numcodecs==0.*"
   ),
   pip=c(
     "ome-zarr==0.2.1"
