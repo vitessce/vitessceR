@@ -51,7 +51,7 @@ Imports:
     zellkonverter,
     SummarizedExperiment,
     SingleCellExperiment,
-    SpatialExperiment
+    SpatialExperiment (== 1.4.0)
 Suggests: 
     testthat,
     knitr,
