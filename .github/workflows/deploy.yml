@@ -11,7 +11,7 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     env:
-      cache-version: 5
+      cache-version: 6
     steps:
       - uses: actions/checkout@v3
       - name: Set up libraries for Ubuntu
@@ -42,7 +42,7 @@ jobs:
           install.packages(c("remotes", "rcmdcheck", "BiocManager", "Seurat", "covr"))
           BiocManager::install("BiocCheck")
           remotes::install_github(c("RubD/Giotto", "mojaveazure/seurat-disk"))
-          remotes::install_deps(dependencies = TRUE)
+          remotes::install_deps(dependencies = TRUE, upgrade = "never")
         shell: Rscript {0}
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
