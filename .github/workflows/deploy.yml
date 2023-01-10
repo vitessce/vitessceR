@@ -70,6 +70,10 @@ jobs:
         run: |
           covr::package_coverage()
         shell: Rscript {0}
+      - name: Downgrade pkgdown
+        run: |
+          remotes::install_version("pkgdown", "2.0.3")
+        shell: Rscript {0}
       - name: Build docs
         run: |
           Rscript -e 'pkgdown::build_site(new_process = FALSE)'
