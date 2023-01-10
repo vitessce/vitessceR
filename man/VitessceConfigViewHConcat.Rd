@@ -21,13 +21,13 @@ Horizontal view concatenation in a VitessceConfig
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{VitessceConfigViewHConcat$new()}}
-\item \href{#method-clone}{\code{VitessceConfigViewHConcat$clone()}}
+\item \href{#method-VitessceConfigViewHConcat-new}{\code{VitessceConfigViewHConcat$new()}}
+\item \href{#method-VitessceConfigViewHConcat-clone}{\code{VitessceConfigViewHConcat$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-VitessceConfigViewHConcat-new"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigViewHConcat-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new view concat object.
 \subsection{Usage}{
@@ -46,8 +46,8 @@ A new \code{VitessceConfigViewHConcat} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-VitessceConfigViewHConcat-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigViewHConcat-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

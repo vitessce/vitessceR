@@ -13,17 +13,17 @@ View in a VitessceConfig
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{VitessceConfigView$new()}}
-\item \href{#method-use_coordination}{\code{VitessceConfigView$use_coordination()}}
-\item \href{#method-set_xywh}{\code{VitessceConfigView$set_xywh()}}
-\item \href{#method-set_props}{\code{VitessceConfigView$set_props()}}
-\item \href{#method-to_list}{\code{VitessceConfigView$to_list()}}
-\item \href{#method-clone}{\code{VitessceConfigView$clone()}}
+\item \href{#method-VitessceConfigView-new}{\code{VitessceConfigView$new()}}
+\item \href{#method-VitessceConfigView-use_coordination}{\code{VitessceConfigView$use_coordination()}}
+\item \href{#method-VitessceConfigView-set_xywh}{\code{VitessceConfigView$set_xywh()}}
+\item \href{#method-VitessceConfigView-set_props}{\code{VitessceConfigView$set_props()}}
+\item \href{#method-VitessceConfigView-to_list}{\code{VitessceConfigView$to_list()}}
+\item \href{#method-VitessceConfigView-clone}{\code{VitessceConfigView$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-VitessceConfigView-new"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigView-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new view object.
 \subsection{Usage}{
@@ -52,8 +52,8 @@ A new \code{VitessceConfigView} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-use_coordination"></a>}}
-\if{latex}{\out{\hypertarget{method-use_coordination}{}}}
+\if{html}{\out{<a id="method-VitessceConfigView-use_coordination"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigView-use_coordination}{}}}
 \subsection{Method \code{use_coordination()}}{
 Link this view to existing coordination scope(s).
 \subsection{Usage}{
@@ -72,8 +72,8 @@ Invisible self, to allow chaining.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_xywh"></a>}}
-\if{latex}{\out{\hypertarget{method-set_xywh}{}}}
+\if{html}{\out{<a id="method-VitessceConfigView-set_xywh"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigView-set_xywh}{}}}
 \subsection{Method \code{set_xywh()}}{
 Set the dimensions of the view.
 \subsection{Usage}{
@@ -98,8 +98,8 @@ Self, to allow chaining.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_props"></a>}}
-\if{latex}{\out{\hypertarget{method-set_props}{}}}
+\if{html}{\out{<a id="method-VitessceConfigView-set_props"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigView-set_props}{}}}
 \subsection{Method \code{set_props()}}{
 Set additional props for this view.
 \subsection{Usage}{
@@ -118,8 +118,8 @@ Self, to allow chaining.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-to_list"></a>}}
-\if{latex}{\out{\hypertarget{method-to_list}{}}}
+\if{html}{\out{<a id="method-VitessceConfigView-to_list"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigView-to_list}{}}}
 \subsection{Method \code{to_list()}}{
 Convert the object to an R list. Helpful when converting the config to JSON.
 \subsection{Usage}{
@@ -131,8 +131,8 @@ A \code{list} that can be serialized to JSON using \code{rjson}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-VitessceConfigView-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigView-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

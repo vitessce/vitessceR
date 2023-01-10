@@ -19,15 +19,15 @@ Class representing a local web server to serve dataset objects.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{VitessceConfigServer$new()}}
-\item \href{#method-create_routes}{\code{VitessceConfigServer$create_routes()}}
-\item \href{#method-run}{\code{VitessceConfigServer$run()}}
-\item \href{#method-clone}{\code{VitessceConfigServer$clone()}}
+\item \href{#method-VitessceConfigServer-new}{\code{VitessceConfigServer$new()}}
+\item \href{#method-VitessceConfigServer-create_routes}{\code{VitessceConfigServer$create_routes()}}
+\item \href{#method-VitessceConfigServer-run}{\code{VitessceConfigServer$run()}}
+\item \href{#method-VitessceConfigServer-clone}{\code{VitessceConfigServer$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-VitessceConfigServer-new"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigServer-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new server wrapper object.
 \subsection{Usage}{
@@ -46,8 +46,8 @@ A new \code{VitessceConfigServer} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-create_routes"></a>}}
-\if{latex}{\out{\hypertarget{method-create_routes}{}}}
+\if{html}{\out{<a id="method-VitessceConfigServer-create_routes"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigServer-create_routes}{}}}
 \subsection{Method \code{create_routes()}}{
 Set up the server routes.
 \subsection{Usage}{
@@ -63,8 +63,8 @@ Set up the server routes.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-run"></a>}}
-\if{latex}{\out{\hypertarget{method-run}{}}}
+\if{html}{\out{<a id="method-VitessceConfigServer-run"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigServer-run}{}}}
 \subsection{Method \code{run()}}{
 Run the local server on the specified port.
 \subsection{Usage}{
@@ -73,8 +73,8 @@ Run the local server on the specified port.
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-VitessceConfigServer-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigServer-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

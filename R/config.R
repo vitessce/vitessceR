@@ -360,7 +360,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' @return A new `VitessceConfig` object.
     initialize = function(name = NA, description = NA) {
       self$config <- list(
-        version = "1.0.0",
+        version = "1.0.9",
         name = ifelse(is_na(name), "", name),
         description = ifelse(is_na(description), "", description),
         datasets = list(),
@@ -529,6 +529,10 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' @param c_types The coordination types on which to coordinate the views.
     #' @param c_values Initial values corresponding to each coordination type.
     #' Should have the same length as the c_types array. Optional.
+    #' @param raw Should the coordination values be set using
+    #' VitessceConfigCoordinationScope$set_value() or
+    #' VitessceConfigCoordinationScope$set_value_raw()? Use
+    #' when setting lists or similar more complex values.
     #' @return Self, to allow chaining.
     #' @examples
     #' vc <- VitessceConfig$new("My config")
@@ -541,7 +545,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #'   c(CoordinationType$EMBEDDING_TARGET_X, CoordinationType$EMBEDDING_TARGET_Y),
     #'   c_values = c(0, 0)
     #' )
-    link_views = function(views, c_types, c_values = NA) {
+    link_views = function(views, c_types, c_values = NA, raw = FALSE) {
       c_scopes <- self$add_coordination(c_types)
       for(view in views) {
         for(c_scope in c_scopes) {
@@ -551,7 +555,11 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
       if(!is_na(c_values) && length(c_types) == length(c_values)) {
         for(i in seq_len(length(c_scopes))) {
           c_scope <- c_scopes[[i]]
-          c_scope$set_value(c_values[[i]])
+          if(raw) {
+            c_scope$set_value_raw(c_values[[i]])
+          } else {
+            c_scope$set_value(c_values[[i]])
+          }
         }
       }
       invisible(self)

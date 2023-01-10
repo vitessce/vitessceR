@@ -1,8 +1,6 @@
 dependencies:
   - name: vitessceR
     version: 0.99.1
-    src: htmlwidgets/dist
+    src: htmlwidgets/lib
     script:
       - index.js
-    stylesheet:
-      - index.css

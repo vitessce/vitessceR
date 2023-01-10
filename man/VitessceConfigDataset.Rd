@@ -34,17 +34,17 @@ dataset <- vc$add_dataset("My dataset")$add_file(
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{VitessceConfigDataset$new()}}
-\item \href{#method-add_file}{\code{VitessceConfigDataset$add_file()}}
-\item \href{#method-add_object}{\code{VitessceConfigDataset$add_object()}}
-\item \href{#method-get_routes}{\code{VitessceConfigDataset$get_routes()}}
-\item \href{#method-to_list}{\code{VitessceConfigDataset$to_list()}}
-\item \href{#method-clone}{\code{VitessceConfigDataset$clone()}}
+\item \href{#method-VitessceConfigDataset-new}{\code{VitessceConfigDataset$new()}}
+\item \href{#method-VitessceConfigDataset-add_file}{\code{VitessceConfigDataset$add_file()}}
+\item \href{#method-VitessceConfigDataset-add_object}{\code{VitessceConfigDataset$add_object()}}
+\item \href{#method-VitessceConfigDataset-get_routes}{\code{VitessceConfigDataset$get_routes()}}
+\item \href{#method-VitessceConfigDataset-to_list}{\code{VitessceConfigDataset$to_list()}}
+\item \href{#method-VitessceConfigDataset-clone}{\code{VitessceConfigDataset$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-VitessceConfigDataset-new"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigDataset-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new dataset object.
 \subsection{Usage}{
@@ -65,8 +65,8 @@ A new \code{VitessceConfigDataset} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-add_file"></a>}}
-\if{latex}{\out{\hypertarget{method-add_file}{}}}
+\if{html}{\out{<a id="method-VitessceConfigDataset-add_file"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigDataset-add_file}{}}}
 \subsection{Method \code{add_file()}}{
 Add a file to this dataset.
 \subsection{Usage}{
@@ -110,8 +110,8 @@ dataset <- vc$add_dataset("My dataset")$add_file(
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-add_object"></a>}}
-\if{latex}{\out{\hypertarget{method-add_object}{}}}
+\if{html}{\out{<a id="method-VitessceConfigDataset-add_object"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigDataset-add_object}{}}}
 \subsection{Method \code{add_object()}}{
 Add a data object to this dataset.
 \subsection{Usage}{
@@ -130,8 +130,8 @@ Invisible self, to allow chaining.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_routes"></a>}}
-\if{latex}{\out{\hypertarget{method-get_routes}{}}}
+\if{html}{\out{<a id="method-VitessceConfigDataset-get_routes"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigDataset-get_routes}{}}}
 \subsection{Method \code{get_routes()}}{
 Get a list of web server route objects corresponding to any local files which will need to be served.
 \subsection{Usage}{
@@ -143,8 +143,8 @@ A \code{list} of \code{VitessceConfigServerStaticRoute}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-to_list"></a>}}
-\if{latex}{\out{\hypertarget{method-to_list}{}}}
+\if{html}{\out{<a id="method-VitessceConfigDataset-to_list"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigDataset-to_list}{}}}
 \subsection{Method \code{to_list()}}{
 Convert the dataset to an R list. Helpful when converting the config to JSON.
 \subsection{Usage}{
@@ -163,8 +163,8 @@ A \code{list} that can be serialized to JSON using \code{rjson}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-VitessceConfigDataset-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigDataset-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

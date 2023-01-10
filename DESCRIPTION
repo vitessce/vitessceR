@@ -28,7 +28,7 @@ LazyData: false
 Language: en-US
 StagedInstall: no
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 VignetteBuilder: knitr
 Imports:
     Matrix,

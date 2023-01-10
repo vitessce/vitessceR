@@ -108,9 +108,6 @@ sce_to_anndata_zarr <- function(sce_obj, out_path) {
 #' @return TRUE if the conversion succeeds.
 #'
 #' @export
-#' @examples
-#' obj <- get_spe_obj()
-#' spe_to_anndata_zarr(obj, out_path = "data/spe.zarr")
 #' @importFrom SummarizedExperiment colData
 #' @importFrom SingleCellExperiment int_colData
 #' @importFrom SpatialExperiment colData<-
@@ -120,7 +117,8 @@ spe_to_anndata_zarr <- function(spe_obj, out_path) {
   colData(spe_obj) <- cbind(
     colData(spe_obj),
     internal_col_data$spatialCoords,
-    internal_col_data$spatialData,
+    # spatialData deprecated in 1.5.2
+    # internal_col_data$spatialData,
     internal_col_data$reducedDims
   )
 
