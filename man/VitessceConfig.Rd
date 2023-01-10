@@ -99,22 +99,22 @@ vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./d
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{VitessceConfig$new()}}
-\item \href{#method-add_dataset}{\code{VitessceConfig$add_dataset()}}
-\item \href{#method-add_view}{\code{VitessceConfig$add_view()}}
-\item \href{#method-add_coordination}{\code{VitessceConfig$add_coordination()}}
-\item \href{#method-layout}{\code{VitessceConfig$layout()}}
-\item \href{#method-link_views}{\code{VitessceConfig$link_views()}}
-\item \href{#method-to_list}{\code{VitessceConfig$to_list()}}
-\item \href{#method-get_routes}{\code{VitessceConfig$get_routes()}}
-\item \href{#method-widget}{\code{VitessceConfig$widget()}}
-\item \href{#method-export}{\code{VitessceConfig$export()}}
-\item \href{#method-clone}{\code{VitessceConfig$clone()}}
+\item \href{#method-VitessceConfig-new}{\code{VitessceConfig$new()}}
+\item \href{#method-VitessceConfig-add_dataset}{\code{VitessceConfig$add_dataset()}}
+\item \href{#method-VitessceConfig-add_view}{\code{VitessceConfig$add_view()}}
+\item \href{#method-VitessceConfig-add_coordination}{\code{VitessceConfig$add_coordination()}}
+\item \href{#method-VitessceConfig-layout}{\code{VitessceConfig$layout()}}
+\item \href{#method-VitessceConfig-link_views}{\code{VitessceConfig$link_views()}}
+\item \href{#method-VitessceConfig-to_list}{\code{VitessceConfig$to_list()}}
+\item \href{#method-VitessceConfig-get_routes}{\code{VitessceConfig$get_routes()}}
+\item \href{#method-VitessceConfig-widget}{\code{VitessceConfig$widget()}}
+\item \href{#method-VitessceConfig-export}{\code{VitessceConfig$export()}}
+\item \href{#method-VitessceConfig-clone}{\code{VitessceConfig$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-VitessceConfig-new"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfig-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new config object.
 \subsection{Usage}{
@@ -135,8 +135,8 @@ A new \code{VitessceConfig} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-add_dataset"></a>}}
-\if{latex}{\out{\hypertarget{method-add_dataset}{}}}
+\if{html}{\out{<a id="method-VitessceConfig-add_dataset"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfig-add_dataset}{}}}
 \subsection{Method \code{add_dataset()}}{
 Add a dataset to the config.
 \subsection{Usage}{
@@ -166,8 +166,8 @@ ds <- vc$add_dataset("My dataset")
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-add_view"></a>}}
-\if{latex}{\out{\hypertarget{method-add_view}{}}}
+\if{html}{\out{<a id="method-VitessceConfig-add_view"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfig-add_view}{}}}
 \subsection{Method \code{add_view()}}{
 Add a view to the config.
 \subsection{Usage}{
@@ -216,8 +216,8 @@ spatial <- vc$add_view(ds, "spatial")
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-add_coordination"></a>}}
-\if{latex}{\out{\hypertarget{method-add_coordination}{}}}
+\if{html}{\out{<a id="method-VitessceConfig-add_coordination"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfig-add_coordination}{}}}
 \subsection{Method \code{add_coordination()}}{
 Add a coordination scope to the config, for one or more coordination types.
 \subsection{Usage}{
@@ -248,8 +248,8 @@ spatial$use_coordination(c_scopes)
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-layout"></a>}}
-\if{latex}{\out{\hypertarget{method-layout}{}}}
+\if{html}{\out{<a id="method-VitessceConfig-layout"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfig-layout}{}}}
 \subsection{Method \code{layout()}}{
 Define the layout of views.
 \subsection{Usage}{
@@ -279,12 +279,12 @@ scatterplot <- vc$add_view(ds, "scatterplot")
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-link_views"></a>}}
-\if{latex}{\out{\hypertarget{method-link_views}{}}}
+\if{html}{\out{<a id="method-VitessceConfig-link_views"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfig-link_views}{}}}
 \subsection{Method \code{link_views()}}{
 A convenience function for setting up new coordination scopes across a set of views.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$link_views(views, c_types, c_values = NA)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$link_views(views, c_types, c_values = NA, raw = FALSE)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -296,6 +296,11 @@ A convenience function for setting up new coordination scopes across a set of vi
 
 \item{\code{c_values}}{Initial values corresponding to each coordination type.
 Should have the same length as the c_types array. Optional.}
+
+\item{\code{raw}}{Should the coordination values be set using
+VitessceConfigCoordinationScope$set_value() or
+VitessceConfigCoordinationScope$set_value_raw()? Use
+when setting lists or similar more complex values.}
 }
 \if{html}{\out{</div>}}
 }
@@ -321,8 +326,8 @@ vc$link_views(
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-to_list"></a>}}
-\if{latex}{\out{\hypertarget{method-to_list}{}}}
+\if{html}{\out{<a id="method-VitessceConfig-to_list"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfig-to_list}{}}}
 \subsection{Method \code{to_list()}}{
 Convert the config to an R list. Helpful when converting the config to JSON.
 \subsection{Usage}{
@@ -351,8 +356,8 @@ vc_list <- vc$to_list(base_url = "http://localhost:8000")
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_routes"></a>}}
-\if{latex}{\out{\hypertarget{method-get_routes}{}}}
+\if{html}{\out{<a id="method-VitessceConfig-get_routes"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfig-get_routes}{}}}
 \subsection{Method \code{get_routes()}}{
 Get a list of web server route objects corresponding to any local files which will need to be served.
 \subsection{Usage}{
@@ -364,8 +369,8 @@ A \code{list} of \code{VitessceConfigServerStaticRoute}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-widget"></a>}}
-\if{latex}{\out{\hypertarget{method-widget}{}}}
+\if{html}{\out{<a id="method-VitessceConfig-widget"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfig-widget}{}}}
 \subsection{Method \code{widget()}}{
 Create an htmlwidget based on this config.
 \subsection{Usage}{
@@ -412,8 +417,8 @@ vc$widget()
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-export"></a>}}
-\if{latex}{\out{\hypertarget{method-export}{}}}
+\if{html}{\out{<a id="method-VitessceConfig-export"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfig-export}{}}}
 \subsection{Method \code{export()}}{
 Export the data associated with this configuration to a specified destination.
 \subsection{Usage}{
@@ -450,8 +455,8 @@ vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./d
 
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-VitessceConfig-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfig-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

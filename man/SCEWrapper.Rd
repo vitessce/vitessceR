@@ -52,33 +52,33 @@ to use for cell set names mapped to keys for scores.}
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{SCEWrapper$new()}}
-\item \href{#method-check_obj}{\code{SCEWrapper$check_obj()}}
-\item \href{#method-get_zarr_path}{\code{SCEWrapper$get_zarr_path()}}
-\item \href{#method-get_zarr_url}{\code{SCEWrapper$get_zarr_url()}}
-\item \href{#method-convert_and_save}{\code{SCEWrapper$convert_and_save()}}
-\item \href{#method-make_cells_file_def_creator}{\code{SCEWrapper$make_cells_file_def_creator()}}
-\item \href{#method-make_cell_sets_file_def_creator}{\code{SCEWrapper$make_cell_sets_file_def_creator()}}
-\item \href{#method-make_expression_matrix_file_def_creator}{\code{SCEWrapper$make_expression_matrix_file_def_creator()}}
-\item \href{#method-clone}{\code{SCEWrapper$clone()}}
+\item \href{#method-SCEWrapper-new}{\code{SCEWrapper$new()}}
+\item \href{#method-SCEWrapper-check_obj}{\code{SCEWrapper$check_obj()}}
+\item \href{#method-SCEWrapper-get_zarr_path}{\code{SCEWrapper$get_zarr_path()}}
+\item \href{#method-SCEWrapper-get_zarr_url}{\code{SCEWrapper$get_zarr_url()}}
+\item \href{#method-SCEWrapper-convert_and_save}{\code{SCEWrapper$convert_and_save()}}
+\item \href{#method-SCEWrapper-make_cells_file_def_creator}{\code{SCEWrapper$make_cells_file_def_creator()}}
+\item \href{#method-SCEWrapper-make_cell_sets_file_def_creator}{\code{SCEWrapper$make_cell_sets_file_def_creator()}}
+\item \href{#method-SCEWrapper-make_expression_matrix_file_def_creator}{\code{SCEWrapper$make_expression_matrix_file_def_creator()}}
+\item \href{#method-SCEWrapper-clone}{\code{SCEWrapper$clone()}}
 }
 }
-\if{html}{
-\out{<details ><summary>Inherited methods</summary>}
-\itemize{
-\item \out{<span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="auto_view_config">}\href{../../vitessceR/html/AbstractWrapper.html#method-auto_view_config}{\code{vitessceR::AbstractWrapper$auto_view_config()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_file_defs">}\href{../../vitessceR/html/AbstractWrapper.html#method-get_file_defs}{\code{vitessceR::AbstractWrapper$get_file_defs()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_out_dir">}\href{../../vitessceR/html/AbstractWrapper.html#method-get_out_dir}{\code{vitessceR::AbstractWrapper$get_out_dir()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_out_dir_route">}\href{../../vitessceR/html/AbstractWrapper.html#method-get_out_dir_route}{\code{vitessceR::AbstractWrapper$get_out_dir_route()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_route_str">}\href{../../vitessceR/html/AbstractWrapper.html#method-get_route_str}{\code{vitessceR::AbstractWrapper$get_route_str()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_routes">}\href{../../vitessceR/html/AbstractWrapper.html#method-get_routes}{\code{vitessceR::AbstractWrapper$get_routes()}}\out{</span>}
-\item \out{<span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_url">}\href{../../vitessceR/html/AbstractWrapper.html#method-get_url}{\code{vitessceR::AbstractWrapper$get_url()}}\out{</span>}
-}
-\out{</details>}
-}
+\if{html}{\out{
+<details><summary>Inherited methods</summary>
+<ul>
+<li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="auto_view_config"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-auto_view_config'><code>vitessceR::AbstractWrapper$auto_view_config()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_file_defs"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_file_defs'><code>vitessceR::AbstractWrapper$get_file_defs()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_out_dir"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_out_dir'><code>vitessceR::AbstractWrapper$get_out_dir()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_out_dir_route"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_out_dir_route'><code>vitessceR::AbstractWrapper$get_out_dir_route()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_route_str"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_route_str'><code>vitessceR::AbstractWrapper$get_route_str()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_routes"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_routes'><code>vitessceR::AbstractWrapper$get_routes()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_url"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_url'><code>vitessceR::AbstractWrapper$get_url()</code></a></span></li>
+</ul>
+</details>
+}}
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-SCEWrapper-new"></a>}}
+\if{latex}{\out{\hypertarget{method-SCEWrapper-new}{}}}
 \subsection{Method \code{new()}}{
 Create a wrapper around a Seurat object.
 \subsection{Usage}{
@@ -127,8 +127,8 @@ A new \code{SCEWrapper} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-check_obj"></a>}}
-\if{latex}{\out{\hypertarget{method-check_obj}{}}}
+\if{html}{\out{<a id="method-SCEWrapper-check_obj"></a>}}
+\if{latex}{\out{\hypertarget{method-SCEWrapper-check_obj}{}}}
 \subsection{Method \code{check_obj()}}{
 Check that the object is valid
 \subsection{Usage}{
@@ -140,8 +140,8 @@ Success or failure.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_zarr_path"></a>}}
-\if{latex}{\out{\hypertarget{method-get_zarr_path}{}}}
+\if{html}{\out{<a id="method-SCEWrapper-get_zarr_path"></a>}}
+\if{latex}{\out{\hypertarget{method-SCEWrapper-get_zarr_path}{}}}
 \subsection{Method \code{get_zarr_path()}}{
 Get the path to the zarr store, relative to the current directory.
 \subsection{Usage}{
@@ -162,8 +162,8 @@ A path as a string.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_zarr_url"></a>}}
-\if{latex}{\out{\hypertarget{method-get_zarr_url}{}}}
+\if{html}{\out{<a id="method-SCEWrapper-get_zarr_url"></a>}}
+\if{latex}{\out{\hypertarget{method-SCEWrapper-get_zarr_url}{}}}
 \subsection{Method \code{get_zarr_url()}}{
 Get the URL to the Zarr store, to fill in the file URL in the file definitions.
 \subsection{Usage}{
@@ -186,8 +186,8 @@ A URL as a string.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-convert_and_save"></a>}}
-\if{latex}{\out{\hypertarget{method-convert_and_save}{}}}
+\if{html}{\out{<a id="method-SCEWrapper-convert_and_save"></a>}}
+\if{latex}{\out{\hypertarget{method-SCEWrapper-convert_and_save}{}}}
 \subsection{Method \code{convert_and_save()}}{
 Create the JSON output files, web server routes, and file definition creators.
 \subsection{Usage}{
@@ -205,8 +205,8 @@ Create the JSON output files, web server routes, and file definition creators.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-make_cells_file_def_creator"></a>}}
-\if{latex}{\out{\hypertarget{method-make_cells_file_def_creator}{}}}
+\if{html}{\out{<a id="method-SCEWrapper-make_cells_file_def_creator"></a>}}
+\if{latex}{\out{\hypertarget{method-SCEWrapper-make_cells_file_def_creator}{}}}
 \subsection{Method \code{make_cells_file_def_creator()}}{
 Make the file definition creator function for the cells data type.
 \subsection{Usage}{
@@ -227,8 +227,8 @@ A file definition creator function which takes a \code{base_url} parameter.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-make_cell_sets_file_def_creator"></a>}}
-\if{latex}{\out{\hypertarget{method-make_cell_sets_file_def_creator}{}}}
+\if{html}{\out{<a id="method-SCEWrapper-make_cell_sets_file_def_creator"></a>}}
+\if{latex}{\out{\hypertarget{method-SCEWrapper-make_cell_sets_file_def_creator}{}}}
 \subsection{Method \code{make_cell_sets_file_def_creator()}}{
 Make the file definition creator function for the cell sets data type.
 \subsection{Usage}{
@@ -249,8 +249,8 @@ A file definition creator function which takes a \code{base_url} parameter.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-make_expression_matrix_file_def_creator"></a>}}
-\if{latex}{\out{\hypertarget{method-make_expression_matrix_file_def_creator}{}}}
+\if{html}{\out{<a id="method-SCEWrapper-make_expression_matrix_file_def_creator"></a>}}
+\if{latex}{\out{\hypertarget{method-SCEWrapper-make_expression_matrix_file_def_creator}{}}}
 \subsection{Method \code{make_expression_matrix_file_def_creator()}}{
 Make the file definition creator function for the expression matrix data type.
 \subsection{Usage}{
@@ -271,8 +271,8 @@ A file definition creator function which takes a \code{base_url} parameter.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-SCEWrapper-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-SCEWrapper-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

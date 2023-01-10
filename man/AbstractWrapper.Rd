@@ -29,21 +29,21 @@ Abstract dataset object wrapper class
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{AbstractWrapper$new()}}
-\item \href{#method-convert_and_save}{\code{AbstractWrapper$convert_and_save()}}
-\item \href{#method-get_routes}{\code{AbstractWrapper$get_routes()}}
-\item \href{#method-get_file_defs}{\code{AbstractWrapper$get_file_defs()}}
-\item \href{#method-get_out_dir_route}{\code{AbstractWrapper$get_out_dir_route()}}
-\item \href{#method-get_url}{\code{AbstractWrapper$get_url()}}
-\item \href{#method-get_route_str}{\code{AbstractWrapper$get_route_str()}}
-\item \href{#method-get_out_dir}{\code{AbstractWrapper$get_out_dir()}}
-\item \href{#method-auto_view_config}{\code{AbstractWrapper$auto_view_config()}}
-\item \href{#method-clone}{\code{AbstractWrapper$clone()}}
+\item \href{#method-AbstractWrapper-new}{\code{AbstractWrapper$new()}}
+\item \href{#method-AbstractWrapper-convert_and_save}{\code{AbstractWrapper$convert_and_save()}}
+\item \href{#method-AbstractWrapper-get_routes}{\code{AbstractWrapper$get_routes()}}
+\item \href{#method-AbstractWrapper-get_file_defs}{\code{AbstractWrapper$get_file_defs()}}
+\item \href{#method-AbstractWrapper-get_out_dir_route}{\code{AbstractWrapper$get_out_dir_route()}}
+\item \href{#method-AbstractWrapper-get_url}{\code{AbstractWrapper$get_url()}}
+\item \href{#method-AbstractWrapper-get_route_str}{\code{AbstractWrapper$get_route_str()}}
+\item \href{#method-AbstractWrapper-get_out_dir}{\code{AbstractWrapper$get_out_dir()}}
+\item \href{#method-AbstractWrapper-auto_view_config}{\code{AbstractWrapper$auto_view_config()}}
+\item \href{#method-AbstractWrapper-clone}{\code{AbstractWrapper$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-AbstractWrapper-new"></a>}}
+\if{latex}{\out{\hypertarget{method-AbstractWrapper-new}{}}}
 \subsection{Method \code{new()}}{
 Create an abstract wrapper around a data object.
 \subsection{Usage}{
@@ -64,8 +64,8 @@ A new \code{AbstractWrapper} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-convert_and_save"></a>}}
-\if{latex}{\out{\hypertarget{method-convert_and_save}{}}}
+\if{html}{\out{<a id="method-AbstractWrapper-convert_and_save"></a>}}
+\if{latex}{\out{\hypertarget{method-AbstractWrapper-convert_and_save}{}}}
 \subsection{Method \code{convert_and_save()}}{
 Fill in the file_def_creators array.
 Each function added to this list should take in a base URL and generate a Vitessce file definition.
@@ -86,8 +86,8 @@ This method is void, should not return anything.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_routes"></a>}}
-\if{latex}{\out{\hypertarget{method-get_routes}{}}}
+\if{html}{\out{<a id="method-AbstractWrapper-get_routes"></a>}}
+\if{latex}{\out{\hypertarget{method-AbstractWrapper-get_routes}{}}}
 \subsection{Method \code{get_routes()}}{
 Obtain the routes that have been created for this wrapper class.
 \subsection{Usage}{
@@ -99,8 +99,8 @@ A list of server routes.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_file_defs"></a>}}
-\if{latex}{\out{\hypertarget{method-get_file_defs}{}}}
+\if{html}{\out{<a id="method-AbstractWrapper-get_file_defs"></a>}}
+\if{latex}{\out{\hypertarget{method-AbstractWrapper-get_file_defs}{}}}
 \subsection{Method \code{get_file_defs()}}{
 Obtain the file definitions for this wrapper class.
 \subsection{Usage}{
@@ -119,8 +119,8 @@ A list of server routes.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_out_dir_route"></a>}}
-\if{latex}{\out{\hypertarget{method-get_out_dir_route}{}}}
+\if{html}{\out{<a id="method-AbstractWrapper-get_out_dir_route"></a>}}
+\if{latex}{\out{\hypertarget{method-AbstractWrapper-get_out_dir_route}{}}}
 \subsection{Method \code{get_out_dir_route()}}{
 Create a web server route for this object.
 \subsection{Usage}{
@@ -141,8 +141,8 @@ A new \code{VitessceConfigServerStaticRoute} instance.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_url"></a>}}
-\if{latex}{\out{\hypertarget{method-get_url}{}}}
+\if{html}{\out{<a id="method-AbstractWrapper-get_url"></a>}}
+\if{latex}{\out{\hypertarget{method-AbstractWrapper-get_url}{}}}
 \subsection{Method \code{get_url()}}{
 Create a local web server URL for a dataset object.
 \subsection{Usage}{
@@ -167,8 +167,8 @@ A URL as a string.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_route_str"></a>}}
-\if{latex}{\out{\hypertarget{method-get_route_str}{}}}
+\if{html}{\out{<a id="method-AbstractWrapper-get_route_str"></a>}}
+\if{latex}{\out{\hypertarget{method-AbstractWrapper-get_route_str}{}}}
 \subsection{Method \code{get_route_str()}}{
 Create a string representing a web server route path (the part following the base URL).
 \subsection{Usage}{
@@ -191,8 +191,8 @@ A path as a string.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-get_out_dir"></a>}}
-\if{latex}{\out{\hypertarget{method-get_out_dir}{}}}
+\if{html}{\out{<a id="method-AbstractWrapper-get_out_dir"></a>}}
+\if{latex}{\out{\hypertarget{method-AbstractWrapper-get_out_dir}{}}}
 \subsection{Method \code{get_out_dir()}}{
 Create a directory path to a dataset within the base output directory.
 \subsection{Usage}{
@@ -215,8 +215,8 @@ A path as a string.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-auto_view_config"></a>}}
-\if{latex}{\out{\hypertarget{method-auto_view_config}{}}}
+\if{html}{\out{<a id="method-AbstractWrapper-auto_view_config"></a>}}
+\if{latex}{\out{\hypertarget{method-AbstractWrapper-auto_view_config}{}}}
 \subsection{Method \code{auto_view_config()}}{
 Automatically configure views for a particular dataset.
 \subsection{Usage}{
@@ -232,8 +232,8 @@ Automatically configure views for a particular dataset.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-AbstractWrapper-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-AbstractWrapper-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

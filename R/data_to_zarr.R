@@ -108,10 +108,6 @@ sce_to_anndata_zarr <- function(sce_obj, out_path) {
 #' @return TRUE if the conversion succeeds.
 #'
 #' @export
-#' @examples
-#' obj <- get_spe_obj()
-#' # TODO: fix example
-#' # spe_to_anndata_zarr(obj, out_path = "data/spe.zarr")
 #' @importFrom SummarizedExperiment colData
 #' @importFrom SingleCellExperiment int_colData
 #' @importFrom SpatialExperiment colData<-

@@ -13,14 +13,14 @@ File in a dataset in a VitessceConfig
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{VitessceConfigDatasetFile$new()}}
-\item \href{#method-to_list}{\code{VitessceConfigDatasetFile$to_list()}}
-\item \href{#method-clone}{\code{VitessceConfigDatasetFile$clone()}}
+\item \href{#method-VitessceConfigDatasetFile-new}{\code{VitessceConfigDatasetFile$new()}}
+\item \href{#method-VitessceConfigDatasetFile-to_list}{\code{VitessceConfigDatasetFile$to_list()}}
+\item \href{#method-VitessceConfigDatasetFile-clone}{\code{VitessceConfigDatasetFile$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-VitessceConfigDatasetFile-new"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigDatasetFile-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new dataset file object.
 \subsection{Usage}{
@@ -50,8 +50,8 @@ A new \code{VitessceConfigDatasetFile} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-to_list"></a>}}
-\if{latex}{\out{\hypertarget{method-to_list}{}}}
+\if{html}{\out{<a id="method-VitessceConfigDatasetFile-to_list"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigDatasetFile-to_list}{}}}
 \subsection{Method \code{to_list()}}{
 Convert the object to an R list. Helpful when converting the config to JSON.
 \subsection{Usage}{
@@ -63,8 +63,8 @@ A \code{list} that can be serialized to JSON using \code{rjson}.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-VitessceConfigDatasetFile-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigDatasetFile-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

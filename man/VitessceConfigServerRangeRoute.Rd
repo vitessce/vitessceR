@@ -21,14 +21,14 @@ Class representing a local web server route for a file which needs to support ra
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{VitessceConfigServerRangeRoute$new()}}
-\item \href{#method-create_handlers}{\code{VitessceConfigServerRangeRoute$create_handlers()}}
-\item \href{#method-clone}{\code{VitessceConfigServerRangeRoute$clone()}}
+\item \href{#method-VitessceConfigServerRangeRoute-new}{\code{VitessceConfigServerRangeRoute$new()}}
+\item \href{#method-VitessceConfigServerRangeRoute-create_handlers}{\code{VitessceConfigServerRangeRoute$create_handlers()}}
+\item \href{#method-VitessceConfigServerRangeRoute-clone}{\code{VitessceConfigServerRangeRoute$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-VitessceConfigServerRangeRoute-new"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigServerRangeRoute-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new server route wrapper object.
 \subsection{Usage}{
@@ -49,8 +49,8 @@ A new \code{VitessceConfigServerRangeRoute} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-create_handlers"></a>}}
-\if{latex}{\out{\hypertarget{method-create_handlers}{}}}
+\if{html}{\out{<a id="method-VitessceConfigServerRangeRoute-create_handlers"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigServerRangeRoute-create_handlers}{}}}
 \subsection{Method \code{create_handlers()}}{
 Add handler functions to the Plumber server object to respond on this route.
 \subsection{Usage}{
@@ -69,8 +69,8 @@ The modified server instance.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-VitessceConfigServerRangeRoute-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigServerRangeRoute-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

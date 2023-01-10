@@ -21,14 +21,14 @@ Class representing a local web server static route: path + directory.
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{VitessceConfigServerStaticRoute$new()}}
-\item \href{#method-create_handlers}{\code{VitessceConfigServerStaticRoute$create_handlers()}}
-\item \href{#method-clone}{\code{VitessceConfigServerStaticRoute$clone()}}
+\item \href{#method-VitessceConfigServerStaticRoute-new}{\code{VitessceConfigServerStaticRoute$new()}}
+\item \href{#method-VitessceConfigServerStaticRoute-create_handlers}{\code{VitessceConfigServerStaticRoute$create_handlers()}}
+\item \href{#method-VitessceConfigServerStaticRoute-clone}{\code{VitessceConfigServerStaticRoute$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-VitessceConfigServerStaticRoute-new"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigServerStaticRoute-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new server route wrapper object.
 \subsection{Usage}{
@@ -49,8 +49,8 @@ A new \code{VitessceConfigServerStaticRoute} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-create_handlers"></a>}}
-\if{latex}{\out{\hypertarget{method-create_handlers}{}}}
+\if{html}{\out{<a id="method-VitessceConfigServerStaticRoute-create_handlers"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigServerStaticRoute-create_handlers}{}}}
 \subsection{Method \code{create_handlers()}}{
 Add handler functions to the Plumber server object to respond on this route.
 \subsection{Usage}{
@@ -69,8 +69,8 @@ The modified server instance.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-VitessceConfigServerStaticRoute-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigServerStaticRoute-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{

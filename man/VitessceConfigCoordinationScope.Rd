@@ -24,15 +24,15 @@ Coordination scope in a VitessceConfig
 \section{Methods}{
 \subsection{Public methods}{
 \itemize{
-\item \href{#method-new}{\code{VitessceConfigCoordinationScope$new()}}
-\item \href{#method-set_value}{\code{VitessceConfigCoordinationScope$set_value()}}
-\item \href{#method-set_value_raw}{\code{VitessceConfigCoordinationScope$set_value_raw()}}
-\item \href{#method-clone}{\code{VitessceConfigCoordinationScope$clone()}}
+\item \href{#method-VitessceConfigCoordinationScope-new}{\code{VitessceConfigCoordinationScope$new()}}
+\item \href{#method-VitessceConfigCoordinationScope-set_value}{\code{VitessceConfigCoordinationScope$set_value()}}
+\item \href{#method-VitessceConfigCoordinationScope-set_value_raw}{\code{VitessceConfigCoordinationScope$set_value_raw()}}
+\item \href{#method-VitessceConfigCoordinationScope-clone}{\code{VitessceConfigCoordinationScope$clone()}}
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-new"></a>}}
-\if{latex}{\out{\hypertarget{method-new}{}}}
+\if{html}{\out{<a id="method-VitessceConfigCoordinationScope-new"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigCoordinationScope-new}{}}}
 \subsection{Method \code{new()}}{
 Create a new coordination scope object.
 \subsection{Usage}{
@@ -53,8 +53,8 @@ A new \code{VitessceConfigCoordinationScope} object.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_value"></a>}}
-\if{latex}{\out{\hypertarget{method-set_value}{}}}
+\if{html}{\out{<a id="method-VitessceConfigCoordinationScope-set_value"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigCoordinationScope-set_value}{}}}
 \subsection{Method \code{set_value()}}{
 Set the coordination value of this coordination scope object.
 \subsection{Usage}{
@@ -73,8 +73,8 @@ Invisible self, to allow chaining.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-set_value_raw"></a>}}
-\if{latex}{\out{\hypertarget{method-set_value_raw}{}}}
+\if{html}{\out{<a id="method-VitessceConfigCoordinationScope-set_value_raw"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigCoordinationScope-set_value_raw}{}}}
 \subsection{Method \code{set_value_raw()}}{
 Set the coordination value of this coordination scope object, without unboxing.
 \subsection{Usage}{
@@ -93,8 +93,8 @@ Invisible self, to allow chaining.
 }
 }
 \if{html}{\out{<hr>}}
-\if{html}{\out{<a id="method-clone"></a>}}
-\if{latex}{\out{\hypertarget{method-clone}{}}}
+\if{html}{\out{<a id="method-VitessceConfigCoordinationScope-clone"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigCoordinationScope-clone}{}}}
 \subsection{Method \code{clone()}}{
 The objects of this class are cloneable with this method.
 \subsection{Usage}{
