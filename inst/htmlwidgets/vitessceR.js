@@ -13,9 +13,9 @@ HTMLWidgets.widget({
 
     return {
       renderValue: async function(x) {
-        const React = await import('https://unpkg.com/es-react@16.13.1/react.js');
-        const ReactDOM = await import('https://unpkg.com/es-react@16.13.1/react-dom.js');
-        const d3 = await import("https://esm.sh/d3-require@1.3.0");
+        const React = await import('https://esm.sh/react@18.2.0');
+        const ReactDOM = await import('https://esm.sh/react-dom@18.2.0');
+        const d3 = await import('https://esm.sh/d3-require@1.3.0');
         
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
