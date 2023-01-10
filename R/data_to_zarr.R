@@ -120,6 +120,8 @@ spe_to_anndata_zarr <- function(spe_obj, out_path) {
   colData(spe_obj) <- cbind(
     colData(spe_obj),
     internal_col_data$spatialCoords,
+    # spatialData deprecated in 1.5.2
+    # internal_col_data$spatialData,
     internal_col_data$reducedDims
   )
 

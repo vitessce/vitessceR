@@ -54,7 +54,7 @@ HTMLWidgets.widget({
             const vitessceProps = { height, theme, config, onConfigChange };
             return e('div', { ref: divRef, style: { height: height + 'px' } },
                 e('style', {}, `
-                /* To undo the bootstrap font-sizing from Shiny. */
+                /* To undo the bootstrap font-sizing from Shiny. TODO: remove in v2.0.3 of Vitessce */
                 html { font-size: initial; }
                 `),
                 e(React.Suspense, { fallback: e('div', {}, 'Loading...') },
