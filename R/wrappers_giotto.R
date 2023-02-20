@@ -19,7 +19,10 @@ GiottoWrapper <- R6::R6Class("GiottoWrapper",
     #' @field obj The object to wrap.
     #' @keywords internal
     obj = NULL,
-    #' @field cell_embeddings The keys in the Seurat object's reductions/cell.embeddings
+    #' @field expr_matrix The key for the expression matrix.
+    #' @keywords internal
+    expr_matrix = NULL,
+    #' @field cell_embeddings The keys in the Giotto object's reductions/cell.embeddings
     #' to use for creating dimensionality reduction mappings.
     #' @keywords internal
     cell_embeddings = NULL,
@@ -31,15 +34,15 @@ GiottoWrapper <- R6::R6Class("GiottoWrapper",
     #' to use for creating dimensionality reduction mappings.
     #' @keywords internal
     cell_embedding_dims = NULL,
-    #' @field cell_set_metas The keys in the Seurat object's meta.data
+    #' @field cell_set_metas The keys in the Giotto object's cell_metadata
     #' to use for creating cell sets.
     #' @keywords internal
     cell_set_metas = NULL,
-    #' @field cell_set_meta_names The keys in the Seurat object's meta.data
+    #' @field cell_set_meta_names The keys in the Giotto object's cell_metadata
     #' to use for cell set names mapped to new names.
     #' @keywords internal
     cell_set_meta_names = NULL,
-    #' @field cell_set_meta_scores The keys in the Seurat object's meta.data
+    #' @field cell_set_meta_scores The keys in the Giotto object's cell_metadata
     #' to use for cell set names mapped to keys for scores.
     #' @keywords internal
     cell_set_meta_scores = NULL,
@@ -47,9 +50,10 @@ GiottoWrapper <- R6::R6Class("GiottoWrapper",
     #' @keywords internal
     zarr_folder = NULL,
     #' @description
-    #' Create a wrapper around a Seurat object.
+    #' Create a wrapper around a Giotto object.
     #' @param obj The object to wrap.
-    #' @param cell_embeddings The keys in the Seurat object's reductions/cell.embeddings
+    #' @param expr_matrix The name of the slot in the Giotto object.
+    #' @param cell_embeddings The keys in the Giotto object's reductions/cell.embeddings
     #' to use for creating dimensionality reduction plots.
     #' @param cell_embedding_names Names
     #' to use for creating dimensionality reduction plots.
@@ -64,9 +68,10 @@ GiottoWrapper <- R6::R6Class("GiottoWrapper",
     #' and keys for annotation scores.
     #' @param ... Parameters inherited from `AbstractWrapper`.
     #' @return A new `GiottoWrapper` object.
-    initialize = function(obj, cell_embeddings = NA, cell_embedding_names = NA, cell_embedding_dims = NA, cell_set_metas = NA, cell_set_meta_names = NA, cell_set_meta_scores = NA, ...) {
+    initialize = function(obj, expr_matrix = NA, cell_embeddings = NA, cell_embedding_names = NA, cell_embedding_dims = NA, cell_set_metas = NA, cell_set_meta_names = NA, cell_set_meta_scores = NA, ...) {
       super$initialize(...)
       self$obj <- obj
+      self$expr_matrix <- expr_matrix
       self$cell_embeddings <- cell_embeddings
       self$cell_embedding_names <- cell_embedding_names
       self$cell_embedding_dims <- cell_embedding_dims
@@ -88,8 +93,12 @@ GiottoWrapper <- R6::R6Class("GiottoWrapper",
         warning("Object is not of type giotto.")
         success <- FALSE
       }
+      if(!is_na(self$expr_matrix) && !(self$expr_matrix %in% slotNames(self$obj))) {
+        warning("Specified expr_matrix not present in Giotto object slot names.")
+        success <- FALSE
+      }
       if(!is_na(self$cell_embeddings) && !all(self$cell_embeddings %in% names(self$obj@dimension_reduction$cells))) {
-        warning("Specified cell_embeddings not all present in Giotto object dimension_reduction")
+        warning("Specified cell_embeddings not all present in Giotto object dimension_reduction.")
         success <- FALSE
       }
       if(!is_na(self$cell_set_metas) && !all(self$cell_set_metas %in% colnames(self$obj@cell_metadata))) {
@@ -128,7 +137,7 @@ GiottoWrapper <- R6::R6Class("GiottoWrapper",
 
       zarr_filepath <- self$get_zarr_path(dataset_uid, obj_i)
       if(!file.exists(zarr_filepath) || !self$use_cache) {
-        giotto_to_anndata_zarr(self$obj, out_path = zarr_filepath)
+        giotto_to_anndata_zarr(self$obj, out_path = zarr_filepath, X_slot = self$expr_matrix)
       }
 
       # Get the file definition creator functions.
@@ -139,7 +148,9 @@ GiottoWrapper <- R6::R6Class("GiottoWrapper",
       # Append the new file definition creators functions to the main list.
       self$file_def_creators <- append(self$file_def_creators, cells_file_creator)
       self$file_def_creators <- append(self$file_def_creators, cell_sets_file_creator)
-      self$file_def_creators <- append(self$file_def_creators, expression_matrix_file_creator)
+      if(!is_na(self$expr_matrix)) {
+        self$file_def_creators <- append(self$file_def_creators, expression_matrix_file_creator)
+      }
 
       # Create a web server route object for the directory of JSON files.
       self$routes <- append(self$routes, self$get_out_dir_route(dataset_uid, obj_i))

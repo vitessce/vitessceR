@@ -1,0 +1,117 @@
+---
+title: "Usage with Giotto: NanoString dataset"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Usage with Giotto: NanoString dataset}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+The following is an example of usage of the widget with a [Giotto](https://github.com/RubD/Giotto) object from [NanoString](https://www.nanostring.com/products/cosmx-spatial-molecular-imager/ffpe-dataset/).
+
+First, install the R dependencies:
+
+```r
+install.packages("devtools")
+devtools::install_github("RubD/Giotto")
+```
+
+Download and un-tar the Giotto object: https://nanostring-public-share.s3.us-west-2.amazonaws.com/SMI-Compressed/All+SMI+Giotto+object.tar.gz
+
+
+Load the Giotto object in R:
+
+```r
+rdata_path <- file.path("data", "giotto", "SMI_Giotto_Object.RData")
+load(rdata_path)
+
+# Clean up
+gem@cell_metadata <- gem@cell_metadata$rna
+gem@spatial_locs <- gem@spatial_locs$raw
+gem@raw_exprs <- NULL
+gem@norm_expr <- NULL
+gem@norm_scaled_expr <- NULL
+gem@custom_expr <- NULL
+gem@gene_metadata <- NULL
+gem@gene_ID <- NULL
+```
+
+Filter to select only the data from the "Lung13" tissue sample:
+
+```r
+cell_metadata <- gem@cell_metadata
+cell_ids <- cell_metadata[cell_metadata$tissue %in% c("Lung13")]$cell_ID
+gem <- Giotto::subsetGiotto(gem, cell_ids = cell_ids)
+
+for(dr in names(gem@dimension_reduction$cells)) {
+  old_coord <- gem@dimension_reduction$cells[[dr]][[dr]]$coordinates
+  new_coord <- old_coord[rownames(old_coord) %in% cell_ids,]
+  gem@dimension_reduction$cells[[dr]][[dr]]$coordinates <- new_coord
+}
+```
+
+Rescale the coordinates to help with saving as a NumPy array:
+
+```r
+# Rescale spatial coordinates
+spatial_locs <- gem@spatial_locs
+spatial_locs$sdimx <- spatial_locs$sdimx*10000
+spatial_locs$sdimy <- spatial_locs$sdimy*10000
+gem@spatial_locs <- spatial_locs
+
+# Rescale dimensionality reduction coordinates
+for(dr in names(gem@dimension_reduction$cells)) {
+  old_coord_2d <- gem@dimension_reduction$cells[[dr]][[dr]]$coordinates[, c(1, 2)]
+  old_coord_2d[, 1] <- old_coord_2d[, 1] - min(old_coord_2d[, 1])
+  old_coord_2d[, 1] <- (old_coord_2d[, 1] / max(old_coord_2d[, 1])) * 10000
+  old_coord_2d[, 2] <- old_coord_2d[, 2] - min(old_coord_2d[, 2])
+  old_coord_2d[, 2] <- (old_coord_2d[, 2] / max(old_coord_2d[, 2])) * 10000
+  
+  new_coord_2d <- old_coord_2d
+  gem@dimension_reduction$cells[[dr]][[dr]]$coordinates[, c(1, 2)] <- new_coord_2d
+}
+```
+
+Set up the Vitessce widget:
+
+```r
+library(vitessceR)
+
+w <- GiottoWrapper$new(
+  gem,
+  cell_set_metas = c("patient", "tissue", "cell_type", "niche"),
+  cell_set_meta_names = c("Patient", "Tissue", "Cell Type", "Niche"),
+  cell_embeddings = c("pca", "umapnew", "um.n200"),
+  cell_embedding_names = c("PCA", "Expression profile UMAP", "Neighborhood UMAP"),
+  out_dir = file.path("data", "giotto_nanostring")
+)
+
+vc <- VitessceConfig$new("My config")
+dataset <- vc$add_dataset("My dataset")$add_object(w)
+spatial <- vc$add_view(dataset, Component$SPATIAL)
+scatterplot_expr <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "Expression profile UMAP")
+scatterplot_nbrh <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "Neighborhood UMAP")
+cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
+status <- vc$add_view(dataset, Component$STATUS)
+desc <- vc$add_view(dataset, Component$DESCRIPTION)
+desc <- desc$set_props(description = "Visualization of a Giotto object.")
+
+vc$layout(
+  hconcat(
+    vconcat(
+      spatial,
+      scatterplot_expr
+    ),
+    vconcat(
+      hconcat(cell_sets, vconcat(desc, status)),
+      scatterplot_nbrh
+    )
+  )
+)
+
+# Render the Vitessce widget
+vc$widget(theme = "light")
+```
+
+
+
