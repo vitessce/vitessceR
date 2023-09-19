@@ -13,32 +13,33 @@ HTMLWidgets.widget({
 
     return {
       renderValue: async function(x) {
-        const React = await import('https://esm.sh/react@18.2.0');
-        const ReactDOM = await import('https://esm.sh/react-dom@18.2.0');
-        const d3 = await import('https://esm.sh/d3-require@1.3.0');
+        const { importWithMap } = await import('https://unpkg.com/dynamic-importmap@0.1.0');
+        const importMap = {
+          imports: {
+            "react": "https://esm.sh/react@18.2.0?dev",
+            "react-dom": "https://esm.sh/react-dom@18.2.0?dev",
+            "react-dom/client": "https://esm.sh/react-dom@18.2.0/client?dev",
+          },
+        };
+        
+        const React = await importWithMap("react", importMap);
+        const { createRoot } = await importWithMap("react-dom/client", importMap);
         
         const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
 
         const e = React.createElement;
-        let customRequire = d3.require;
         
-        const jsPackageVersion = "2.0.2"; // TODO
-        
+        const jsDevMode = x.js_dev_mode;
         const customJsUrl = x.custom_js_url;
-        if(customJsUrl && customJsUrl.length > 0) {
-            customRequire = d3.requireFrom(async () => {
-                return customJsUrl;
-            });
-        }
-        const aliasedRequire = customRequire.alias({
-            "react": React,
-            "react-dom": ReactDOM
-        });
-        const Vitessce = React.lazy(() => aliasedRequire(`vitessce@${jsPackageVersion}`).then(vitessce => asEsModule(vitessce.Vitessce)));
+        const jsPackageVersion = (x.js_package_version ? x.js_package_version : "3.2.1");
+        const pkgName = (jsDevMode ? "@vitessce/dev" : "vitessce");
 
-        // console.log(d3);
-        // console.log(e);
-        // console.log(x);
+        importMap.imports["vitessce"] = (customJsUrl && customJsUrl.length > 0
+            ? customJsUrl
+            : `https://unpkg.com/${pkgName}@${jsPackageVersion}`
+        );
+
+        const { Vitessce } = await importWithMap("vitessce", importMap);
         
         function VitessceWidget(props) {
             const { config, theme } = props;
@@ -53,17 +54,14 @@ HTMLWidgets.widget({
             
             const vitessceProps = { height, theme, config, onConfigChange };
             return e('div', { ref: divRef, style: { height: height + 'px' } },
-                e('style', {}, `
-                /* To undo the bootstrap font-sizing from Shiny. TODO: remove in v2.0.3 of Vitessce */
-                html { font-size: initial; }
-                `),
-                e(React.Suspense, { fallback: e('div', {}, 'Loading...') },
-                    e(Vitessce, vitessceProps)
-                )
+              e(React.Suspense, { fallback: e('div', {}, 'Loading...') },
+                e(Vitessce, vitessceProps)
+              )
             );
         }
-        
-        ReactDOM.render(e(VitessceWidget, x), el);
+
+        const root = createRoot(el);
+        root.render(e(VitessceWidget, x));
       },
       resize: function(width, height) {
         // TODO: code to re-render the widget with a new size
