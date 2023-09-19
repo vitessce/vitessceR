@@ -9,7 +9,6 @@
 ^node_modules$
 ^img$
 ^webpack\.config\.js$
-^inst/htmlwidgets/lib/.*$
 ^inst/htmlwidgets/dist/.*\.map$
 ^inst/testdata
 ^index\.md$
