@@ -15,7 +15,7 @@ The ``vitessceR`` package includes:
 
 * **Data preparation**
 
-  * Use our data conversion wrapper classes to process data stored in common single-cell file types including Seurat objects.
+  * Use data conversion functions from the `vitessceAnalysisR` package to process data stored in common single-cell data structures including Seurat objects.
 
 
 ## Installation

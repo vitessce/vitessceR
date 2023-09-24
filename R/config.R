@@ -665,6 +665,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
 
 #' @name VitessceConfig$from_list
 #' @title Create a new Vitessce Config from a list
+#' @description
 #'
 #' A helper function to construct a new `VitessceConfig` object based on an existing config in a list format.
 #'
@@ -703,6 +704,7 @@ VitessceConfig$from_list <- function(config) {
 
 #' @name VitessceConfig$from_object
 #' @title Create a new Vitessce Config from a data object
+#' @description
 #'
 #' A helper function to construct a new `VitessceConfig` object based on an object containing single-cell or imaging data.
 #'
