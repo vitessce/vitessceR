@@ -1,3 +1,23 @@
+
+
+make_unique_filename <- function(file_ext) {
+  return(paste0("some_uuid", file_ext))
+}
+
+
+file_path_to_url_path <- function(local_path, prepend_slash = TRUE) {
+  if(grepl("\\", local_path, fixed = TRUE)) {
+    segments <- stringr::str_split(local_path, "\\\\")[[1]]
+    url_path <- paste(segments, collapse = "/")
+  } else {
+    url_path <- local_path
+  }
+  if(prepend_slash && substr(url_path, 1, 1) != "/") {
+    url_path <- paste0("/", url_path)
+  }
+  return(url_path)
+}
+
 #' Abstract dataset object wrapper class
 #' @title AbstractWrapper Class
 #' @docType class
@@ -23,6 +43,9 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
     #' @field file_def_creators A list of file definition creator functions.
     #' @keywords internal
     file_def_creators = NULL,
+    #' @field base_dir The base directory for local data.
+    #' @keywords internal
+    base_dir = NULL,
     #' @description
     #' Create an abstract wrapper around a data object.
     #' @param out_dir The directory for processed output files.
@@ -38,6 +61,7 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
       self$use_cache <- use_cache
       self$routes <- list()
       self$file_def_creators <- list()
+      self$base_dir <- NA
     },
     #' @description
     #' Fill in the file_def_creators array.
@@ -47,8 +71,10 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
     #'
     #' @param dataset_uid A unique identifier for this dataset.
     #' @param obj_i Within the dataset, the index of this data wrapper object.
-    convert_and_save = function(dataset_uid, obj_i) {
+    #' @param base_dir Path to a base directory.
+    convert_and_save = function(dataset_uid, obj_i, base_dir = NA) {
       dir.create(self$get_out_dir(dataset_uid, obj_i), recursive = TRUE, showWarnings = FALSE)
+      self$base_dir <- base_dir
     },
     #' @description
     #' Obtain the routes that have been created for this wrapper class.
@@ -85,6 +111,28 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
       )
       return(route)
     },
+    get_local_dir_url = function(base_url, dataset_uid, obj_i, local_dir_path, local_dir_uid) {
+      if(!self$is_remote && !is.na(self$base_dir)) {
+        return(self$get_url_simple(base_url, file_path_to_url_path(local_dir_path, prepend_slash = FALSE)))
+      }
+      return(self$get_url(base_url, dataset_uid, obj_i, local_dir_uid))
+    },
+    get_local_dir_route = function(dataset_uid, obj_i, local_dir_path, local_dir_uid) {
+      if(!self$is_remote) {
+        if(is.na(self$base_dir)) {
+          route_path <- self$get_route_str(dataset_uid, obj_i, local_dir_uid)
+        } else {
+          route_path <- file_path_to_url_path(local_dir_path)
+          local_dir_path <- file.path(self$base_dir, local_dir_path)
+        }
+        route <- VitessceConfigServerStaticRoute$new(
+          route_path,
+          local_dir_path
+        )
+        return(list(route))
+      }
+      return(list())
+    },
     #' @description
     #' Create a local web server URL for a dataset object.
     #' @param base_url The base URL on which the web server is serving.
@@ -95,6 +143,9 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
     get_url = function(base_url, dataset_uid, obj_i, ...) {
         retval <- paste0(base_url, self$get_route_str(dataset_uid, obj_i, ...))
         return(retval)
+    },
+    get_url_simple = function(base_url, suffix) {
+      return(paste0(base_url, "/", suffix))
     },
     #' @description
     #' Create a string representing a web server route path (the part following the base URL).
