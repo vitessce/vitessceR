@@ -1,7 +1,7 @@
 
 
 make_unique_filename <- function(file_ext) {
-  return(paste0("some_uuid", file_ext))
+  return(paste0(uuid::UUIDgenerate(output = "string"), file_ext))
 }
 
 

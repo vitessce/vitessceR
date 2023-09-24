@@ -43,7 +43,8 @@ Imports:
     stats,
     methods,
     S4Vectors,
-    grDevices
+    grDevices,
+    uuid
 Suggests: 
     testthat,
     knitr,
