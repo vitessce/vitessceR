@@ -61,7 +61,7 @@ VitessceConfigDatasetFile <- R6::R6Class("VitessceConfigDatasetFile",
     #' @param file_type A file type for the file.
     #' @param options A list of options to include for the file.
     #' @return A new `VitessceConfigDatasetFile` object.
-    initialize = function(url = NA, data_type = NA, file_type = NA, options = NA, coordination_values = NA) {
+    initialize = function(url = NA, file_type = NA, options = NA, coordination_values = NA, data_type = NA) {
       private$file <- obj_list()
       private$file[['fileType']] = file_type
       if(!is_na(url)) {
@@ -97,18 +97,27 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
   public = list(
     #' @field dataset The dataset as a list.
     dataset = NULL,
+    #' @field base_dir The base directory for the config.
+    base_dir = NULL,
     #' @description
     #' Create a new dataset object.
     #' @param uid A unique identifier string for the dataset.
     #' @param name A name for the dataset
     #' @return A new `VitessceConfigDataset` object.
-    initialize = function(uid, name) {
+    initialize = function(uid, name, base_dir = NA) {
       self$dataset <- list(
         uid = uid,
         name = name,
         files = list()
       )
       private$objs <- list()
+      self$base_dir <- base_dir
+    },
+    get_name = function() {
+      return(self$dataset[['name']])
+    },
+    get_uid = function() {
+      return(self$dataset[['uid']])
     },
     #' @description
     #' Add a file to this dataset.
@@ -125,8 +134,8 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
     #'   data_type = DataType$CELLS,
     #'   file_type = FileType$CELLS_JSON
     #' )
-    add_file = function(url = NA, data_type = NA, file_type = NA, options = NA) {
-      new_file <- VitessceConfigDatasetFile$new(url = url, data_type = data_type, file_type = file_type, options = options)
+    add_file = function(url = NA, file_type = NA, options = NA, coordination_values = NA, data_type = NA) {
+      new_file <- VitessceConfigDatasetFile$new(url = url, file_type = file_type, options = options, coordination_values = coordination_values)
       self$dataset$files <- append(self$dataset$files, new_file)
       invisible(self)
     },
@@ -135,7 +144,7 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
     #' @param obj The data object to add.
     #' @return Invisible self, to allow chaining.
     add_object = function(obj) {
-      obj$convert_and_save(self$dataset$uid, length(private$objs))
+      obj$convert_and_save(self$dataset$uid, length(private$objs), base_dir = self$base_dir)
       private$objs <- append(private$objs, obj)
       invisible(self)
     },
@@ -174,7 +183,7 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
 
         retval <- self$dataset
         retval$files <- obj_file_defs
-        retval
+        return(retval)
     }
   )
 )
