@@ -374,7 +374,14 @@ VitessceConfigView <- R6::R6Class("VitessceConfigView",
       }
       invisible(self)
     },
-    
+    use_coordination_by_dict = function(scopes) {
+      # TODO
+      invisible(self)
+    },
+    use_meta_coordination = function(meta_scope) {
+      # TODO
+      invisible(self)
+    },
     #' @description
     #' Set the dimensions of the view.
     #' @param x The x-coordinate of the view in the layout.
@@ -418,14 +425,16 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
   public = list(
     #' @field config The internal representation of the view config.
     config = NULL,
+    #' @field base_dir The base directory for the config.
+    base_dir = NULL,
     #' @description
     #' Create a new config object.
     #' @param name A name for the config.
     #' @param description A description for the config.
     #' @return A new `VitessceConfig` object.
-    initialize = function(name = NA, description = NA) {
+    initialize = function(schema_version, name = NA, description = NA, base_dir = NA) {
       self$config <- list(
-        version = "1.0.9",
+        version = schema_version,
         name = ifelse(is_na(name), "", name),
         description = ifelse(is_na(description), "", description),
         datasets = list(),
@@ -433,6 +442,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
         layout = list(),
         initStrategy = "auto"
       )
+      self$base_dir <- base_dir
     },
     #' @description
     #' Add a dataset to the config.
@@ -448,7 +458,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
         prev_dataset_uids <- c(prev_dataset_uids, d$dataset$uid)
       }
       uid <- ifelse(is_na(uid), get_next_scope(prev_dataset_uids), uid)
-      new_dataset <- VitessceConfigDataset$new(uid, name)
+      new_dataset <- VitessceConfigDataset$new(uid, name, base_dir = self$base_dir)
       self$config$datasets <- append(self$config$datasets, new_dataset)
 
       new_scopes <- self$add_coordination(CoordinationType$DATASET)
@@ -535,6 +545,15 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
         result <- append(result, scope)
       }
       result
+    },
+    add_meta_coordination = function() {
+      # TODO
+    },
+    add_coordination_by_dict = function(input_val) {
+      # TODO
+    },
+    link_views_by_dict = function(views, input_val, meta = TRUE) {
+      # TODO
     },
     #' @description
     #' Define the layout of views.
@@ -737,14 +756,15 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
 #' @param config A list containing a valid config.
 #' @return A `VitessceConfig` object reflecting the list-based configuration values.
 VitessceConfig$from_list <- function(config) {
-  vc <- VitessceConfig$new(config$name, config$description)
+  vc <- VitessceConfig$new(config$version, name = config$name, description = config$description)
   for(d in config$datasets) {
     new_dataset <- vc$add_dataset(d$name, uid = d$uid)
     for(f in d$files) {
       new_dataset$add_file(
-        f$url,
-        f$type,
-        f$fileType
+        url = f$url,
+        file_type = ifelse(!is.null(f$fileType), f$fileType, NA),
+        coordination_values = ifelse(!is.null(f$coordinationValues), f$coordinationValues, NA),
+        options = ifelse(!is.null(f$options), f$options, NA)
       )
     }
   }
@@ -777,8 +797,8 @@ VitessceConfig$from_list <- function(config) {
 #' @param name A name for the view config.
 #' @param description A description for the view config.
 #' @return A `VitessceConfig` object containing the object as a member of the datasets list, with some automatically-configured views.
-VitessceConfig$from_object <- function(obj, name = NA, description = NA) {
-  vc <- VitessceConfig$new(name, description)
+VitessceConfig$from_object <- function(obj, schema_version, name = NA, description = NA) {
+  vc <- VitessceConfig$new(schema_version, name = name, description = description)
   obj$auto_view_config(vc)
   return(vc)
 }
