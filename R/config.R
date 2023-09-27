@@ -61,15 +61,17 @@ VitessceConfigDatasetFile <- R6::R6Class("VitessceConfigDatasetFile",
     #' @param file_type A file type for the file.
     #' @param options A list of options to include for the file.
     #' @return A new `VitessceConfigDatasetFile` object.
-    initialize = function(url = NA, data_type = NA, file_type = NA, options = NA) {
+    initialize = function(url = NA, data_type = NA, file_type = NA, options = NA, coordination_values = NA) {
       private$file <- obj_list()
+      private$file[['fileType']] = file_type
       if(!is_na(url)) {
         private$file[['url']] = url
       }
-      private$file[['type']] = data_type
-      private$file[['fileType']] = file_type
       if(!is_na(options)) {
         private$file[['options']] = options
+      }
+      if(!is_na(coordination_values)) {
+        private$file[['coordinationValues']] = coordination_values
       }
     },
     #' @description
