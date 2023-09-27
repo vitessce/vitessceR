@@ -51,6 +51,8 @@
 #'   c_values = c(0, 0)
 #' )
 CoordinationType <- list(
+  META_COORDINATION_SCOPES = "metaCoordinationScopes",
+  META_COORDINATION_SCOPES_BY = "metaCoordinationScopesBy",
   DATASET = "dataset",
   EMBEDDING_TYPE = "embeddingType",
   EMBEDDING_ZOOM = "embeddingZoom",

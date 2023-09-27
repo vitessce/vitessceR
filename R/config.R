@@ -188,6 +188,30 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
   )
 )
 
+CoordinationLevel <- R6::R6Class("CoordinationLevel",
+  public = list(
+    value = NULL,
+    cached_value = NULL,
+    initialize = function(value) {
+      self$value <- value
+      self$cached_value <- NA
+    },
+    set_cached = function(processed_level) {
+      self$cached_value <- processed_level
+    },
+    get_cached = function() {
+      return(self$cached_value)
+    },
+    is_cached = function() {
+      return(!is.na(self$cached_value))
+    }
+  )
+)
+
+CL <- function(value) {
+  return(CoordinationLevel$new(value))
+}
+
 #' Coordination scope in a VitessceConfig
 #' @title VitessceConfigCoordinationScope Class
 #' @docType class
@@ -208,10 +232,10 @@ VitessceConfigCoordinationScope <- R6::R6Class("VitessceConfigCoordinationScope"
     #' @param c_type A coordination type name.
     #' @param c_scope A coordination scope name.
     #' @return A new `VitessceConfigCoordinationScope` object.
-    initialize = function(c_type, c_scope) {
+    initialize = function(c_type, c_scope, c_value = NA) {
       self$c_type <- c_type
       self$c_scope <- c_scope
-      self$c_value <- NA
+      self$c_value <- c_value
     },
     #' @description
     #' Set the coordination value of this coordination scope object.
@@ -231,6 +255,35 @@ VitessceConfigCoordinationScope <- R6::R6Class("VitessceConfigCoordinationScope"
     #' @return Invisible self, to allow chaining.
     set_value_raw = function(c_value) {
       self$c_value <- c_value
+      invisible(self)
+    }
+  )
+)
+
+VitessceConfigMetaCoordinationScope <- R6::R6Class("VitessceConfigMetaCoordinationScope",
+  public = list(
+    #' @field meta_scope The name of the coordination scope for metaCoordinationScopes.
+    meta_scope = NULL,
+    #' @field meta_by_scope The name of the coordination scope for metaCoordinationScopesBy.
+    meta_by_scope = NULL,
+    initialize = function(meta_scope, meta_by_scope) {
+      self$meta_scope = VitessceConfigCoordinationScope$new(CoordinationType$META_COORDINATION_SCOPES, meta_scope)
+      self$meta_by_scope = VitessceConfigCoordinationScope$new(CoordinationType$META_COORDINATION_SCOPES_BY, meta_by_scope)
+    },
+    use_coordination = function(c_scopes) {
+      if(is.na(self$meta_scope4c_value)) {
+        self$meta_scope$set_value(obj_list())
+      }
+
+      meta_scopes_val <- self$meta_scope$c_value
+      for(c_scope in c_scopes) {
+        meta_scopes_val[[c_scope$c_type]] <- c_scope$c_scope
+      }
+      self$meta_scope$set_value(meta_scopes_val)
+      invisible(self)
+    },
+    use_coordination_by_dict = function(scopes) {
+      # TODO
       invisible(self)
     }
   )
@@ -321,6 +374,7 @@ VitessceConfigView <- R6::R6Class("VitessceConfigView",
       }
       invisible(self)
     },
+    
     #' @description
     #' Set the dimensions of the view.
     #' @param x The x-coordinate of the view in the layout.
