@@ -15,6 +15,8 @@ View in a VitessceConfig
 \itemize{
 \item \href{#method-VitessceConfigView-new}{\code{VitessceConfigView$new()}}
 \item \href{#method-VitessceConfigView-use_coordination}{\code{VitessceConfigView$use_coordination()}}
+\item \href{#method-VitessceConfigView-use_coordination_by_dict}{\code{VitessceConfigView$use_coordination_by_dict()}}
+\item \href{#method-VitessceConfigView-use_meta_coordination}{\code{VitessceConfigView$use_meta_coordination()}}
 \item \href{#method-VitessceConfigView-set_xywh}{\code{VitessceConfigView$set_xywh()}}
 \item \href{#method-VitessceConfigView-set_props}{\code{VitessceConfigView$set_props()}}
 \item \href{#method-VitessceConfigView-to_list}{\code{VitessceConfigView$to_list()}}
@@ -70,6 +72,24 @@ Link this view to existing coordination scope(s).
 \subsection{Returns}{
 Invisible self, to allow chaining.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-VitessceConfigView-use_coordination_by_dict"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigView-use_coordination_by_dict}{}}}
+\subsection{Method \code{use_coordination_by_dict()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigView$use_coordination_by_dict(scopes)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-VitessceConfigView-use_meta_coordination"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigView-use_meta_coordination}{}}}
+\subsection{Method \code{use_meta_coordination()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigView$use_meta_coordination(meta_scope)}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-VitessceConfigView-set_xywh"></a>}}

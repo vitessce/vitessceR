@@ -5,7 +5,7 @@
 \alias{CoordinationType}
 \title{Enumeration of Coordination Type values}
 \format{
-An object of class \code{list} of length 32.
+An object of class \code{list} of length 34.
 }
 \usage{
 CoordinationType

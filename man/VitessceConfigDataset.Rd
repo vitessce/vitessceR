@@ -28,6 +28,8 @@ dataset <- vc$add_dataset("My dataset")$add_file(
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{dataset}}{The dataset as a list.}
+
+\item{\code{base_dir}}{The base directory for the config.}
 }
 \if{html}{\out{</div>}}
 }
@@ -35,6 +37,8 @@ dataset <- vc$add_dataset("My dataset")$add_file(
 \subsection{Public methods}{
 \itemize{
 \item \href{#method-VitessceConfigDataset-new}{\code{VitessceConfigDataset$new()}}
+\item \href{#method-VitessceConfigDataset-get_name}{\code{VitessceConfigDataset$get_name()}}
+\item \href{#method-VitessceConfigDataset-get_uid}{\code{VitessceConfigDataset$get_uid()}}
 \item \href{#method-VitessceConfigDataset-add_file}{\code{VitessceConfigDataset$add_file()}}
 \item \href{#method-VitessceConfigDataset-add_object}{\code{VitessceConfigDataset$add_object()}}
 \item \href{#method-VitessceConfigDataset-get_routes}{\code{VitessceConfigDataset$get_routes()}}
@@ -48,7 +52,7 @@ dataset <- vc$add_dataset("My dataset")$add_file(
 \subsection{Method \code{new()}}{
 Create a new dataset object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDataset$new(uid, name)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDataset$new(uid, name, base_dir = NA)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -65,6 +69,24 @@ A new \code{VitessceConfigDataset} object.
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-VitessceConfigDataset-get_name"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigDataset-get_name}{}}}
+\subsection{Method \code{get_name()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDataset$get_name()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-VitessceConfigDataset-get_uid"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfigDataset-get_uid}{}}}
+\subsection{Method \code{get_uid()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDataset$get_uid()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-VitessceConfigDataset-add_file"></a>}}
 \if{latex}{\out{\hypertarget{method-VitessceConfigDataset-add_file}{}}}
 \subsection{Method \code{add_file()}}{
@@ -72,9 +94,10 @@ Add a file to this dataset.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDataset$add_file(
   url = NA,
-  data_type = NA,
   file_type = NA,
-  options = NA
+  options = NA,
+  coordination_values = NA,
+  data_type = NA
 )}\if{html}{\out{</div>}}
 }
 
@@ -83,11 +106,11 @@ Add a file to this dataset.
 \describe{
 \item{\code{url}}{The URL to the file.}
 
-\item{\code{data_type}}{The data type for the file.}
-
 \item{\code{file_type}}{The file type for the file.}
 
 \item{\code{options}}{Optional. An options list for the file.}
+
+\item{\code{data_type}}{The data type for the file.}
 }
 \if{html}{\out{</div>}}
 }

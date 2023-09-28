@@ -93,6 +93,8 @@ vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./d
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{config}}{The internal representation of the view config.}
+
+\item{\code{base_dir}}{The base directory for the config.}
 }
 \if{html}{\out{</div>}}
 }
@@ -103,6 +105,9 @@ vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./d
 \item \href{#method-VitessceConfig-add_dataset}{\code{VitessceConfig$add_dataset()}}
 \item \href{#method-VitessceConfig-add_view}{\code{VitessceConfig$add_view()}}
 \item \href{#method-VitessceConfig-add_coordination}{\code{VitessceConfig$add_coordination()}}
+\item \href{#method-VitessceConfig-add_meta_coordination}{\code{VitessceConfig$add_meta_coordination()}}
+\item \href{#method-VitessceConfig-add_coordination_by_dict}{\code{VitessceConfig$add_coordination_by_dict()}}
+\item \href{#method-VitessceConfig-link_views_by_dict}{\code{VitessceConfig$link_views_by_dict()}}
 \item \href{#method-VitessceConfig-layout}{\code{VitessceConfig$layout()}}
 \item \href{#method-VitessceConfig-link_views}{\code{VitessceConfig$link_views()}}
 \item \href{#method-VitessceConfig-to_list}{\code{VitessceConfig$to_list()}}
@@ -118,7 +123,7 @@ vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./d
 \subsection{Method \code{new()}}{
 Create a new config object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$new(name = NA, description = NA)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$new(schema_version, name = NA, description = NA, base_dir = NA)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -244,6 +249,33 @@ spatial$use_coordination(c_scopes)
 }
 \if{html}{\out{</div>}}
 
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-VitessceConfig-add_meta_coordination"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfig-add_meta_coordination}{}}}
+\subsection{Method \code{add_meta_coordination()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$add_meta_coordination()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-VitessceConfig-add_coordination_by_dict"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfig-add_coordination_by_dict}{}}}
+\subsection{Method \code{add_coordination_by_dict()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$add_coordination_by_dict(input_val)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-VitessceConfig-link_views_by_dict"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfig-link_views_by_dict}{}}}
+\subsection{Method \code{link_views_by_dict()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$link_views_by_dict(views, input_val, meta = TRUE)}\if{html}{\out{</div>}}
 }
 
 }

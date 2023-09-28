@@ -38,11 +38,14 @@ Image wrapper class
 <ul>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="auto_view_config"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-auto_view_config'><code>vitessceR::AbstractWrapper$auto_view_config()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_file_defs"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_file_defs'><code>vitessceR::AbstractWrapper$get_file_defs()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_local_dir_route"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_local_dir_route'><code>vitessceR::AbstractWrapper$get_local_dir_route()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_local_dir_url"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_local_dir_url'><code>vitessceR::AbstractWrapper$get_local_dir_url()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_out_dir"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_out_dir'><code>vitessceR::AbstractWrapper$get_out_dir()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_out_dir_route"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_out_dir_route'><code>vitessceR::AbstractWrapper$get_out_dir_route()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_route_str"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_route_str'><code>vitessceR::AbstractWrapper$get_route_str()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_routes"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_routes'><code>vitessceR::AbstractWrapper$get_routes()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_url"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_url'><code>vitessceR::AbstractWrapper$get_url()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_url_simple"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_url_simple'><code>vitessceR::AbstractWrapper$get_url_simple()</code></a></span></li>
 </ul>
 </details>
 }}
