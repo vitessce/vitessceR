@@ -152,6 +152,7 @@ FileType <- list(
   CELL_SETS_JSON = "cell-sets.json",
   CLUSTERS_JSON = "clusters.json",
   EXPRESSION_MATRIX_ZARR = "expression-matrix.zarr",
+  ANNDATA_ZARR = "anndata.zarr",
   ANNDATA_CELLS_ZARR = "anndata-cells.zarr",
   ANNDATA_CELL_SETS_ZARR = "anndata-cell-sets.zarr",
   ANNDATA_EXPRESSION_MATRIX_ZARR = "anndata-expression-matrix.zarr"
