@@ -75,8 +75,8 @@ VitessceConfigServerFileRoute <- R6::R6Class("VitessceConfigServerFileRoute",
             # Adapted from https://github.com/rstudio/plumber/blob/e829af6a94380cb897441c1c56129504afb9564f/R/plumber-static.R#L70C9-L85C12
             ext <- tools::file_ext(self$file_path)
             info <- file.info(self$file_path)
-            contentType <- getContentType(ext)
-            res$headers[["Content-Type"]] <- contentType
+            content_type <- get_content_type(ext)
+            res$headers[["Content-Type"]] <- content_type
             res$headers[["Content-Length"]] <- info$size
             res$headers[["Last-Modified"]] <- http_date_string(info$mtime)
             res$body <- NULL # For HEAD request.

@@ -36,6 +36,7 @@ Imports:
     jsonlite,
     R6,
     plumber,
+    mime,
     future,
     httpuv,
     stringr,

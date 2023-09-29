@@ -54,13 +54,16 @@ knownContentTypes <- c(
   yaml = "application/yaml"
 )
 
-getContentType <- function(ext, defaultType = 'application/octet-stream') {
+get_content_type <- function(ext, defaultType = 'application/octet-stream') {
   ext <- tolower(ext)
 
-  ret <-
-    knownContentTypes[ext] %|%
-    mime::mimemap[ext] %|%
-    defaultType
+  if(!is.null(knownContentTypes[ext])) {
+    ret <- knownContentTypes[ext]
+  } else if(!is.null(mime::mimemap[ext])) {
+    ret <- mime::mimemap[ext]
+  } else {
+    ret <- defaultType
+  }
 
   ret[[1]]
 }
