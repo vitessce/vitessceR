@@ -39,12 +39,12 @@ Imports:
     future,
     httpuv,
     stringr,
+    stringi,
     tools,
     stats,
     methods,
     S4Vectors,
-    grDevices,
-    uuid
+    grDevices
 Suggests: 
     testthat,
     knitr,
