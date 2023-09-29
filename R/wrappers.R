@@ -117,6 +117,10 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
       }
       return(self$get_url(base_url, dataset_uid, obj_i, local_dir_uid))
     },
+    get_local_file_url = function(base_url, dataset_uid, obj_i, local_file_path, local_file_uid) {
+      # Same logic as get_local_dir_url
+      return(self$get_local_dir_url(base_url, dataset_uid, obj_i, local_file_path, local_file_uid))
+    },
     get_local_dir_route = function(dataset_uid, obj_i, local_dir_path, local_dir_uid) {
       if(!self$is_remote) {
         if(is.na(self$base_dir)) {
@@ -128,6 +132,24 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
         route <- VitessceConfigServerStaticRoute$new(
           route_path,
           local_dir_path
+        )
+        return(list(route))
+      }
+      return(list())
+    },
+    get_local_file_route = function(dataset_uid, obj_i, local_file_path, local_file_uid) {
+      if(!self$is_remote) {
+        if(is.na(self$base_dir)) {
+          route_path <- self$get_route_str(dataset_uid, obj_i, local_file_uid)
+          local_file_path <- local_file_path
+        } else {
+          # Has base_dir
+          route_path <- file_path_to_url_path(local_file_path)
+          local_file_path <- file.path(self$base_dir, local_file_path)
+        }
+        route <- VitessceConfigServerFileRoute$new(
+          route_path,
+          local_file_path
         )
         return(list(route))
       }

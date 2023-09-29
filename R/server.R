@@ -45,6 +45,62 @@ VitessceConfigServerStaticRoute <- R6::R6Class("VitessceConfigServerStaticRoute"
 #' Class representing a local web server route for a file which needs to support range requests.
 #' @keywords internal
 #' @rdname VitessceConfigServerRangeRoute
+VitessceConfigServerFileRoute <- R6::R6Class("VitessceConfigServerFileRoute",
+   public = list(
+     #' @field path The path on which the web server should respond to requests using this callback.
+     path = NULL,
+     #' @field file_path The file to serve.
+     file_path = NULL,
+     #' @description
+     #' Create a new server route wrapper object.
+     #' @param path The route path.
+     #' @param file_path The file to serve on this route.
+     #' @return A new `VitessceConfigServerRangeRoute` object.
+     initialize = function(path, file_path) {
+       self$path <- path
+       self$file_path <- file_path
+     },
+     #' @description
+     #' Add handler functions to the Plumber server object to respond on this route.
+     #' @param pr_server The server instance.
+     #' @return The modified server instance.
+     create_handlers = function(pr_server) {
+       # Add the handler for range requests.
+       new_server <- plumber::pr_handle(pr_server, c("GET", "HEAD"), self$path, handler = function(req, res) {
+         if(req$REQUEST_METHOD %in% c("HEAD", "GET")) {
+            file_path <- self$file_path
+
+            res$headers <- obj_list()
+
+            # Adapted from https://github.com/rstudio/plumber/blob/e829af6a94380cb897441c1c56129504afb9564f/R/plumber-static.R#L70C9-L85C12
+            ext <- tools::file_ext(self$file_path)
+            info <- file.info(self$file_path)
+            contentType <- getContentType(ext)
+            res$headers[["Content-Type"]] <- contentType
+            res$headers[["Content-Length"]] <- info$size
+            res$headers[["Last-Modified"]] <- http_date_string(info$mtime)
+            res$body <- NULL # For HEAD request.
+            if (req$REQUEST_METHOD == 'GET') {
+              readBin(self$file_path, 'raw', n = info$size)
+            }
+            
+            # Set other headers.
+            res$headers[["Accept-Ranges"]] <- "bytes"
+            res$headers[["Access-Control-Allow-Origin"]] <- "*"
+            res$headers[["Access-Control-Expose-Headers"]] <- "Access-Control-Allow-Origin, Content-Length, Content-Range, Content-Type, Date, Server, Transfer-Encoding, range"
+            res$status <- 200
+         }
+         # Return the response object.
+         res
+       })
+       return(new_server)
+     }
+   )
+)
+
+#' Class representing a local web server route for a file which needs to support range requests.
+#' @keywords internal
+#' @rdname VitessceConfigServerRangeRoute
 VitessceConfigServerRangeRoute <- R6::R6Class("VitessceConfigServerRangeRoute",
    public = list(
      #' @field path The path on which the web server should respond to requests using this callback.
