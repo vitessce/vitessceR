@@ -27,26 +27,24 @@ library(vitessceR)
 base_url <- "https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/"
 
 # Create Vitessce view config
-vc <- VitessceConfig$new("Codeluppi et al., Nature Methods 2018")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "Codeluppi et al., Nature Methods 2018")
 dataset <- vc$add_dataset("Codeluppi")$add_file(
   url = paste0(base_url, "linnarsson.cells.json"),
-  data_type = DataType$CELLS,
-  file_type = FileType$CELLS_JSON
+  file_type = FileType$CELLS_JSON,
+  options = obj_list(
+    embeddingTypes = c("PCA", "t-SNE")
+  )
 )$add_file(
   url = paste0(base_url, "linnarsson.cell-sets.json"),
-  data_type = DataType$CELL_SETS,
   file_type = FileType$CELL_SETS_JSON
 )$add_file(
   url = paste0(base_url, "linnarsson.molecules.json"),
-  data_type = DataType$MOLECULES,
   file_type = FileType$MOLECULES_JSON
 )$add_file(
   url = paste0(base_url, "linnarsson.clusters.json"),
-  data_type = DataType$EXPRESSION_MATRIX,
   file_type = FileType$CLUSTERS_JSON
 )$add_file(
   url = paste0(base_url, "linnarsson.raster.json"),
-  data_type = DataType$RASTER,
   file_type = FileType$RASTER_JSON
 )
 
@@ -60,8 +58,8 @@ scatterplot_pca <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
 scatterplot_tsne <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "t-SNE")
 status <- vc$add_view(dataset, Component$STATUS)
 
-cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
-gene_list <- vc$add_view(dataset, Component$GENES)
+cell_sets <- vc$add_view(dataset, Component$OBS_SETS)
+gene_list <- vc$add_view(dataset, Component$FEATURE_LIST)
 heatmap <- vc$add_view(dataset, Component$HEATMAP)$set_props(transpose = TRUE)
 
 vc$layout(hconcat(

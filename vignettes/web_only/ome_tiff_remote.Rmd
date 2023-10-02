@@ -37,7 +37,7 @@ file_options = obj_list(
 )
 
 # Create Vitessce view config
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")$add_file(
   data_type = DataType$RASTER,
   file_type = FileType$RASTER_JSON,
