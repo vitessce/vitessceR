@@ -31,7 +31,7 @@ instrs <- createGiottoInstructions(
   save_plot = TRUE,
   show_plot = FALSE,
   save_dir = save_dir,
-  python_path = "~/miniconda3/envs/vitessce-r-env/bin/python"
+  python_path = "~/software/miniconda3/envs/vitessce-r-env/bin/python"
 )
 
 getSpatialDataset(dataset = "seqfish_SS_cortex", directory = save_dir, method = "wget")
