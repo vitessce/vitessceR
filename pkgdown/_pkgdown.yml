@@ -86,19 +86,13 @@ reference:
   desc: "Wrapper classes for automating the data conversion process for Vitessce."
 - contents:
   - AbstractWrapper
-  - SeuratWrapper
-  - SCEWrapper
-  - SPEWrapper
-  - GiottoWrapper
+  - AnnDataWrapper
+  - CsvWrapper
   - MultiImageWrapper
   - OmeTiffWrapper
+  - OmeZarrWrapper
 
 articles:
-  - title: Articles
-    navbar: Developer guides
-    contents:
-      - dev_wrapper_class
-      - dev_wrapper_subclass
   - title: Articles
     navbar: Troubleshooting
     contents:
