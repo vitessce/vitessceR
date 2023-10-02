@@ -48,7 +48,7 @@ HTMLWidgets.widget({
             
             const onConfigChange = React.useCallback((newConfig) => {
                 if(window && window.Shiny && window.Shiny.setInputValue) {
-                  Shiny.setInputValue("on_config_change", newConfig);
+                  Shiny.setInputValue("vitessce_on_config_change", newConfig);
                 }
             }, [window.Shiny]);
             

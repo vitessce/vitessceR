@@ -85,14 +85,15 @@ SeuratData::InstallData("pbmc3k")
 data("pbmc3k.final")
 force(pbmc3k.final)
 
-OUT_DIR <- file.path("data", "shiny")
+BASE_DIR <- file.path("data", "seurat")
+adata_filename <- "pbmc3k.final.h5ad.zarr"
+vitessceAnalysisR::seurat_to_anndata_zarr(pbmc3k.final, file.path(BASE_DIR, adata_filename))
 
-w <- SeuratWrapper$new(
-  pbmc3k.final,
-  cell_embeddings = c("pca", "umap"),
-  cell_embedding_names = c("PCA", "UMAP"),
-  cell_set_metas = c("seurat_annotations", "seurat_clusters"),
-  out_dir = OUT_DIR
+w <- AnnDataWrapper$new(
+  adata_path=adata_filename,
+  obs_embedding_paths = c("obsm/X_pca", "obsm/X_umap"),
+  obs_embedding_names = c("PCA", "UMAP"),
+  obs_set_paths = c("obs/seurat_annotations", "obs/seurat_clusters")
 )
 
 ui <- fluidPage(
@@ -101,14 +102,20 @@ ui <- fluidPage(
 )
 
 server <- function(input, output, session) {
-  addResourcePath("vitessce", OUT_DIR)
+  # Ask Shiny to also serve our data files in our local ./data/seurat folder from "/vitessce"
+  addResourcePath("vitessce", BASE_DIR)
+  
+  # Render the Vitessce widget into the UI output.
   output$vitessce_visualization <- render_vitessce(expr = {
-    vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
+    
+    # Tell Vitessce that file paths (in AnnDataWrapper) are relative to the BASE_DIR folder.
+    vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config", base_dir = BASE_DIR)
     dataset <- vc$add_dataset("My dataset")
     dataset <- dataset$add_object(w)
     scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
     vc$layout(scatterplot)
     
+    # Construct a base_url value dynamically based on the Shiny session info.
     BASE_URL <- paste0(
       session$clientData$url_protocol,
       "//",
@@ -118,46 +125,41 @@ server <- function(input, output, session) {
       "/vitessce"
     )
 
-    vc$widget(serve = FALSE, base_url = BASE_URL)
+    vc$widget(theme = "light", serve = FALSE, base_url = BASE_URL)
   })
 }
 
 shinyApp(ui, server)
 ```
 
-## Style issues
+## Bidirectional communication example
 
-By default, Shiny includes CSS from bootstrap in all apps.
-The bootstrap styles (font sizes in particular) can interfere with the styles for the Vitessce widget.
-
-One solution is add CSS to reset the font sizes for the root element of the Shiny app:
+Listen for `input$vitessce_on_config_change` events emitted by the Vitessce widget in order to observe user interactions and update the Shiny app in response. 
 
 ```r
 library(shiny)
 library(vitessceR)
+library(vitessceAnalysisR)
 library(SeuratData)
 
 SeuratData::InstallData("pbmc3k")
 data("pbmc3k.final")
 force(pbmc3k.final)
 
-w <- SeuratWrapper$new(
-  pbmc3k.final,
-  cell_embeddings = c("pca", "umap"),
-  cell_embedding_names = c("PCA", "UMAP"),
-  cell_set_metas = c("seurat_annotations", "seurat_clusters")
+adata_path <- file.path("data", "seurat", "pbmc3k.final.h5ad.zarr")
+vitessceAnalysisR::seurat_to_anndata_zarr(pbmc3k.final, adata_path)
+
+w <- AnnDataWrapper$new(
+  adata_path=adata_path,
+  obs_embedding_paths = c("obsm/X_pca", "obsm/X_umap"),
+  obs_embedding_names = c("PCA", "UMAP"),
+  obs_set_paths = c("obs/seurat_annotations", "obs/seurat_clusters")
 )
 
 ui <- fluidPage(
-  tags$head(
-    tags$style(HTML("
-      html, body {
-        font-size: inherit;
-      }
-    "))
-  ),
   "Vitessce in a Shiny app",
   vitessce_output(output_id = "vitessce_visualization", height = "600px"),
+  verbatimTextOutput("vitessce_config")
 )
 
 server <- function(input, output, session) {
@@ -167,11 +169,20 @@ server <- function(input, output, session) {
     dataset <- dataset$add_object(w)
     scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
     vc$layout(scatterplot)
-    vc$widget()
+    vc$widget(theme="light")
   })
+  
+  rv <- reactiveValues(current=NULL)
+  
+  observeEvent(input$vitessce_on_config_change, {
+    # We can access any values from the coordination space here.
+    # In this example, we access the ID of the currently-hovered cell.
+    rv$current <- input$vitessce_on_config_change[['coordinationSpace']][['obsHighlight']]
+  })
+  
+  output$vitessce_config <- renderPrint({ rv$current })
 }
 
 shinyApp(ui, server)
 ```
-
 

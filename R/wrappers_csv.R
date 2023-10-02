@@ -77,7 +77,7 @@ CsvWrapper <- R6::R6Class("CsvWrapper",
     #' @param obj_i The index of this data object within the dataset.
     #' @param base_dir A base directory for local data.
     convert_and_save = function(dataset_uid, obj_i, base_dir = NA) {
-      if(self$is_remote) {
+      if(!self$is_remote) {
         super$convert_and_save(dataset_uid, obj_i, base_dir = base_dir)
       }
 
