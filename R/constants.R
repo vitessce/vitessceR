@@ -79,6 +79,7 @@ CoordinationType <- list(
   GENE_SELECTION = "geneSelection",
   GENE_EXPRESSION_COLORMAP = "geneExpressionColormap",
   GENE_EXPRESSION_COLORMAP_RANGE = "geneExpressionColormapRange",
+  FEATURE_VALUE_COLORMAP_RANGE = "featureValueColormapRange",
   CELL_COLOR_ENCODING = "cellColorEncoding",
   SPATIAL_LAYERS = "spatialLayers",
   GENOMIC_ZOOM = "genomicZoom",
@@ -188,9 +189,11 @@ Component <- list(
   DESCRIPTION = "description",
   STATUS = "status",
   CELL_SETS = "cellSets",
+  OBS_SETS = "obsSets",
   HEATMAP = "heatmap",
   LAYER_CONTROLLER = "layerController",
   HIGLASS = "higlass",
   CELL_SET_SIZES = "cellSetSizes",
-  GENES = "genes"
+  GENES = "genes",
+  FEATURE_LIST = "featureList"
 )

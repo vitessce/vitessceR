@@ -16,6 +16,7 @@ First, install the R dependencies:
 install.packages("seurat")
 install.packages("devtools")
 devtools::install_github("mojaveazure/seurat-disk")
+devtools::install_github("vitessce/vitessceAnalysisR")
 ```
 
 
@@ -23,6 +24,7 @@ Download the dataset, load and preprocess the Seurat object, and configure the V
 
 ```r
 library(vitessceR)
+library(vitessceAnalysisR)
 library(Seurat)
 
 # Download example dataset
@@ -49,24 +51,28 @@ pbmc <- FindClusters(pbmc, resolution = 0.5)
 
 pbmc <- ScaleData(pbmc, features = all.genes, do.center = FALSE)
 
+adata_path <- file.path("data", "seurat", "pbmc3k.h5ad.zarr")
+
+vitessceAnalysisR::seurat_to_anndata_zarr(pbmc, adata_path)
+
 # Create Vitessce view config
-vc <- VitessceConfig$new("My config")
-dataset <- vc$add_dataset("My dataset")$add_object(SeuratWrapper$new(
-  pbmc,
-  cell_set_metas = c("seurat_clusters"),
-  cell_embeddings = c("pca"),
-  cell_embedding_names = c("PCA"),
-  out_dir = file.path("data", "seurat_basic"), use_cache = TRUE
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
+dataset <- vc$add_dataset("My dataset")$add_object(AnnDataWrapper$new(
+  adata_path=adata_path,
+  obs_set_paths = c("obs/seurat_clusters"),
+  obs_embedding_paths = c("obsm/X_pca"),
+  obs_embedding_names = c("PCA"),
+  obs_feature_matrix_path = "X"
 ))
 scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
 status <- vc$add_view(dataset, Component$STATUS)
 desc <- vc$add_view(dataset, Component$DESCRIPTION)
 desc <- desc$set_props(description = "Visualization of a Seurat object containing the PBMC 3K dataset.")
-genes <- vc$add_view(dataset, Component$GENES)
+genes <- vc$add_view(dataset, Component$FEATURE_LIST)
 heatmap <- vc$add_view(dataset, Component$HEATMAP)
 vc$link_views(
   list(scatterplot, heatmap),
-  list(CoordinationType$GENE_EXPRESSION_COLORMAP_RANGE),
+  list(CoordinationType$FEATURE_VALUE_COLORMAP_RANGE),
   list(c(0.0, 0.05))
 )
 vc$layout(hconcat(
