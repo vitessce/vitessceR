@@ -9,19 +9,6 @@ vignette: >
 
 The main goal of this R package is to enable configuring Vitessce visualizations using R syntax.
 
-We also aim to simplify the data conversion process by providing [dataset wrapper classes](../reference/index.html#dataset-wrapper-classes) that automatically convert common single-cell data structures to [file formats supported by Vitessce](http://vitessce.io/docs/data-types-file-types/).
-
-Our effort to develop converters for R formats remains ongoing. However, we provide a guide for R developers to [write data conversion functions](./dev_wrapper_class.html) to support any type of R single-cell data structure (or to improve conversion for already-supported data structures).
+We provide functions in the companion vitessceAnalysisR package for conversion of common single-cell data structures to [file formats supported by Vitessce](http://vitessce.io/docs/data-types-file-types/).
 
 The following vignettes in the "Examples with Local Data" section demonstrate how the dataset wrapper classes can be used with single-cell datasets stored on your local machine.
-
-## Zarr via Reticulate via Basilisk
-
-Due to a lack of native R support for Zarr, the R dataset conversion functions currently depend on a Python environment. 
-
-We currently use [basilisk](https://github.com/LTLA/basilisk) and [reticulate](https://rstudio.github.io/reticulate/) to write to Zarr stores via the ``zarr`` Python package.
-
-
-## Zarr natively
-
-Subscribe to the [Zarr in R issue](https://github.com/vitessce/vitessce-r/issues/7) for future updates about native Zarr support that would avoid the need for the Python environment.

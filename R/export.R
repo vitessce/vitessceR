@@ -10,7 +10,7 @@
 #' @param out_dir The directory for storing exported files.
 #' @returns If `with_config = TRUE`, returns the config after calling `to_list` with the specified `base_url`.
 #' @examples
-#' vc <- VitessceConfig$new("My config")
+#' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 #' dataset <- vc$add_dataset("My dataset")
 #' description <- vc$add_view(dataset, Component$DESCRIPTION)
 #' vc$layout(description)

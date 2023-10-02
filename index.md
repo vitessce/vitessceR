@@ -35,11 +35,11 @@ The simplest way to instantiate a Vitessce widget is to create a view config bas
 library(vitessceR)
 
 # Create Vitessce view config
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")
 scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
 status <- vc$add_view(dataset, Component$STATUS)
-cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
+cell_sets <- vc$add_view(dataset, Component$OBS_SETS)
 vc$layout(hconcat(scatterplot, vconcat(status, cell_sets)))
 
 # Render the Vitessce widget

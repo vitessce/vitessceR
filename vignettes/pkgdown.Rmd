@@ -21,7 +21,7 @@ To render a Vitessce widget into a pkgdown article, set the [chunk options](http
     `r chunk`{r echo = TRUE}
     library(vitessceR)
     
-    vc <- VitessceConfig$new("My config")
+    vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
     
     # configure vitessce here
     

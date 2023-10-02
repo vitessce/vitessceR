@@ -128,7 +128,7 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
     #' @return Invisible self, to allow chaining.
     #' @examples
     #' base_url <- "http://localhost:8000/"
-    #' vc <- VitessceConfig$new("My config")
+    #' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
     #' dataset <- vc$add_dataset("My dataset")$add_file(
     #'   url = paste0(base_url, "cells.json"),
     #'   data_type = DataType$CELLS,
@@ -450,7 +450,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' @param uid A unique ID for the dataset. Optional. Created automatically if not provided.
     #' @return A new `VitessceConfigDataset` object.
     #' @examples
-    #' vc <- VitessceConfig$new("My config")
+    #' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
     #' ds <- vc$add_dataset("My dataset")
     add_dataset = function(name, uid = NA) {
       prev_dataset_uids <- c()
@@ -476,7 +476,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' @param mapping An optional convenience parameter for setting the `CoordinationType$EMBEDDING_TYPE` coordination value if the component is`Component$SCATTERPLOT`.
     #' @return A new `VitessceConfigView` object.
     #' @examples
-    #' vc <- VitessceConfig$new("My config")
+    #' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
     #' ds <- vc$add_dataset("My dataset")
     #' spatial <- vc$add_view(ds, "spatial")
     add_view = function(dataset, component, x = NA, y = NA, w = NA, h = NA, mapping = NA) {
@@ -511,7 +511,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' @param c_types The coordination types for which to create new coordination scopes.
     #' @return A list of new `VitessceConfigCoordinationScope` objects.
     #' @examples
-    #' vc <- VitessceConfig$new("My config")
+    #' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
     #' ds <- vc$add_dataset("My dataset")
     #' spatial <- vc$add_view(ds, "spatial")
     #' c_scopes <- vc$add_coordination(c("spatialZoom", "spatialTargetX"))
@@ -560,7 +560,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' @param view_concat A concatenation of views.
     #' @return Self, to allow chaining.
     #' @examples
-    #' vc <- VitessceConfig$new("My config")
+    #' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
     #' ds <- vc$add_dataset("My dataset")
     #' spatial <- vc$add_view(ds, "spatial")
     #' scatterplot <- vc$add_view(ds, "scatterplot")
@@ -619,7 +619,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' when setting lists or similar more complex values.
     #' @return Self, to allow chaining.
     #' @examples
-    #' vc <- VitessceConfig$new("My config")
+    #' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
     #' ref_dataset <- vc$add_dataset("Reference")
     #' qry_dataset <- vc$add_dataset("Query")
     #' ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "umap")
@@ -653,7 +653,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' @param base_url An base URL to prepend to file paths.
     #' @return A `list` that can be serialized to JSON.
     #' @examples
-    #' vc <- VitessceConfig$new("My config")
+    #' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
     #' ds <- vc$add_dataset("My dataset")
     #' vc_list <- vc$to_list(base_url = "http://localhost:8000")
     to_list = function(base_url = NA) {
@@ -713,7 +713,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' @param ... Passes extra keyword arguments to the `vitessce_widget` function.
     #' @return The Vitessce htmlwidget.
     #' @examples
-    #' vc <- VitessceConfig$new("My config")
+    #' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
     #' dataset <- vc$add_dataset("My dataset")
     #' description <- vc$add_view(dataset, Component$DESCRIPTION)
     #' vc$layout(description)
@@ -729,7 +729,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     #' @param ... Extra parameters to pass through to the export function.
     #' @return The Vitessce configuration as a list, with the `base_url` filled in.
     #' @examples
-    #' vc <- VitessceConfig$new("My config")
+    #' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
     #' dataset <- vc$add_dataset("My dataset")
     #' description <- vc$add_view(dataset, Component$DESCRIPTION)
     #' vc$layout(description)

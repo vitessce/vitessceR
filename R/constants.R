@@ -40,7 +40,7 @@
 #'
 #' @export
 #' @examples
-#' vc <- VitessceConfig$new("My config")
+#' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 #' ref_dataset <- vc$add_dataset("Reference")
 #' qry_dataset <- vc$add_dataset("Query")
 #' ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "umap")
@@ -105,7 +105,7 @@ CoordinationType <- list(
 #' @export
 #' @examples
 #' base_url <- "http://localhost:8000/"
-#' vc <- VitessceConfig$new("My config")
+#' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 #' dataset <- vc$add_dataset("My dataset")$add_file(
 #'   url = paste0(base_url, "cells.json"),
 #'   data_type = DataType$CELLS,
@@ -138,10 +138,9 @@ DataType <- list(
 #' @export
 #' @examples
 #' base_url <- "http://localhost:8000/"
-#' vc <- VitessceConfig$new("My config")
+#' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 #' dataset <- vc$add_dataset("My dataset")$add_file(
 #'   url = paste0(base_url, "cells.json"),
-#'   data_type = DataType$CELLS,
 #'   file_type = FileType$CELLS_JSON
 #' )
 FileType <- list(
@@ -178,7 +177,7 @@ FileType <- list(
 #'
 #' @export
 #' @examples
-#' vc <- VitessceConfig$new("My config")
+#' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 #' dataset <- vc$add_dataset("My dataset")
 #' description <- vc$add_view(dataset, Component$DESCRIPTION)
 #' vc$layout(description)

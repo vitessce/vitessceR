@@ -14,6 +14,7 @@ First, install the R dependencies:
 ```r
 install.packages("devtools")
 devtools::install_github("RubD/Giotto")
+devtools::install_github("vitessce/vitessceAnalysisR")
 ```
 
 
@@ -122,21 +123,25 @@ Set up the Vitessce widget:
 
 ```r
 library(vitessceR)
+library(vitessceAnalysisR)
 
-w <- GiottoWrapper$new(
-  SS_seqfish,
-  cell_set_metas = c("cell_types"),
-  cell_set_meta_names = c("Cell Types"),
-  cell_embeddings = c("pca", "tsne"),
-  cell_embedding_names = c("PCA", "t-SNE"),
-  out_dir = file.path("data", "giotto")
+adata_path <- file.path("data", "giotto_seqfish.h5ad.zarr")
+
+vitessceAnalysisR::giotto_to_anndata_zarr(SS_seqfish, adata_path)
+
+w <- AnnDataWrapper$new(
+  adata_path = adata_path,
+  obs_set_paths = c("obs/cell_types"),
+  obs_set_names = c("Cell Types"),
+  obs_embedding_paths = c("obsm/pca", "obsm/tsne"),
+  obs_embedding_names = c("PCA", "t-SNE")
 )
 
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")$add_object(w)
 spatial <- vc$add_view(dataset, Component$SPATIAL)
 scatterplot_tsne <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "t-SNE")
-cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
+cell_sets <- vc$add_view(dataset, Component$OBS_SETS)
 status <- vc$add_view(dataset, Component$STATUS)
 desc <- vc$add_view(dataset, Component$DESCRIPTION)
 desc <- desc$set_props(description = "Visualization of a Giotto object.")

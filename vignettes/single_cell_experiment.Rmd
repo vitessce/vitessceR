@@ -32,7 +32,7 @@ sce_zeisel <- runPCA(sce_zeisel)
 
 
 # Create Vitessce view config
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")$add_object(SCEWrapper$new(
   sce_zeisel,
   cell_set_metas = c("tissue", "level1class", "level2class"),
