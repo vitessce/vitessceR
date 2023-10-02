@@ -17,17 +17,27 @@
 #' vc$export(to = "files", out_dir = "./data")
 export_to_files <- function(config, with_config, base_url, out_dir) {
   routes <- config$get_routes()
+  
 
   for(route in routes) {
     # Get the intended web server route, removing the initial "/"
     route_path <- substr(route$path, 2, stringr::str_length(route$path))
     out_path <- file.path(out_dir, route_path)
 
-    dir.create(out_path, showWarnings = FALSE, recursive = TRUE)
-    # Copy the converted files from their original directory to the `out_dir`.
-    static_dir <- route$directory
-    files_to_copy = list.files(static_dir, full.names = TRUE)
-    file.copy(files_to_copy, out_path, recursive = TRUE)
+    if(class(route)[1] == "VitessceConfigServerStaticRoute") {
+      # This is a directory.
+      dir.create(out_path, showWarnings = FALSE, recursive = TRUE)
+      # Copy the converted files from their original directory to the `out_dir`.
+      static_dir <- route$directory
+      files_to_copy <- list.files(static_dir, full.names = TRUE)
+      file.copy(files_to_copy, out_path, recursive = TRUE)
+    } else {
+      # This is a single file.
+      dir.create(dirname(out_path), showWarnings = FALSE, recursive = TRUE)
+      # Copy the converted files from their original directory to the `out_dir`.
+      file_to_copy <- route$file_path
+      file.copy(file_to_copy, out_path, recursive = TRUE)
+    }
   }
 
   if(with_config) {
