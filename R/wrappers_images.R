@@ -118,6 +118,9 @@ OmeTiffWrapper <- R6::R6Class("OmeTiffWrapper",
      #' @field is_remote Whether or not this image is remote.
      #' @keywords internal
      is_remote = NULL,
+     #' @field local_img_uid
+     #' @keywords internal
+     local_img_uid = NULL,
      #' @description
      #' Create a wrapper around multiple image objects.
      #' @param img_path A local filepath to an OME-TIFF file.
@@ -137,6 +140,8 @@ OmeTiffWrapper <- R6::R6Class("OmeTiffWrapper",
        self$transformation_matrix <- transformation_matrix
        self$is_bitmask <- is_bitmask
 
+       self$local_img_uid <- make_unique_filename(".ome.tif")
+
        if(!is.na(img_url) && !is.na(img_path)) {
          warning("Expected either img_path or img_url to be provided, but not both.")
        }
@@ -147,9 +152,9 @@ OmeTiffWrapper <- R6::R6Class("OmeTiffWrapper",
      #' Create the web server routes and file definition creators.
      #' @param dataset_uid The ID for this dataset.
      #' @param obj_i The index of this data object within the dataset.
-     convert_and_save = function(dataset_uid, obj_i) {
+     convert_and_save = function(dataset_uid, obj_i, base_dir = NA) {
        if(!self$is_remote) {
-         super$convert_and_save(dataset_uid, obj_i)
+         super$convert_and_save(dataset_uid, obj_i, base_dir = base_dir)
        }
 
        # Get the file definition creator functions.
@@ -169,11 +174,18 @@ OmeTiffWrapper <- R6::R6Class("OmeTiffWrapper",
        if(self$is_remote) {
          return(list())
        } else {
-         route <- VitessceConfigServerRangeRoute$new(
-           self$get_route_str(dataset_uid, obj_i, basename(self$img_path)),
-           self$img_path
-         )
-         return(list(route))
+        if(is.na(self$base_dir)) {
+          local_img_path <- self$img_path
+          local_img_route_path <- self$get_route_str(dataset_uid, obj_i, self$local_img_uid)
+        } else {
+          local_img_path <- file.path(self$base_dir, self$img_path)
+          local_img_route_path <- file_path_to_url_path(self$img_path)
+        }
+        route <- VitessceConfigServerRangeRoute$new(
+          local_img_route_path,
+          local_img_path
+        )
+        return(list(route))
        }
      },
      #' @description
@@ -184,27 +196,8 @@ OmeTiffWrapper <- R6::R6Class("OmeTiffWrapper",
      #' @return A list that can be converted to JSON.
      #' @keywords internal
      make_image_def = function(dataset_uid, obj_i, base_url) {
-       img_url <- NA
-       if(self$is_remote) {
-         img_url <- self$img_url
-       } else {
-         img_url <- self$get_url(base_url, dataset_uid, obj_i, basename(self$img_path))
-       }
-
-       img_def <- list(
-         name = self$name,
-         type = "ome-tiff",
-         url = img_url
-       )
-       metadata <- obj_list()
-       if(!is.na(self$transformation_matrix)) {
-         metadata[['transform']] = list(
-           matrix = self$transformation_matrix
-         )
-       }
-       metadata[['isBitmask']] = self$is_bitmask
-       img_def[['metadata']] = metadata
-       img_def
+      img_url <- self$get_img_url(base_url, dataset_uid, obj_i)
+      return(self$create_image_json(img_url))
      },
      #' @description
      #' Make the file definition creator function for the raster data type.
@@ -220,13 +213,38 @@ OmeTiffWrapper <- R6::R6Class("OmeTiffWrapper",
            )
          )
          file_def <- list(
-           type = DataType$RASTER,
            fileType = FileType$RASTER_JSON,
            options = options_def
          )
          return(file_def)
        }
        return(get_raster)
+     },
+      create_image_json = function(img_url, offsets_url = NA) {
+        metadata <- obj_list()
+        img_def <- list(
+         name = self$name,
+         type = "ome-tiff",
+         url = img_url
+        )
+        # TODO: offsets_url
+       if(!is.na(self$transformation_matrix)) {
+         metadata[['transform']] = list(
+           matrix = self$transformation_matrix
+         )
+       }
+       metadata[['isBitmask']] = self$is_bitmask
+       img_def[['metadata']] = metadata
+       img_def
+     },
+     get_img_url = function(base_url = "", dataset_uid = "", obj_i = "") {
+        if(self$is_remote) {
+          return(self$img_url)
+        }
+        if(!is.na(self$base_dir)) {
+          return(self$get_url_simple(base_url, file_path_to_url_path(self$img_path, prepend_slash = FALSE)))
+        }
+        return(self$get_url(base_url, dataset_uid, obj_i, self$local_img_uid))
      }
    ),
 )

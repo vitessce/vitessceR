@@ -23,6 +23,8 @@ Abstract dataset object wrapper class
 \item{\code{routes}}{A list of \code{VitessceConfigServerRoute} objects.}
 
 \item{\code{file_def_creators}}{A list of file definition creator functions.}
+
+\item{\code{base_dir}}{The base directory for local data.}
 }
 \if{html}{\out{</div>}}
 }
@@ -34,7 +36,12 @@ Abstract dataset object wrapper class
 \item \href{#method-AbstractWrapper-get_routes}{\code{AbstractWrapper$get_routes()}}
 \item \href{#method-AbstractWrapper-get_file_defs}{\code{AbstractWrapper$get_file_defs()}}
 \item \href{#method-AbstractWrapper-get_out_dir_route}{\code{AbstractWrapper$get_out_dir_route()}}
+\item \href{#method-AbstractWrapper-get_local_dir_url}{\code{AbstractWrapper$get_local_dir_url()}}
+\item \href{#method-AbstractWrapper-get_local_file_url}{\code{AbstractWrapper$get_local_file_url()}}
+\item \href{#method-AbstractWrapper-get_local_dir_route}{\code{AbstractWrapper$get_local_dir_route()}}
+\item \href{#method-AbstractWrapper-get_local_file_route}{\code{AbstractWrapper$get_local_file_route()}}
 \item \href{#method-AbstractWrapper-get_url}{\code{AbstractWrapper$get_url()}}
+\item \href{#method-AbstractWrapper-get_url_simple}{\code{AbstractWrapper$get_url_simple()}}
 \item \href{#method-AbstractWrapper-get_route_str}{\code{AbstractWrapper$get_route_str()}}
 \item \href{#method-AbstractWrapper-get_out_dir}{\code{AbstractWrapper$get_out_dir()}}
 \item \href{#method-AbstractWrapper-auto_view_config}{\code{AbstractWrapper$auto_view_config()}}
@@ -72,7 +79,7 @@ Each function added to this list should take in a base URL and generate a Vitess
 If this wrapper is wrapping local data, then create routes and fill in the routes array.
 This method is void, should not return anything.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$convert_and_save(dataset_uid, obj_i)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$convert_and_save(dataset_uid, obj_i, base_dir = NA)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -81,6 +88,8 @@ This method is void, should not return anything.
 \item{\code{dataset_uid}}{A unique identifier for this dataset.}
 
 \item{\code{obj_i}}{Within the dataset, the index of this data wrapper object.}
+
+\item{\code{base_dir}}{Path to a base directory.}
 }
 \if{html}{\out{</div>}}
 }
@@ -141,6 +150,136 @@ A new \code{VitessceConfigServerStaticRoute} instance.
 }
 }
 \if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-AbstractWrapper-get_local_dir_url"></a>}}
+\if{latex}{\out{\hypertarget{method-AbstractWrapper-get_local_dir_url}{}}}
+\subsection{Method \code{get_local_dir_url()}}{
+Construct a URL to a local directory.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_local_dir_url(
+  base_url,
+  dataset_uid,
+  obj_i,
+  local_dir_path,
+  local_dir_uid
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{base_url}}{The base URL on which the web server is serving.}
+
+\item{\code{dataset_uid}}{The ID for this dataset.}
+
+\item{\code{obj_i}}{The index of this data object within the dataset.}
+
+\item{\code{local_dir_path}}{The path to the local directory.}
+
+\item{\code{local_dir_uid}}{A unique identifier for this local directory in this dataset.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A string for the URL.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-AbstractWrapper-get_local_file_url"></a>}}
+\if{latex}{\out{\hypertarget{method-AbstractWrapper-get_local_file_url}{}}}
+\subsection{Method \code{get_local_file_url()}}{
+Construct a URL to a local file.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_local_file_url(
+  base_url,
+  dataset_uid,
+  obj_i,
+  local_file_path,
+  local_file_uid
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{base_url}}{The base URL on which the web server is serving.}
+
+\item{\code{dataset_uid}}{The ID for this dataset.}
+
+\item{\code{obj_i}}{The index of this data object within the dataset.}
+
+\item{\code{local_file_path}}{The path to the local file.}
+
+\item{\code{local_file_uid}}{A unique identifier for this local file in this dataset.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A string for the URL.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-AbstractWrapper-get_local_dir_route"></a>}}
+\if{latex}{\out{\hypertarget{method-AbstractWrapper-get_local_dir_route}{}}}
+\subsection{Method \code{get_local_dir_route()}}{
+Create a web server route for this object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_local_dir_route(
+  dataset_uid,
+  obj_i,
+  local_dir_path,
+  local_dir_uid
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{dataset_uid}}{The ID for this dataset.}
+
+\item{\code{obj_i}}{The index of this data object within the dataset.}
+
+\item{\code{local_dir_path}}{The path to the local directory.}
+
+\item{\code{local_dir_uid}}{A unique identifier for this local directory in this dataset.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{VitessceConfigServerStaticRoute} instance.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-AbstractWrapper-get_local_file_route"></a>}}
+\if{latex}{\out{\hypertarget{method-AbstractWrapper-get_local_file_route}{}}}
+\subsection{Method \code{get_local_file_route()}}{
+Create a web server route for this object.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_local_file_route(
+  dataset_uid,
+  obj_i,
+  local_file_path,
+  local_file_uid
+)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{dataset_uid}}{The ID for this dataset.}
+
+\item{\code{obj_i}}{The index of this data object within the dataset.}
+
+\item{\code{local_file_path}}{The path to the local file.}
+
+\item{\code{local_file_uid}}{A unique identifier for this local file in this dataset.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A new \code{VitessceConfigServerFileRoute} instance.
+}
+}
+\if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AbstractWrapper-get_url"></a>}}
 \if{latex}{\out{\hypertarget{method-AbstractWrapper-get_url}{}}}
 \subsection{Method \code{get_url()}}{
@@ -164,6 +303,28 @@ Create a local web server URL for a dataset object.
 }
 \subsection{Returns}{
 A URL as a string.
+}
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-AbstractWrapper-get_url_simple"></a>}}
+\if{latex}{\out{\hypertarget{method-AbstractWrapper-get_url_simple}{}}}
+\subsection{Method \code{get_url_simple()}}{
+Construct a URL.
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{AbstractWrapper$get_url_simple(base_url, suffix)}\if{html}{\out{</div>}}
+}
+
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{base_url}}{The base URL on which the web server is serving.}
+
+\item{\code{suffix}}{The suffix to append to the base URL.}
+}
+\if{html}{\out{</div>}}
+}
+\subsection{Returns}{
+A URL as a string like {base_url}/{suffix}
 }
 }
 \if{html}{\out{<hr>}}

@@ -16,14 +16,14 @@ VitessceConfig
 ## Method `VitessceConfig$add_dataset`
 ## ------------------------------------------------
 
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 ds <- vc$add_dataset("My dataset")
 
 ## ------------------------------------------------
 ## Method `VitessceConfig$add_view`
 ## ------------------------------------------------
 
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 ds <- vc$add_dataset("My dataset")
 spatial <- vc$add_view(ds, "spatial")
 
@@ -31,7 +31,7 @@ spatial <- vc$add_view(ds, "spatial")
 ## Method `VitessceConfig$add_coordination`
 ## ------------------------------------------------
 
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 ds <- vc$add_dataset("My dataset")
 spatial <- vc$add_view(ds, "spatial")
 c_scopes <- vc$add_coordination(c("spatialZoom", "spatialTargetX"))
@@ -41,7 +41,7 @@ spatial$use_coordination(c_scopes)
 ## Method `VitessceConfig$layout`
 ## ------------------------------------------------
 
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 ds <- vc$add_dataset("My dataset")
 spatial <- vc$add_view(ds, "spatial")
 scatterplot <- vc$add_view(ds, "scatterplot")
@@ -50,7 +50,7 @@ scatterplot <- vc$add_view(ds, "scatterplot")
 ## Method `VitessceConfig$link_views`
 ## ------------------------------------------------
 
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 ref_dataset <- vc$add_dataset("Reference")
 qry_dataset <- vc$add_dataset("Query")
 ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "umap")
@@ -65,7 +65,7 @@ vc$link_views(
 ## Method `VitessceConfig$to_list`
 ## ------------------------------------------------
 
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 ds <- vc$add_dataset("My dataset")
 vc_list <- vc$to_list(base_url = "http://localhost:8000")
 
@@ -73,7 +73,7 @@ vc_list <- vc$to_list(base_url = "http://localhost:8000")
 ## Method `VitessceConfig$widget`
 ## ------------------------------------------------
 
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")
 description <- vc$add_view(dataset, Component$DESCRIPTION)
 vc$layout(description)
@@ -83,7 +83,7 @@ vc$widget()
 ## Method `VitessceConfig$export`
 ## ------------------------------------------------
 
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")
 description <- vc$add_view(dataset, Component$DESCRIPTION)
 vc$layout(description)
@@ -93,6 +93,8 @@ vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./d
 \if{html}{\out{<div class="r6-fields">}}
 \describe{
 \item{\code{config}}{The internal representation of the view config.}
+
+\item{\code{base_dir}}{The base directory for the config.}
 }
 \if{html}{\out{</div>}}
 }
@@ -103,6 +105,9 @@ vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./d
 \item \href{#method-VitessceConfig-add_dataset}{\code{VitessceConfig$add_dataset()}}
 \item \href{#method-VitessceConfig-add_view}{\code{VitessceConfig$add_view()}}
 \item \href{#method-VitessceConfig-add_coordination}{\code{VitessceConfig$add_coordination()}}
+\item \href{#method-VitessceConfig-add_meta_coordination}{\code{VitessceConfig$add_meta_coordination()}}
+\item \href{#method-VitessceConfig-add_coordination_by_dict}{\code{VitessceConfig$add_coordination_by_dict()}}
+\item \href{#method-VitessceConfig-link_views_by_dict}{\code{VitessceConfig$link_views_by_dict()}}
 \item \href{#method-VitessceConfig-layout}{\code{VitessceConfig$layout()}}
 \item \href{#method-VitessceConfig-link_views}{\code{VitessceConfig$link_views()}}
 \item \href{#method-VitessceConfig-to_list}{\code{VitessceConfig$to_list()}}
@@ -118,12 +123,14 @@ vc$export(with_config = TRUE, base_url = "http://localhost:3000", out_dir = "./d
 \subsection{Method \code{new()}}{
 Create a new config object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$new(name = NA, description = NA)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$new(schema_version, name = NA, description = NA, base_dir = NA)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
 \if{html}{\out{<div class="arguments">}}
 \describe{
+\item{\code{schema_version}}{The Vitessce config schema version to use.}
+
 \item{\code{name}}{A name for the config.}
 
 \item{\code{description}}{A description for the config.}
@@ -157,7 +164,7 @@ A new \code{VitessceConfigDataset} object.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{vc <- VitessceConfig$new("My config")
+\preformatted{vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 ds <- vc$add_dataset("My dataset")
 }
 \if{html}{\out{</div>}}
@@ -206,7 +213,7 @@ A new \code{VitessceConfigView} object.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{vc <- VitessceConfig$new("My config")
+\preformatted{vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 ds <- vc$add_dataset("My dataset")
 spatial <- vc$add_view(ds, "spatial")
 }
@@ -236,7 +243,7 @@ A list of new \code{VitessceConfigCoordinationScope} objects.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{vc <- VitessceConfig$new("My config")
+\preformatted{vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 ds <- vc$add_dataset("My dataset")
 spatial <- vc$add_view(ds, "spatial")
 c_scopes <- vc$add_coordination(c("spatialZoom", "spatialTargetX"))
@@ -244,6 +251,33 @@ spatial$use_coordination(c_scopes)
 }
 \if{html}{\out{</div>}}
 
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-VitessceConfig-add_meta_coordination"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfig-add_meta_coordination}{}}}
+\subsection{Method \code{add_meta_coordination()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$add_meta_coordination()}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-VitessceConfig-add_coordination_by_dict"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfig-add_coordination_by_dict}{}}}
+\subsection{Method \code{add_coordination_by_dict()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$add_coordination_by_dict(input_val)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-VitessceConfig-link_views_by_dict"></a>}}
+\if{latex}{\out{\hypertarget{method-VitessceConfig-link_views_by_dict}{}}}
+\subsection{Method \code{link_views_by_dict()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfig$link_views_by_dict(views, input_val, meta = TRUE)}\if{html}{\out{</div>}}
 }
 
 }
@@ -268,7 +302,7 @@ Self, to allow chaining.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{vc <- VitessceConfig$new("My config")
+\preformatted{vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 ds <- vc$add_dataset("My dataset")
 spatial <- vc$add_view(ds, "spatial")
 scatterplot <- vc$add_view(ds, "scatterplot")
@@ -309,7 +343,7 @@ Self, to allow chaining.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{vc <- VitessceConfig$new("My config")
+\preformatted{vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 ref_dataset <- vc$add_dataset("Reference")
 qry_dataset <- vc$add_dataset("Query")
 ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "umap")
@@ -346,7 +380,7 @@ A \code{list} that can be serialized to JSON.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{vc <- VitessceConfig$new("My config")
+\preformatted{vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 ds <- vc$add_dataset("My dataset")
 vc_list <- vc$to_list(base_url = "http://localhost:8000")
 }
@@ -405,7 +439,7 @@ The Vitessce htmlwidget.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{vc <- VitessceConfig$new("My config")
+\preformatted{vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")
 description <- vc$add_view(dataset, Component$DESCRIPTION)
 vc$layout(description)
@@ -443,7 +477,7 @@ The Vitessce configuration as a list, with the \code{base_url} filled in.
 }
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
-\preformatted{vc <- VitessceConfig$new("My config")
+\preformatted{vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")
 description <- vc$add_view(dataset, Component$DESCRIPTION)
 vc$layout(description)

@@ -15,7 +15,7 @@ Configure the Vitessce widget:
 library(vitessceR)
 
 # Create Vitessce view config
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")$add_object(
   MultiImageWrapper$new(
     image_wrappers = list(

@@ -23,7 +23,7 @@ A helper function to export files associated with a particular Vitessce configur
 We do not recommend calling this function directly. Instead, use the \code{export()} function on a \code{VitessceConfig} instance.
 }
 \examples{
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")
 description <- vc$add_view(dataset, Component$DESCRIPTION)
 vc$layout(description)

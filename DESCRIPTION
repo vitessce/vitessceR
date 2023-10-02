@@ -14,11 +14,10 @@ Authors@R: c(
 Description:
   R API and htmlwidget facilitating interactive visualization
   of spatial single-cell data with Vitessce. The R API contains
-  classes and functions for loading single-cell data stored as
-  SingleCellExperiment, SpatialExperiment, and Seurat objects.
-  The htmlwidget is a wrapper around the Vitessce JavaScript
-  library and can be used in the Viewer tab of RStudio or Shiny
-  apps.
+  classes and functions for loading single-cell data stored in
+  compatible on-disk formats. The htmlwidget is a wrapper around
+  the Vitessce JavaScript library and can be used in the Viewer tab
+  of RStudio or Shiny apps.
 biocViews: SingleCell, Spatial, Visualization, ShinyApps
 License: MIT + file LICENSE
 BugReports: https://github.com/vitessce/vitessceR/issues
@@ -37,21 +36,16 @@ Imports:
     jsonlite,
     R6,
     plumber,
+    mime,
     future,
     httpuv,
     stringr,
-    reticulate,
-    varhandle,
+    stringi,
     tools,
     stats,
     methods,
     S4Vectors,
-    grDevices,
-    basilisk,
-    zellkonverter,
-    SummarizedExperiment,
-    SingleCellExperiment,
-    SpatialExperiment
+    grDevices
 Suggests: 
     testthat,
     knitr,
@@ -60,7 +54,4 @@ Suggests:
     pkgdown,
     rmarkdown,
     purrr,
-    rjson,
-    Seurat,
-    SeuratDisk,
-    Giotto
+    rjson

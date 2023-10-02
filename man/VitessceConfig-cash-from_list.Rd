@@ -2,9 +2,7 @@
 % Please edit documentation in R/config.R
 \name{VitessceConfig$from_list}
 \alias{VitessceConfig$from_list}
-\title{Create a new Vitessce Config from a list
-
-A helper function to construct a new \code{VitessceConfig} object based on an existing config in a list format.}
+\title{Create a new Vitessce Config from a list}
 \arguments{
 \item{config}{A list containing a valid config.}
 }
@@ -12,7 +10,5 @@ A helper function to construct a new \code{VitessceConfig} object based on an ex
 A \code{VitessceConfig} object reflecting the list-based configuration values.
 }
 \description{
-Create a new Vitessce Config from a list
-
 A helper function to construct a new \code{VitessceConfig} object based on an existing config in a list format.
 }

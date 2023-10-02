@@ -25,7 +25,7 @@ for dataset files.
 }
 \examples{
 base_url <- "http://localhost:8000/"
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")$add_file(
   url = paste0(base_url, "cells.json"),
   data_type = DataType$CELLS,

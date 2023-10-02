@@ -5,7 +5,7 @@
 \alias{CoordinationType}
 \title{Enumeration of Coordination Type values}
 \format{
-An object of class \code{list} of length 32.
+An object of class \code{list} of length 35.
 }
 \usage{
 CoordinationType
@@ -50,7 +50,7 @@ in the coordination space.
 }
 }
 \examples{
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 ref_dataset <- vc$add_dataset("Reference")
 qry_dataset <- vc$add_dataset("Query")
 ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "umap")

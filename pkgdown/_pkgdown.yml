@@ -6,8 +6,8 @@ template:
     base_font: {google: "Inter"}
 
 authors:
-  Gehlenborg Lab:
-    href: http://gehlenborglab.org/
+  HIDIVE Lab:
+    href: http://hidivelab.org/
   Mark Keller:
     href: https://github.com/keller-mark
 
@@ -59,7 +59,7 @@ footer:
     left: [authors]
     right: built_with
   components:
-    authors: Developed by the Gehlenborg Lab
+    authors: Developed by the HIDIVE Lab
 
 reference:
 - title: "Working with view configs"
@@ -86,19 +86,13 @@ reference:
   desc: "Wrapper classes for automating the data conversion process for Vitessce."
 - contents:
   - AbstractWrapper
-  - SeuratWrapper
-  - SCEWrapper
-  - SPEWrapper
-  - GiottoWrapper
+  - AnnDataWrapper
+  - CsvWrapper
   - MultiImageWrapper
   - OmeTiffWrapper
+  - OmeZarrWrapper
 
 articles:
-  - title: Articles
-    navbar: Developer guides
-    contents:
-      - dev_wrapper_class
-      - dev_wrapper_subclass
   - title: Articles
     navbar: Troubleshooting
     contents:

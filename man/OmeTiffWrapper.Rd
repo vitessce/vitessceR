@@ -40,6 +40,8 @@ this image (see http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-ma
 \item \href{#method-OmeTiffWrapper-make_raster_routes}{\code{OmeTiffWrapper$make_raster_routes()}}
 \item \href{#method-OmeTiffWrapper-make_image_def}{\code{OmeTiffWrapper$make_image_def()}}
 \item \href{#method-OmeTiffWrapper-make_raster_file_def_creator}{\code{OmeTiffWrapper$make_raster_file_def_creator()}}
+\item \href{#method-OmeTiffWrapper-create_image_json}{\code{OmeTiffWrapper$create_image_json()}}
+\item \href{#method-OmeTiffWrapper-get_img_url}{\code{OmeTiffWrapper$get_img_url()}}
 \item \href{#method-OmeTiffWrapper-clone}{\code{OmeTiffWrapper$clone()}}
 }
 }
@@ -48,11 +50,16 @@ this image (see http://www.opengl-tutorial.org/beginners-tutorials/tutorial-3-ma
 <ul>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="auto_view_config"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-auto_view_config'><code>vitessceR::AbstractWrapper$auto_view_config()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_file_defs"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_file_defs'><code>vitessceR::AbstractWrapper$get_file_defs()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_local_dir_route"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_local_dir_route'><code>vitessceR::AbstractWrapper$get_local_dir_route()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_local_dir_url"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_local_dir_url'><code>vitessceR::AbstractWrapper$get_local_dir_url()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_local_file_route"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_local_file_route'><code>vitessceR::AbstractWrapper$get_local_file_route()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_local_file_url"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_local_file_url'><code>vitessceR::AbstractWrapper$get_local_file_url()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_out_dir"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_out_dir'><code>vitessceR::AbstractWrapper$get_out_dir()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_out_dir_route"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_out_dir_route'><code>vitessceR::AbstractWrapper$get_out_dir_route()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_route_str"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_route_str'><code>vitessceR::AbstractWrapper$get_route_str()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_routes"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_routes'><code>vitessceR::AbstractWrapper$get_routes()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_url"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_url'><code>vitessceR::AbstractWrapper$get_url()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_url_simple"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_url_simple'><code>vitessceR::AbstractWrapper$get_url_simple()</code></a></span></li>
 </ul>
 </details>
 }}
@@ -102,7 +109,7 @@ A new \code{OmeTiffWrapper} object.
 \subsection{Method \code{convert_and_save()}}{
 Create the web server routes and file definition creators.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{OmeTiffWrapper$convert_and_save(dataset_uid, obj_i)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{OmeTiffWrapper$convert_and_save(dataset_uid, obj_i, base_dir = NA)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -182,6 +189,24 @@ Make the file definition creator function for the raster data type.
 \subsection{Returns}{
 A file definition creator function which takes a \code{base_url} parameter.
 }
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-OmeTiffWrapper-create_image_json"></a>}}
+\if{latex}{\out{\hypertarget{method-OmeTiffWrapper-create_image_json}{}}}
+\subsection{Method \code{create_image_json()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OmeTiffWrapper$create_image_json(img_url, offsets_url = NA)}\if{html}{\out{</div>}}
+}
+
+}
+\if{html}{\out{<hr>}}
+\if{html}{\out{<a id="method-OmeTiffWrapper-get_img_url"></a>}}
+\if{latex}{\out{\hypertarget{method-OmeTiffWrapper-get_img_url}{}}}
+\subsection{Method \code{get_img_url()}}{
+\subsection{Usage}{
+\if{html}{\out{<div class="r">}}\preformatted{OmeTiffWrapper$get_img_url(base_url = "", dataset_uid = "", obj_i = "")}\if{html}{\out{</div>}}
+}
+
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-OmeTiffWrapper-clone"></a>}}

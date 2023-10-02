@@ -11,3 +11,4 @@ check/
 vignettes/data/
 *.Rproj
 .RData
+my_vitessce_files/

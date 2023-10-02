@@ -1,7 +1,7 @@
 library(vitessceR)
 
 test_that("VitessceConfig new", {
-  vc <- VitessceConfig$new("My config")
+  vc <- VitessceConfig$new(schema_version = "1.0.9", name = "My config")
 
   vc_list <- vc$to_list(base_url = "http://localhost:8000")
   expect_equal(vc_list, list(
@@ -16,11 +16,10 @@ test_that("VitessceConfig new", {
 })
 
 test_that("VitessceConfig add_dataset", {
-  vc <- VitessceConfig$new("My config")
+  vc <- VitessceConfig$new(schema_version = "1.0.9", name = "My config")
   vc$add_dataset("My dataset")
 
   vc_list <- vc$to_list(base_url = "http://localhost:8000")
-
 
   expect_equal(vc_list, list(
     version = "1.0.9",
@@ -44,11 +43,12 @@ test_that("VitessceConfig add_dataset", {
 })
 
 test_that("VitessceConfigDataset add_file", {
-  vc <- VitessceConfig$new("My config")
+  vc <- VitessceConfig$new(schema_version = "1.0.9", name = "My config")
   ds <- vc$add_dataset("My dataset")
-  ds$add_file("http://example.com/cells", "cells", "cells.json")
+  ds$add_file(url = "http://example.com/cells", file_type = "cells.json")
 
   vc_list <- vc$to_list(base_url = "http://localhost:8000")
+
   expect_equal(vc_list, list(
     version = "1.0.9",
     name = "My config",
@@ -59,9 +59,8 @@ test_that("VitessceConfigDataset add_file", {
         name = "My dataset",
         files = list(
           list(
-            url = "http://example.com/cells",
-            type = "cells",
-            fileType = "cells.json"
+            fileType = "cells.json",
+            url = "http://example.com/cells"
           )
         )
       )
@@ -77,9 +76,13 @@ test_that("VitessceConfigDataset add_file", {
 })
 
 test_that("VitessceConfigDataset add_file twice", {
-  vc <- VitessceConfig$new("My config")
+  vc <- VitessceConfig$new(schema_version = "1.0.9", name = "My config")
   ds <- vc$add_dataset("My dataset")
-  ds$add_file("http://example.com/cells", "cells", "cells.json")$add_file("http://example.com/molecules", "molecules", "molecules.json")
+  ds$add_file(
+    url = "http://example.com/cells", file_type = "cells.json"
+  )$add_file(
+    url = "http://example.com/molecules", file_type = "molecules.json"
+  )
 
   vc_list <- vc$to_list(base_url = "http://localhost:8000")
   expect_equal(vc_list, list(
@@ -92,14 +95,12 @@ test_that("VitessceConfigDataset add_file twice", {
         name = "My dataset",
         files = list(
           list(
-            url = "http://example.com/cells",
-            type = "cells",
-            fileType = "cells.json"
+            fileType = "cells.json",
+            url = "http://example.com/cells"
           ),
           list(
-            url = "http://example.com/molecules",
-            type = "molecules",
-            fileType = "molecules.json"
+            fileType = "molecules.json",
+            url = "http://example.com/molecules"
           )
         )
       )
@@ -115,7 +116,7 @@ test_that("VitessceConfigDataset add_file twice", {
 })
 
 test_that("VitessceConfigDataset add_file with options", {
-  vc <- VitessceConfig$new("My config")
+  vc <- VitessceConfig$new(schema_version = "1.0.9", name = "My config")
   ds <- vc$add_dataset("My dataset")
 
   file_options = obj_list(
@@ -131,7 +132,7 @@ test_that("VitessceConfigDataset add_file with options", {
       "Image"
     )
   )
-  ds$add_file(data_type = "cells", file_type = "cells.json", options = file_options)
+  ds$add_file(file_type = "cells.json", options = file_options)
 
   vc_list <- vc$to_list(base_url = "http://localhost:8000")
   expect_equal(vc_list, list(
@@ -144,7 +145,6 @@ test_that("VitessceConfigDataset add_file with options", {
         name = "My dataset",
         files = list(
           list(
-            type = "cells",
             fileType = "cells.json",
             options = file_options
           )
@@ -162,17 +162,16 @@ test_that("VitessceConfigDataset add_file with options", {
 })
 
 test_that("VitessceConfigDataset add_object", {
-  vc <- VitessceConfig$new("My config")
+  vc <- VitessceConfig$new(schema_version = "1.0.9", name = "My config")
   ds <- vc$add_dataset("My dataset")
 
   MockWrapper <- R6::R6Class("SeuratWrapper",
      inherit = AbstractWrapper,
      public = list(
-       convert_and_save = function(dataset_uid, obj_i) {
+       convert_and_save = function(dataset_uid, obj_i, base_dir = NA) {
          get_cells <- function(base_url) {
            return(list(
              url = "http://localhost:8000/cells",
-             type = "cells",
              fileType = "cells.json"
            ))
          }
@@ -196,7 +195,6 @@ test_that("VitessceConfigDataset add_object", {
         files = list(
           list(
             url = "http://localhost:8000/cells",
-            type = "cells",
             fileType = "cells.json"
           )
         )
@@ -213,7 +211,7 @@ test_that("VitessceConfigDataset add_object", {
 })
 
 test_that("VitessceConfig add_view", {
-  vc <- VitessceConfig$new("My config")
+  vc <- VitessceConfig$new(schema_version = "1.0.9", name = "My config")
   ds <- vc$add_dataset("My dataset")
   v1 <- vc$add_view(ds, "spatial")
   v2 <- vc$add_view(ds, "scatterplot", mapping = "UMAP")
@@ -260,7 +258,7 @@ test_that("VitessceConfig add_view", {
 })
 
 test_that("VitessceConfig add_coordination", {
-  vc <- VitessceConfig$new("My config")
+  vc <- VitessceConfig$new(schema_version = "1.0.9", name = "My config")
   ds <- vc$add_dataset("My dataset")
   v1 <- vc$add_view(ds, "spatial")
   v2 <- vc$add_view(ds, "spatial")
@@ -319,7 +317,7 @@ test_that("VitessceConfig add_coordination", {
 })
 
 test_that("VitessceConfig layout", {
-  vc <- VitessceConfig$new("My config")
+  vc <- VitessceConfig$new(schema_version = "1.0.9", name = "My config")
   ds <- vc$add_dataset("My dataset")
   v1 <- vc$add_view(ds, "spatial")
   v2 <- vc$add_view(ds, "description")

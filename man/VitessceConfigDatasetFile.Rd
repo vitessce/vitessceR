@@ -26,9 +26,10 @@ Create a new dataset file object.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDatasetFile$new(
   url = NA,
-  data_type = NA,
   file_type = NA,
-  options = NA
+  options = NA,
+  coordination_values = NA,
+  data_type = NA
 )}\if{html}{\out{</div>}}
 }
 
@@ -37,11 +38,13 @@ Create a new dataset file object.
 \describe{
 \item{\code{url}}{A URL for the file.}
 
-\item{\code{data_type}}{A data type for the file.}
-
 \item{\code{file_type}}{A file type for the file.}
 
 \item{\code{options}}{A list of options to include for the file.}
+
+\item{\code{coordination_values}}{A list of coordination values to include in the file definition.}
+
+\item{\code{data_type}}{A data type for the file.}
 }
 \if{html}{\out{</div>}}
 }

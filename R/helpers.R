@@ -7,10 +7,10 @@
 #'
 #' @export
 #' @examples
-#' vc <- VitessceConfig$new("My config")
+#' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 #' ds <- vc$add_dataset("My dataset")
 #' spatial <- vc$add_view(ds, Component$SPATIAL)
-#' gene_list <- vc$add_view(ds, Component$GENES)
+#' gene_list <- vc$add_view(ds, Component$FEATURE_LIST)
 #' vc$layout(hconcat(spatial, gene_list))
 #' vc$widget()
 hconcat <- function(...) {
@@ -27,10 +27,10 @@ hconcat <- function(...) {
 #'
 #' @export
 #' @examples
-#' vc <- VitessceConfig$new("My config")
+#' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 #' ds <- vc$add_dataset("My dataset")
 #' spatial <- vc$add_view(ds, Component$SPATIAL)
-#' gene_list <- vc$add_view(ds, Component$GENES)
+#' gene_list <- vc$add_view(ds, Component$FEATURE_LIST)
 #' vc$layout(vconcat(spatial, gene_list))
 #' vc$widget()
 vconcat <- function(...) {

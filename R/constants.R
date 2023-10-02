@@ -40,7 +40,7 @@
 #'
 #' @export
 #' @examples
-#' vc <- VitessceConfig$new("My config")
+#' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 #' ref_dataset <- vc$add_dataset("Reference")
 #' qry_dataset <- vc$add_dataset("Query")
 #' ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "umap")
@@ -51,6 +51,8 @@
 #'   c_values = c(0, 0)
 #' )
 CoordinationType <- list(
+  META_COORDINATION_SCOPES = "metaCoordinationScopes",
+  META_COORDINATION_SCOPES_BY = "metaCoordinationScopesBy",
   DATASET = "dataset",
   EMBEDDING_TYPE = "embeddingType",
   EMBEDDING_ZOOM = "embeddingZoom",
@@ -77,6 +79,7 @@ CoordinationType <- list(
   GENE_SELECTION = "geneSelection",
   GENE_EXPRESSION_COLORMAP = "geneExpressionColormap",
   GENE_EXPRESSION_COLORMAP_RANGE = "geneExpressionColormapRange",
+  FEATURE_VALUE_COLORMAP_RANGE = "featureValueColormapRange",
   CELL_COLOR_ENCODING = "cellColorEncoding",
   SPATIAL_LAYERS = "spatialLayers",
   GENOMIC_ZOOM = "genomicZoom",
@@ -102,7 +105,7 @@ CoordinationType <- list(
 #' @export
 #' @examples
 #' base_url <- "http://localhost:8000/"
-#' vc <- VitessceConfig$new("My config")
+#' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 #' dataset <- vc$add_dataset("My dataset")$add_file(
 #'   url = paste0(base_url, "cells.json"),
 #'   data_type = DataType$CELLS,
@@ -135,10 +138,9 @@ DataType <- list(
 #' @export
 #' @examples
 #' base_url <- "http://localhost:8000/"
-#' vc <- VitessceConfig$new("My config")
+#' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 #' dataset <- vc$add_dataset("My dataset")$add_file(
 #'   url = paste0(base_url, "cells.json"),
-#'   data_type = DataType$CELLS,
 #'   file_type = FileType$CELLS_JSON
 #' )
 FileType <- list(
@@ -150,6 +152,7 @@ FileType <- list(
   CELL_SETS_JSON = "cell-sets.json",
   CLUSTERS_JSON = "clusters.json",
   EXPRESSION_MATRIX_ZARR = "expression-matrix.zarr",
+  ANNDATA_ZARR = "anndata.zarr",
   ANNDATA_CELLS_ZARR = "anndata-cells.zarr",
   ANNDATA_CELL_SETS_ZARR = "anndata-cell-sets.zarr",
   ANNDATA_EXPRESSION_MATRIX_ZARR = "anndata-expression-matrix.zarr"
@@ -174,7 +177,7 @@ FileType <- list(
 #'
 #' @export
 #' @examples
-#' vc <- VitessceConfig$new("My config")
+#' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 #' dataset <- vc$add_dataset("My dataset")
 #' description <- vc$add_view(dataset, Component$DESCRIPTION)
 #' vc$layout(description)
@@ -185,9 +188,11 @@ Component <- list(
   DESCRIPTION = "description",
   STATUS = "status",
   CELL_SETS = "cellSets",
+  OBS_SETS = "obsSets",
   HEATMAP = "heatmap",
   LAYER_CONTROLLER = "layerController",
   HIGLASS = "higlass",
   CELL_SET_SIZES = "cellSetSizes",
-  GENES = "genes"
+  GENES = "genes",
+  FEATURE_LIST = "featureList"
 )

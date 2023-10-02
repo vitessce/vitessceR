@@ -49,6 +49,6 @@ recommend calling the \code{widget()} method on the \code{VitessceConfig}
 instance.
 }
 \examples{
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 vc$widget()
 }

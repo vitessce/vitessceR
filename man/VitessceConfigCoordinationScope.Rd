@@ -36,7 +36,7 @@ Coordination scope in a VitessceConfig
 \subsection{Method \code{new()}}{
 Create a new coordination scope object.
 \subsection{Usage}{
-\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigCoordinationScope$new(c_type, c_scope)}\if{html}{\out{</div>}}
+\if{html}{\out{<div class="r">}}\preformatted{VitessceConfigCoordinationScope$new(c_type, c_scope, c_value = NA)}\if{html}{\out{</div>}}
 }
 
 \subsection{Arguments}{
@@ -45,6 +45,8 @@ Create a new coordination scope object.
 \item{\code{c_type}}{A coordination type name.}
 
 \item{\code{c_scope}}{A coordination scope name.}
+
+\item{\code{c_value}}{An initial value for the coordination scope.}
 }
 \if{html}{\out{</div>}}
 }

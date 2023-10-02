@@ -198,35 +198,37 @@ ref_obj@reductions$refUMAP@assay.used <- "RNA"
 
 #### Use Vitessce for visualization ####
 
+ref_adata_path <- file.path(data_dir, "ref.h5ad.zarr")
+qry_adata_path <- file.path(data_dir, "qry.h5ad.zarr")
+
+vitessceAnalysisR::seurat_to_anndata_zarr(ref_obj, ref_adata_path, assay = Seurat::DefaultAssay(ref_obj))
+vitessceAnalysisR::seurat_to_anndata_zarr(qry_obj, qry_adata_path, assay = Seurat::DefaultAssay(qry_obj))
+
 # Create Vitessce view config
-vc <- VitessceConfig$new("Azimuth")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "Azimuth")
 ref_dataset <- vc$add_dataset("Reference")$add_object(
-  SeuratWrapper$new(
-    ref_obj,
-    assay = Seurat::DefaultAssay(ref_obj),
-    cell_embeddings = c("refUMAP"),
-    cell_embedding_names = c("UMAP"),
-    cell_set_metas = c("celltype.l2"),
-    out_dir = file.path(data_dir, "reference"), overwrite = TRUE
+  AnnDataWrapper$new(
+    adata_path = ref_adata_path,
+    obs_embedding_paths = c("obsm/X_refUMAP"),
+    obs_embedding_names = c("UMAP"),
+    obs_set_paths = c("obs/celltype.l2")
   )
 )
 qry_dataset <- vc$add_dataset("Query")$add_object(
-  SeuratWrapper$new(
-    qry_obj,
-    assay = Seurat::DefaultAssay(qry_obj),
-    cell_embeddings = c("umap.proj"),
-    cell_embedding_names = c("UMAP"),
-    cell_set_metas = c("predicted.celltype.l2"),
-    cell_set_meta_names = c("celltype.l2"),
-    cell_set_meta_scores = c("predicted.celltype.l2.score"),
-    out_dir = file.path(data_dir, "query"), overwrite = TRUE
+  AnnDataWrapper$new(
+    adata_path = qry_adata_path,
+    obs_embedding_paths = c("obsm/X_umap.proj"),
+    obs_embedding_names = c("UMAP"),
+    obs_set_paths = c("obs/predicted.celltype.l2"),
+    obs_set_names = c("celltype.l2"),
+    obs_set_score_paths = c("obs/predicted.celltype.l2.score")
   )
 )
 
 ref_plot <- vc$add_view(ref_dataset, Component$SCATTERPLOT, mapping = "UMAP")
 qry_plot <- vc$add_view(qry_dataset, Component$SCATTERPLOT, mapping = "UMAP")
-cell_sets <- vc$add_view(ref_dataset, Component$CELL_SETS)
-cell_sets_2 <- vc$add_view(qry_dataset, Component$CELL_SETS)
+cell_sets <- vc$add_view(ref_dataset, Component$OBS_SETS)
+cell_sets_2 <- vc$add_view(qry_dataset, Component$OBS_SETS)
 
 vc$link_views(
   c(ref_plot, qry_plot),

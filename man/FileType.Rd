@@ -5,7 +5,7 @@
 \alias{FileType}
 \title{Enumeration of File Type values}
 \format{
-An object of class \code{list} of length 11.
+An object of class \code{list} of length 12.
 }
 \usage{
 FileType
@@ -26,10 +26,9 @@ for dataset files.
 }
 \examples{
 base_url <- "http://localhost:8000/"
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")$add_file(
   url = paste0(base_url, "cells.json"),
-  data_type = DataType$CELLS,
   file_type = FileType$CELLS_JSON
 )
 }

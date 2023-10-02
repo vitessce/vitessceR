@@ -32,7 +32,7 @@ w <- SPEWrapper$new(
 )
 
 # Create Vitessce view config
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")$add_object(w)
 spatial <- vc$add_view(dataset, Component$SPATIAL)
 status <- vc$add_view(dataset, Component$STATUS)

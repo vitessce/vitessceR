@@ -128,13 +128,13 @@ my_wrapped_object <- MyCustomSeuratWrapper$new(pbmc, cell_sets = cell_sets_list,
 Now, we create the Vitessce config as usual:
 ```r
 # Create Vitessce view config
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")$add_object(my_wrapped_object)
 scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "pca")
 status <- vc$add_view(dataset, Component$STATUS)
 desc <- vc$add_view(dataset, Component$DESCRIPTION)
 desc <- desc$set_props(description = "Visualization of a Seurat object containing the PBMC 3K dataset.")
-cell_sets <- vc$add_view(dataset, Component$CELL_SETS)
+cell_sets <- vc$add_view(dataset, Component$OBS_SETS)
 vc$layout(hconcat(
   vconcat(scatterplot),
   vconcat(cell_sets, vconcat(desc, status))

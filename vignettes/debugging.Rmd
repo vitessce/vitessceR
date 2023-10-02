@@ -16,20 +16,9 @@ The following code snippets assume that `vitessceR` has been loaded via `library
 
 ```r
 library(vitessceR)
-vc <- VitessceConfig$new("My single-cell data visualization")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My single-cell data visualization")
 ```
 
-## Use the `out_dir` parameter for data object wrapper classes
-
-Rather than using a temporary directory, this will write converted files to the specified directory.
-This way, you can open and explore the converted output files.
-
-```r
-dir.create("./debug")
-
-dataset <- vc$add_dataset("My dataset")
-dataset <- dataset$add_object(SeuratWrapper$new(pbmc3k.final, out_dir = "./debug"))
-```
 
 ## Use the `port` parameter
 
