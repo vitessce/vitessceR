@@ -1,18 +1,11 @@
-#' Seurat object wrapper class
-#' @title SeuratWrapper Class
+#' AnnData object wrapper class
+#' @title AnnDataWrapper Class
 #' @docType class
 #' @description
-#' Class representing a local Seurat object in a Vitessce dataset.
+#' Class representing an AnnData object (saved to a Zarr store) in a Vitessce dataset.
 #'
-#' @rdname SeuratWrapper
+#' @rdname AnnDataWrapper
 #' @export
-#' @examples
-#' obj <- get_seurat_obj()
-#' w <- SeuratWrapper$new(
-#'   obj,
-#'   cell_embeddings = c("pca"),
-#'   cell_embedding_names = c("PCA")
-#' )
 AnnDataWrapper <- R6::R6Class("AnnDataWrapper",
   inherit = AbstractWrapper,
   public = list(
@@ -25,30 +18,77 @@ AnnDataWrapper <- R6::R6Class("AnnDataWrapper",
     #' @field local_dir_uid The path to the local zarr store.
     #' @keywords internal
     local_dir_uid = NULL,
-
-
+    #' @field obs_feature_matrix_path The path to the observation-by-feature matrix within the Zarr store.
+    #' @keywords internal
     obs_feature_matrix_path=NULL,
+    #' @field feature_filter_path The path to the a column of adata.var within the Zarr store.
+    #' Use this if obs_feature_matrix_path points to a subset of adata.X (relative to the full adata.var).
+    #' @keywords internal
     feature_filter_path=NULL,
+    #' @field initial_feature_filter_path The path to the a column of adata.var within the Zarr store.
+    #' Use this to load a subset of the matrix at obs_feature_matrix_path initially.
+    #' @keywords internal
     initial_feature_filter_path=NULL,
+    #' @field obs_set_paths A list of paths to the observation sets within the Zarr store.
+    #' @keywords internal
     obs_set_paths=NULL,
+    #' @field obs_set_names A list of names for the observation sets.
+    #' @keywords internal
     obs_set_names=NULL,
+    #' @field obs_locations_path The path to the observation locations within the Zarr store.
+    #' @keywords internal
     obs_locations_path=NULL,
+    #' @field obs_segmentations_path The path to the observation segmentations within the Zarr store.
+    #' @keywords internal
     obs_segmentations_path=NULL,
+    #' @field obs_embedding_paths A list of paths to the observation embeddings within the Zarr store.
+    #' @keywords internal
     obs_embedding_paths=NULL,
+    #' @field obs_embedding_names A list of names for the observation embeddings.
+    #' @keywords internal
     obs_embedding_names=NULL,
+    #' @field obs_embedding_dims A list of dimensions for the observation embeddings.
+    #' @keywords internal
     obs_embedding_dims=NULL,
-    request_init=NULL,
+    #' @field feature_labels_path The path to the feature labels within the Zarr store.
+    #' @keywords internal
     feature_labels_path=NULL,
+    #' @field obs_labels_path The path to the observation labels within the Zarr store.
+    #' @keywords internal
     obs_labels_path=NULL,
+    #' @field obs_labels_paths A list of paths to the observation labels within the Zarr store.
+    #' @keywords internal
     obs_labels_paths=NULL,
+    #' @field obs_labels_names A list of names for the observation labels.
+    #' @keywords internal
     obs_labels_names=NULL,
+    #' @field coordination_values A list of coordination values for the file definition.
+    #' @keywords internal
     coordination_values=NULL,
-
+    #' @field request_init A list of requestInit options for the Zarr store.
+    #' @keywords internal
+    request_init=NULL,
     #' @description
     #' Create a wrapper around an AnnData object saved to a Zarr store.
     #' @param adata_path The path to a local Zarr store.
+    #' @param adata_url The URL to a remote Zarr store.
+    #' @param obs_feature_matrix_path The path to the observation-by-feature matrix within the Zarr store.
+    #' @param feature_filter_path The path to the a column of adata.var within the Zarr store. Use this if obs_feature_matrix_path points to a subset of adata.X (relative to the full adata.var).
+    #' @param initial_feature_filter_path The path to the a column of adata.var within the Zarr store. Use this to load a subset of the matrix at obs_feature_matrix_path initially.
+    #' @param obs_set_paths A list of paths to the observation sets within the Zarr store.
+    #' @param obs_set_names A list of names for the observation sets.
+    #' @param obs_locations_path The path to the observation locations within the Zarr store.
+    #' @param obs_segmentations_path The path to the observation segmentations within the Zarr store.
+    #' @param obs_embedding_paths A list of paths to the observation embeddings within the Zarr store.
+    #' @param obs_embedding_names A list of names for the observation embeddings.
+    #' @param obs_embedding_dims A list of dimensions for the observation embeddings.
+    #' @param request_init A list of requestInit options for the Zarr store.
+    #' @param feature_labels_path The path to the feature labels within the Zarr store.
+    #' @param obs_labels_paths A list of paths to the observation labels within the Zarr store.
+    #' @param obs_labels_names A list of names for the observation labels.
+    #' @param coordination_values A list of coordination values for the file definition.
     #' @param ... Parameters inherited from `AbstractWrapper`.
-    #' @return A new `SeuratWrapper` object.
+    #' @return A new `AnnDataWrapper` object.
     initialize = function(adata_path = NA, adata_url = NA, obs_feature_matrix_path = NA, feature_filter_path = NA, initial_feature_filter_path = NA, obs_set_paths = NA, obs_set_names = NA, obs_locations_path = NA, obs_segmentations_path = NA, obs_embedding_paths = NA, obs_embedding_names = NA, obs_embedding_dims = NA, request_init = NA, feature_labels_path = NA, obs_labels_path = NA, coordination_values = NA, obs_labels_paths = NA, obs_labels_names = NA, ...) {
       super$initialize(...)
       self$adata_path <- adata_path
@@ -91,6 +131,7 @@ AnnDataWrapper <- R6::R6Class("AnnDataWrapper",
     #' Create the JSON output files, web server routes, and file definition creators.
     #' @param dataset_uid The ID for this dataset.
     #' @param obj_i The index of this data object within the dataset.
+    #' @param base_dir A base directory for local data.
     convert_and_save = function(dataset_uid, obj_i, base_dir = NA) {
       if(self$is_remote) {
         super$convert_and_save(dataset_uid, obj_i, base_dir = base_dir)
@@ -108,6 +149,10 @@ AnnDataWrapper <- R6::R6Class("AnnDataWrapper",
         self$routes <- append(self$routes, route)
       }
     },
+    #' @description
+    #' Get a list of server route objects.
+    #' @param dataset_uid The ID for this dataset.
+    #' @param obj_i The index of this data object within the dataset.
     make_routes = function(dataset_uid, obj_i) {
       return(self$get_local_dir_route(dataset_uid, obj_i, self$adata_path, self$local_dir_uid))
     },

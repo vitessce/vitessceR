@@ -60,6 +60,7 @@ VitessceConfigDatasetFile <- R6::R6Class("VitessceConfigDatasetFile",
     #' @param data_type A data type for the file.
     #' @param file_type A file type for the file.
     #' @param options A list of options to include for the file.
+    #' @param coordination_values A list of coordination values to include in the file definition.
     #' @return A new `VitessceConfigDatasetFile` object.
     initialize = function(url = NA, file_type = NA, options = NA, coordination_values = NA, data_type = NA) {
       private$file <- obj_list()
@@ -103,6 +104,7 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
     #' Create a new dataset object.
     #' @param uid A unique identifier string for the dataset.
     #' @param name A name for the dataset
+    #' @param base_dir A directory which local files are configured relative to.
     #' @return A new `VitessceConfigDataset` object.
     initialize = function(uid, name, base_dir = NA) {
       self$dataset <- list(
@@ -113,9 +115,15 @@ VitessceConfigDataset <- R6::R6Class("VitessceConfigDataset",
       private$objs <- list()
       self$base_dir <- base_dir
     },
+    #' @description
+    #' Get the dataset name.
+    #' @return The name as a string.
     get_name = function() {
       return(self$dataset[['name']])
     },
+    #' @description
+    #' Get the dataset UID.
+    #' @return The uid as a string.
     get_uid = function() {
       return(self$dataset[['uid']])
     },
@@ -231,6 +239,7 @@ VitessceConfigCoordinationScope <- R6::R6Class("VitessceConfigCoordinationScope"
     #' Create a new coordination scope object.
     #' @param c_type A coordination type name.
     #' @param c_scope A coordination scope name.
+    #' @param c_value An initial value for the coordination scope.
     #' @return A new `VitessceConfigCoordinationScope` object.
     initialize = function(c_type, c_scope, c_value = NA) {
       self$c_type <- c_type
@@ -374,6 +383,7 @@ VitessceConfigView <- R6::R6Class("VitessceConfigView",
       }
       invisible(self)
     },
+    #' @description
     use_coordination_by_dict = function(scopes) {
       # TODO
       invisible(self)
@@ -429,6 +439,7 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
     base_dir = NULL,
     #' @description
     #' Create a new config object.
+    #' @param schema_version The Vitessce config schema version to use.
     #' @param name A name for the config.
     #' @param description A description for the config.
     #' @return A new `VitessceConfig` object.

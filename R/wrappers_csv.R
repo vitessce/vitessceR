@@ -1,42 +1,46 @@
-#' Seurat object wrapper class
-#' @title SeuratWrapper Class
+#' CSV file wrapper class
+#' @title CsvWrapper Class
 #' @docType class
 #' @description
-#' Class representing a local Seurat object in a Vitessce dataset.
+#' Class representing a CSV file in a Vitessce dataset.
 #'
-#' @rdname SeuratWrapper
+#' @rdname CsvWrapper
 #' @export
-#' @examples
-#' obj <- get_seurat_obj()
-#' w <- SeuratWrapper$new(
-#'   obj,
-#'   cell_embeddings = c("pca"),
-#'   cell_embedding_names = c("PCA")
-#' )
 CsvWrapper <- R6::R6Class("CsvWrapper",
   inherit = AbstractWrapper,
   public = list(
-    #' @field adata_path The object to wrap.
+    #' @field csv_path The object to wrap.
     #' @keywords internal
     csv_path = NULL,
-    #' @field adata_url The object to wrap.
+    #' @field csv_url The object to wrap.
     #' @keywords internal
     csv_url = NULL,
-    #' @field local_dir_uid The path to the local zarr store.
+    #' @field local_csv_uid The path to the local zarr store.
     #' @keywords internal
     local_csv_uid = NULL,
 
-
+    #' @field data_type The Vitessce data type for this file.
+    #' @keywords internal
     data_type = NULL,
+    #' @field options A list of options to pass to the Vitessce file definition.
+    #' @keywords internal
     options=NULL,
+    #' @field coordination_values A list of coordination values to pass to the Vitessce file definition.
+    #' @keywords internal
     coordination_values=NULL,
+    #' @field request_init A list of requestInit values to pass to fetch when loading the CSV over HTTP.
+    #' @keywords internal
     request_init = NULL,
-
     #' @description
-    #' Create a wrapper around an AnnData object saved to a Zarr store.
-    #' @param adata_path The path to a local Zarr store.
+    #' Create a wrapper around a CSV file.
+    #' @param csv_path The path to a local CSV file.
+    #' @param csv_url The URL to a remote CSV file.
+    #' @param data_type The Vitessce data type for this file.
+    #' @param options A list of options to pass to the Vitessce file definition.
+    #' @param coordination_values A list of coordination values to pass to the Vitessce file definition.
+    #' @param request_init A list of requestInit values to pass to fetch when loading the CSV over HTTP.
     #' @param ... Parameters inherited from `AbstractWrapper`.
-    #' @return A new `SeuratWrapper` object.
+    #' @return A new `CsvWrapper` object.
     initialize = function(csv_path = NA, csv_url = NA, data_type = NA, options = NA, coordination_values = NA, request_init = NA, ...) {
       super$initialize(...)
       self$csv_path <- csv_path
@@ -71,6 +75,7 @@ CsvWrapper <- R6::R6Class("CsvWrapper",
     #' Create the JSON output files, web server routes, and file definition creators.
     #' @param dataset_uid The ID for this dataset.
     #' @param obj_i The index of this data object within the dataset.
+    #' @param base_dir A base directory for local data.
     convert_and_save = function(dataset_uid, obj_i, base_dir = NA) {
       if(self$is_remote) {
         super$convert_and_save(dataset_uid, obj_i, base_dir = base_dir)
@@ -88,6 +93,10 @@ CsvWrapper <- R6::R6Class("CsvWrapper",
         self$routes <- append(self$routes, route)
       }
     },
+    #' @description
+    #' Get a list of server route objects.
+    #' @param dataset_uid The ID for this dataset.
+    #' @param obj_i The index of this data object within the dataset.
     make_routes = function(dataset_uid, obj_i) {
       return(self$get_local_file_route(dataset_uid, obj_i, self$csv_path, self$local_csv_uid))
     },

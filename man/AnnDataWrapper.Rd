@@ -3,20 +3,12 @@
 \docType{class}
 \name{AnnDataWrapper}
 \alias{AnnDataWrapper}
-\title{SeuratWrapper Class}
+\title{AnnDataWrapper Class}
 \description{
-Class representing a local Seurat object in a Vitessce dataset.
+Class representing an AnnData object (saved to a Zarr store) in a Vitessce dataset.
 }
 \details{
-Seurat object wrapper class
-}
-\examples{
-obj <- get_seurat_obj()
-w <- SeuratWrapper$new(
-  obj,
-  cell_embeddings = c("pca"),
-  cell_embedding_names = c("PCA")
-)
+AnnData object wrapper class
 }
 \keyword{internal}
 \section{Super class}{
@@ -30,6 +22,40 @@ w <- SeuratWrapper$new(
 \item{\code{adata_url}}{The object to wrap.}
 
 \item{\code{local_dir_uid}}{The path to the local zarr store.}
+
+\item{\code{obs_feature_matrix_path}}{The path to the observation-by-feature matrix within the Zarr store.}
+
+\item{\code{feature_filter_path}}{The path to the a column of adata.var within the Zarr store.
+Use this if obs_feature_matrix_path points to a subset of adata.X (relative to the full adata.var).}
+
+\item{\code{initial_feature_filter_path}}{The path to the a column of adata.var within the Zarr store.
+Use this to load a subset of the matrix at obs_feature_matrix_path initially.}
+
+\item{\code{obs_set_paths}}{A list of paths to the observation sets within the Zarr store.}
+
+\item{\code{obs_set_names}}{A list of names for the observation sets.}
+
+\item{\code{obs_locations_path}}{The path to the observation locations within the Zarr store.}
+
+\item{\code{obs_segmentations_path}}{The path to the observation segmentations within the Zarr store.}
+
+\item{\code{obs_embedding_paths}}{A list of paths to the observation embeddings within the Zarr store.}
+
+\item{\code{obs_embedding_names}}{A list of names for the observation embeddings.}
+
+\item{\code{obs_embedding_dims}}{A list of dimensions for the observation embeddings.}
+
+\item{\code{feature_labels_path}}{The path to the feature labels within the Zarr store.}
+
+\item{\code{obs_labels_path}}{The path to the observation labels within the Zarr store.}
+
+\item{\code{obs_labels_paths}}{A list of paths to the observation labels within the Zarr store.}
+
+\item{\code{obs_labels_names}}{A list of names for the observation labels.}
+
+\item{\code{coordination_values}}{A list of coordination values for the file definition.}
+
+\item{\code{request_init}}{A list of requestInit options for the Zarr store.}
 }
 \if{html}{\out{</div>}}
 }
@@ -51,6 +77,8 @@ w <- SeuratWrapper$new(
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_file_defs"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_file_defs'><code>vitessceR::AbstractWrapper$get_file_defs()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_local_dir_route"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_local_dir_route'><code>vitessceR::AbstractWrapper$get_local_dir_route()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_local_dir_url"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_local_dir_url'><code>vitessceR::AbstractWrapper$get_local_dir_url()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_local_file_route"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_local_file_route'><code>vitessceR::AbstractWrapper$get_local_file_route()</code></a></span></li>
+<li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_local_file_url"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_local_file_url'><code>vitessceR::AbstractWrapper$get_local_file_url()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_out_dir"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_out_dir'><code>vitessceR::AbstractWrapper$get_out_dir()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_out_dir_route"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_out_dir_route'><code>vitessceR::AbstractWrapper$get_out_dir_route()</code></a></span></li>
 <li><span class="pkg-link" data-pkg="vitessceR" data-topic="AbstractWrapper" data-id="get_route_str"><a href='../../vitessceR/html/AbstractWrapper.html#method-AbstractWrapper-get_route_str'><code>vitessceR::AbstractWrapper$get_route_str()</code></a></span></li>
@@ -94,12 +122,44 @@ Create a wrapper around an AnnData object saved to a Zarr store.
 \describe{
 \item{\code{adata_path}}{The path to a local Zarr store.}
 
+\item{\code{adata_url}}{The URL to a remote Zarr store.}
+
+\item{\code{obs_feature_matrix_path}}{The path to the observation-by-feature matrix within the Zarr store.}
+
+\item{\code{feature_filter_path}}{The path to the a column of adata.var within the Zarr store. Use this if obs_feature_matrix_path points to a subset of adata.X (relative to the full adata.var).}
+
+\item{\code{initial_feature_filter_path}}{The path to the a column of adata.var within the Zarr store. Use this to load a subset of the matrix at obs_feature_matrix_path initially.}
+
+\item{\code{obs_set_paths}}{A list of paths to the observation sets within the Zarr store.}
+
+\item{\code{obs_set_names}}{A list of names for the observation sets.}
+
+\item{\code{obs_locations_path}}{The path to the observation locations within the Zarr store.}
+
+\item{\code{obs_segmentations_path}}{The path to the observation segmentations within the Zarr store.}
+
+\item{\code{obs_embedding_paths}}{A list of paths to the observation embeddings within the Zarr store.}
+
+\item{\code{obs_embedding_names}}{A list of names for the observation embeddings.}
+
+\item{\code{obs_embedding_dims}}{A list of dimensions for the observation embeddings.}
+
+\item{\code{request_init}}{A list of requestInit options for the Zarr store.}
+
+\item{\code{feature_labels_path}}{The path to the feature labels within the Zarr store.}
+
+\item{\code{coordination_values}}{A list of coordination values for the file definition.}
+
+\item{\code{obs_labels_paths}}{A list of paths to the observation labels within the Zarr store.}
+
+\item{\code{obs_labels_names}}{A list of names for the observation labels.}
+
 \item{\code{...}}{Parameters inherited from \code{AbstractWrapper}.}
 }
 \if{html}{\out{</div>}}
 }
 \subsection{Returns}{
-A new \code{SeuratWrapper} object.
+A new \code{AnnDataWrapper} object.
 }
 }
 \if{html}{\out{<hr>}}
@@ -117,6 +177,8 @@ Create the JSON output files, web server routes, and file definition creators.
 \item{\code{dataset_uid}}{The ID for this dataset.}
 
 \item{\code{obj_i}}{The index of this data object within the dataset.}
+
+\item{\code{base_dir}}{A base directory for local data.}
 }
 \if{html}{\out{</div>}}
 }
@@ -125,10 +187,20 @@ Create the JSON output files, web server routes, and file definition creators.
 \if{html}{\out{<a id="method-AnnDataWrapper-make_routes"></a>}}
 \if{latex}{\out{\hypertarget{method-AnnDataWrapper-make_routes}{}}}
 \subsection{Method \code{make_routes()}}{
+Get a list of server route objects.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{AnnDataWrapper$make_routes(dataset_uid, obj_i)}\if{html}{\out{</div>}}
 }
 
+\subsection{Arguments}{
+\if{html}{\out{<div class="arguments">}}
+\describe{
+\item{\code{dataset_uid}}{The ID for this dataset.}
+
+\item{\code{obj_i}}{The index of this data object within the dataset.}
+}
+\if{html}{\out{</div>}}
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-AnnDataWrapper-get_zarr_url"></a>}}

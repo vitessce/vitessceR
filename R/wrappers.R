@@ -111,16 +111,42 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
       )
       return(route)
     },
+    #' @description
+    #' Construct a URL to a local directory.
+    #'
+    #' @param base_url The base URL on which the web server is serving.
+    #' @param dataset_uid The ID for this dataset.
+    #' @param obj_i The index of this data object within the dataset.
+    #' @param local_dir_path The path to the local directory.
+    #' @param local_dir_uid A unique identifier for this local directory in this dataset.
+    #' @return A string for the URL.
     get_local_dir_url = function(base_url, dataset_uid, obj_i, local_dir_path, local_dir_uid) {
       if(!self$is_remote && !is.na(self$base_dir)) {
         return(self$get_url_simple(base_url, file_path_to_url_path(local_dir_path, prepend_slash = FALSE)))
       }
       return(self$get_url(base_url, dataset_uid, obj_i, local_dir_uid))
     },
+    #' @description
+    #' Construct a URL to a local file.
+    #'
+    #' @param base_url The base URL on which the web server is serving.
+    #' @param dataset_uid The ID for this dataset.
+    #' @param obj_i The index of this data object within the dataset.
+    #' @param local_file_path The path to the local file.
+    #' @param local_file_uid A unique identifier for this local file in this dataset.
+    #' @return A string for the URL.
     get_local_file_url = function(base_url, dataset_uid, obj_i, local_file_path, local_file_uid) {
       # Same logic as get_local_dir_url
       return(self$get_local_dir_url(base_url, dataset_uid, obj_i, local_file_path, local_file_uid))
     },
+    #' @description
+    #' Create a web server route for this object.
+    #'
+    #' @param dataset_uid The ID for this dataset.
+    #' @param obj_i The index of this data object within the dataset.
+    #' @param local_dir_path The path to the local directory.
+    #' @param local_dir_uid A unique identifier for this local directory in this dataset.
+    #' @return A new `VitessceConfigServerStaticRoute` instance.
     get_local_dir_route = function(dataset_uid, obj_i, local_dir_path, local_dir_uid) {
       if(!self$is_remote) {
         if(is.na(self$base_dir)) {
@@ -137,6 +163,14 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
       }
       return(list())
     },
+    #' @description
+    #' Create a web server route for this object.
+    #'
+    #' @param dataset_uid The ID for this dataset.
+    #' @param obj_i The index of this data object within the dataset.
+    #' @param local_file_path The path to the local file.
+    #' @param local_file_uid A unique identifier for this local file in this dataset.
+    #' @return A new `VitessceConfigServerFileRoute` instance.
     get_local_file_route = function(dataset_uid, obj_i, local_file_path, local_file_uid) {
       if(!self$is_remote) {
         if(is.na(self$base_dir)) {
@@ -166,6 +200,11 @@ AbstractWrapper <- R6::R6Class("AbstractWrapper",
         retval <- paste0(base_url, self$get_route_str(dataset_uid, obj_i, ...))
         return(retval)
     },
+    #' @description
+    #' Construct a URL.
+    #' @param base_url The base URL on which the web server is serving.
+    #' @param suffix The suffix to append to the base URL.
+    #' @return A URL as a string like {base_url}/{suffix}
     get_url_simple = function(base_url, suffix) {
       return(paste0(base_url, "/", suffix))
     },

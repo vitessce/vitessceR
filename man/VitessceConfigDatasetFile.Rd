@@ -42,6 +42,8 @@ Create a new dataset file object.
 
 \item{\code{options}}{A list of options to include for the file.}
 
+\item{\code{coordination_values}}{A list of coordination values to include in the file definition.}
+
 \item{\code{data_type}}{A data type for the file.}
 }
 \if{html}{\out{</div>}}

@@ -17,7 +17,7 @@ Dataset in a VitessceConfig
 ## ------------------------------------------------
 
 base_url <- "http://localhost:8000/"
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")$add_file(
   url = paste0(base_url, "cells.json"),
   data_type = DataType$CELLS,
@@ -61,6 +61,8 @@ Create a new dataset object.
 \item{\code{uid}}{A unique identifier string for the dataset.}
 
 \item{\code{name}}{A name for the dataset}
+
+\item{\code{base_dir}}{A directory which local files are configured relative to.}
 }
 \if{html}{\out{</div>}}
 }
@@ -72,19 +74,27 @@ A new \code{VitessceConfigDataset} object.
 \if{html}{\out{<a id="method-VitessceConfigDataset-get_name"></a>}}
 \if{latex}{\out{\hypertarget{method-VitessceConfigDataset-get_name}{}}}
 \subsection{Method \code{get_name()}}{
+Get the dataset name.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDataset$get_name()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+The name as a string.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-VitessceConfigDataset-get_uid"></a>}}
 \if{latex}{\out{\hypertarget{method-VitessceConfigDataset-get_uid}{}}}
 \subsection{Method \code{get_uid()}}{
+Get the dataset UID.
 \subsection{Usage}{
 \if{html}{\out{<div class="r">}}\preformatted{VitessceConfigDataset$get_uid()}\if{html}{\out{</div>}}
 }
 
+\subsection{Returns}{
+The uid as a string.
+}
 }
 \if{html}{\out{<hr>}}
 \if{html}{\out{<a id="method-VitessceConfigDataset-add_file"></a>}}
@@ -120,7 +130,7 @@ Invisible self, to allow chaining.
 \subsection{Examples}{
 \if{html}{\out{<div class="r example copy">}}
 \preformatted{base_url <- "http://localhost:8000/"
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")$add_file(
   url = paste0(base_url, "cells.json"),
   data_type = DataType$CELLS,

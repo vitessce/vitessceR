@@ -5,7 +5,7 @@
 \alias{Component}
 \title{Enumeration of Component values}
 \format{
-An object of class \code{list} of length 10.
+An object of class \code{list} of length 12.
 }
 \usage{
 Component
@@ -26,7 +26,7 @@ valid string constant values representing components.
 }
 }
 \examples{
-vc <- VitessceConfig$new("My config")
+vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")
 description <- vc$add_view(dataset, Component$DESCRIPTION)
 vc$layout(description)

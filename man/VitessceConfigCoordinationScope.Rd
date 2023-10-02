@@ -45,6 +45,8 @@ Create a new coordination scope object.
 \item{\code{c_type}}{A coordination type name.}
 
 \item{\code{c_scope}}{A coordination scope name.}
+
+\item{\code{c_value}}{An initial value for the coordination scope.}
 }
 \if{html}{\out{</div>}}
 }
