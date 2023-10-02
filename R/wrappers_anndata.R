@@ -89,7 +89,7 @@ AnnDataWrapper <- R6::R6Class("AnnDataWrapper",
     #' @param coordination_values A list of coordination values for the file definition.
     #' @param ... Parameters inherited from `AbstractWrapper`.
     #' @return A new `AnnDataWrapper` object.
-    initialize = function(adata_path = NA, adata_url = NA, obs_feature_matrix_path = NA, feature_filter_path = NA, initial_feature_filter_path = NA, obs_set_paths = NA, obs_set_names = NA, obs_locations_path = NA, obs_segmentations_path = NA, obs_embedding_paths = NA, obs_embedding_names = NA, obs_embedding_dims = NA, request_init = NA, feature_labels_path = NA, obs_labels_path = NA, coordination_values = NA, obs_labels_paths = NA, obs_labels_names = NA, ...) {
+    initialize = function(adata_path = NA, adata_url = NA, obs_feature_matrix_path = NA, feature_filter_path = NA, initial_feature_filter_path = NA, obs_set_paths = NA, obs_set_names = NA, obs_locations_path = NA, obs_segmentations_path = NA, obs_embedding_paths = NA, obs_embedding_names = NA, obs_embedding_dims = NA, request_init = NA, feature_labels_path = NA, coordination_values = NA, obs_labels_paths = NA, obs_labels_names = NA, ...) {
       super$initialize(...)
       self$adata_path <- adata_path
       self$adata_url <- adata_url

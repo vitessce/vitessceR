@@ -383,7 +383,6 @@ VitessceConfigView <- R6::R6Class("VitessceConfigView",
       }
       invisible(self)
     },
-    #' @description
     use_coordination_by_dict = function(scopes) {
       # TODO
       invisible(self)

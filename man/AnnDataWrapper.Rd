@@ -109,7 +109,6 @@ Create a wrapper around an AnnData object saved to a Zarr store.
   obs_embedding_dims = NA,
   request_init = NA,
   feature_labels_path = NA,
-  obs_labels_path = NA,
   coordination_values = NA,
   obs_labels_paths = NA,
   obs_labels_names = NA,
