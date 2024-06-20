@@ -12,6 +12,12 @@ Installation requires R 4.0.0 or greater.
 
 ```r
 install.packages("devtools")
+
+devtools::install_github("keller-mark/pizzarr")
+devtools::install_github("keller-mark/anndataR", ref="keller-mark/zarr-and-rarr")
+devtools::install_github("vitessce/vitessceAnalysisR", ref="keller-mark/pizzarr-seurat-5")
+
+devtools::install_github("keller-mark/anyhtmlwidget")
 devtools::install_github("vitessce/vitessceR")
 ```
 
