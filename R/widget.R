@@ -1,18 +1,209 @@
 
+DEFAULT_PLUGIN_ESM <- "
+function createPlugins(utilsForPlugins) {
+    const {
+        React,
+        PluginFileType,
+        PluginViewType,
+        PluginCoordinationType,
+        PluginJointFileType,
+        z,
+        useCoordination,
+    } = utilsForPlugins;
+    return {
+        pluginViewTypes: undefined,
+        pluginFileTypes: undefined,
+        pluginCoordinationTypes: undefined,
+        pluginJointFileTypes: undefined,
+    };
+}
+export default { createPlugins };
+"
+
 ESM <- "
-function render({ el, model }) {
-  console.log(model.get('config'));
-  let count = () => model.get('count');
-  let btn = document.createElement('button');
-  btn.innerHTML = `count button ${count()}`;
-  btn.addEventListener('click', () => {
-    model.set('count', count() + 1);
-    model.save_changes();
-  });
-  model.on('change:count', () => {
-        btn.innerHTML = `count is ${count()}`;
-  });
-  el.appendChild(btn);
+import { importWithMap } from 'https://unpkg.com/dynamic-importmap@0.1.0';
+const importMap = {
+  imports: {
+    'react': 'https://esm.sh/react@18.2.0?dev',
+    'react-dom': 'https://esm.sh/react-dom@18.2.0?dev',
+    'react-dom/client': 'https://esm.sh/react-dom@18.2.0/client?dev',
+  },
+};
+
+const React = await importWithMap('react', importMap);
+const { createRoot } = await importWithMap('react-dom/client', importMap);
+
+const e = React.createElement;
+
+const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+function prependBaseUrl(config, proxy, hasHostName) {
+  return config;
+}
+
+async function render(view) {
+
+  const cssUid = view.model.get('uid');
+  const jsDevMode = view.model.get('js_dev_mode');
+  const jsPackageVersion = view.model.get('js_package_version');
+  const customJsUrl = view.model.get('custom_js_url');
+  const pluginEsm = view.model.get('plugin_esm');
+  const remountOnUidChange = view.model.get('remount_on_uid_change');
+  const storeUrls = view.model.get('store_urls');
+
+  const pkgName = (jsDevMode ? '@vitessce/dev' : 'vitessce');
+
+  importMap.imports.vitessce = (customJsUrl.length > 0
+    ? customJsUrl
+    : `https://unpkg.com/${pkgName}@${jsPackageVersion}`
+  );
+
+  const {
+    Vitessce,
+    PluginFileType,
+    PluginViewType,
+    PluginCoordinationType,
+    PluginJointFileType,
+    z,
+    useCoordination,
+  } = await importWithMap('vitessce', importMap);
+
+  let pluginViewTypes;
+  let pluginCoordinationTypes;
+  let pluginFileTypes;
+  let pluginJointFileTypes;
+
+  const stores = {};
+  /*
+  const stores = Object.fromEntries(
+      storeUrls.map(storeUrl => ([
+          storeUrl,
+          {
+              async get(key) {
+                  const [data, buffers] = await view.experimental.invoke('_zarr_get', [storeUrl, key]);
+                  if (!data.success) return undefined;
+                  return buffers[0].buffer;
+              },
+          }
+      ])),
+  );
+  */
+
+  try {
+      const pluginEsmUrl = URL.createObjectURL(new Blob([pluginEsm], { type: 'text/javascript' }));
+      const pluginModule = (await import(pluginEsmUrl)).default;
+      URL.revokeObjectURL(pluginEsmUrl);
+
+      const pluginsObj = await pluginModule.createPlugins({
+          React,
+          PluginFileType,
+          PluginViewType,
+          PluginCoordinationType,
+          PluginJointFileType,
+          z,
+          useCoordination,
+      });
+      pluginViewTypes = pluginsObj.pluginViewTypes;
+      pluginCoordinationTypes = pluginsObj.pluginCoordinationTypes;
+      pluginFileTypes = pluginsObj.pluginFileTypes;
+      pluginJointFileTypes = pluginsObj.pluginJointFileTypes;
+  } catch(e) {
+      console.error(e);
+  }
+
+
+   function VitessceWidget(props) {
+      const { model } = props;
+
+      const [config, setConfig] = React.useState(prependBaseUrl(model.get('config'), model.get('proxy'), model.get('has_host_name')));
+      const [validateConfig, setValidateConfig] = React.useState(true);
+      const height = model.get('height');
+      const theme = model.get('theme') === 'auto' ? (prefersDark ? 'dark' : 'light') : model.get('theme');
+
+      const divRef = React.useRef();
+
+      React.useEffect(() => {
+          if(!divRef.current) {
+              return () => {};
+          }
+
+          function handleMouseEnter() {
+              const jpn = divRef.current.closest('.jp-Notebook');
+              if(jpn) {
+                  jpn.style.overflow = 'hidden';
+              }
+          }
+          function handleMouseLeave(event) {
+              if(event.relatedTarget === null || (event.relatedTarget && event.relatedTarget.closest('.jp-Notebook')?.length)) return;
+              const jpn = divRef.current.closest('.jp-Notebook');
+              if(jpn) {
+                  jpn.style.overflow = 'auto';
+              }
+          }
+          divRef.current.addEventListener('mouseenter', handleMouseEnter);
+          divRef.current.addEventListener('mouseleave', handleMouseLeave);
+
+          return () => {
+              if(divRef.current) {
+                  divRef.current.removeEventListener('mouseenter', handleMouseEnter);
+                  divRef.current.removeEventListener('mouseleave', handleMouseLeave);
+              }
+          };
+      }, [divRef]);
+
+      // Config changed on JS side (from within <Vitessce/>),
+      // send updated config to Python side.
+      const onConfigChange = React.useCallback((config) => {
+          model.set('config', config);
+          setValidateConfig(false);
+          model.save_changes();
+      }, [model]);
+
+      // Config changed on Python side,
+      // pass to <Vitessce/> component to it is updated on JS side.
+      React.useEffect(() => {
+          model.on('change:config', () => {
+              const newConfig = prependBaseUrl(model.get('config'), model.get('proxy'), model.get('has_host_name'));
+
+              // Force a re-render and re-validation by setting a new config.uid value.
+              // TODO: make this conditional on a parameter from Python.
+              //newConfig.uid = `random-${Math.random()}`;
+              //console.log('newConfig', newConfig);
+              setConfig(newConfig);
+          });
+      }, []);
+
+      const vitessceProps = {
+          height, theme, config, onConfigChange, validateConfig,
+          pluginViewTypes, pluginCoordinationTypes, pluginFileTypes, pluginJointFileTypes,
+          remountOnUidChange, stores,
+      };
+
+      return e('div', { ref: divRef, style: { height: height + 'px' } },
+          e(React.Suspense, { fallback: e('div', {}, 'Loading...') },
+              e(React.StrictMode, {},
+                  e(Vitessce, vitessceProps)
+              ),
+          ),
+      );
+  }
+
+  const root = createRoot(view.el);
+  root.render(e(VitessceWidget, { model: view.model }));
+
+  return () => {
+      // Re-enable scrolling.
+      const jpn = view.el.closest('.jp-Notebook');
+      if(jpn) {
+          jpn.style.overflow = 'auto';
+      }
+
+      // Clean up React and DOM state.
+      root.unmount();
+      if(view._isFromDisplay) {
+          view.el.remove();
+      }
+  };
 }
 export default { render };
 "
@@ -86,8 +277,16 @@ vitessce_widget <- function(config, theme = "dark", width = NA, height = NA, por
     .mode = "static",
     .width = width,
     .height = height,
+    height = 600,
     count = 1,
     config = config_list,
-    theme = theme
+    theme = theme,
+    uid = 'todo-uuid-here',
+    proxy = FALSE,
+    js_package_version = '3.4.6',
+    js_dev_mode = FALSE,
+    custom_js_url = '',
+    plugin_esm = DEFAULT_PLUGIN_ESM,
+    remount_on_uid_change = TRUE
   )
 }

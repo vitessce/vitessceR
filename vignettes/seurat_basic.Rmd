@@ -30,8 +30,10 @@ library(Seurat)
 adata_path <- file.path("data", "seurat", "pbmcsca.h5ad.zarr")
 
 seu <- get_seurat_v5_obj()
+# TODO: add a dimensionality reduction
 sce <- seurat_to_sce(seu)
-sce_to_anndata_zarr(sce, adata_path)
+sce <- sce[1:3000,1:20000]
+sce_to_anndata_zarr(sce, adata_path, to_dense = TRUE)
 
 # Create Vitessce view config
 vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
