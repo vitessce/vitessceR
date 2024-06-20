@@ -1,3 +1,23 @@
+
+ESM <- "
+function render({ el, model }) {
+  console.log(model.get('config'));
+  let count = () => model.get('count');
+  let btn = document.createElement('button');
+  btn.innerHTML = `count button ${count()}`;
+  btn.addEventListener('click', () => {
+    model.set('count', count() + 1);
+    model.save_changes();
+  });
+  model.on('change:count', () => {
+        btn.innerHTML = `count is ${count()}`;
+  });
+  el.appendChild(btn);
+}
+export default { render };
+"
+
+
 #' Vitessce Widget
 #'
 #' This function creates a new Vitessce htmlwidget.
@@ -26,7 +46,7 @@
 #' @examples
 #' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 #' vc$widget()
-vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL, port = NA, base_url = NA, serve = TRUE, element_id = NULL) {
+vitessce_widget <- function(config, theme = "dark", width = NA, height = NA, port = NA, base_url = NA, serve = TRUE, element_id = NULL) {
 
   use_port <- port
   if(is.na(port)) {
@@ -61,46 +81,13 @@ vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL,
   )
 
   # create widget
-  htmlwidgets::createWidget(
-    name = 'vitessceR',
-    params,
-    width = width,
-    height = height,
-    package = 'vitessceR',
-    elementId = element_id,
-    sizingPolicy = htmlwidgets::sizingPolicy(
-      viewer.padding = 0,
-      browser.padding = 0,
-      browser.fill = TRUE
-    )
+  anyhtmlwidget::AnyHtmlWidget$new(
+    .esm = ESM,
+    .mode = "static",
+    .width = width,
+    .height = height,
+    count = 1,
+    config = config_list,
+    theme = theme
   )
-}
-
-#' Shiny bindings for vitessceR
-#'
-#' Output and render functions for using vitessceR within Shiny
-#' applications and interactive Rmd documents.
-#'
-#' @param output_id output variable to read from
-#' @param width,height Must be a valid CSS unit (like \code{'100\%'},
-#'   \code{'400px'}, \code{'auto'}) or a number, which will be coerced to a
-#'   string and have \code{'px'} appended.
-#' @param expr An expression that generates a vitessce
-#' @param env The environment in which to evaluate \code{expr}.
-#' @param quoted Is \code{expr} a quoted expression (with \code{quote()})? This
-#'   is useful if you want to save an expression in a variable.
-#' @return The Shiny UI element.
-#'
-#' @rdname vitessce-shiny
-#' @export
-vitessce_output <- function(output_id, width = '100%', height = '400px'){
-  htmlwidgets::shinyWidgetOutput(output_id, 'vitessceR', width, height, package = 'vitessceR')
-}
-
-#' @name vitessce-shiny
-#' @return The Shiny server output.
-#' @export
-render_vitessce <- function(expr, env = parent.frame(), quoted = FALSE) {
-  if (!quoted) { expr <- substitute(expr) } # force quoted
-  htmlwidgets::shinyRenderWidget(expr, vitessce_output, env, quoted = TRUE)
 }

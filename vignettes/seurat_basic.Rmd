@@ -27,56 +27,31 @@ library(vitessceR)
 library(vitessceAnalysisR)
 library(Seurat)
 
-# Download example dataset
-url <- "https://cf.10xgenomics.com/samples/cell/pbmc3k/pbmc3k_filtered_gene_bc_matrices.tar.gz"
-save_dir <- file.path("data", "seurat")
-dir.create(save_dir)
-download.file(url, destfile = file.path(save_dir, "filtered_gene_bc_matrices.tar.gz"))
-untar(file.path(save_dir, "filtered_gene_bc_matrices.tar.gz"), exdir = save_dir)
+adata_path <- file.path("data", "seurat", "pbmcsca.h5ad.zarr")
 
-# Load example dataset
-pbmc.data <- Read10X(data.dir = file.path(save_dir, "filtered_gene_bc_matrices", "hg19"))
-
-# Process example dataset (run PCA and cluster)
-pbmc <- CreateSeuratObject(counts = pbmc.data, project = "pbmc3k", min.cells = 3, min.features = 200)
-pbmc[["percent.mt"]] <- PercentageFeatureSet(pbmc, pattern = "^MT-")
-pbmc <- subset(pbmc, subset = nFeature_RNA > 200 & nFeature_RNA < 2500 & percent.mt < 5)
-pbmc <- NormalizeData(pbmc, normalization.method = "LogNormalize", scale.factor = 10000)
-pbmc <- FindVariableFeatures(pbmc, selection.method = "vst", nfeatures = 2000)
-all.genes <- rownames(pbmc)
-pbmc <- ScaleData(pbmc, features = all.genes)
-pbmc <- RunPCA(pbmc, features = VariableFeatures(object = pbmc))
-pbmc <- FindNeighbors(pbmc, dims = 1:10)
-pbmc <- FindClusters(pbmc, resolution = 0.5)
-
-pbmc <- ScaleData(pbmc, features = all.genes, do.center = FALSE)
-
-adata_path <- file.path("data", "seurat", "pbmc3k.h5ad.zarr")
-
-vitessceAnalysisR::seurat_to_anndata_zarr(pbmc, adata_path)
+seu <- get_seurat_v5_obj()
+sce <- seurat_to_sce(seu)
+sce_to_anndata_zarr(sce, adata_path)
 
 # Create Vitessce view config
 vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 dataset <- vc$add_dataset("My dataset")$add_object(AnnDataWrapper$new(
   adata_path=adata_path,
-  obs_set_paths = c("obs/seurat_clusters"),
-  obs_embedding_paths = c("obsm/X_pca"),
-  obs_embedding_names = c("PCA"),
+  obs_set_paths = c("obs/CellType"),
   obs_feature_matrix_path = "X"
 ))
-scatterplot <- vc$add_view(dataset, Component$SCATTERPLOT, mapping = "PCA")
 status <- vc$add_view(dataset, Component$STATUS)
 desc <- vc$add_view(dataset, Component$DESCRIPTION)
 desc <- desc$set_props(description = "Visualization of a Seurat object containing the PBMC 3K dataset.")
 genes <- vc$add_view(dataset, Component$FEATURE_LIST)
 heatmap <- vc$add_view(dataset, Component$HEATMAP)
 vc$link_views(
-  list(scatterplot, heatmap),
+  list(heatmap),
   list(CoordinationType$FEATURE_VALUE_COLORMAP_RANGE),
   list(c(0.0, 0.05))
 )
 vc$layout(hconcat(
-  vconcat(scatterplot, heatmap),
+  heatmap,
   vconcat(genes, vconcat(desc, status))
 ))
 
