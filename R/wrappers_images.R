@@ -30,9 +30,10 @@ MultiImageWrapper <- R6::R6Class("MultiImageWrapper",
      #' Create the web server routes and file definition creators.
      #' @param dataset_uid The ID for this dataset.
      #' @param obj_i The index of this data object within the dataset.
-     convert_and_save = function(dataset_uid, obj_i) {
+     #' @param base_dir A base directory to pass into the convert_and_save function of each image wrapper.
+     convert_and_save = function(dataset_uid, obj_i, base_dir = NA) {
        for(image in self$image_wrappers) {
-         image$convert_and_save(dataset_uid, obj_i)
+         image$convert_and_save(dataset_uid, obj_i, base_dir = base_dir)
        }
 
        # Get the file definition creator functions.
