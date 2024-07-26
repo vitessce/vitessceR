@@ -20,11 +20,11 @@ Any static web server will work, and an easy one to install and configure is [ht
 
 First, download the files used in this example:
 
-- https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/linnarsson.cells.json
-- https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/linnarsson.cell-sets.json
-- https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/linnarsson.molecules.json
-- https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/linnarsson.clusters.json
-- https://s3.amazonaws.com/vitessce-data/0.0.31/master_release/linnarsson/linnarsson.raster.json
+- https://data-1.vitessce.io/0.0.31/master_release/linnarsson/linnarsson.cells.json
+- https://data-1.vitessce.io/0.0.31/master_release/linnarsson/linnarsson.cell-sets.json
+- https://data-1.vitessce.io/0.0.31/master_release/linnarsson/linnarsson.molecules.json
+- https://data-1.vitessce.io/0.0.31/master_release/linnarsson/linnarsson.clusters.json
+- https://data-1.vitessce.io/0.0.31/master_release/linnarsson/linnarsson.raster.json
 
 ## Serve the JSON files locally
 
