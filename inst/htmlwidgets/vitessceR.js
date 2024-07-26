@@ -31,7 +31,7 @@ HTMLWidgets.widget({
         
         const jsDevMode = x.js_dev_mode;
         const customJsUrl = x.custom_js_url;
-        const jsPackageVersion = (x.js_package_version ? x.js_package_version : "3.2.1");
+        const jsPackageVersion = (x.js_package_version ? x.js_package_version : "3.4.6");
         const pkgName = (jsDevMode ? "@vitessce/dev" : "vitessce");
 
         importMap.imports["vitessce"] = (customJsUrl && customJsUrl.length > 0
