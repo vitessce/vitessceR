@@ -122,7 +122,8 @@ server <- function(input, output, session) {
       session$clientData$url_hostname,
       ":",
       session$clientData$url_port,
-      "/vitessce"
+      session$clientData$url_pathname,
+      "vitessce"
     )
 
     vc$widget(theme = "light", serve = FALSE, base_url = BASE_URL)
