@@ -13,6 +13,9 @@
 #' @param theme The theme of the widget, either "dark" or "light". Optional. By default, "dark".
 #' @param width The width of the widget as a number or CSS string. Optional.
 #' @param height The height of the widget as a number or CSS string. Optional.
+#' @param js_dev_mode Use the development (rather than production) version of the JS package. By default, FALSE.
+#' @param js_package_version Specify an NPM package version to use. Optional.
+#' @param custom_js_url Specify a URL to a JavaScript bundle to use. Optional.
 #' @param port The port for the local web server (which serves local dataset objects to the widget).
 #' Optional. By default, uses open port between 8000 and 9000.
 #' @param base_url The base URL for the web server. Optional.
@@ -26,7 +29,7 @@
 #' @examples
 #' vc <- VitessceConfig$new(schema_version = "1.0.16", name = "My config")
 #' vc$widget()
-vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL, port = NA, base_url = NA, serve = TRUE, element_id = NULL) {
+vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL, js_package_version = NULL, js_dev_mode = FALSE, custom_js_url = NULL, port = NA, base_url = NA, serve = TRUE, element_id = NULL) {
 
   use_port <- port
   if(is.na(port)) {
@@ -57,7 +60,10 @@ vitessce_widget <- function(config, theme = "dark", width = NULL, height = NULL,
   # forward widget options to javascript
   params = list(
     config = config_list,
-    theme = theme
+    theme = theme,
+    js_dev_mode = js_dev_mode,
+    js_package_version = js_package_version,
+    custom_js_url = custom_js_url
   )
 
   # create widget
