@@ -757,7 +757,11 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
             } else {
               scopes <- self$add_coordination(c_type)
               scope <- scopes[[1]]
-              scope$set_value(initial_value)
+              if(is.list(initial_value)) {
+                scope$set_value_raw(initial_value)
+              } else {
+                scope$set_value(initial_value)
+              }
               result[[c_type]] <- list(scope = scope)
             }
           }
