@@ -423,3 +423,108 @@ test_that("VitessceConfig from list", {
   vc_list_orig[['coordinationSpace']][['spatialTargetX']][['A']] <- jsonlite::unbox(20)
   expect_equal(vc_list_loaded, vc_list_orig)
 })
+
+test_that("VitessceConfig link_views_by_dict basic functionality", {
+  vc <- VitessceConfig$new(schema_version = "1.0.16", name = "Test config")
+  ds <- vc$add_dataset("Test dataset")
+  v1 <- vc$add_view(ds, "spatial")
+  v2 <- vc$add_view(ds, "scatterplot")
+
+  # Test simple coordination with meta = FALSE
+  simple_input <- list()
+  simple_input[[CoordinationType$SPATIAL_ZOOM]] <- 2
+  simple_input[[CoordinationType$SPATIAL_TARGET_X]] <- 0
+  simple_input[[CoordinationType$SPATIAL_TARGET_Y]] <- 0
+
+  vc$link_views_by_dict(list(v1, v2), simple_input, meta = FALSE)
+
+  vc_list <- vc$to_list()
+  
+  # Check that coordination scopes were created
+  expect_true("spatialZoom" %in% names(vc_list$coordinationSpace))
+  expect_true("spatialTargetX" %in% names(vc_list$coordinationSpace))
+  expect_true("spatialTargetY" %in% names(vc_list$coordinationSpace))
+  
+  # Check that values were set correctly
+  zoom_scope_name <- names(vc_list$coordinationSpace$spatialZoom)[1]
+  expect_equal(vc_list$coordinationSpace$spatialZoom[[zoom_scope_name]], jsonlite::unbox(2))
+  
+  x_scope_name <- names(vc_list$coordinationSpace$spatialTargetX)[1]
+  expect_equal(vc_list$coordinationSpace$spatialTargetX[[x_scope_name]], jsonlite::unbox(0))
+  
+  y_scope_name <- names(vc_list$coordinationSpace$spatialTargetY)[1]
+  expect_equal(vc_list$coordinationSpace$spatialTargetY[[y_scope_name]], jsonlite::unbox(0))
+  
+  # Check that views use the coordination scopes
+  expect_equal(vc_list$layout[[1]]$coordinationScopes$spatialZoom, zoom_scope_name)
+  expect_equal(vc_list$layout[[1]]$coordinationScopes$spatialTargetX, x_scope_name)
+  expect_equal(vc_list$layout[[1]]$coordinationScopes$spatialTargetY, y_scope_name)
+  
+  expect_equal(vc_list$layout[[2]]$coordinationScopes$spatialZoom, zoom_scope_name)
+  expect_equal(vc_list$layout[[2]]$coordinationScopes$spatialTargetX, x_scope_name)
+  expect_equal(vc_list$layout[[2]]$coordinationScopes$spatialTargetY, y_scope_name)
+})
+
+test_that("VitessceConfig link_views_by_dict with meta coordination", {
+  vc <- VitessceConfig$new(schema_version = "1.0.16", name = "Test config")
+  ds <- vc$add_dataset("Test dataset")
+  v1 <- vc$add_view(ds, "spatial")
+  v2 <- vc$add_view(ds, "scatterplot")
+
+  # Test with meta coordination (default behavior)
+  simple_input <- list()
+  simple_input[[CoordinationType$SPATIAL_ZOOM]] <- 3
+
+  vc$link_views_by_dict(list(v1, v2), simple_input)  # meta = TRUE by default
+
+  vc_list <- vc$to_list()
+  
+  # Check that meta coordination scopes were created
+  expect_true("metaCoordinationScopes" %in% names(vc_list$coordinationSpace))
+  expect_true("metaCoordinationScopesBy" %in% names(vc_list$coordinationSpace))
+  
+  # Check that views use meta coordination
+  expect_true("metaCoordinationScopes" %in% names(vc_list$layout[[1]]$coordinationScopes))
+  expect_true("metaCoordinationScopesBy" %in% names(vc_list$layout[[1]]$coordinationScopes))
+  expect_true("metaCoordinationScopes" %in% names(vc_list$layout[[2]]$coordinationScopes))
+  expect_true("metaCoordinationScopesBy" %in% names(vc_list$layout[[2]]$coordinationScopes))
+})
+
+test_that("VitessceConfig add_coordination_by_dict", {
+  vc <- VitessceConfig$new(schema_version = "1.0.16", name = "Test config")
+  
+  # Test add_coordination_by_dict alone
+  input_val <- list()
+  input_val[[CoordinationType$SPATIAL_ZOOM]] <- 5
+  input_val[[CoordinationType$SPATIAL_TARGET_X]] <- 10
+  
+  result <- vc$add_coordination_by_dict(input_val)
+  
+  # Check structure of result
+  expect_true("spatialZoom" %in% names(result))
+  expect_true("spatialTargetX" %in% names(result))
+  expect_true("scope" %in% names(result$spatialZoom))
+  expect_true("scope" %in% names(result$spatialTargetX))
+  
+  # Check that scopes were created with correct values
+  expect_equal(as.numeric(result$spatialZoom$scope$c_value), 5)
+  expect_equal(as.numeric(result$spatialTargetX$scope$c_value), 10)
+  expect_equal(result$spatialZoom$scope$c_type, "spatialZoom")
+  expect_equal(result$spatialTargetX$scope$c_type, "spatialTargetX")
+})
+
+test_that("VitessceConfig add_meta_coordination", {
+  vc <- VitessceConfig$new(schema_version = "1.0.16", name = "Test config")
+  
+  meta_scope <- vc$add_meta_coordination()
+  
+  # Check that meta scope object was created
+  expect_true(inherits(meta_scope, "VitessceConfigMetaCoordinationScope"))
+  expect_true(inherits(meta_scope$meta_scope, "VitessceConfigCoordinationScope"))
+  expect_true(inherits(meta_scope$meta_by_scope, "VitessceConfigCoordinationScope"))
+  
+  # Check that coordination space was updated
+  vc_list <- vc$to_list()
+  expect_true("metaCoordinationScopes" %in% names(vc_list$coordinationSpace))
+  expect_true("metaCoordinationScopesBy" %in% names(vc_list$coordinationSpace))
+})
