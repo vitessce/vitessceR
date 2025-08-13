@@ -1,3 +1,86 @@
+#' Helper function for processing coordination dictionaries
+#'
+#' @keywords internal
+#' @param scopes The coordination scopes to process.
+#' @param coordination_scopes The coordination scopes object to update.
+#' @param coordination_scopes_by The coordination scopes by object to update.
+#' @return A list containing updated coordination_scopes and coordination_scopes_by.
+use_coordination_by_dict_helper <- function(scopes, coordination_scopes, coordination_scopes_by) {
+  # Recursive inner function
+  process_level <- function(parent_type, parent_scope, level_type, level_val) {
+    if(is.list(level_val) && !inherits(level_val, "VitessceConfigCoordinationScope")) {
+      # Check if this is a list of coordination objects
+      all_have_scope <- all(sapply(level_val, function(x) is.list(x) && "scope" %in% names(x)))
+      if(all_have_scope) {
+        # This is a list of coordination objects
+        if(is.null(coordination_scopes_by[[parent_type]])) coordination_scopes_by[[parent_type]] <- list()
+        if(is.null(coordination_scopes_by[[parent_type]][[level_type]])) coordination_scopes_by[[parent_type]][[level_type]] <- list()
+        coordination_scopes_by[[parent_type]][[level_type]][[parent_scope$c_scope]] <- sapply(level_val, function(child_val) child_val[["scope"]]$c_scope)
+        
+        for(child_val in level_val) {
+          if("children" %in% names(child_val)) {
+            # Continue recursion
+            for(next_level_type in names(child_val[["children"]])) {
+              next_level_val <- child_val[["children"]][[next_level_type]]
+              process_level(level_type, child_val[["scope"]], next_level_type, next_level_val)
+            }
+          }
+        }
+      }
+    } else {
+      # Single coordination object
+      if(is.null(coordination_scopes_by[[parent_type]])) coordination_scopes_by[[parent_type]] <- list()
+      if(is.null(coordination_scopes_by[[parent_type]][[level_type]])) coordination_scopes_by[[parent_type]][[level_type]] <- list()
+      coordination_scopes_by[[parent_type]][[level_type]][[parent_scope$c_scope]] <- level_val[["scope"]]$c_scope
+      
+      if("children" %in% names(level_val)) {
+        # Continue recursion
+        for(next_level_type in names(level_val[["children"]])) {
+          next_level_val <- level_val[["children"]][[next_level_type]]
+          process_level(level_type, level_val[["scope"]], next_level_type, next_level_val)
+        }
+      }
+    }
+  }
+  
+  # Process top-level coordination types
+  for(top_level_type in names(scopes)) {
+    top_level_val <- scopes[[top_level_type]]
+    
+    if(is.list(top_level_val) && !inherits(top_level_val, "VitessceConfigCoordinationScope")) {
+      # Check if this is a list of coordination objects
+      all_have_scope <- all(sapply(top_level_val, function(x) is.list(x) && "scope" %in% names(x)))
+      if(all_have_scope) {
+        coordination_scopes[[top_level_type]] <- sapply(top_level_val, function(level_val) level_val[["scope"]]$c_scope)
+        
+        for(level_val in top_level_val) {
+          if("children" %in% names(level_val)) {
+            # Begin recursion
+            for(next_level_type in names(level_val[["children"]])) {
+              next_level_val <- level_val[["children"]][[next_level_type]]
+              process_level(top_level_type, level_val[["scope"]], next_level_type, next_level_val)
+            }
+          }
+        }
+      } else {
+        # Single coordination object - handle the case where it's a simple list with scope
+        if("scope" %in% names(top_level_val)) {
+          coordination_scopes[[top_level_type]] <- top_level_val[["scope"]]$c_scope
+          if("children" %in% names(top_level_val)) {
+            # Begin recursion
+            for(next_level_type in names(top_level_val[["children"]])) {
+              next_level_val <- top_level_val[["children"]][[next_level_type]]
+              process_level(top_level_type, top_level_val[["scope"]], next_level_type, next_level_val)
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  return(list(coordination_scopes = coordination_scopes, coordination_scopes_by = coordination_scopes_by))
+}
+
 #' Get next scope name
 #'
 #' @keywords internal
@@ -280,7 +363,7 @@ VitessceConfigMetaCoordinationScope <- R6::R6Class("VitessceConfigMetaCoordinati
       self$meta_by_scope = VitessceConfigCoordinationScope$new(CoordinationType$META_COORDINATION_SCOPES_BY, meta_by_scope)
     },
     use_coordination = function(c_scopes) {
-      if(is.na(self$meta_scope4c_value)) {
+      if(is.na(self$meta_scope$c_value)) {
         self$meta_scope$set_value(obj_list())
       }
 
@@ -292,7 +375,23 @@ VitessceConfigMetaCoordinationScope <- R6::R6Class("VitessceConfigMetaCoordinati
       invisible(self)
     },
     use_coordination_by_dict = function(scopes) {
-      # TODO
+      if(is.na(self$meta_scope$c_value)) {
+        self$meta_scope$set_value_raw(obj_list())
+      }
+      
+      if(is.na(self$meta_by_scope$c_value)) {
+        self$meta_by_scope$set_value_raw(obj_list())
+      }
+      
+      result <- use_coordination_by_dict_helper(
+        scopes,
+        self$meta_scope$c_value,
+        self$meta_by_scope$c_value
+      )
+      
+      self$meta_scope$set_value_raw(result$coordination_scopes)
+      self$meta_by_scope$set_value_raw(result$coordination_scopes_by)
+      
       invisible(self)
     }
   )
@@ -384,11 +483,48 @@ VitessceConfigView <- R6::R6Class("VitessceConfigView",
       invisible(self)
     },
     use_coordination_by_dict = function(scopes) {
-      # TODO
+      if(is.null(private$view$coordinationScopes)) {
+        private$view$coordinationScopes <- list()
+      }
+      
+      if(is.null(private$view$coordinationScopesBy)) {
+        private$view$coordinationScopesBy <- list()
+      }
+      
+      result <- use_coordination_by_dict_helper(
+        scopes,
+        private$view$coordinationScopes,
+        private$view$coordinationScopesBy
+      )
+      
+      private$view$coordinationScopes <- result$coordination_scopes
+      private$view$coordinationScopesBy <- result$coordination_scopes_by
+      
       invisible(self)
     },
     use_meta_coordination = function(meta_scope) {
-      # TODO
+      if(is.null(private$view$coordinationScopes)) {
+        private$view$coordinationScopes <- list()
+      }
+      
+      # Initialize as empty lists if they don't exist
+      if(is.null(private$view$coordinationScopes[[CoordinationType$META_COORDINATION_SCOPES]])) {
+        private$view$coordinationScopes[[CoordinationType$META_COORDINATION_SCOPES]] <- list()
+      }
+      if(is.null(private$view$coordinationScopes[[CoordinationType$META_COORDINATION_SCOPES_BY]])) {
+        private$view$coordinationScopes[[CoordinationType$META_COORDINATION_SCOPES_BY]] <- list()
+      }
+      
+      # Append the new meta scope values
+      private$view$coordinationScopes[[CoordinationType$META_COORDINATION_SCOPES]] <- c(
+        private$view$coordinationScopes[[CoordinationType$META_COORDINATION_SCOPES]],
+        meta_scope$meta_scope$c_scope
+      )
+      private$view$coordinationScopes[[CoordinationType$META_COORDINATION_SCOPES_BY]] <- c(
+        private$view$coordinationScopes[[CoordinationType$META_COORDINATION_SCOPES_BY]],
+        meta_scope$meta_by_scope$c_scope
+      )
+      
       invisible(self)
     },
     #' @description
@@ -557,13 +693,104 @@ VitessceConfig <- R6::R6Class("VitessceConfig",
       result
     },
     add_meta_coordination = function() {
-      # TODO
+      prev_meta_scopes <- names(self$config$coordinationSpace[[CoordinationType$META_COORDINATION_SCOPES]])
+      prev_meta_by_scopes <- names(self$config$coordinationSpace[[CoordinationType$META_COORDINATION_SCOPES_BY]])
+      
+      if(is.null(prev_meta_scopes)) prev_meta_scopes <- character()
+      if(is.null(prev_meta_by_scopes)) prev_meta_by_scopes <- character()
+      
+      meta_container <- VitessceConfigMetaCoordinationScope$new(
+        get_next_scope(prev_meta_scopes),
+        get_next_scope(prev_meta_by_scopes)
+      )
+      
+      if(!is.element(CoordinationType$META_COORDINATION_SCOPES, names(self$config$coordinationSpace))) {
+        self$config$coordinationSpace[[CoordinationType$META_COORDINATION_SCOPES]] <- list()
+      }
+      if(!is.element(CoordinationType$META_COORDINATION_SCOPES_BY, names(self$config$coordinationSpace))) {
+        self$config$coordinationSpace[[CoordinationType$META_COORDINATION_SCOPES_BY]] <- list()
+      }
+      
+      self$config$coordinationSpace[[CoordinationType$META_COORDINATION_SCOPES]][[meta_container$meta_scope$c_scope]] <- meta_container$meta_scope
+      self$config$coordinationSpace[[CoordinationType$META_COORDINATION_SCOPES_BY]][[meta_container$meta_by_scope$c_scope]] <- meta_container$meta_by_scope
+      
+      meta_container
     },
     add_coordination_by_dict = function(input_val) {
-      # TODO
+      # Recursive function to process each level
+      process_level <- function(level) {
+        result <- list()
+        if(is.null(level)) {
+          return(result)
+        }
+        
+        for(c_type in names(level)) {
+          next_level_or_initial_value <- level[[c_type]]
+          
+          # Check if value is a CoordinationLevel instance
+          if(inherits(next_level_or_initial_value, "CoordinationLevel")) {
+            next_level <- next_level_or_initial_value$value
+            if(is.list(next_level)) {
+              if(next_level_or_initial_value$is_cached()) {
+                result[[c_type]] <- next_level_or_initial_value$get_cached()
+              } else {
+                processed_level <- lapply(next_level, function(next_el) {
+                  dummy_scopes <- self$add_coordination(c_type)
+                  dummy_scope <- dummy_scopes[[1]]
+                  dummy_scope$set_value("__dummy__")
+                  list(
+                    scope = dummy_scope,
+                    children = process_level(next_el)
+                  )
+                })
+                next_level_or_initial_value$set_cached(processed_level)
+                result[[c_type]] <- processed_level
+              }
+            } else {
+              stop("Expected CoordinationLevel$value to be a list.")
+            }
+          } else {
+            # Base case
+            initial_value <- next_level_or_initial_value
+            if(inherits(initial_value, "VitessceConfigCoordinationScope")) {
+              result[[c_type]] <- list(scope = initial_value)
+            } else {
+              scopes <- self$add_coordination(c_type)
+              scope <- scopes[[1]]
+              if(is.list(initial_value)) {
+                scope$set_value_raw(initial_value)
+              } else {
+                scope$set_value(initial_value)
+              }
+              result[[c_type]] <- list(scope = scope)
+            }
+          }
+        }
+        return(result)
+      }
+      
+      # Begin recursion
+      output_val <- process_level(input_val)
+      return(output_val)
     },
-    link_views_by_dict = function(views, input_val, meta = TRUE) {
-      # TODO
+    link_views_by_dict = function(views, input_val, meta = TRUE, scope_prefix = NA) {
+      # TODO: implement scope_prefix functionality similar to Python version
+      scopes <- self$add_coordination_by_dict(input_val)
+      
+      if(meta) {
+        meta_scope <- self$add_meta_coordination()
+        meta_scope$use_coordination_by_dict(scopes)
+        
+        for(view in views) {
+          view$use_meta_coordination(meta_scope)
+        }
+      } else {
+        for(view in views) {
+          view$use_coordination_by_dict(scopes)
+        }
+      }
+      
+      invisible(self)
     },
     #' @description
     #' Define the layout of views.
